@@ -5,7 +5,21 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, Calendar, BookOpen, Brain, MapPin, User } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  Menu,
+  Calendar,
+  BookOpen,
+  Brain,
+  MapPin,
+  User,
+  FileText,
+  TrendingUp,
+  Newspaper,
+  LogOut,
+  Settings,
+} from "lucide-react"
+import { useAuth, getRoleDisplayName } from "@/lib/auth"
 
 const navItems = [
   { href: "/", label: "Головна", icon: User },
@@ -13,11 +27,19 @@ const navItems = [
   { href: "/tutorials", label: "Навчання", icon: BookOpen },
   { href: "/tests", label: "Тестування", icon: Brain },
   { href: "/table-plan", label: "План столиків", icon: MapPin },
+  { href: "/rules", label: "Правила", icon: FileText },
+  { href: "/my-path", label: "Мій шлях", icon: TrendingUp },
+  { href: "/news", label: "Актуальне", icon: Newspaper },
 ]
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const { user, logout } = useAuth()
+
+  const handleLogout = () => {
+    logout()
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -30,7 +52,7 @@ export function Navigation() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden lg:flex items-center space-x-4">
           {navItems.map((item) => {
             const Icon = item.icon
             return (
@@ -50,7 +72,39 @@ export function Navigation() {
           })}
         </nav>
 
-        <Button className="hidden md:flex bg-orange-500 hover:bg-orange-600">Увійти</Button>
+        {/* User Menu */}
+        <div className="hidden md:flex items-center space-x-4">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="flex items-center space-x-2">
+                <User className="h-4 w-4" />
+                <span>
+                  {user?.firstName} {user?.lastName}
+                </span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <div className="px-2 py-1.5 text-sm text-gray-600">
+                <div className="font-medium">
+                  {user?.firstName} {user?.lastName}
+                </div>
+                <div className="text-xs">{getRoleDisplayName(user?.role || "")}</div>
+              </div>
+              {user?.role === "admin" && (
+                <DropdownMenuItem asChild>
+                  <Link href="/admin" className="flex items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Адміністрування
+                  </Link>
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Вийти
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
 
         {/* Mobile Navigation */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -61,7 +115,13 @@ export function Navigation() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
             <div className="flex flex-col space-y-4 mt-8">
-              <Button className="bg-orange-500 hover:bg-orange-600 mb-4">Увійти</Button>
+              <div className="px-4 py-2 bg-orange-50 rounded-md">
+                <div className="font-medium text-orange-900">
+                  {user?.firstName} {user?.lastName}
+                </div>
+                <div className="text-sm text-orange-600">{getRoleDisplayName(user?.role || "")}</div>
+              </div>
+
               {navItems.map((item) => {
                 const Icon = item.icon
                 return (
@@ -80,6 +140,26 @@ export function Navigation() {
                   </Link>
                 )
               })}
+
+              {user?.role === "admin" && (
+                <Link
+                  href="/admin"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center space-x-3 px-4 py-3 rounded-md text-sm font-medium text-gray-600 hover:text-orange-600 hover:bg-orange-50"
+                >
+                  <Settings className="h-5 w-5" />
+                  <span>Адміністрування</span>
+                </Link>
+              )}
+
+              <Button
+                onClick={handleLogout}
+                variant="outline"
+                className="mx-4 border-orange-200 text-orange-600 hover:bg-orange-50"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Вийти
+              </Button>
             </div>
           </SheetContent>
         </Sheet>

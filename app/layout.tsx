@@ -3,14 +3,14 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "next-themes"
-import { Navigation } from "@/components/navigation"
+import { ClientLayout } from "@/components/client-layout"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "СамоГуру - Платформа для ресторанного персоналу",
   description: "Управління розкладом, навчання та тестування для ресторанного персоналу",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
@@ -22,8 +22,7 @@ export default function RootLayout({
     <html lang="uk" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          <Navigation />
-          <main className="min-h-screen bg-gray-50">{children}</main>
+          <ClientLayout>{children}</ClientLayout>
         </ThemeProvider>
       </body>
     </html>

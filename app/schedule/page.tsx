@@ -3,71 +3,159 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { Calendar, Clock, Users, RefreshCw, CalendarIcon } from "lucide-react"
+import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
 
-const scheduleData = [
-  { day: "Понеділок", date: "15.01", shift: "Ранкова", time: "08:00-16:00", status: "confirmed" },
-  { day: "Вівторок", date: "16.01", shift: "Денна", time: "12:00-20:00", status: "confirmed" },
-  { day: "Середа", date: "17.01", shift: "Вечірня", time: "16:00-00:00", status: "pending" },
-  { day: "Четвер", date: "18.01", shift: "Ранкова", time: "08:00-16:00", status: "confirmed" },
-  { day: "П'ятниця", date: "19.01", shift: "Денна", time: "12:00-20:00", status: "confirmed" },
-  { day: "Субота", date: "20.01", shift: "Вечірня", time: "16:00-00:00", status: "requested-off" },
-  { day: "Неділя", date: "21.01", shift: "Вихідний", time: "-", status: "off" },
+// Sample schedule data matching the image format
+const employees = [
+  "Максим Скак.",
+  "Аня Лемик",
+  "Влад Ярем.",
+  "Ахмед",
+  "Саша Маркович",
+  "Таня",
+  "Єва Комбуль",
+  "Маркіян Кравч.",
+  "Влад Пек.",
+  "Саша Гладка",
+  "Матвій Гард.",
+  "Настя Пушкар",
+  "Зоряна Грубяк",
+  "Ярослав Борода",
 ]
 
-export default function SchedulePage() {
-  const [selectedShift, setSelectedShift] = useState<any>(null)
+const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return "bg-green-100 text-green-800"
-      case "pending":
-        return "bg-yellow-100 text-yellow-800"
-      case "requested-off":
-        return "bg-blue-100 text-blue-800"
-      case "off":
-        return "bg-gray-100 text-gray-800"
-      default:
-        return "bg-gray-100 text-gray-800"
+// Generate schedule data for June 2025
+const generateScheduleData = () => {
+  const scheduleData: { [key: string]: { [key: number]: string | null } } = {}
+
+  employees.forEach((employee) => {
+    scheduleData[employee] = {}
+    for (let day = 1; day <= 31; day++) {
+      // Randomly assign shifts (1 = day shift, 16 = night shift, null = day off)
+      const random = Math.random()
+      if (random < 0.3) {
+        scheduleData[employee][day] = null // day off
+      } else if (random < 0.7) {
+        scheduleData[employee][day] = "1" // day shift
+      } else {
+        scheduleData[employee][day] = "16" // night shift
+      }
     }
+  })
+
+  return scheduleData
+}
+
+const getDayOfWeek = (day: number) => {
+  // June 2025 starts on Sunday (0)
+  const startDay = 0 // Sunday
+  return daysOfWeek[(startDay + day - 1) % 7]
+}
+
+export default function SchedulePage() {
+  const [scheduleData] = useState(generateScheduleData())
+  const [selectedCell, setSelectedCell] = useState<{ employee: string; day: number } | null>(null)
+
+  const getShiftColor = (shift: string | null) => {
+    if (shift === "1") return "bg-blue-100 text-blue-800 border-blue-200"
+    if (shift === "16") return "bg-green-100 text-green-800 border-green-200"
+    return "bg-gray-800 text-white" // day off
   }
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return "Підтверджено"
-      case "pending":
-        return "Очікує"
-      case "requested-off":
-        return "Запит на вихідний"
-      case "off":
-        return "Вихідний"
-      default:
-        return "Невідомо"
-    }
+  const getShiftText = (shift: string | null) => {
+    if (shift === "1") return "1"
+    if (shift === "16") return "16"
+    return ""
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Розклад роботи</h1>
-        <p className="text-gray-600">Управляйте своїм робочим розкладом та запитами на зміни</p>
+        <p className="text-gray-600">Червень 2025 - Графік роботи співробітників</p>
       </div>
 
+      {/* Legend */}
+      <div className="mb-6 flex flex-wrap gap-4">
+        <div className="flex items-center space-x-2">
+          <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-blue-800">
+            1
+          </div>
+          <span className="text-sm text-gray-600">Денна зміна</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="w-6 h-6 bg-green-100 border border-green-200 rounded flex items-center justify-center text-xs font-medium text-green-800">
+            16
+          </div>
+          <span className="text-sm text-gray-600">Нічна зміна</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="w-6 h-6 bg-gray-800 rounded"></div>
+          <span className="text-sm text-gray-600">Вихідний</span>
+        </div>
+      </div>
+
+      {/* Schedule Table */}
+      <Card className="overflow-hidden">
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Calendar className="h-5 w-5 text-orange-500 mr-2" />
+            Червень 2025
+          </CardTitle>
+          <CardDescription>Графік роботи всіх співробітників</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="sticky left-0 bg-gray-50 border border-gray-200 px-4 py-2 text-left font-medium text-gray-900 min-w-[150px]">
+                    № Співробітник
+                  </th>
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                    <th key={day} className="border border-gray-200 px-2 py-2 text-center min-w-[40px]">
+                      <div className="text-xs font-medium text-gray-900">{day}</div>
+                      <div className="text-xs text-gray-500">{getDayOfWeek(day)}</div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {employees.map((employee, index) => (
+                  <tr key={employee} className="hover:bg-gray-50">
+                    <td className="sticky left-0 bg-white border border-gray-200 px-4 py-2 font-medium text-gray-900">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm text-gray-500">{index + 1}</span>
+                        <span>{employee}</span>
+                      </div>
+                    </td>
+                    {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => {
+                      const shift = scheduleData[employee][day]
+                      return (
+                        <td
+                          key={day}
+                          className="border border-gray-200 p-1 text-center cursor-pointer hover:bg-gray-100"
+                          onClick={() => setSelectedCell({ employee, day })}
+                        >
+                          <div
+                            className={`w-6 h-6 mx-auto rounded flex items-center justify-center text-xs font-medium ${getShiftColor(shift)}`}
+                          >
+                            {getShiftText(shift)}
+                          </div>
+                        </td>
+                      )
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Quick Actions */}
-      <div className="grid md:grid-cols-3 gap-4 mb-8">
+      <div className="grid md:grid-cols-3 gap-4 mt-8">
         <Card className="border-orange-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
@@ -76,30 +164,7 @@ export default function SchedulePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="w-full bg-orange-500 hover:bg-orange-600">Запросити заміну</Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Запит на заміну зміни</DialogTitle>
-                  <DialogDescription>Оберіть зміну, яку хочете замінити, та вкажіть причину</DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Оберіть зміну" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="wed">Середа 17.01 - Вечірня</SelectItem>
-                      <SelectItem value="fri">П'ятниця 19.01 - Денна</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Textarea placeholder="Причина заміни..." />
-                  <Button className="w-full bg-orange-500 hover:bg-orange-600">Відправити запит</Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <Button className="w-full bg-orange-500 hover:bg-orange-600">Запросити заміну</Button>
           </CardContent>
         </Card>
 
@@ -111,32 +176,9 @@ export default function SchedulePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" className="w-full border-orange-200 text-orange-600 hover:bg-orange-50">
-                  Запросити вихідний
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Запит на вихідний день</DialogTitle>
-                  <DialogDescription>Оберіть дату та вкажіть причину</DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Оберіть дату" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="sat">Субота 20.01</SelectItem>
-                      <SelectItem value="sun">Неділя 21.01</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Textarea placeholder="Причина запиту..." />
-                  <Button className="w-full bg-orange-500 hover:bg-orange-600">Відправити запит</Button>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <Button variant="outline" className="w-full border-orange-200 text-orange-600 hover:bg-orange-50">
+              Запросити вихідний
+            </Button>
           </CardContent>
         </Card>
 
@@ -155,60 +197,31 @@ export default function SchedulePage() {
         </Card>
       </div>
 
-      {/* Schedule Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Calendar className="h-5 w-5 text-orange-500 mr-2" />
-            Тижневий розклад
-          </CardTitle>
-          <CardDescription>15 - 21 січня 2024</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">День</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">Дата</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">Зміна</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">Час</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">Статус</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">Дії</th>
-                </tr>
-              </thead>
-              <tbody>
-                {scheduleData.map((item, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="py-4 px-4 font-medium">{item.day}</td>
-                    <td className="py-4 px-4">{item.date}</td>
-                    <td className="py-4 px-4">{item.shift}</td>
-                    <td className="py-4 px-4 flex items-center">
-                      <Clock className="h-4 w-4 text-gray-400 mr-2" />
-                      {item.time}
-                    </td>
-                    <td className="py-4 px-4">
-                      <Badge className={getStatusColor(item.status)}>{getStatusText(item.status)}</Badge>
-                    </td>
-                    <td className="py-4 px-4">
-                      {item.status === "confirmed" && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="text-orange-600 border-orange-200 hover:bg-orange-50"
-                          onClick={() => setSelectedShift(item)}
-                        >
-                          Змінити
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Selected Cell Info */}
+      {selectedCell && (
+        <Card className="mt-6 border-orange-200">
+          <CardHeader>
+            <CardTitle className="text-lg">
+              Деталі зміни: {selectedCell.employee} - {selectedCell.day} червня
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Зміна:</p>
+                <p className="font-medium">
+                  {scheduleData[selectedCell.employee][selectedCell.day] === "1" && "Денна зміна (08:00-20:00)"}
+                  {scheduleData[selectedCell.employee][selectedCell.day] === "16" && "Нічна зміна (20:00-08:00)"}
+                  {!scheduleData[selectedCell.employee][selectedCell.day] && "Вихідний день"}
+                </p>
+              </div>
+              <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
+                Змінити
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
