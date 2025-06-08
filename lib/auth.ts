@@ -20,7 +20,7 @@ interface AuthStore {
 }
 
 // Base64 encoded "samoguru"
-const STATIC_PASSWORD = "c2Ftb2d1cnU="
+const STATIC_PASSWORD = "samoguru1"
 
 export const useAuth = create<AuthStore>()(
   persist(
