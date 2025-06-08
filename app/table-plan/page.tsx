@@ -5,37 +5,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Users, Clock, CheckCircle, AlertCircle } from "lucide-react"
+import { demoTableData } from "@/lib/demo-data"
 
-const tableData = [
-  { id: 1, number: 1, seats: 2, status: "available", section: "Тераса", waiter: "Олена" },
-  { id: 2, number: 2, seats: 4, status: "occupied", section: "Тераса", waiter: "Олена", timeOccupied: "19:30" },
-  { id: 3, number: 3, seats: 2, status: "reserved", section: "Тераса", waiter: "Олена", reservationTime: "20:00" },
-  { id: 4, number: 4, seats: 6, status: "available", section: "Основний зал", waiter: "Максим" },
-  { id: 5, number: 5, seats: 4, status: "occupied", section: "Основний зал", waiter: "Максим", timeOccupied: "19:15" },
-  { id: 6, number: 6, seats: 4, status: "cleaning", section: "Основний зал", waiter: "Максим" },
-  {
-    id: 7,
-    number: 7,
-    seats: 8,
-    status: "reserved",
-    section: "Основний зал",
-    waiter: "Максим",
-    reservationTime: "20:30",
-  },
-  { id: 8, number: 8, seats: 2, status: "available", section: "Основний зал", waiter: "Ірина" },
-  { id: 9, number: 9, seats: 4, status: "occupied", section: "VIP зона", waiter: "Ірина", timeOccupied: "18:45" },
-  { id: 10, number: 10, seats: 6, status: "available", section: "VIP зона", waiter: "Ірина" },
-  {
-    id: 11,
-    number: 11,
-    seats: 4,
-    status: "reserved",
-    section: "Біля вікна",
-    waiter: "Андрій",
-    reservationTime: "21:00",
-  },
-  { id: 12, number: 12, seats: 2, status: "available", section: "Біля вікна", waiter: "Андрій" },
-]
+const tableData = demoTableData
 
 const sections = ["Всі", "Тераса", "Основний зал", "VIP зона", "Біля вікна"]
 

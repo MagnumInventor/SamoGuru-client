@@ -8,12 +8,13 @@ import { Progress } from "@/components/ui/progress"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Brain, Trophy, Clock, CheckCircle, XCircle, BarChart3 } from "lucide-react"
+import { demoTestQuestions } from "@/lib/demo-data"
 
 const testCategories = [
   {
     id: 1,
-    title: "Знання меню",
-    description: "Тест на знання страв та їх складу",
+    title: "Основні страви",
+    description: "Тест на знання основних страв та їх складу",
     questions: 15,
     duration: "10 хв",
     difficulty: "Легкий",
@@ -22,55 +23,47 @@ const testCategories = [
   },
   {
     id: 2,
-    title: "Винна карта",
-    description: "Знання вин та їх поєднання зі стравами",
-    questions: 20,
-    duration: "15 хв",
+    title: "Мангал та гриль",
+    description: "Знання страв з мангалу та способів приготування",
+    questions: 12,
+    duration: "8 хв",
     difficulty: "Середній",
-    lastScore: 72,
+    lastScore: 78,
     attempts: 2,
   },
   {
     id: 3,
-    title: "Коктейлі та напої",
-    description: "Рецепти коктейлів та техніки приготування",
-    questions: 12,
-    duration: "8 хв",
-    difficulty: "Легкий",
+    title: "Хінкалі та хачапурі",
+    description: "Традиційні грузинські страви та їх особливості",
+    questions: 18,
+    duration: "12 хв",
+    difficulty: "Середній",
     lastScore: 90,
     attempts: 4,
   },
   {
     id: 4,
-    title: "Стандарти обслуговування",
-    description: "Правила та етикет обслуговування гостей",
-    questions: 18,
-    duration: "12 хв",
+    title: "Салати та закуски",
+    description: "Холодні страви, салати та закуски",
+    questions: 10,
+    duration: "7 хв",
+    difficulty: "Легкий",
+    lastScore: 82,
+    attempts: 3,
+  },
+  {
+    id: 5,
+    title: "Алергени та попередження",
+    description: "Важлива інформація про алергени в стравах",
+    questions: 20,
+    duration: "15 хв",
     difficulty: "Складний",
     lastScore: null,
     attempts: 0,
   },
 ]
 
-const sampleQuestions = [
-  {
-    id: 1,
-    question: "Які інгредієнти входять до складу класичного борщу?",
-    options: [
-      "Капуста, буряк, морква, цибуля, картопля",
-      "Капуста, буряк, морква, помідори, картопля",
-      "Капуста, морква, цибуля, картопля, м'ясо",
-      "Буряк, морква, цибуля, картопля, зелень",
-    ],
-    correct: 0,
-  },
-  {
-    id: 2,
-    question: "Яка температура подачі червоного вина?",
-    options: ["6-8°C", "10-12°C", "16-18°C", "20-22°C"],
-    correct: 2,
-  },
-]
+const sampleQuestions = demoTestQuestions
 
 export default function TestsPage() {
   const [currentTest, setCurrentTest] = useState<any>(null)

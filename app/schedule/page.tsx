@@ -4,48 +4,34 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
+import { demoScheduleData } from "@/lib/demo-data"
 
 // Sample schedule data matching the image format
-const employees = [
-  "Максим Скак.",
-  "Аня Лемик",
-  "Влад Ярем.",
-  "Ахмед",
-  "Саша Маркович",
-  "Таня",
-  "Єва Комбуль",
-  "Маркіян Кравч.",
-  "Влад Пек.",
-  "Саша Гладка",
-  "Матвій Гард.",
-  "Настя Пушкар",
-  "Зоряна Грубяк",
-  "Ярослав Борода",
-]
+const employees = demoScheduleData.employees
 
 const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
 
 // Generate schedule data for June 2025
-const generateScheduleData = () => {
-  const scheduleData: { [key: string]: { [key: number]: string | null } } = {}
+// const generateScheduleData = () => {
+//   const scheduleData: { [key: string]: { [key: number]: string | null } } = {}
 
-  employees.forEach((employee) => {
-    scheduleData[employee] = {}
-    for (let day = 1; day <= 31; day++) {
-      // Randomly assign shifts (1 = day shift, 16 = night shift, null = day off)
-      const random = Math.random()
-      if (random < 0.3) {
-        scheduleData[employee][day] = null // day off
-      } else if (random < 0.7) {
-        scheduleData[employee][day] = "1" // day shift
-      } else {
-        scheduleData[employee][day] = "16" // night shift
-      }
-    }
-  })
+//   employees.forEach((employee) => {
+//     scheduleData[employee] = {}
+//     for (let day = 1; day <= 31; day++) {
+//       // Randomly assign shifts (1 = day shift, 16 = night shift, null = day off)
+//       const random = Math.random()
+//       if (random < 0.3) {
+//         scheduleData[employee][day] = null // day off
+//       } else if (random < 0.7) {
+//         scheduleData[employee][day] = "1" // day shift
+//       } else {
+//         scheduleData[employee][day] = "16" // night shift
+//       }
+//     }
+//   })
 
-  return scheduleData
-}
+//   return scheduleData
+// }
 
 const getDayOfWeek = (day: number) => {
   // June 2025 starts on Sunday (0)
@@ -54,7 +40,7 @@ const getDayOfWeek = (day: number) => {
 }
 
 export default function SchedulePage() {
-  const [scheduleData] = useState(generateScheduleData())
+  const [scheduleData] = useState(demoScheduleData.generateSchedule())
   const [selectedCell, setSelectedCell] = useState<{ employee: string; day: number } | null>(null)
 
   const getShiftColor = (shift: string | null) => {

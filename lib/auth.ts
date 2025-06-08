@@ -14,25 +14,37 @@ export interface User {
 
 interface AuthStore {
   user: User | null
-  login: (userData: Omit<User, "id" | "isAuthenticated">) => void
+  login: (password: string) => boolean
   logout: () => void
   isAuthenticated: () => boolean
 }
 
-// Base64 encoded "samoguru"
-const STATIC_PASSWORD = "samoguru1"
+// Simple password validation - no server needed
+const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: string }> = {
+  samoguru123: { role: "admin", name: "Адміністратор", surname: "Системи" },
+  waiter123: { role: "waiter", name: "Офіціант", surname: "Тестовий" },
+  helper123: { role: "helper", name: "Помічник", surname: "Тестовий" },
+}
 
 export const useAuth = create<AuthStore>()(
   persist(
     (set, get) => ({
       user: null,
-      login: (userData) => {
-        const user: User = {
-          ...userData,
-          id: Math.random().toString(36).substr(2, 9),
-          isAuthenticated: true,
+      login: (password: string) => {
+        const userInfo = VALID_PASSWORDS[password]
+        if (userInfo) {
+          const user: User = {
+            id: Math.random().toString(36).substr(2, 9),
+            firstName: userInfo.name,
+            lastName: userInfo.surname,
+            phone: "+380 XX XXX XX XX",
+            role: userInfo.role as any,
+            isAuthenticated: true,
+          }
+          set({ user })
+          return true
         }
-        set({ user })
+        return false
       },
       logout: () => set({ user: null }),
       isAuthenticated: () => !!get().user?.isAuthenticated,
@@ -42,11 +54,6 @@ export const useAuth = create<AuthStore>()(
     },
   ),
 )
-
-export const validatePassword = (password: string): boolean => {
-  const encodedPassword = btoa(password)
-  return encodedPassword === STATIC_PASSWORD
-}
 
 export const getRoleDisplayName = (role: string): string => {
   switch (role) {

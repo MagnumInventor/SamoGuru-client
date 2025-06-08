@@ -2,49 +2,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Newspaper, Users, Calendar, TrendingUp, Award, Coffee } from "lucide-react"
+import { demoNewsData } from "@/lib/demo-data"
 
-const news = [
-  {
-    id: 1,
-    title: "Новий співробітник у команді",
-    description: "Вітаємо Марію Іваненко, яка приєдналася до нашої команди як офіціант",
-    category: "team",
-    date: "22.01.2024",
-    author: "HR відділ",
-    image: "/placeholder.svg?height=200&width=300",
-    priority: "medium",
-  },
-  {
-    id: 2,
-    title: "Оновлення літнього меню",
-    description: "З 1 лютого запускаємо нове літнє меню з 15 новими стравами та 8 коктейлями",
-    category: "menu",
-    date: "20.01.2024",
-    author: "Шеф-кухар",
-    image: "/placeholder.svg?height=200&width=300",
-    priority: "high",
-  },
-  {
-    id: 3,
-    title: "Результати конкурсу 'Офіціант місяця'",
-    description: "Переможцем січня став Олексій Петренко за відмінне обслуговування гостей",
-    category: "achievement",
-    date: "18.01.2024",
-    author: "Менеджмент",
-    image: "/placeholder.svg?height=200&width=300",
-    priority: "medium",
-  },
-  {
-    id: 4,
-    title: "Нова кавова машина",
-    description: "Встановлено професійну кавову машину La Marzocco для покращення якості кави",
-    category: "equipment",
-    date: "15.01.2024",
-    author: "Технічний відділ",
-    image: "/placeholder.svg?height=200&width=300",
-    priority: "low",
-  },
-]
+const news = demoNewsData
 
 const announcements = [
   {
@@ -153,6 +113,11 @@ export default function NewsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md">
+        <div className="text-sm text-blue-800">
+          <strong>FF:</strong> Новини та оголошення будуть завантажуватися з CMS після впровадження backend
+        </div>
+      </div>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Актуальне</h1>
         <p className="text-gray-600">Новини, оголошення та важливі оновлення</p>

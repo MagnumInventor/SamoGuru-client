@@ -18,12 +18,14 @@ import {
   Newspaper,
   LogOut,
   Settings,
+  UtensilsCrossed,
 } from "lucide-react"
 import { useAuth, getRoleDisplayName } from "@/lib/auth"
 
 const navItems = [
   { href: "/", label: "Головна", icon: User },
   { href: "/schedule", label: "Розклад роботи", icon: Calendar },
+  { href: "/menu", label: "Меню", icon: UtensilsCrossed },
   { href: "/tutorials", label: "Навчання", icon: BookOpen },
   { href: "/tests", label: "Тестування", icon: Brain },
   { href: "/table-plan", label: "План столиків", icon: MapPin },

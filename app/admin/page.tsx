@@ -58,6 +58,14 @@ export default function AdminPage() {
           <p className="text-gray-600">Управління співробітниками, розкладом та контентом</p>
         </div>
 
+        {/* Add this after the header section: */}
+        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+          <div className="text-sm text-yellow-800">
+            <strong>FF (For Future):</strong> Адміністративні функції (додавання співробітників, редагування розкладу,
+            управління контентом) будуть реалізовані після впровадження backend API
+          </div>
+        </div>
+
         {/* Stats Overview */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {adminStats.map((stat, index) => {

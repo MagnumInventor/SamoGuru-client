@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, BookOpen, Brain, MapPin, Users, Clock } from "lucide-react"
 import Link from "next/link"
+import { FFStatus } from "@/components/ff-status"
 
 export default function HomePage() {
   return (
@@ -75,7 +76,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-white rounded-2xl p-8 shadow-sm border border-orange-100">
+      <section className="bg-white rounded-2xl p-8 shadow-sm border border-orange-100 mb-12">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Статистика платформи</h2>
         <div className="grid md:grid-cols-3 gap-8 text-center">
           <div>
@@ -94,6 +95,11 @@ export default function HomePage() {
             <div className="text-gray-600">Успішних тестів</div>
           </div>
         </div>
+      </section>
+
+      {/* FF Status Section */}
+      <section>
+        <FFStatus />
       </section>
     </div>
   )

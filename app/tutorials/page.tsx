@@ -6,70 +6,280 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
-import { Play, Clock, Search, Star, ChefHat, Wine } from "lucide-react"
+import { Play, Clock, Search, Star } from "lucide-react"
 
 const tutorials = {
-  kitchen: [
+  salads: [
     {
       id: 1,
-      title: "Приготування борщу класичного",
-      description: "Покрокова інструкція приготування традиційного українського борщу",
+      title: "Приготування грузинського салату з фундуком",
+      description: "Покрокова інструкція приготування традиційного грузинського салату",
       type: "video",
-      duration: "15 хв",
-      difficulty: "Середній",
+      duration: "12 хв",
+      difficulty: "Легкий",
       rating: 4.8,
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
     {
       id: 2,
-      title: "Техніка нарізки овочів",
-      description: "Основні техніки професійної нарізки овочів для кухні",
+      title: "Салат Вах-Вах: секрети приготування",
+      description: "Унікальний грузинський салат з 4 різними соусами",
       type: "video",
-      duration: "8 хв",
-      difficulty: "Легкий",
+      duration: "15 хв",
+      difficulty: "Середній",
       rating: 4.9,
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
     {
       id: 3,
-      title: "Стандарти подачі страв",
-      description: "Правила та стандарти красивої подачі страв у ресторані",
-      type: "text",
-      duration: "5 хв",
+      title: "Цезар з креветкою: класична техніка",
+      description: "Правильне приготування соусу та подача креветок",
+      type: "video",
+      duration: "10 хв",
       difficulty: "Легкий",
       rating: 4.7,
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
-  ],
-  bar: [
     {
       id: 4,
-      title: "Класичні коктейлі: Мохіто",
-      description: "Рецепт та техніка приготування класичного мохіто",
+      title: "Томлений буряк з ткемалі",
+      description: "Техніка томління буряка та приготування соусу ткемалі",
       type: "video",
-      duration: "6 хв",
-      difficulty: "Легкий",
+      duration: "18 хв",
+      difficulty: "Середній",
       rating: 4.6,
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
+  ],
+  grill: [
     {
       id: 5,
-      title: "Робота з кавовою машиною",
-      description: "Інструкція з експлуатації професійної кавової машини",
-      type: "text",
-      duration: "10 хв",
+      title: "Мангалиця у вогні: робота з відкритим вогнем",
+      description: "Техніка приготування мангалиці на відкритому вогні",
+      type: "video",
+      duration: "25 хв",
+      difficulty: "Складний",
+      rating: 4.9,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 6,
+      title: "Морський окунь в печі Пурне",
+      description: "Особливості роботи з грузинською піччю та рибою",
+      type: "video",
+      duration: "20 хв",
       difficulty: "Середній",
       rating: 4.8,
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
     {
-      id: 6,
-      title: "Винна карта ресторану",
-      description: "Огляд винної карти та рекомендації до страв",
+      id: 7,
+      title: "Люля-кебаб: формування та запікання",
+      description: "Правильна техніка формування та запікання люля-кебабу",
+      type: "video",
+      duration: "15 хв",
+      difficulty: "Середній",
+      rating: 4.7,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 8,
+      title: "Стейк Рібай: ступені прожарки",
+      description: "Визначення ступенів прожарки та подача стейка",
+      type: "video",
+      duration: "22 хв",
+      difficulty: "Складний",
+      rating: 4.8,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+  ],
+  fryer: [
+    {
+      id: 9,
+      title: "Чебуреки: робота з тістом та фритюром",
+      description: "Техніка розкочування тіста та правильне смаження",
+      type: "video",
+      duration: "18 хв",
+      difficulty: "Середній",
+      rating: 4.6,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 10,
+      title: "Сирні палички у фритюрі",
+      description: "Панірування та контроль температури олії",
       type: "video",
       duration: "12 хв",
-      difficulty: "Складний",
+      difficulty: "Легкий",
       rating: 4.5,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 11,
+      title: "Картопля фрі: секрети хрусткості",
+      description: "Подвійне смаження та правильна подача",
+      type: "video",
+      duration: "14 хв",
+      difficulty: "Легкий",
+      rating: 4.7,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+  ],
+  main: [
+    {
+      id: 12,
+      title: "М'ясна дошка: компонування та подача",
+      description: "Правильне розміщення компонентів та температурна подача",
+      type: "video",
+      duration: "20 хв",
+      difficulty: "Середній",
+      rating: 4.8,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 13,
+      title: "Чашушулі з телятини",
+      description: "Техніка тушкування та робота з спеціями",
+      type: "video",
+      duration: "16 хв",
+      difficulty: "Середній",
+      rating: 4.7,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 14,
+      title: "Свинина по-карськи: запікання з сиром",
+      description: "Правильна температура запікання та контроль готовності",
+      type: "video",
+      duration: "18 хв",
+      difficulty: "Середній",
+      rating: 4.6,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 15,
+      title: "Чкмерулі з курки: вершково-часниковий соус",
+      description: "Приготування соусу та запікання курки",
+      type: "video",
+      duration: "22 хв",
+      difficulty: "Середній",
+      rating: 4.9,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+  ],
+  soups: [
+    {
+      id: 16,
+      title: "Бульйон з півня: основи наваристості",
+      description: "Техніка варіння прозорого наваристого бульйону",
+      type: "video",
+      duration: "25 хв",
+      difficulty: "Середній",
+      rating: 4.8,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 17,
+      title: "Харчо з ягнятини: грузинські спеції",
+      description: "Робота з традиційними грузинськими спеціями",
+      type: "video",
+      duration: "20 хв",
+      difficulty: "Складний",
+      rating: 4.7,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 18,
+      title: "Журик: польський суп з ковбасою",
+      description: "Особливості приготування закваски та подачі",
+      type: "video",
+      duration: "18 хв",
+      difficulty: "Середній",
+      rating: 4.6,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+  ],
+  khinkali: [
+    {
+      id: 19,
+      title: "Хінкалі: техніка ліплення",
+      description: "Правильна техніка ліплення та кількість складок",
+      type: "video",
+      duration: "15 хв",
+      difficulty: "Складний",
+      rating: 4.9,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 20,
+      title: "Начинка для хінкалі: пропорції м'яса",
+      description: "Правильні пропорції м'яса та спецій",
+      type: "video",
+      duration: "12 хв",
+      difficulty: "Середній",
+      rating: 4.8,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 21,
+      title: "Смажені хінкалі: унікальна техніка",
+      description: "Особливості смаження хінкалі до хрусткої скоринки",
+      type: "video",
+      duration: "14 хв",
+      difficulty: "Складний",
+      rating: 4.7,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 22,
+      title: "Хінкалі з сиром: сирна начинка",
+      description: "Робота з різними видами сиру та їх поєднання",
+      type: "video",
+      duration: "16 хв",
+      difficulty: "Середній",
+      rating: 4.6,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+  ],
+  desserts: [
+    {
+      id: 23,
+      title: "Тірамісу: класична техніка",
+      description: "Приготування маскарпоне крему та збирання десерту",
+      type: "video",
+      duration: "20 хв",
+      difficulty: "Середній",
+      rating: 4.8,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 24,
+      title: "Багратоні: грузинський наполеон",
+      description: "Робота з листковим тістом та заварним кремом",
+      type: "video",
+      duration: "25 хв",
+      difficulty: "Складний",
+      rating: 4.9,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 25,
+      title: "Еклери: заварне тісто та крем",
+      description: "Техніка приготування заварного тіста та начинок",
+      type: "video",
+      duration: "30 хв",
+      difficulty: "Складний",
+      rating: 4.7,
+      thumbnail: "/placeholder.svg?height=200&width=300",
+    },
+    {
+      id: 26,
+      title: "Чізкейк: робота з сиром філадельфія",
+      description: "Правильна консистенція та запікання чізкейка",
+      type: "video",
+      duration: "22 хв",
+      difficulty: "Середній",
+      rating: 4.6,
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
   ],
@@ -121,21 +331,40 @@ export default function TutorialsPage() {
         </div>
       </div>
 
-      <Tabs defaultValue="kitchen" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-8">
-          <TabsTrigger value="kitchen" className="flex items-center">
-            <ChefHat className="h-4 w-4 mr-2" />
-            Кухня
+      <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-md">
+        <div className="text-sm text-blue-800">
+          <strong>FF:</strong> Відео контент буде завантажуватися з CDN після налаштування медіа сервера
+        </div>
+      </div>
+
+      <Tabs defaultValue="salads" className="w-full">
+        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 mb-8">
+          <TabsTrigger value="salads" className="flex items-center text-xs">
+            🥗 Салати/Закуски
           </TabsTrigger>
-          <TabsTrigger value="bar" className="flex items-center">
-            <Wine className="h-4 w-4 mr-2" />
-            Бар
+          <TabsTrigger value="grill" className="flex items-center text-xs">
+            🔥 Гриль
+          </TabsTrigger>
+          <TabsTrigger value="fryer" className="flex items-center text-xs">
+            🍟 Фритюр
+          </TabsTrigger>
+          <TabsTrigger value="main" className="flex items-center text-xs">
+            🍖 Основні страви
+          </TabsTrigger>
+          <TabsTrigger value="soups" className="flex items-center text-xs">
+            🍲 Перші страви
+          </TabsTrigger>
+          <TabsTrigger value="khinkali" className="flex items-center text-xs">
+            🥟 Хінкалі
+          </TabsTrigger>
+          <TabsTrigger value="desserts" className="flex items-center text-xs">
+            🍰 Десерти
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="kitchen">
+        <TabsContent value="salads">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tutorials.kitchen.map((tutorial) => (
+            {tutorials.salads.map((tutorial) => (
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
@@ -178,9 +407,234 @@ export default function TutorialsPage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="bar">
+        <TabsContent value="grill">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tutorials.bar.map((tutorial) => (
+            {tutorials.grill.map((tutorial) => (
+              <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                <div className="relative">
+                  <img
+                    src={tutorial.thumbnail || "/placeholder.svg"}
+                    alt={tutorial.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  {tutorial.type === "video" && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Button size="lg" className="rounded-full bg-orange-500 hover:bg-orange-600">
+                        <Play className="h-6 w-6" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <CardTitle className="text-lg">{tutorial.title}</CardTitle>
+                    <Badge className={getDifficultyColor(tutorial.difficulty)}>{tutorial.difficulty}</Badge>
+                  </div>
+                  <CardDescription>{tutorial.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="h-4 w-4 mr-1" />
+                      {tutorial.duration}
+                    </div>
+                    <div className="flex items-center">
+                      {renderStars(tutorial.rating)}
+                      <span className="ml-2 text-sm text-gray-600">{tutorial.rating}</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                    {tutorial.type === "video" ? "Дивитися" : "Читати"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="fryer">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tutorials.fryer.map((tutorial) => (
+              <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                <div className="relative">
+                  <img
+                    src={tutorial.thumbnail || "/placeholder.svg"}
+                    alt={tutorial.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  {tutorial.type === "video" && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Button size="lg" className="rounded-full bg-orange-500 hover:bg-orange-600">
+                        <Play className="h-6 w-6" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <CardTitle className="text-lg">{tutorial.title}</CardTitle>
+                    <Badge className={getDifficultyColor(tutorial.difficulty)}>{tutorial.difficulty}</Badge>
+                  </div>
+                  <CardDescription>{tutorial.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="h-4 w-4 mr-1" />
+                      {tutorial.duration}
+                    </div>
+                    <div className="flex items-center">
+                      {renderStars(tutorial.rating)}
+                      <span className="ml-2 text-sm text-gray-600">{tutorial.rating}</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                    {tutorial.type === "video" ? "Дивитися" : "Читати"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="main">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tutorials.main.map((tutorial) => (
+              <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                <div className="relative">
+                  <img
+                    src={tutorial.thumbnail || "/placeholder.svg"}
+                    alt={tutorial.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  {tutorial.type === "video" && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Button size="lg" className="rounded-full bg-orange-500 hover:bg-orange-600">
+                        <Play className="h-6 w-6" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <CardTitle className="text-lg">{tutorial.title}</CardTitle>
+                    <Badge className={getDifficultyColor(tutorial.difficulty)}>{tutorial.difficulty}</Badge>
+                  </div>
+                  <CardDescription>{tutorial.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="h-4 w-4 mr-1" />
+                      {tutorial.duration}
+                    </div>
+                    <div className="flex items-center">
+                      {renderStars(tutorial.rating)}
+                      <span className="ml-2 text-sm text-gray-600">{tutorial.rating}</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                    {tutorial.type === "video" ? "Дивитися" : "Читати"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="soups">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tutorials.soups.map((tutorial) => (
+              <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                <div className="relative">
+                  <img
+                    src={tutorial.thumbnail || "/placeholder.svg"}
+                    alt={tutorial.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  {tutorial.type === "video" && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Button size="lg" className="rounded-full bg-orange-500 hover:bg-orange-600">
+                        <Play className="h-6 w-6" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <CardTitle className="text-lg">{tutorial.title}</CardTitle>
+                    <Badge className={getDifficultyColor(tutorial.difficulty)}>{tutorial.difficulty}</Badge>
+                  </div>
+                  <CardDescription>{tutorial.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="h-4 w-4 mr-1" />
+                      {tutorial.duration}
+                    </div>
+                    <div className="flex items-center">
+                      {renderStars(tutorial.rating)}
+                      <span className="ml-2 text-sm text-gray-600">{tutorial.rating}</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                    {tutorial.type === "video" ? "Дивитися" : "Читати"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="khinkali">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tutorials.khinkali.map((tutorial) => (
+              <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                <div className="relative">
+                  <img
+                    src={tutorial.thumbnail || "/placeholder.svg"}
+                    alt={tutorial.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                  />
+                  {tutorial.type === "video" && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Button size="lg" className="rounded-full bg-orange-500 hover:bg-orange-600">
+                        <Play className="h-6 w-6" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <CardTitle className="text-lg">{tutorial.title}</CardTitle>
+                    <Badge className={getDifficultyColor(tutorial.difficulty)}>{tutorial.difficulty}</Badge>
+                  </div>
+                  <CardDescription>{tutorial.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="h-4 w-4 mr-1" />
+                      {tutorial.duration}
+                    </div>
+                    <div className="flex items-center">
+                      {renderStars(tutorial.rating)}
+                      <span className="ml-2 text-sm text-gray-600">{tutorial.rating}</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                    {tutorial.type === "video" ? "Дивитися" : "Читати"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="desserts">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tutorials.desserts.map((tutorial) => (
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
