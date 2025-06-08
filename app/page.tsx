@@ -10,10 +10,10 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="text-center py-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl text-white mb-12">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Ласкаво просимо до <span className="text-orange-100">СамоГуру</span>
+          Ласкаво просимо до <span className="text-orange-100">САМоГУРу</span>
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-orange-100">
-          Ваша платформа для ефективного управління ресторанним персоналом
+          Платформа для злагодженого та ефективного навчання та роботи ресторанного персоналу
         </p>
         <Button size="lg" variant="secondary" className="bg-white text-orange-600 hover:bg-orange-50">
           Розпочати роботу
@@ -26,7 +26,7 @@ export default function HomePage() {
           <CardHeader className="text-center">
             <Calendar className="h-12 w-12 text-orange-500 mx-auto mb-4" />
             <CardTitle className="text-orange-600">Гнучкий розклад</CardTitle>
-            <CardDescription>Управляйте своїм робочим розкладом та змінами</CardDescription>
+            <CardDescription>Керуйте своїм робочим графіком та змінами</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/schedule">
@@ -39,7 +39,7 @@ export default function HomePage() {
           <CardHeader className="text-center">
             <BookOpen className="h-12 w-12 text-orange-500 mx-auto mb-4" />
             <CardTitle className="text-orange-600">Навчальні матеріали</CardTitle>
-            <CardDescription>Відео та текстові інструкції для кухні та бару</CardDescription>
+            <CardDescription>Відео/текстові інструкції для вивчення меню з кухні та бару</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/tutorials">
@@ -52,11 +52,11 @@ export default function HomePage() {
           <CardHeader className="text-center">
             <Brain className="h-12 w-12 text-orange-500 mx-auto mb-4" />
             <CardTitle className="text-orange-600">Тестування знань</CardTitle>
-            <CardDescription>Перевірте свої знання меню та процедур</CardDescription>
+            <CardDescription>Перевірте свої знання меню, бару, процедур</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/tests">
-              <Button className="w-full bg-orange-500 hover:bg-orange-600">Пройти тест</Button>
+              <Button className="w-full bg-orange-500 hover:bg-orange-600">Пройти тести</Button>
             </Link>
           </CardContent>
         </Card>
@@ -65,11 +65,11 @@ export default function HomePage() {
           <CardHeader className="text-center">
             <MapPin className="h-12 w-12 text-orange-500 mx-auto mb-4" />
             <CardTitle className="text-orange-600">План ресторану</CardTitle>
-            <CardDescription>Інтерактивний план розташування столиків</CardDescription>
+            <CardDescription>Інтерактивний план та схема розташування столиків у закладі</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/table-plan">
-              <Button className="w-full bg-orange-500 hover:bg-orange-600">Переглянути план</Button>
+              <Button className="w-full bg-orange-500 hover:bg-orange-600">Переглянути номерацію</Button>
             </Link>
           </CardContent>
         </Card>
