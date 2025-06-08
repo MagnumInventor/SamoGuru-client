@@ -1,0 +1,330 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
+import { Brain, Trophy, Clock, CheckCircle, XCircle, BarChart3 } from "lucide-react"
+
+const testCategories = [
+  {
+    id: 1,
+    title: "Знання меню",
+    description: "Тест на знання страв та їх складу",
+    questions: 15,
+    duration: "10 хв",
+    difficulty: "Легкий",
+    lastScore: 85,
+    attempts: 3,
+  },
+  {
+    id: 2,
+    title: "Винна карта",
+    description: "Знання вин та їх поєднання зі стравами",
+    questions: 20,
+    duration: "15 хв",
+    difficulty: "Середній",
+    lastScore: 72,
+    attempts: 2,
+  },
+  {
+    id: 3,
+    title: "Коктейлі та напої",
+    description: "Рецепти коктейлів та техніки приготування",
+    questions: 12,
+    duration: "8 хв",
+    difficulty: "Легкий",
+    lastScore: 90,
+    attempts: 4,
+  },
+  {
+    id: 4,
+    title: "Стандарти обслуговування",
+    description: "Правила та етикет обслуговування гостей",
+    questions: 18,
+    duration: "12 хв",
+    difficulty: "Складний",
+    lastScore: null,
+    attempts: 0,
+  },
+]
+
+const sampleQuestions = [
+  {
+    id: 1,
+    question: "Які інгредієнти входять до складу класичного борщу?",
+    options: [
+      "Капуста, буряк, морква, цибуля, картопля",
+      "Капуста, буряк, морква, помідори, картопля",
+      "Капуста, морква, цибуля, картопля, м'ясо",
+      "Буряк, морква, цибуля, картопля, зелень",
+    ],
+    correct: 0,
+  },
+  {
+    id: 2,
+    question: "Яка температура подачі червоного вина?",
+    options: ["6-8°C", "10-12°C", "16-18°C", "20-22°C"],
+    correct: 2,
+  },
+]
+
+export default function TestsPage() {
+  const [currentTest, setCurrentTest] = useState<any>(null)
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [answers, setAnswers] = useState<number[]>([])
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+  const [showResults, setShowResults] = useState(false)
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case "Легкий":
+        return "bg-green-100 text-green-800"
+      case "Середній":
+        return "bg-yellow-100 text-yellow-800"
+      case "Складний":
+        return "bg-red-100 text-red-800"
+      default:
+        return "bg-gray-100 text-gray-800"
+    }
+  }
+
+  const getScoreColor = (score: number | null) => {
+    if (score === null) return "text-gray-400"
+    if (score >= 80) return "text-green-600"
+    if (score >= 60) return "text-yellow-600"
+    return "text-red-600"
+  }
+
+  const startTest = (test: any) => {
+    setCurrentTest(test)
+    setCurrentQuestion(0)
+    setAnswers([])
+    setSelectedAnswer(null)
+    setShowResults(false)
+  }
+
+  const nextQuestion = () => {
+    if (selectedAnswer !== null) {
+      const newAnswers = [...answers, selectedAnswer]
+      setAnswers(newAnswers)
+
+      if (currentQuestion < sampleQuestions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1)
+        setSelectedAnswer(null)
+      } else {
+        setShowResults(true)
+      }
+    }
+  }
+
+  const calculateScore = () => {
+    let correct = 0
+    answers.forEach((answer, index) => {
+      if (answer === sampleQuestions[index].correct) {
+        correct++
+      }
+    })
+    return Math.round((correct / sampleQuestions.length) * 100)
+  }
+
+  if (currentTest && !showResults) {
+    const question = sampleQuestions[currentQuestion]
+    const progress = ((currentQuestion + 1) / sampleQuestions.length) * 100
+
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-bold">{currentTest.title}</h1>
+            <Badge className="bg-orange-100 text-orange-800">
+              {currentQuestion + 1} з {sampleQuestions.length}
+            </Badge>
+          </div>
+          <Progress value={progress} className="mb-4" />
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl">{question.question}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <RadioGroup
+              value={selectedAnswer?.toString()}
+              onValueChange={(value) => setSelectedAnswer(Number.parseInt(value))}
+            >
+              {question.options.map((option, index) => (
+                <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-50">
+                  <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                  <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+
+            <div className="flex justify-between mt-6">
+              <Button variant="outline" onClick={() => setCurrentTest(null)}>
+                Скасувати тест
+              </Button>
+              <Button
+                onClick={nextQuestion}
+                disabled={selectedAnswer === null}
+                className="bg-orange-500 hover:bg-orange-600"
+              >
+                {currentQuestion < sampleQuestions.length - 1 ? "Наступне питання" : "Завершити тест"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  if (showResults) {
+    const score = calculateScore()
+
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
+        <Card>
+          <CardHeader className="text-center">
+            <div className="mx-auto mb-4">
+              {score >= 80 ? (
+                <Trophy className="h-16 w-16 text-yellow-500" />
+              ) : score >= 60 ? (
+                <CheckCircle className="h-16 w-16 text-green-500" />
+              ) : (
+                <XCircle className="h-16 w-16 text-red-500" />
+              )}
+            </div>
+            <CardTitle className="text-2xl">Результат тесту</CardTitle>
+            <CardDescription>Ви завершили тест "{currentTest.title}"</CardDescription>
+          </CardHeader>
+          <CardContent className="text-center">
+            <div className="text-4xl font-bold mb-4 text-orange-600">{score}%</div>
+            <div className="text-lg mb-6">
+              Правильних відповідей:{" "}
+              {answers.filter((answer, index) => answer === sampleQuestions[index].correct).length} з{" "}
+              {sampleQuestions.length}
+            </div>
+
+            <div className="space-y-2 mb-6">
+              {score >= 80 && <p className="text-green-600">Відмінний результат! 🎉</p>}
+              {score >= 60 && score < 80 && <p className="text-yellow-600">Хороший результат! Є над чим працювати.</p>}
+              {score < 60 && <p className="text-red-600">Рекомендуємо повторити навчальні матеріали.</p>}
+            </div>
+
+            <div className="flex gap-4 justify-center">
+              <Button variant="outline" onClick={() => setCurrentTest(null)}>
+                Повернутися до тестів
+              </Button>
+              <Button onClick={() => startTest(currentTest)} className="bg-orange-500 hover:bg-orange-600">
+                Пройти ще раз
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Тестування знань</h1>
+        <p className="text-gray-600">Перевірте свої знання меню та процедур ресторану</p>
+      </div>
+
+      {/* Stats Overview */}
+      <div className="grid md:grid-cols-3 gap-6 mb-8">
+        <Card className="border-orange-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center">
+              <BarChart3 className="h-5 w-5 text-orange-500 mr-2" />
+              Загальна статистика
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-600 mb-1">78%</div>
+            <div className="text-sm text-gray-600">Середній бал</div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-orange-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center">
+              <Trophy className="h-5 w-5 text-orange-500 mr-2" />
+              Пройдено тестів
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-600 mb-1">9</div>
+            <div className="text-sm text-gray-600">З 12 доступних</div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-orange-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg flex items-center">
+              <Clock className="h-5 w-5 text-orange-500 mr-2" />
+              Час навчання
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-600 mb-1">2.5</div>
+            <div className="text-sm text-gray-600">Години цього тижня</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Test Categories */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {testCategories.map((test) => (
+          <Card key={test.id} className="hover:shadow-lg transition-shadow border-orange-100">
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div>
+                  <CardTitle className="text-xl mb-2">{test.title}</CardTitle>
+                  <CardDescription>{test.description}</CardDescription>
+                </div>
+                <Badge className={getDifficultyColor(test.difficulty)}>{test.difficulty}</Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600">
+                <div className="flex items-center">
+                  <Brain className="h-4 w-4 mr-2" />
+                  {test.questions} питань
+                </div>
+                <div className="flex items-center">
+                  <Clock className="h-4 w-4 mr-2" />
+                  {test.duration}
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <div className="text-sm text-gray-600">Останній результат:</div>
+                  <div className={`text-lg font-semibold ${getScoreColor(test.lastScore)}`}>
+                    {test.lastScore ? `${test.lastScore}%` : "Не пройдено"}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-gray-600">Спроб:</div>
+                  <div className="text-lg font-semibold">{test.attempts}</div>
+                </div>
+              </div>
+
+              <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => startTest(test)}>
+                {test.attempts > 0 ? "Пройти знову" : "Розпочати тест"}
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  )
+}
