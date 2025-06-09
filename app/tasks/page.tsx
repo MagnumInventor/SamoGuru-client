@@ -394,7 +394,7 @@ export default function TasksPage() {
                   <CardTitle>Активні працівники</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {["Офіціант Тестовий", "Помічник Тестовий", "Максим Скак.", "Аня Лемик"].map((worker, index) => (
+                  {["Офіціант Тестовий", "Помічник Тестовий", "Влад Пекарський", "Саша Маркович"].map((worker, index) => (
                     <div key={index} className="flex items-center space-x-3 mb-3 p-3 bg-gray-50 rounded-lg">
                       <Avatar>
                         <AvatarFallback>

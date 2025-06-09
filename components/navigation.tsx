@@ -29,15 +29,16 @@ const allNavItems = [
   { href: "/schedule", label: "Розклад роботи", icon: Calendar, roles: ["admin", "waiter", "helper"] },
   { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["admin", "waiter", "helper"] },
 
-  { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["admin", "waiter", "helper"] },
-  { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["admin", "helper"] }, 
-  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
+  { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["waiter", "helper"] },
   { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
-  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["admin", "helper"] }, 
+
+  { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["helper"] }, 
+  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
+  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper"] }, 
   
   { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, 
-  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["waiter", "helper"] },
   { href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
+   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
 ]
 
 export function Navigation() {
