@@ -8,45 +8,25 @@ import { Users, Calendar, FileText, BarChart3, Settings, Plus, Edit } from "luci
 
 const adminStats = [
   {
-    title: "Всього співробітників",
-    value: "24",
+    title: "Всього офіціантів/помічників станом на {currentdate}",
+    value: "52",
     change: "+2",
     icon: Users,
     color: "text-blue-600",
   },
   {
     title: "Активних змін",
-    value: "18",
+    value: "32",
     change: "0",
     icon: Calendar,
     color: "text-green-600",
-  },
-  {
-    title: "Нових правил",
-    value: "3",
-    change: "+1",
-    icon: FileText,
-    color: "text-orange-600",
-  },
-  {
-    title: "Тестів пройдено",
-    value: "156",
-    change: "+12",
-    icon: BarChart3,
-    color: "text-purple-600",
-  },
+  }
 ]
 
 const recentEmployees = [
-  { name: "Марія Іваненко", role: "waiter", joinDate: "22.01.2024", status: "active" },
-  { name: "Петро Сидоренко", role: "helper", joinDate: "20.01.2024", status: "training" },
-  { name: "Олена Коваленко", role: "waiter", joinDate: "18.01.2024", status: "active" },
-]
-
-const pendingRequests = [
-  { employee: "Максим Скак", type: "shift-change", date: "25.01.2024", status: "pending" },
-  { employee: "Аня Лемик", type: "time-off", date: "26.01.2024", status: "pending" },
-  { employee: "Влад Ярем", type: "shift-change", date: "24.01.2024", status: "approved" },
+  { name: "Андріана", role: "waiter", joinDate: "22.01.2024", status: "active" },
+  { name: "Олександр Маркович", role: "helper", joinDate: "20.01.2024", status: "training" },
+  { name: "Ярослав", role: "waiter", joinDate: "18.01.2024", status: "active" },
 ]
 
 export default function AdminPage() {
@@ -147,63 +127,6 @@ export default function AdminPage() {
                     >
                       {employee.status === "active" ? "Активний" : "Навчання"}
                     </Badge>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Pending Requests */}
-          <Card className="border-orange-200">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Calendar className="h-5 w-5 text-orange-500 mr-2" />
-                Запити на розгляд
-              </CardTitle>
-              <CardDescription>Запити на зміни розкладу та вихідні</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {pendingRequests.map((request, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <div className="font-medium">{request.employee}</div>
-                      <div className="text-sm text-gray-600">
-                        {request.type === "shift-change" ? "Заміна зміни" : "Вихідний день"}
-                      </div>
-                      <div className="text-xs text-gray-500">{request.date}</div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Badge
-                        className={
-                          request.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : request.status === "approved"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
-                        }
-                      >
-                        {request.status === "pending"
-                          ? "Очікує"
-                          : request.status === "approved"
-                            ? "Схвалено"
-                            : "Відхилено"}
-                      </Badge>
-                      {request.status === "pending" && (
-                        <div className="flex space-x-1">
-                          <Button size="sm" className="bg-green-500 hover:bg-green-600 h-8 w-8 p-0">
-                            ✓
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-red-200 text-red-600 hover:bg-red-50 h-8 w-8 p-0"
-                          >
-                            ✗
-                          </Button>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 ))}
               </div>
