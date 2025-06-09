@@ -504,7 +504,9 @@ export default function MenuPage() {
   const [selectedCategory, setSelectedCategory] = useState("main")
   const [selectedDish, setSelectedDish] = useState<any>(null)
 
-  const filteredItems = menuCategories[selectedCategory as keyof typeof menuCategories].filter(
+  // Fix: Ensure filteredItems is always an array
+  const currentCategoryItems = menuCategories[selectedCategory as keyof typeof menuCategories] || []
+  const filteredItems = currentCategoryItems.filter(
     (item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description.toLowerCase().includes(searchTerm.toLowerCase()),
