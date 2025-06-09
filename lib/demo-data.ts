@@ -85,7 +85,6 @@ export const demoNewsData = [
     category: "team",
     date: "12.05.2024",
     author: "Адміністрація",
-    priority: "medium",
   },
   {
     id: 2,
@@ -93,7 +92,7 @@ export const demoNewsData = [
     description: "З 1 лютого запускаємо нове літнє меню з 15 новими стравами та 8 коктейлями",
     category: "menu",
     date: "20.01.2024",
-    author: "Шеф-кухар",
+    author: "Адміністрація",
     priority: "high",
   },
 ]

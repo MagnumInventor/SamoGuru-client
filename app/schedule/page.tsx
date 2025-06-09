@@ -14,7 +14,7 @@ const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
 // Month name
 const currentMonth = "Червень"
 
-// Helper schedule data - 14 workers from Максим Скак to Ярослав Борода (from IMG_5159)
+// ГРафіек помічників - (14) з Максим Скакуна до Ярослав Бороди (from IMG_5159)
 const helperScheduleData = {
   "Максим Скак.": {
     1: "0",
