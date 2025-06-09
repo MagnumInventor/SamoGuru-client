@@ -196,18 +196,67 @@ export default function TestsPage() {
             <CardTitle className="text-2xl">Результат тесту</CardTitle>
             <CardDescription>Ви завершили тест "{currentTest.title}"</CardDescription>
           </CardHeader>
-          <CardContent className="text-center">
-            <div className="text-4xl font-bold mb-4 text-orange-600">{score}%</div>
-            <div className="text-lg mb-6">
+          <CardContent>
+            <div className="text-4xl font-bold mb-4 text-orange-600 text-center">{score}%</div>
+            <div className="text-lg mb-6 text-center">
               Правильних відповідей:{" "}
               {answers.filter((answer, index) => answer === sampleQuestions[index].correct).length} з{" "}
               {sampleQuestions.length}
             </div>
 
-            <div className="space-y-2 mb-6">
+            <div className="space-y-2 mb-6 text-center">
               {score >= 80 && <p className="text-green-600">Відмінний результат! 🎉</p>}
               {score >= 60 && score < 80 && <p className="text-yellow-600">Хороший результат! Є над чим працювати.</p>}
               {score < 60 && <p className="text-red-600">Рекомендуємо повторити навчальні матеріали.</p>}
+            </div>
+
+            {/* Questions Review */}
+            <div className="mt-8 mb-6">
+              <h3 className="text-lg font-medium mb-4">Огляд питань:</h3>
+              <div className="space-y-6">
+                {sampleQuestions.map((question, index) => {
+                  const isCorrect = answers[index] === question.correct
+                  return (
+                    <div
+                      key={index}
+                      className={`p-4 rounded-lg ${isCorrect ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}
+                    >
+                      <div className="flex items-start gap-2">
+                        {isCorrect ? (
+                          <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                        ) : (
+                          <XCircle className="h-5 w-5 text-red-500 mt-0.5" />
+                        )}
+                        <div>
+                          <p className="font-medium mb-2">
+                            {index + 1}. {question.question}
+                          </p>
+                          <div className="space-y-1 ml-2">
+                            {question.options.map((option, optIndex) => (
+                              <div
+                                key={optIndex}
+                                className={`text-sm ${
+                                  optIndex === question.correct
+                                    ? "text-green-700 font-medium"
+                                    : optIndex === answers[index] && optIndex !== question.correct
+                                      ? "text-red-700 font-medium"
+                                      : "text-gray-600"
+                                }`}
+                              >
+                                {optIndex === question.correct && <CheckCircle className="inline h-3 w-3 mr-1" />}
+                                {optIndex === answers[index] && optIndex !== question.correct && (
+                                  <XCircle className="inline h-3 w-3 mr-1" />
+                                )}
+                                {option}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
 
             <div className="flex gap-4 justify-center">
@@ -243,6 +292,12 @@ export default function TestsPage() {
           <CardContent>
             <div className="text-2xl font-bold text-orange-600 mb-1">78%</div>
             <div className="text-sm text-gray-600">Середній бал</div>
+            <div className="mt-2 p-2 bg-yellow-50 rounded-md">
+              <div className="text-xs text-yellow-800">
+                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
+                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -256,6 +311,12 @@ export default function TestsPage() {
           <CardContent>
             <div className="text-2xl font-bold text-orange-600 mb-1">9</div>
             <div className="text-sm text-gray-600">З 12 доступних</div>
+            <div className="mt-2 p-2 bg-yellow-50 rounded-md">
+              <div className="text-xs text-yellow-800">
+                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
+                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -269,6 +330,12 @@ export default function TestsPage() {
           <CardContent>
             <div className="text-2xl font-bold text-orange-600 mb-1">2.5</div>
             <div className="text-sm text-gray-600">Години цього тижня</div>
+            <div className="mt-2 p-2 bg-yellow-50 rounded-md">
+              <div className="text-xs text-yellow-800">
+                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
+                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

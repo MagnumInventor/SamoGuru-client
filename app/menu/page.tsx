@@ -1,12 +1,20 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Search, Clock, Users, AlertTriangle } from "lucide-react"
+import { Search, Clock, Users, AlertTriangle, ImageIcon, Video, ExternalLink } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 const menuCategories = {
   main: [
@@ -21,6 +29,8 @@ const menuCategories = {
         "Асорті ковбас із домашньої масарні, свинний стейк та курча тапака. Подається зі смаженою картоплею, грінками та фірмовими соусами.",
       allergens: ["цибуля", "перець чилі"],
       price: "890 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example1",
     },
     {
       id: 2,
@@ -32,6 +42,8 @@ const menuCategories = {
       allergens: [],
       warning: "Обережно, гаряча сковорідка!",
       price: "320 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example2",
     },
     {
       id: 3,
@@ -44,6 +56,8 @@ const menuCategories = {
       allergens: ["кінза"],
       warning: "Обережно, гаряча сковорідка!",
       price: "380 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example3",
     },
   ],
   grill: [
@@ -58,6 +72,8 @@ const menuCategories = {
       allergens: ["кінза"],
       isWeighted: true,
       price: "від 450 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example4",
     },
     {
       id: 5,
@@ -69,6 +85,8 @@ const menuCategories = {
       allergens: ["перець чилі"],
       isWeighted: true,
       price: "від 890 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example5",
     },
   ],
   khinkali: [
@@ -82,6 +100,8 @@ const menuCategories = {
       allergens: [],
       warning: "Обережно, гарячий бульйон!",
       price: "45 ₴/шт",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example6",
     },
     {
       id: 7,
@@ -93,6 +113,8 @@ const menuCategories = {
         "Ніжні соковиті мішечки з тонкого тіста, наповнені щедрою порцією сирної начинки в сирно-вершковому соусі.",
       allergens: ["м'ята"],
       price: "280 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example7",
     },
   ],
   salads: [
@@ -105,6 +127,8 @@ const menuCategories = {
       description: "Вдале поєднання свіжих овочів, з додаванням запашної кінзи та горіхового соусу.",
       allergens: ["цибуля синя", "кінза", "фундук"],
       price: "240 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example8",
     },
     {
       id: 9,
@@ -116,6 +140,8 @@ const menuCategories = {
         "Унікальний грузинський салат із свіжих та вялених томатів, у поєднанні із мусом з овечої бринзи. Поєднує у собі 4 соуса.",
       allergens: ["цибуля", "пікантний соус"],
       price: "320 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example9",
     },
   ],
   desserts: [
@@ -129,6 +155,8 @@ const menuCategories = {
         "Ніжне тірамісу на основі сиру маскарпоне з хрумкими трубочками, смак якого чудово доповнює запашне еспресо.",
       allergens: ["яйце"],
       price: "180 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example10",
     },
     {
       id: 11,
@@ -140,6 +168,8 @@ const menuCategories = {
         "Справжній грузинський наполеон з хрумким листковим тістом і ніжним заварним кремом. Названо в честь грузинського царського роду Багратіоні.",
       allergens: ["яйце"],
       price: "160 ₴",
+      images: ["/placeholder.svg?height=400&width=600"],
+      videoUrl: "https://www.youtube.com/watch?v=example11",
     },
   ],
 }
@@ -147,6 +177,7 @@ const menuCategories = {
 export default function MenuPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("main")
+  const [selectedDish, setSelectedDish] = useState<any>(null)
 
   const filteredItems = menuCategories[selectedCategory as keyof typeof menuCategories].filter(
     (item) =>
@@ -213,7 +244,7 @@ export default function MenuPage() {
                       <div className="mb-4">
                         <div className="text-xs text-gray-600 mb-1">Алергени:</div>
                         <div className="flex flex-wrap gap-1">
-                          {item.allergens.map((allergen, index) => (
+                          {item.allergens.map((allergen: string, index: number) => (
                             <Badge key={index} className="bg-red-100 text-red-800 text-xs">
                               {allergen}
                             </Badge>
@@ -231,14 +262,172 @@ export default function MenuPage() {
 
                     {item.isWeighted && <Badge className="bg-blue-100 text-blue-800 mb-4">Вагова страва</Badge>}
 
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600">Детальніше</Button>
+                    <div className="flex space-x-2">
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50"
+                          >
+                            <ImageIcon className="h-4 w-4 mr-2" />
+                            Фото
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle>{item.name} - Фото</DialogTitle>
+                            <DialogDescription>Фотографії страви</DialogDescription>
+                          </DialogHeader>
+                          <div className="grid gap-4 py-4">
+                            {item.images.map((image: string, index: number) => (
+                              <div key={index} className="relative h-60 w-full">
+                                <img
+                                  src={image || "/placeholder.svg"}
+                                  alt={`${item.name} - фото ${index + 1}`}
+                                  className="h-full w-full object-cover rounded-md"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                          <div className="p-4 bg-yellow-50 rounded-md text-sm text-yellow-800">
+                            <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо
+                            ви справді зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50"
+                          >
+                            <Video className="h-4 w-4 mr-2" />
+                            Відео
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle>{item.name} - Відео</DialogTitle>
+                            <DialogDescription>Відео приготування страви</DialogDescription>
+                          </DialogHeader>
+                          <div className="flex flex-col items-center justify-center py-8">
+                            <Video className="h-16 w-16 text-orange-300 mb-4" />
+                            <p className="text-center mb-4">Відео приготування страви "{item.name}"</p>
+                            <Button
+                              variant="outline"
+                              className="flex items-center border-orange-200 text-orange-600 hover:bg-orange-50"
+                              onClick={() => window.open(item.videoUrl, "_blank")}
+                            >
+                              <ExternalLink className="h-4 w-4 mr-2" />
+                              Відкрити відео
+                            </Button>
+                          </div>
+                          <div className="p-4 bg-yellow-50 rounded-md text-sm text-yellow-800">
+                            <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо
+                            ви справді зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
                   </CardContent>
+                  <CardFooter>
+                    <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => setSelectedDish(item)}>
+                      Детальніше
+                    </Button>
+                  </CardFooter>
                 </Card>
               ))}
             </div>
           </TabsContent>
         ))}
       </Tabs>
+
+      {/* Selected Dish Dialog */}
+      {selectedDish && (
+        <Dialog open={!!selectedDish} onOpenChange={(open) => !open && setSelectedDish(null)}>
+          <DialogContent className="sm:max-w-xl">
+            <DialogHeader>
+              <DialogTitle className="flex justify-between items-center">
+                <span>{selectedDish.name}</span>
+                <span className="text-orange-600">{selectedDish.price}</span>
+              </DialogTitle>
+              <DialogDescription>{selectedDish.ingredients}</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-6">
+              <div className="relative h-60 w-full">
+                <img
+                  src={selectedDish.images[0] || "/placeholder.svg"}
+                  alt={selectedDish.name}
+                  className="h-full w-full object-cover rounded-md"
+                />
+              </div>
+
+              <div>
+                <h4 className="font-medium mb-2">Опис</h4>
+                <p className="text-gray-700">{selectedDish.description}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-medium mb-2">Деталі</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="h-4 w-4 mr-2" />
+                      Час приготування: {selectedDish.cookingTime}
+                    </div>
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Users className="h-4 w-4 mr-2" />
+                      Вага: {selectedDish.weight}
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  {selectedDish.allergens && selectedDish.allergens.length > 0 && (
+                    <div>
+                      <h4 className="font-medium mb-2">Алергени</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedDish.allergens.map((allergen: string, index: number) => (
+                          <Badge key={index} className="bg-red-100 text-red-800 text-xs">
+                            {allergen}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedDish.warning && (
+                    <div className="mt-4">
+                      <div className="flex items-center text-orange-600">
+                        <AlertTriangle className="h-4 w-4 mr-1" />
+                        <span>{selectedDish.warning}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex space-x-4">
+                <Button
+                  variant="outline"
+                  className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50"
+                  onClick={() => window.open(selectedDish.videoUrl, "_blank")}
+                >
+                  <Video className="h-4 w-4 mr-2" />
+                  Дивитися відео
+                </Button>
+                <Button className="flex-1 bg-orange-500 hover:bg-orange-600">Додати до замовлення</Button>
+              </div>
+
+              <div className="p-4 bg-yellow-50 rounded-md text-sm text-yellow-800">
+                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
+                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

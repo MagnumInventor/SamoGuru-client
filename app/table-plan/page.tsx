@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Users, Clock, CheckCircle, AlertCircle } from "lucide-react"
 import { demoTableData } from "@/lib/demo-data"
+import Link from "next/link"
 
 const tableData = demoTableData
 
@@ -76,6 +77,15 @@ export default function TablePlanPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">План ресторану</h1>
         <p className="text-gray-600">Інтерактивний план розташування столиків та їх статус</p>
+      </div>
+
+      <div className="mb-6 flex flex-wrap gap-4">
+        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
+          <Link href="/table-plan">Список столиків</Link>
+        </Button>
+        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
+          <Link href="/table-plan/map">Карта ресторану</Link>
+        </Button>
       </div>
 
       {/* Stats Overview */}
@@ -245,6 +255,14 @@ export default function TablePlanPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* FF Notice */}
+      <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+        <div className="text-sm text-yellow-800">
+          <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
+          зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+        </div>
+      </div>
     </div>
   )
 }

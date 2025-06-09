@@ -69,6 +69,12 @@ export function FFStatus() {
             налаштування backend
           </div>
         </div>
+        <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+          <div className="text-sm text-yellow-800">
+            <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
+            зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+          </div>
+        </div>
       </CardContent>
     </Card>
   )

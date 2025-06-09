@@ -154,6 +154,14 @@ export default function MyPathPage() {
         <p className="text-gray-600">Відстежуйте свій прогрес та досягнення в ресторані</p>
       </div>
 
+      {/* FF Notice */}
+      <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+        <div className="text-sm text-yellow-800">
+          <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
+          зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+        </div>
+      </div>
+
       {/* Progress Overview */}
       <Card className="mb-8 border-orange-200">
         <CardHeader>
