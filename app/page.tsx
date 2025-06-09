@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, BookOpen, Brain, MapPin } from "lucide-react"
 import Link from "next/link"
-import { FFStatus } from "@/components/ff-status"
+import FFStatus from "@/components/ff-status"
 
 export default function HomePage() {
   return (

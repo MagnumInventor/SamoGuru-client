@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle, Clock, Server, ExternalLink } from "lucide-react"
 import Link from "next/link"
 
-export function FFStatus() {
+export default function FFStatus() {
   const features = [
     { name: "Автентифікація (базова)", status: "ready", type: "client" },
     { name: "Навігація", status: "ready", type: "client" },
