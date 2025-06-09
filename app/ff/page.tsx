@@ -16,7 +16,7 @@ export default function FFPage() {
             <Server className="h-10 w-10 text-orange-500" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Функція в розробці</h1>
-          <p className="text-gray-600">Ця функція буде доступна після впровадження серверної частини</p>
+          <p className="text-gray-600">Ця функція буде доступна після впровадження фінансування та серверної частини платформи</p>
         </div>
 
         {/* Main Card */}
@@ -27,33 +27,33 @@ export default function FFPage() {
               FF - For Future
             </Badge>
             <CardTitle className="text-xl">Наразі це не функціонує</CardTitle>
-            <CardDescription>Через відсутність фінансування та серверу ця функція тимчасово недоступна</CardDescription>
+            <CardDescription>Через причини вище ця функція тимчасово недоступна</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
               <h3 className="font-medium text-yellow-800 mb-2">Що це означає?</h3>
               <p className="text-sm text-yellow-700">
                 FF (For Future) - це позначення функцій, які потребують серверної частини для повноцінної роботи. Наразі
-                платформа працює в демонстраційному режимі без підключення до бази даних та серверних API.
+                платформа працює в демонстраційному-статичному режимі без підключення до бази даних та серверних API.
               </p>
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <h3 className="font-medium text-blue-800 mb-2">Що буде доступно після впровадження?</h3>
               <ul className="text-sm text-blue-700 space-y-1">
-                <li>• Реальне збереження даних</li>
+                <li>• Персональний акаунт та збереження даних</li>
                 <li>• Синхронізація між користувачами</li>
-                <li>• Завантаження фото та відео</li>
-                <li>• Автоматичні сповіщення</li>
-                <li>• Детальна аналітика</li>
-                <li>• Інтеграція з касовими системами</li>
+                <li>• Взаємодія між працівниками (заміни, повідомлення, похвали)</li>
+                <li>• Динамічні сповіщення</li>
+                <li>• Детальна аналітика та статистика</li>
+                <li>• Керування штатом та меню (через панель адміна/шефа)</li>
               </ul>
             </div>
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <h3 className="font-medium text-green-800 mb-2">Зацікавлені у запуску?</h3>
               <p className="text-sm text-green-700 mb-4">
-                Якщо ви справді зацікавлені у запуску цієї функції та готові інвестувати у розвиток платформи,
+                Якщо ви справді зацікавлені у запуску цих функцій та готові підтримати розвиток платформи,
                 зверніться до розробника:
               </p>
 
@@ -69,8 +69,8 @@ export default function FFPage() {
                 <div className="flex items-center space-x-3">
                   <MessageCircle className="h-5 w-5 text-green-600" />
                   <div>
-                    <p className="font-medium text-green-800">Telegram</p>
-                    <p className="text-sm text-green-700">@developer_contact</p>
+                    <p className="font-medium text-green-800">Instagram</p>
+                    <p className="text-sm text-green-700">@_marsa__08</p>
                   </div>
                 </div>
 
@@ -78,7 +78,7 @@ export default function FFPage() {
                   <Mail className="h-5 w-5 text-green-600" />
                   <div>
                     <p className="font-medium text-green-800">Email</p>
-                    <p className="text-sm text-green-700">samoguru.dev@gmail.com</p>
+                    <p className="text-sm text-green-700">ujobua@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -97,8 +97,8 @@ export default function FFPage() {
 
         {/* Additional Info */}
         <div className="text-center text-sm text-gray-500">
-          <p>СамоГуру - Платформа для ресторанного персоналу</p>
-          <p>Версія: Demo 1.0</p>
+          <p>СамоГуру - Платформа для персоналу ресторану "Ковчег"</p>
+          <p>Версія: Alpha 1.17.2</p>
         </div>
       </div>
     </div>
