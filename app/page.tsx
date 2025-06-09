@@ -15,9 +15,11 @@ export default function HomePage() {
         <p className="text-xl md:text-2xl mb-8 text-orange-100">
           Платформа для злагодженого та ефективного навчання та роботи ресторанного персоналу
         </p>
+        <Link href="/checklist">
         <Button size="lg" variant="secondary" className="bg-white text-orange-600 hover:bg-orange-50">
           Розпочати роботу
         </Button>
+        </Link>
       </section>
 
       {/* Features Grid */}
