@@ -8,26 +8,12 @@ const news = demoNewsData
 
 const announcements = [
   {
-    id: 1,
-    title: "Тренінг з винної карти",
-    description: "Обов'язковий тренінг для всіх офіціантів 25 січня о 14:00",
-    date: "25.01.2024",
-    type: "training",
-  },
-  {
     id: 2,
     title: "Зміна графіку роботи",
-    description: "На наступному тижні зміни в розкладі через ремонтні роботи",
+    description: "Пів зміни помічника з 16:00-23:00 (замість 16:00-22:00)",
     date: "28.01.2024",
     type: "schedule",
-  },
-  {
-    id: 3,
-    title: "Корпоративна вечірка",
-    description: "Запрошуємо всіх на корпоративну вечірку 30 січня о 19:00",
-    date: "30.01.2024",
-    type: "event",
-  },
+  }
 ]
 
 const stats = [
@@ -44,14 +30,7 @@ const stats = [
     period: "цього тижня",
     icon: Coffee,
     color: "text-green-600",
-  },
-  {
-    title: "Досягнень команди",
-    value: "5",
-    period: "цього місяця",
-    icon: Award,
-    color: "text-orange-600",
-  },
+  }
 ]
 
 export default function NewsPage() {
