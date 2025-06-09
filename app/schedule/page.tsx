@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
 import { useAuth } from "@/lib/auth"
+import { redirectToFF } from "@/lib/ff-redirect"
 import Image from "next/image"
 
 // Days of the week abbreviations
@@ -577,7 +578,9 @@ export default function SchedulePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Button className="w-full bg-orange-500 hover:bg-orange-600">Запросити заміну</Button>
+            <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={redirectToFF}>
+              Запросити заміну
+            </Button>
           </CardContent>
         </Card>
 
@@ -589,7 +592,11 @@ export default function SchedulePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" className="w-full border-orange-200 text-orange-600 hover:bg-orange-50">
+            <Button
+              variant="outline"
+              className="w-full border-orange-200 text-orange-600 hover:bg-orange-50"
+              onClick={redirectToFF}
+            >
               Запросити вихідний
             </Button>
           </CardContent>
@@ -603,7 +610,11 @@ export default function SchedulePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" className="w-full border-orange-200 text-orange-600 hover:bg-orange-50">
+            <Button
+              variant="outline"
+              className="w-full border-orange-200 text-orange-600 hover:bg-orange-50"
+              onClick={redirectToFF}
+            >
               Переглянути (3)
             </Button>
           </CardContent>
@@ -627,21 +638,13 @@ export default function SchedulePage() {
                   {helperScheduleData[selectedCell.employee][selectedCell.day] === "0" && "Вихідний день"}
                 </p>
               </div>
-              <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
+              <Button size="sm" className="bg-orange-500 hover:bg-orange-600" onClick={redirectToFF}>
                 Змінити
               </Button>
             </div>
           </CardContent>
         </Card>
       )}
-
-      {/* FF Notice */}
-      <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-        <div className="text-sm text-yellow-800">
-          <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-          зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
-        </div>
-      </div>
     </div>
   )
 }

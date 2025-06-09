@@ -2,7 +2,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Clock, Server } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { CheckCircle, Clock, Server, ExternalLink } from "lucide-react"
+import Link from "next/link"
 
 export function FFStatus() {
   const features = [
@@ -21,10 +23,10 @@ export function FFStatus() {
   ]
 
   return (
-    <Card className="border-orange-200">
+    <Card className="border-red-300 bg-red-50">
       <CardHeader>
-        <CardTitle className="flex items-center">
-          <Server className="h-5 w-5 text-orange-500 mr-2" />
+        <CardTitle className="flex items-center text-red-800">
+          <Server className="h-5 w-5 text-red-600 mr-2" />
           Статус функцій платформи
         </CardTitle>
       </CardHeader>
@@ -47,14 +49,14 @@ export function FFStatus() {
             </div>
           </div>
           <div>
-            <h4 className="font-medium mb-3 text-orange-700">🔄 FF (For Future - Server)</h4>
+            <h4 className="font-medium mb-3 text-red-700">🔄 FF (For Future - Server)</h4>
             <div className="space-y-2">
               {features
                 .filter((f) => f.status === "ff")
                 .map((feature, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <span className="text-sm">{feature.name}</span>
-                    <Badge className="bg-orange-100 text-orange-800">
+                    <Badge className="bg-red-100 text-red-800">
                       <Clock className="h-3 w-3 mr-1" />
                       FF
                     </Badge>
@@ -69,11 +71,16 @@ export function FFStatus() {
             налаштування backend
           </div>
         </div>
-        <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-          <div className="text-sm text-yellow-800">
-            <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-            зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+        <div className="mt-4 p-4 bg-red-100 border-2 border-red-300 rounded-md">
+          <div className="text-sm text-red-800 mb-3">
+            <strong>⚠️ УВАГА:</strong> Більшість функцій наразі не працюють через відсутність фінансування та серверу
           </div>
+          <Link href="/ff">
+            <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Дізнатися більше про FF функції
+            </Button>
+          </Link>
         </div>
       </CardContent>
     </Card>

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar, BookOpen, Brain, MapPin, Users, Clock } from "lucide-react"
+import { Calendar, BookOpen, Brain, MapPin } from "lucide-react"
 import Link from "next/link"
 import { FFStatus } from "@/components/ff-status"
 
@@ -68,33 +68,11 @@ export default function HomePage() {
             <CardDescription>Інтерактивний план та схема розташування столиків у закладі</CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/table-plan">
-              <Button className="w-full bg-orange-500 hover:bg-orange-600">Переглянути номерацію</Button>
+            <Link href="/table-plan/map">
+              <Button className="w-full bg-orange-500 hover:bg-orange-600">Переглянути карту</Button>
             </Link>
           </CardContent>
         </Card>
-      </section>
-
-      {/* Stats Section */}
-      <section className="bg-white rounded-2xl p-8 shadow-sm border border-orange-100 mb-12">
-        <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">Статистика платформи</h2>
-        <div className="grid md:grid-cols-3 gap-8 text-center">
-          <div>
-            <Users className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-            <div className="text-3xl font-bold text-gray-900 mb-2">150+</div>
-            <div className="text-gray-600">Активних користувачів</div>
-          </div>
-          <div>
-            <Clock className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-            <div className="text-3xl font-bold text-gray-900 mb-2">98%</div>
-            <div className="text-gray-600">Вчасних змін</div>
-          </div>
-          <div>
-            <Brain className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-            <div className="text-3xl font-bold text-gray-900 mb-2">85%</div>
-            <div className="text-gray-600">Успішних тестів</div>
-          </div>
-        </div>
       </section>
 
       {/* FF Status Section */}
