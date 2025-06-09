@@ -1,4 +1,4 @@
-// FF: This will be replaced with real API calls when backend is implemented
+// FF: СПИСКИ ПРАЦІВНИКІВ БУДУТЬ ПЕРЕНЕСЕНІ В ДБ ПІСЛЯ ЗАПУСКУ СЕРВЕРА
 
 export const demoScheduleData = {
   employees: [

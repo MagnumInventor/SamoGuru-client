@@ -19,13 +19,15 @@ interface AuthStore {
   isAuthenticated: () => boolean
 }
 
-// Simple password validation - no server needed
+// ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
 const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: string }> = {
-  samoguru123: { role: "admin", name: "Адміністратор", surname: "Системи" },
-  waiter123: { role: "waiter", name: "Офіціант", surname: "Тестовий" },
-  helper123: { role: "helper", name: "Помічник", surname: "Тестовий" },
+  samoguru123: { role: "admin", name: "Адміністратор", surname: "системи" },
+  waiter123: { role: "waiter", name: "Офіціант", surname: "тестовий" },
+  helper123: { role: "helper", name: "Помічник", surname: "навчальний" },
 }
 
+
+// ПОВНОЦІННА РЕЄСТРАЦІЯ
 export const useAuth = create<AuthStore>()(
   persist(
     (set, get) => ({

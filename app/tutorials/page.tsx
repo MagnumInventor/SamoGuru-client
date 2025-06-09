@@ -333,7 +333,7 @@ export default function TutorialsPage() {
 
       <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-md">
         <div className="text-sm text-blue-800">
-          <strong>FF:</strong> Відео контент буде завантажуватися з CDN після налаштування медіа сервера
+          <strong>FF:</strong> Відео контент буде завантажуватися після налаштування медіа сервера
         </div>
       </div>
 
