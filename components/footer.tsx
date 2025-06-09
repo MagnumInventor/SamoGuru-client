@@ -7,8 +7,8 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex items-center space-x-2">
             <div className="text-lg font-bold">
-              <span className="text-gray-900">Само</span>
-              <span className="text-orange-500">Гуру</span>
+              <span className="text-gray-900">САМо</span>
+              <span className="text-orange-500">ГУРу</span>
             </div>
             <span className="text-gray-500 text-sm">© 2025</span>
           </div>
@@ -20,7 +20,7 @@ export function Footer() {
             <Link href="/rules" className="hover:text-orange-600 transition-colors">
               Правила
             </Link>
-            <span className="text-xs text-gray-400">v1.0.0</span>
+            <span className="text-xs text-gray-400">розробив Маркович Олександр</span>
           </div>
         </div>
       </div>

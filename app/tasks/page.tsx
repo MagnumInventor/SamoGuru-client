@@ -67,7 +67,7 @@ const allTasks: Task[] = [
   {
     id: "w1",
     title: "Перевірити меню",
-    description: "Переглянути денне меню та спеціальні пропозиції",
+    description: "Пе��еглянути денне меню та спеціальні пропозиції",
     category: "before-opening",
     difficulty: "medium",
     forRoles: ["waiter"],

@@ -241,7 +241,7 @@ export default function ServingPage() {
                       <DialogContent className="sm:max-w-md">
                         <DialogHeader>
                           <DialogTitle>{item.name} - Приклад сервірування</DialogTitle>
-                          <DialogDescription>Фотографія правильного сервірування</DialogDescription>
+                          <DialogDescription>��отографія правильного сервірування</DialogDescription>
                         </DialogHeader>
                         <div className="grid gap-4 py-4">
                           <div className="relative h-60 w-full bg-gray-100 rounded-md flex items-center justify-center">

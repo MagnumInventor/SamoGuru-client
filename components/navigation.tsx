@@ -27,14 +27,16 @@ import { useAuth, getRoleDisplayName } from "@/lib/auth"
 const allNavItems = [
   { href: "/", label: "Головна", icon: User, roles: ["admin", "waiter", "helper"] },
   { href: "/schedule", label: "Розклад роботи", icon: Calendar, roles: ["admin", "waiter", "helper"] },
-  { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["admin", "waiter", "helper"] },
-  { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["admin", "helper"] }, // Removed from waiter
   { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["admin", "waiter", "helper"] },
-  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["admin", "waiter", "helper"] },
-  { href: "/tests", label: "Тестування", icon: Brain, roles: ["admin", "waiter", "helper"] },
-  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["admin", "helper"] }, // Removed from waiter
-  { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, // Removed from helper
-  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["admin", "waiter", "helper"] },
+
+  { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["admin", "waiter", "helper"] },
+  { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["admin", "helper"] }, 
+  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
+  { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
+  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["admin", "helper"] }, 
+  
+  { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, 
+  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["waiter", "helper"] },
   { href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
 ]
 
