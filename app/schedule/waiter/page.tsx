@@ -911,13 +911,13 @@ export default function WaiterSchedulePage() {
           <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-blue-800">
             1
           </div>
-          <span className="text-sm text-gray-600">Денна зміна (10:00-22:00)</span>
+          <span className="text-sm text-gray-600">Денна зміна (9:00-23:00)</span>
         </div>
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-green-100 border border-green-200 rounded flex items-center justify-center text-xs font-medium text-green-800">
             16
           </div>
-          <span className="text-sm text-gray-600">Вечірня зміна (16:00-02:00)</span>
+          <span className="text-sm text-gray-600">Вечірня зміна (16:00-23:00)</span>
         </div>
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-gray-800 rounded"></div>
@@ -925,7 +925,7 @@ export default function WaiterSchedulePage() {
         </div>
       </div>
 
-      {/* Schedule Table */}
+      {/* ТАБЛИЦЯ  */}
       <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle className="flex items-center">
