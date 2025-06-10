@@ -467,8 +467,7 @@ const helperScheduleData = {
 }
 
 const getDayOfWeek = (day: number) => {
-  // June 2025 starts on Sunday (0)
-  const startDay = 0 // Sunday
+  const startDay = 0 // НД
   return daysOfWeek[(startDay + day - 1) % 7]
 }
 
@@ -480,7 +479,7 @@ export default function SchedulePage() {
   const getShiftColor = (shift: string | null) => {
     if (shift === "1") return "bg-blue-100 text-blue-800 border-blue-200"
     if (shift === "16") return "bg-green-100 text-green-800 border-green-200"
-    if (shift === "0") return "bg-gray-800 text-white" // day off
+    if (shift === "0") return "bg-gray-800 text-white" // ВИХІДНИЙ
     return "bg-gray-100 text-gray-800 border-gray-200"
   }
 
@@ -502,17 +501,9 @@ export default function SchedulePage() {
         <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
           <a href="/schedule">Графік помічників</a>
         </Button>
-        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
-          <a href="/schedule/waiter">Графік офіціантів</a>
-        </Button>
-        {user?.role === "admin" && (
-          <Button variant="outline" className="border-purple-200 text-purple-600 hover:bg-purple-50">
-            <a href="/admin">Адмін панель</a>
-          </Button>
-        )}
       </div>
 
-      {/* Legend */}
+      {/* ЛЕГЕНДА */}
       <div className="mb-6 flex flex-wrap gap-4">
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-blue-800">

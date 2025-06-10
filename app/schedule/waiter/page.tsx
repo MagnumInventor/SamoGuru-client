@@ -905,27 +905,19 @@ export default function WaiterSchedulePage() {
         <p className="text-gray-600">{currentMonth} 2025 - Графік роботи офіціантів (26 співробітників)</p>
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-4">
-        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
-          <a href="/schedule/helper">Графік помічників</a>
-        </Button>
-        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
-          <a href="/schedule/waiter">Графік офіціантів</a>
-        </Button>
-        {user?.role === "admin" && (
-          <Button variant="outline" className="border-purple-200 text-purple-600 hover:bg-purple-50">
-            <a href="/admin">Адмін панель</a>
-          </Button>
-        )}
-      </div>
-
-      {/* Legend */}
+      {/* ЛЕГЕНДА */}
       <div className="mb-6 flex flex-wrap gap-4">
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-blue-800">
             1
           </div>
-          <span className="text-sm text-gray-600">Робочий день</span>
+          <span className="text-sm text-gray-600">Денна зміна (10:00-22:00)</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="w-6 h-6 bg-green-100 border border-green-200 rounded flex items-center justify-center text-xs font-medium text-green-800">
+            16
+          </div>
+          <span className="text-sm text-gray-600">Вечірня зміна (16:00-02:00)</span>
         </div>
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-gray-800 rounded"></div>
@@ -940,7 +932,7 @@ export default function WaiterSchedulePage() {
             <Calendar className="h-5 w-5 text-orange-500 mr-2" />
             {currentMonth} 2025 - Офіціанти (26 співробітників)
           </CardTitle>
-          <CardDescription>Графік роботи офіціантів: Ігор - Ярослав (об'єднаний розклад)</CardDescription>
+          <CardDescription>Графік роботи офіціантів: Ігор - Ярослав</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
