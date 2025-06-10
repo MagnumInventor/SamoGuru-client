@@ -270,7 +270,7 @@ const menuCategories = {
     },
     {
       id: 21,
-      name: "Еліксир Здоров'я (Бехер��вка, Штекелівка)",
+      name: "Еліксир Здоров'я (Бехерівка, Штекелівка)",
       category: "Наливки",
       description: "З виразним смаком прянощів, привкус солодкого апельсина",
       alcohol: "34-36°",
@@ -504,13 +504,15 @@ export default function MenuPage() {
   const [selectedCategory, setSelectedCategory] = useState("main")
   const [selectedDish, setSelectedDish] = useState<any>(null)
 
-  // Fix: Ensure filteredItems is always an array
-  const currentCategoryItems = menuCategories[selectedCategory as keyof typeof menuCategories] || []
-  const filteredItems = currentCategoryItems.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  // Remove the current filteredItems definition and replace with this function
+  const getFilteredItems = (category: string) => {
+    const currentCategoryItems = menuCategories[category as keyof typeof menuCategories] || []
+    return currentCategoryItems.filter(
+      (item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
+  }
 
   const getTypeColor = (type: string) => {
     switch (type) {
@@ -590,7 +592,7 @@ export default function MenuPage() {
           .map(([category, items]) => (
             <TabsContent key={category} value={category}>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredItems.map((item) => (
+                {getFilteredItems(category).map((item) => (
                   <Card key={item.id} className="hover:shadow-lg transition-shadow border-orange-100">
                     <CardHeader>
                       <div className="flex items-start justify-between">
@@ -741,7 +743,7 @@ export default function MenuPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
+            {getFilteredItems("bar").map((item) => (
               <Card key={item.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <CardHeader>
                   <div className="flex items-start justify-between">

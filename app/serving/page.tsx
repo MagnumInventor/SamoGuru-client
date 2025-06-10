@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Coffee, ImageIcon, Info, CheckCircle } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Coffee, ImageIcon, Info, CheckCircle, Search, UtensilsCrossed, AlertTriangle } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -16,43 +17,195 @@ import {
 } from "@/components/ui/dialog"
 
 const servingRules = {
-  straws: {
-    title: "+ Трубочка",
-    icon: "🥤",
-    description: "Напої, які подаються з трубочкою",
+  food: {
+    title: "Їжа",
+    icon: "🍽️",
+    description: "Правила сервірування страв для помічників офіціантів",
     items: [
       {
         id: 1,
-        name: "Соки",
-        description: "Свіжовичавлені та пакетовані соки",
-        rules: ["Обов'язково з трубочкою", "Трубочка має бути в упаковці до моменту подачі"],
+        name: "Хачапурі по-аджарськи",
+        description: "Грузинська страва з сиром",
+        category: "З звичайною вилкою",
+        rules: ["2 вилки для хачапурі по-аджарськи", "Подавати гарячим"],
+        searchTerms: ["хачапурі", "аджарськи", "грузинська", "сир"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
         id: 2,
-        name: "Коктейлі",
-        description: "Алкогольні та безалкогольні коктейлі",
-        rules: ["Подати на підносі з трубочкою"],
+        name: "За коментарем",
+        description: "Страви з особливими вимогами в коментарі",
+        category: "З звичайною вилкою",
+        rules: ["Звертати увагу на коментар в чеку", "Сервірування може бути змінене"],
+        searchTerms: ["коментар", "особливе", "зміна"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
         id: 3,
-        name: "Фреші",
-        description: "Свіжовичавлені соки з фруктів",
-        rules: ["Подавати одразу після приготування", "З трубочкою"],
+        name: "Бульйон з півня",
+        description: "Перша страва",
+        category: "З звичайною ложкою",
+        rules: ["Подавати з звичайною ложкою", "Гаряча подача"],
+        searchTerms: ["бульйон", "півень", "суп", "перша"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 4,
+        name: "Дитячий бульйон",
+        description: "Перша страва для дітей",
+        category: "З звичайною ложкою",
+        rules: ["Подавати з звичайною ложкою", "Менша порція"],
+        searchTerms: ["дитячий", "бульйон", "діти", "перша"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 5,
+        name: "Грибна зупа",
+        description: "Перша страва з грибами",
+        category: "З звичайною ложкою",
+        rules: ["Подавати з звичайною ложкою", "Гаряча подача"],
+        searchTerms: ["грибна", "зупа", "гриби", "перша"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 6,
+        name: "Журик",
+        description: "Польська кисла зупа",
+        category: "З звичайною ложкою",
+        rules: ["Подавати з звичайною ложкою", "Традиційна подача"],
+        searchTerms: ["журик", "польська", "кисла", "зупа"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 7,
+        name: "Харчо з ягнятини",
+        description: "Грузинська зупа з ягнятини",
+        category: "З звичайною ложкою",
+        rules: ["Подавати з звичайною ложкою", "Гостра страва"],
+        searchTerms: ["харчо", "ягнятина", "грузинська", "зупа"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 8,
+        name: "Фруктові льоди",
+        description: "Морозиво з фруктами",
+        category: "З десертною ложкою",
+        rules: ["Подавати з десертною ложкою", "Холодна подача"],
+        searchTerms: ["фруктові", "льоди", "морозиво", "десерт"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 9,
+        name: "Пивні льоди",
+        description: "Морозиво з пивним смаком",
+        category: "З десертною ложкою",
+        rules: ["Подавати з десертною ложкою", "Оригінальний смак"],
+        searchTerms: ["пивні", "льоди", "морозиво", "пиво"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 10,
+        name: "Чоколяда",
+        description: "Тарілка з імітацією шоколадного боба",
+        category: "З десертною ложкою",
+        rules: ["Подавати з десертною ложкою", "Тарілка з імітацією шоколадного боба"],
+        searchTerms: ["чоколяда", "шоколад", "боб", "десерт"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 11,
+        name: "Багратоні",
+        description: "Схожий на наполеон",
+        category: "З десертною ложкою та вилкою",
+        rules: ["Подавати з десертною ложкою та вилкою", "Делікатна подача"],
+        searchTerms: ["багратоні", "наполеон", "торт", "десерт"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 12,
+        name: "Чізкейк",
+        description: "Сирний торт",
+        category: "З десертною ложкою та вилкою",
+        rules: ["Подавати з десертною ложкою та вилкою", "Охолоджений"],
+        searchTerms: ["чізкейк", "сирний", "торт", "десерт"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 13,
+        name: "Страви з собою",
+        description: "В коробках для винесення",
+        category: "Окремо",
+        rules: ["В коробках з собою", "Враховувати соуси", "Перевірити комплектність"],
+        searchTerms: ["з собою", "коробка", "винесення", "соуси"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 14,
+        name: "Равлики в ткемалі",
+        description: "Грузинська закуска",
+        category: "Окремо",
+        rules: ["Особлива подача", "З ткемалі соусом", "Традиційне сервірування"],
+        searchTerms: ["равлики", "ткемалі", "грузинська", "закуска"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 15,
+        name: "Шоті",
+        description: "Грузинський хліб",
+        category: "Окремо",
+        rules: ["Подається на дошці", "З маленькими металевими ручками", "Традиційна подача"],
+        searchTerms: ["шоті", "грузинський", "хліб", "дошка"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 16,
+        name: "Грузинський презент",
+        description: "ВАЖЛИВО! Особлива подача",
+        category: "Окремо",
+        rules: ["1 шоті на лодочку з молотком", "Соусниця з 30 грам зеленої олії", "ДУЖЕ ВАЖЛИВО!"],
+        special: "ВАЖЛИВО",
+        searchTerms: ["грузинський", "презент", "лодочка", "молоток", "зелена олія"],
         image: "/placeholder.svg?height=300&width=400",
       },
     ],
   },
-  coffee: {
-    title: "З печевом, ложкою та блюдцем",
-    icon: "☕",
-    description: "Кавові напої з повним сервірування",
+  drinks: {
+    title: "Напої",
+    icon: "🥤",
+    description: "Правила сервірування напоїв для помічників офіціантів",
     items: [
       {
-        id: 4,
+        id: 17,
+        name: "Соки",
+        description: "Свіжовичавлені та пакетовані соки",
+        category: "З трубочкою",
+        rules: ["Обов'язково з трубочкою", "Трубочка має бути в упаковці до моменту подачі"],
+        searchTerms: ["соки", "сік", "фреш", "трубочка"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 18,
+        name: "Коктейлі",
+        description: "Алкогольні та безалкогольні коктейлі",
+        category: "З трубочкою",
+        rules: ["Подати на підносі з трубочкою"],
+        searchTerms: ["коктейлі", "коктейль", "алкогольні", "безалкогольні"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 19,
+        name: "Фреші",
+        description: "Свіжовичавлені соки з фруктів",
+        category: "З трубочкою",
+        rules: ["Подавати одразу після приготування", "З трубочкою"],
+        searchTerms: ["фреші", "фреш", "свіжовичавлені", "фрукти"],
+        image: "/placeholder.svg?height=300&width=400",
+      },
+      {
+        id: 20,
         name: "Рістретто",
         description: "Концентрований еспресо, менший об'єм",
+        category: "З печевом, ложкою та блюдцем",
         rules: [
           "Подавати в маленькій кавовій чашці (60-70 мл)",
           "На блюдці з кавовою ложечкою",
@@ -61,12 +214,14 @@ const servingRules = {
         ],
         volume: "15-20 мл",
         temperature: "65-70°C",
+        searchTerms: ["рістретто", "еспресо", "кава", "концентрований"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
-        id: 5,
+        id: 21,
         name: "Еспресо",
         description: "Класичний італійський кавовий напій",
+        category: "З печевом, ложкою та блюдцем",
         rules: [
           "Подавати в кавовій чашці (70-80 мл)",
           "На блюдці з кавовою ложечкою",
@@ -77,12 +232,14 @@ const servingRules = {
         volume: "25-30 мл",
         temperature: "65-70°C",
         special: "З водою та дощечкою",
+        searchTerms: ["еспресо", "кава", "італійський", "вода"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
-        id: 6,
+        id: 22,
         name: "Американо",
         description: "Еспресо, розбавлений гарячою водою",
+        category: "З печевом, ложкою та блюдцем",
         rules: [
           "Подається з бару в більшій кавовій чашці",
           "На блюдці з кавовою ложечкою",
@@ -91,31 +248,29 @@ const servingRules = {
         ],
         volume: "90 мл",
         temperature: "65-70°C",
+        searchTerms: ["американо", "кава", "розбавлений", "молоко"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
-        id: 7,
+        id: 23,
         name: "Допіо",
         description: "Подвійний еспресо",
+        category: "З печевом, ложкою та блюдцем",
         rules: ["На блюдці з кавовою ложечкою", "Печево на блюдці", "Подавати гарячим одразу після приготування"],
         volume: "60 мл",
         temperature: "65-70°C",
+        searchTerms: ["допіо", "подвійний", "еспресо", "кава"],
         image: "/placeholder.svg?height=300&width=400",
       },
-    ],
-  },
-  beer: {
-    title: "Бочонок з соняшниковим насінням",
-    icon: "🍺",
-    description: 'Спеціальне сервірування для пива "Слава Україні"',
-    items: [
       {
-        id: 8,
+        id: 24,
         name: "1 літрове пиво",
         description: "Велика порція пива з традиційною закускою",
+        category: "Бочонок з соняшниковим насінням",
         rules: ["Обов'язково з бочонком соняшникового насіння", "Бочонок ставити поруч з келихом", "Піна 2-3 см"],
         volume: "1000 мл",
         special: "З бочонком соняшникового насіння",
+        searchTerms: ["пиво", "літрове", "бочонок", "соняшникове насіння"],
         image: "/placeholder.svg?height=300&width=400",
       },
     ],
@@ -123,16 +278,41 @@ const servingRules = {
 }
 
 export default function ServingPage() {
-  const [selectedCategory, setSelectedCategory] = useState("straws")
+  const [selectedCategory, setSelectedCategory] = useState("food")
   const [selectedItem, setSelectedItem] = useState<any>(null)
+  const [searchQuery, setSearchQuery] = useState("")
 
   const currentCategory = servingRules[selectedCategory as keyof typeof servingRules]
+
+  // Filter items based on search query
+  const filteredItems = currentCategory.items.filter((item) => {
+    if (!searchQuery) return true
+    const query = searchQuery.toLowerCase()
+    return (
+      item.name.toLowerCase().includes(query) ||
+      item.description.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query) ||
+      item.searchTerms.some((term) => term.toLowerCase().includes(query))
+    )
+  })
+
+  // Group items by category
+  const groupedItems = filteredItems.reduce(
+    (acc, item) => {
+      if (!acc[item.category]) {
+        acc[item.category] = []
+      }
+      acc[item.category].push(item)
+      return acc
+    },
+    {} as Record<string, typeof filteredItems>,
+  )
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Сервірування</h1>
-        <p className="text-gray-600">Правила подачі напоїв та сервірування для помічників офіціантів</p>
+        <p className="text-gray-600">Правила подачі страв та напоїв для помічників офіціантів</p>
       </div>
 
       {/* FF Notice */}
@@ -142,16 +322,26 @@ export default function ServingPage() {
         </div>
       </div>
 
+      {/* Search Bar */}
+      <div className="mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
+            placeholder="Пошук страв та напоїв..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+      </div>
+
       <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
-          <TabsTrigger value="straws" className="flex items-center">
-            🥤 З трубочкою
+        <TabsList className="grid w-full grid-cols-2 mb-8">
+          <TabsTrigger value="food" className="flex items-center">
+            🍽️ Їжа
           </TabsTrigger>
-          <TabsTrigger value="coffee" className="flex items-center">
-            ☕ Кава з сервірування
-          </TabsTrigger>
-          <TabsTrigger value="beer" className="flex items-center">
-            🍺 Пиво з насінням
+          <TabsTrigger value="drinks" className="flex items-center">
+            🥤 Напої
           </TabsTrigger>
         </TabsList>
 
@@ -167,106 +357,121 @@ export default function ServingPage() {
             </CardHeader>
           </Card>
 
-          {/* Items Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {currentCategory.items.map((item) => (
-              <Card key={item.id} className="hover:shadow-lg transition-shadow border-orange-100">
-                <CardHeader>
-                  <CardTitle className="text-lg">{item.name}</CardTitle>
-                  <CardDescription>{item.description}</CardDescription>
-                  {item.volume && <Badge className="bg-blue-100 text-blue-800 w-fit">Об'єм: {item.volume}</Badge>}
-                  {item.temperature && (
-                    <Badge className="bg-red-100 text-red-800 w-fit">Температура: {item.temperature}</Badge>
-                  )}
-                  {item.special && (
-                    <Badge className="bg-yellow-100 text-yellow-800 w-fit">Особливість: {item.special}</Badge>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  {/* Photo Placeholder */}
-                  <div className="mb-4 bg-gray-100 rounded-lg h-48 flex items-center justify-center">
-                    <div className="text-center text-gray-500">
-                      <ImageIcon className="h-12 w-12 mx-auto mb-2" />
-                      <p className="text-sm">Фото приклад сервірування</p>
-                      <p className="text-xs">Буде додано пізніше</p>
-                    </div>
-                  </div>
+          {/* Search Results Info */}
+          {searchQuery && (
+            <div className="mb-6 p-3 bg-gray-50 border border-gray-200 rounded-md">
+              <p className="text-sm text-gray-600">
+                Знайдено {filteredItems.length} результат(ів) для "{searchQuery}"
+              </p>
+            </div>
+          )}
 
-                  {/* Rules Preview */}
-                  <div className="mb-4">
-                    <h4 className="font-medium mb-2 text-sm">Основні правила:</h4>
-                    <ul className="space-y-1">
-                      {item.rules.slice(0, 2).map((rule: string, index: number) => (
-                        <li key={index} className="flex items-start text-xs text-gray-600">
-                          <CheckCircle className="h-3 w-3 text-green-500 mr-1 mt-0.5 flex-shrink-0" />
-                          {rule}
-                        </li>
-                      ))}
-                      {item.rules.length > 2 && (
-                        <li className="text-xs text-gray-500">+ ще {item.rules.length - 2} правил...</li>
+          {/* Items by Category */}
+          {Object.entries(groupedItems).map(([categoryName, items]) => (
+            <div key={categoryName} className="mb-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <UtensilsCrossed className="h-5 w-5 mr-2 text-orange-500" />
+                {categoryName}
+              </h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {items.map((item) => (
+                  <Card key={item.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                    <CardHeader>
+                      <CardTitle className="text-lg flex items-center">
+                        {item.name}
+                        {item.special === "ВАЖЛИВО" && <AlertTriangle className="h-4 w-4 ml-2 text-red-500" />}
+                      </CardTitle>
+                      <CardDescription>{item.description}</CardDescription>
+                      {item.volume && <Badge className="bg-blue-100 text-blue-800 w-fit">Об'єм: {item.volume}</Badge>}
+                      {item.temperature && (
+                        <Badge className="bg-red-100 text-red-800 w-fit">Температура: {item.temperature}</Badge>
                       )}
-                    </ul>
-                  </div>
-
-                  {/* Examples */}
-                  {item.examples && (
-                    <div className="mb-4">
-                      <h4 className="font-medium mb-2 text-sm">Приклади:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {item.examples.slice(0, 2).map((example: string, index: number) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {example}
-                          </Badge>
-                        ))}
-                        {item.examples.length > 2 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{item.examples.length - 2}
-                          </Badge>
-                        )}
+                      {item.special && (
+                        <Badge className="bg-yellow-100 text-yellow-800 w-fit">
+                          {item.special === "ВАЖЛИВО" ? "⚠️ ВАЖЛИВО" : item.special}
+                        </Badge>
+                      )}
+                    </CardHeader>
+                    <CardContent>
+                      {/* Photo Placeholder */}
+                      <div className="mb-4 bg-gray-100 rounded-lg h-48 flex items-center justify-center">
+                        <div className="text-center text-gray-500">
+                          <ImageIcon className="h-12 w-12 mx-auto mb-2" />
+                          <p className="text-sm">Фото приклад сервірування</p>
+                          <p className="text-xs">Буде додано пізніше</p>
+                        </div>
                       </div>
-                    </div>
-                  )}
 
-                  <div className="flex space-x-2">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50"
-                        >
-                          <ImageIcon className="h-4 w-4 mr-2" />
-                          Фото
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>{item.name} - Приклад сервірування</DialogTitle>
-                          <DialogDescription>��отографія правильного сервірування</DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-4 py-4">
-                          <div className="relative h-60 w-full bg-gray-100 rounded-md flex items-center justify-center">
-                            <div className="text-center text-gray-500">
-                              <ImageIcon className="h-16 w-16 mx-auto mb-4" />
-                              <p className="text-lg font-medium mb-2">Фото приклад</p>
-                              <p className="text-sm">Правильне сервірування {item.name.toLowerCase()}</p>
+                      {/* Rules Preview */}
+                      <div className="mb-4">
+                        <h4 className="font-medium mb-2 text-sm">Основні правила:</h4>
+                        <ul className="space-y-1">
+                          {item.rules.slice(0, 2).map((rule: string, index: number) => (
+                            <li key={index} className="flex items-start text-xs text-gray-600">
+                              <CheckCircle className="h-3 w-3 text-green-500 mr-1 mt-0.5 flex-shrink-0" />
+                              {rule}
+                            </li>
+                          ))}
+                          {item.rules.length > 2 && (
+                            <li className="text-xs text-gray-500">+ ще {item.rules.length - 2} правил...</li>
+                          )}
+                        </ul>
+                      </div>
+
+                      <div className="flex space-x-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50"
+                            >
+                              <ImageIcon className="h-4 w-4 mr-2" />
+                              Фото
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                              <DialogTitle>{item.name} - Приклад сервірування</DialogTitle>
+                              <DialogDescription>Фотографія правильного сервірування</DialogDescription>
+                            </DialogHeader>
+                            <div className="grid gap-4 py-4">
+                              <div className="relative h-60 w-full bg-gray-100 rounded-md flex items-center justify-center">
+                                <div className="text-center text-gray-500">
+                                  <ImageIcon className="h-16 w-16 mx-auto mb-4" />
+                                  <p className="text-lg font-medium mb-2">Фото приклад</p>
+                                  <p className="text-sm">Правильне сервірування {item.name.toLowerCase()}</p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-md text-sm text-blue-800">
-                          <strong>FF:</strong> Фотографії прикладів сервірування будуть додані після налаштування медіа
-                          сервера
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+                            <div className="p-4 bg-blue-50 border border-blue-200 rounded-md text-sm text-blue-800">
+                              <strong>FF:</strong> Фотографії прикладів сервірування будуть додані після налаштування
+                              медіа сервера
+                            </div>
+                          </DialogContent>
+                        </Dialog>
 
-                    <Button className="flex-1 bg-orange-500 hover:bg-orange-600" onClick={() => setSelectedItem(item)}>
-                      Детальніше
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                        <Button
+                          className="flex-1 bg-orange-500 hover:bg-orange-600"
+                          onClick={() => setSelectedItem(item)}
+                        >
+                          Детальніше
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {/* No Results */}
+          {searchQuery && filteredItems.length === 0 && (
+            <div className="text-center py-12">
+              <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">Нічого не знайдено</h3>
+              <p className="text-gray-600">Спробуйте змінити пошуковий запит</p>
+            </div>
+          )}
         </TabsContent>
       </Tabs>
 
@@ -278,6 +483,7 @@ export default function ServingPage() {
               <DialogTitle className="flex items-center">
                 <span className="text-2xl mr-3">{currentCategory.icon}</span>
                 {selectedItem.name}
+                {selectedItem.special === "ВАЖЛИВО" && <AlertTriangle className="h-5 w-5 ml-2 text-red-500" />}
               </DialogTitle>
               <DialogDescription>{selectedItem.description}</DialogDescription>
             </DialogHeader>
@@ -315,6 +521,10 @@ export default function ServingPage() {
                     Деталі
                   </h4>
                   <div className="space-y-3">
+                    <div>
+                      <span className="text-sm text-gray-600">Категорія:</span>
+                      <div className="font-medium">{selectedItem.category}</div>
+                    </div>
                     {selectedItem.volume && (
                       <div>
                         <span className="text-sm text-gray-600">Об'єм:</span>
@@ -330,18 +540,11 @@ export default function ServingPage() {
                     {selectedItem.special && (
                       <div>
                         <span className="text-sm text-gray-600">Особливість:</span>
-                        <div className="font-medium">{selectedItem.special}</div>
-                      </div>
-                    )}
-                    {selectedItem.examples && (
-                      <div>
-                        <span className="text-sm text-gray-600">Приклади:</span>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {selectedItem.examples.map((example: string, index: number) => (
-                            <Badge key={index} variant="outline" className="text-xs">
-                              {example}
-                            </Badge>
-                          ))}
+                        <div className="font-medium flex items-center">
+                          {selectedItem.special === "ВАЖЛИВО" && (
+                            <AlertTriangle className="h-4 w-4 mr-1 text-red-500" />
+                          )}
+                          {selectedItem.special}
                         </div>
                       </div>
                     )}
@@ -357,13 +560,32 @@ export default function ServingPage() {
         </Dialog>
       )}
 
-      {/* General Tips */}
-      <div className="mt-12">
+      {/* General Rules */}
+      <div className="mt-12 space-y-6">
+        <Card className="border-red-200 bg-red-50">
+          <CardHeader>
+            <CardTitle className="flex items-center text-red-800">
+              <AlertTriangle className="h-5 w-5 text-red-600 mr-2" />
+              Загальні правила
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-red-700 space-y-3">
+            <div>
+              <strong>1. Коментарі в чеку:</strong> Завжди звертайте увагу на коментар в чеку - там може бути змінене
+              сервірування.
+            </div>
+            <div>
+              <strong>2. Перевірка офіціантом:</strong> Всі страви та напої сервіруються помічником, але на станції
+              (перед видачею) офіціант перевіряє подачу та може виправити помилку помічника.
+            </div>
+          </CardContent>
+        </Card>
+
         <Card className="border-green-200 bg-green-50">
           <CardHeader>
             <CardTitle className="flex items-center text-green-800">
               <Coffee className="h-5 w-5 text-green-600 mr-2" />
-              Загальні поради для помічників
+              Поради для помічників
             </CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-green-700 space-y-3">
@@ -374,7 +596,7 @@ export default function ServingPage() {
               <strong>Презентація:</strong> Акуратно розміщуйте всі елементи сервірування на підносі.
             </div>
             <div>
-              <strong>Швидкість:</strong> Пиво подавати одразу після приготування, поки не сіла пінка.
+              <strong>Швидкість:</strong> Гарячі страви подавати одразу після приготування, поки не остигли.
             </div>
           </CardContent>
         </Card>
