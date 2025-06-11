@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
+import { Input } from "@/components/ui/input"
 import {
   CheckCircle2,
   Clock,
@@ -17,6 +18,8 @@ import {
   ShieldCheck,
   AlertTriangle,
   User,
+  Plus,
+  Minus,
 } from "lucide-react"
 import { useAuth } from "@/lib/auth"
 import FFStatus from "@/components/ff-status"
@@ -25,10 +28,10 @@ interface Task {
   id: string
   title: string
   description: string
-  // before-openign - Перед відкриттям, before-closing - перед закриттям, during-work - завдання під час роботи (за тижневим розкладом) 
+  // before-opening - Перед відкриттям, before-closing - перед закриттям, during-work - завдання під час роботи (за тижневим розкладом) 
   category: "before-opening" | "during-work" | "before-closing"
   difficulty: "easy" | "medium" | "hard"
-  day: "Понеділок" | "Вівторок" | "Середа" | "Четвер" | "Пятниця" | "Субота" | "Неділя" | "ЗАВЖДИ"
+  day: "Понеділок" | "Вівторок" | "Середа" | "Четвер" | "П'ятниця" | "Субота" | "Неділя" | "ЗАВЖДИ"
   station: "1floor" | "2floor" | "3floor" | "1front" | "1back" | "6" | "67" | "8"
   forRoles: ("waiter" | "helper")[]
   completed: boolean
@@ -39,30 +42,35 @@ interface Task {
 interface SellDish {
   id: string
   title: string
-// ДОРОБИТИ ОПЦІЮ КІЛЬКОСТІ ПРОДАНИХ СТРАВ
-  //option: counter
-  forRoles: ("waiter")[]
+  // ДОРОБИТИ ОПЦІЮ КІЛЬКОСТІ ПРОДАНИХ СТРАВ
+  quantity: number
+  forRoles: ("waiter" | "helper")[]
   completed: boolean
   completedBy?: string
   completedAt?: Date
 }
 
-const allTasks: SellDish[] = [
-  { id: "sd1",
+// Продажі страв
+const allSellDishes: SellDish[] = [
+  { 
+    id: "sd1",
     title: "Раки (2 кг)",
-    forRoles: [""]
-    conpleted: false
+    quantity: 0,
+    forRoles: ["waiter"],
+    completed: false
   },
 ]
 
 const allTasks: Task[] = [
-  // Before Opening - Helper Tasks
+  // ЗАВДАННЯ ПОМІЧНИКА - ПВ (Перед відкриттям)
   {
     id: "h1",
-    title: "Протерти столи",
-    description: "Протерти всі столи вологою серветкою",
+    title: "Допомогти офіціанту під час відкриття (до зборів)",
+    description: "Протерти стакани, прибори, посуд мікрофіброю, витерти всі столи вологою серветкою",
     category: "before-opening",
-    difficulty: "easy",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
     forRoles: ["helper"],
     completed: false,
   },
@@ -72,55 +80,522 @@ const allTasks: Task[] = [
     description: "Враховуючи всю актуальну ситуацію, накази, деталі/уточнення",
     category: "before-opening",
     difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
     forRoles: ["helper"],
     completed: false,
   },
   {
     id: "h3",
     title: "Підготовка станції до початку роботи",
-    description: "Переконатися що всі поверхні чисті, ",
+    description: "Переконатися що всі поверхні чисті",
     category: "before-opening",
     difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
     forRoles: ["helper"],
     completed: false,
   },
 
-  // Before Opening - Waiter Tasks
+  // 1FLOOR « Пивоварна зала » - Щоденні завдання
   {
-    id: "w1",
-    title: "Перевірити меню",
-    description: "Пе��еглянути денне меню та спеціальні пропозиції",
-    category: "before-opening",
+    id: "1f1",
+    title: "Миття усіх вікон",
+    description: "Миття усіх вікон спеціальним засобом, не забуваємо про вікно за пивоварнею",
+    category: "during-work",
     difficulty: "medium",
+    day: "Понеділок",
+    station: "1floor",
     forRoles: ["waiter"],
     completed: false,
   },
   {
-    id: "w2",
-    title: "Підготувати касу",
-    description: "Перевірити роботу касового апарату та наявність здачі",
-    category: "before-opening",
+    id: "1f2",
+    title: "Чистка ніжок столів та стільців",
+    description: "Ретельно почистіть з допомогою щітки та миючого засобу усі ніжки столів та стільців",
+    category: "during-work",
     difficulty: "medium",
+    day: "Вівторок",
+    station: "1floor",
     forRoles: ["waiter"],
     completed: false,
   },
   {
-    id: "w3",
-    title: "Перевірити столові прибори",
-    description: "Переконатися що всі столові прибори чисті та на місці",
-    category: "before-opening",
+    id: "1f3",
+    title: "Генеральне прибирання станції офіціанта",
+    description: "Генеральне прибирання станції офіціанта всередині",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Середа",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "1f4",
+    title: "Чистимо підлогу хімією",
+    description: "Чистимо за допомогою хімії підлогу",
+    category: "during-work",
     difficulty: "medium",
+    day: "Четвер",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "1f5",
+    title: "Чистка сидінь за лавками",
+    description: "Замінюємо воду і миємо ще раз чистою. Почистити усі сидіння за лавками та пропилососити шпарини між сидіннями за 101-102-103",
+    category: "during-work",
+    difficulty: "medium",
+    day: "П'ятниця",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "1f6",
+    title: "Миття ліфта та поличок",
+    description: "Помийте шторку ліфта, ліфт у середині та зверху прорезиненою ганчіркою з використанням миючого засобу. Поличку біля ліфта помити ретельно з додаванням неохлору",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Субота",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "1f7",
+    title: "Почистити всі подушки",
+    description: "Почистити всі подушки",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Неділя",
+    station: "1floor",
     forRoles: ["waiter"],
     completed: false,
   },
 
-  // During Work - Helper Tasks
+  // ПЕРЕД ВІДКРИТТЯМ - Щоденні завдання
+  {
+    id: "bo1",
+    title: "Перевірка світильників",
+    description: "Перевірте справність усіх світильників (чи горять усі лампочки), включіть та виключіть вимикачі (протріть їх). Включіть світло над пивоварнею та вивіску над вхідними дверима. Виключіть прожектори для вазонів",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo2",
+    title: "Протирання світильників за столами 104-110",
+    description: "Протріть світильники за 104-110 столами вологую мікрофіброю рожевого кольору",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo3",
+    title: "Протирання світильників за столами 101-103",
+    description: "Світильники за 101-103 столами протираємо від пилюки та павутин пипідастром",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo4",
+    title: "Протерти перегородку між столами",
+    description: "Протерти від крихт та пилоки перегородку між 106-108 столом за допомогою вологої ганчірки",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo5",
+    title: "Протерти тач-скрін",
+    description: "Протерти тач-скрін прорезиненою ганчіркою жовтого кольору попередньо збрискавши її",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo6",
+    title: "Протирання декорацій",
+    description: "Протріть підвіконники, декорацію Ковчег (станція презенту) та мідну ливну у становку біля",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo7",
+    title: "Селимо жуйки",
+    description: "Селимо жуйки, під столами та на підлозі за допомогою шпателя для жуйок",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo8",
+    title: "Прибираємо павутиння",
+    description: "Детально прибираємо усе павутиння за допомогою пипідастра",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo9",
+    title: "Збризкуємо балки та мох",
+    description: "Збризкуємо балки та мох чистою водою (стіл 104, кабіна 109-110)",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo10",
+    title: "Розставляємо підставки для сумок",
+    description: "Розставляємо підставки для сумок, попередньо перевіривши їх на справність та чистоту, у зручному для гостей місці",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo11",
+    title: "Підготовка холодильника",
+    description: "Протираємо від крихт та дезинфікуємо розчином неохлору. Протираємо холодильник прорезиновою ганчіркою, виставляємо температуру на позначку +2 та наповнюємо салфетками",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo12",
+    title: "Підготовка тостерниці",
+    description: "Вмикаємо тостерницю попередньо почистивши її від крихт і залишків їжі",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo13",
+    title: "Полив вазонів",
+    description: "Перевіряємо чи волога земля у вазонів, при потребі підливаємо їх, не забуваємо про вазони за пивоварнею",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo14",
+    title: "Чистка підлоги",
+    description: "Вичищаємо шпарини в підлозі шпателем для підлоги та ретельно замітаємо підлогу віником з маркуванням для 1-го поверху. Сміття збираємо на совок з маркуванням 1-го поверху",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo15",
+    title: "Миття підлоги",
+    description: "Миємо підлогу шваброю з маркуванням для 1-го поверху з додаванням миючого засобу для підлоги",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo16",
+    title: "Прибирання інвентаря",
+    description: "Ретельно вимиваємо відро для миття підлоги, швабри та совки, складаємо їх у мопочній",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo17",
+    title: "Підготовка станції офіціанта",
+    description: "Прибираємо і заповнюємо станцію офіціанта: протираємо станцію розчином неохлору, наповнюємо натертими тарілками (мінімум 55 шт), натираємо прибори та складаємо в чисту касету (по 55 шт)",
+    category: "before-opening",
+    difficulty: "hard",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo18",
+    title: "Дезинфекція шкатулок для приборів",
+    description: "Шкатулки для приборів дезинфікуємо ззовні та всередині - 14 шт",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo19",
+    title: "Перевірка ваз та аксесуарів",
+    description: "Перевіряємо наявність та чистоту ваз, приносимо брендовані пакети та одноразові лотки",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo20",
+    title: "Підготовка корабликів",
+    description: "Перевіряємо справність корабликів, чистимо та дезинфікуємо - мінімум 6 шт",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo21",
+    title: "Підготовка дрібниць",
+    description: "Заповнити дерев'яну підставку зубочистками, підготувати серветки сухі та вологі, відро синього кольору з чистою водою та розчином неохлору",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo22",
+    title: "Підготовка дитячої зони",
+    description: "Підготувати підставку з підточеними кольоровими олівцями та розмальовки - 10 шт, протерти та продезинфікувати дитячу іграшку",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bo23",
+    title: "Перевірка АХД гелю",
+    description: "Перевірити наявність баночки з АХД гелем",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+
+  // ПЕРЕД ЗАКРИТТЯМ
+  {
+    id: "bc1",
+    title: "Збір брудного посуду",
+    description: "Весь бруднийпосуд зносимо на мийку",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter", "helper"],
+    completed: false,
+  },
+  {
+    id: "bc2",
+    title: "Робимо перекриття столів",
+    description: "Робимо перекриття столів",
+    category: "before-closing",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bc3",
+    title: "Знести хлібничку на мийку",
+    description: "Знести хлібничку на мийку",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter", "helper"],
+    completed: false,
+  },
+  {
+    id: "bc4",
+    title: "Перевірка обладнання",
+    description: "Перевірити на справність кораблики для рахунків, коробки для приборів, тейблтенти, підставки під сумки (при поломці, повідомляємo адміна)",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bc5",
+    title: "Прибирання станції презенту",
+    description: "Прибираємо станцію презенту, виключаємо тостерницю, виносимо сміття",
+    category: "before-closing",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bc6",
+    title: "Протирання спецниць",
+    description: "Протираємо спецниці і при необхідності досипаємо спеції",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bc7",
+    title: "Дезинфекція касет для приборів",
+    description: "Касету (ємкість для приборів) збрискуємо неохлором, залишивши на 30 сек та протираємо сухою ганчіркою, залишаємо в перевернутому стані на ніч. Прибори складаємо на продезинфікований піднос та накриваємо рушником",
+    category: "before-closing",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bc8",
+    title: "Завантаження станції",
+    description: "Завантажуємо станцію посудом та натертими приборами",
+    category: "before-closing",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bc9",
+    title: "Прання мікрофібр",
+    description: "Зніміть брудні мікрофібри та рушники на мийку пратися",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter", "helper"],
+    completed: false,
+  },
+  {
+    id: "bc10",
+    title: "Миття підносів",
+    description: "Підноси збираємо і відносимо на мийку мити щітками",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter", "helper"],
+    completed: false,
+  },
+  {
+    id: "bc11",
+    title: "Дезинфекція QR-кодів",
+    description: "Дезинфікуємо QR-коди неохлором та протираємо на сухо від липких плям",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+  {
+    id: "bc12",
+    title: "Виливання води з відра",
+    description: "Виливаємо воду з відра в туалеті персоналу",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter", "helper"],
+    completed: false,
+  },
+  {
+    id: "bc13",
+    title: "Винесення сміття",
+    description: "Виносимо сміття",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
+    forRoles: ["waiter", "helper"],
+    completed: false,
+  },
+  {
+    id: "bc14",
+    title: "Виключення світла",
+    description: "Виключаємо світло",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",  
+    station: "1floor",
+    forRoles: ["waiter"],
+    completed: false,
+  },
+
+  // ЗАВДАННЯ ПОМІЧНИКА - ЗАГАЛЬНІ
   {
     id: "h4",
     title: "Прибирати столи після гостей",
     description: "Швидко прибрати та протерти стіл після відходу гостей",
     category: "during-work",
     difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
     forRoles: ["helper"],
     completed: false,
   },
@@ -130,17 +605,21 @@ const allTasks: Task[] = [
     description: "Слідкувати щоб на столах завжди були серветки",
     category: "during-work",
     difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1floor",
     forRoles: ["helper"],
     completed: false,
   },
 
-  // During Work - Waiter Tasks
+  // ЗАВДАННЯ ОФІЦІАНТА - ЗАГАЛЬНІ
   {
     id: "w4",
     title: "Обслуговувати гостей",
     description: "Приймати замовлення та подавати страви",
     category: "during-work",
     difficulty: "hard",
+    day: "ЗАВЖДИ",
+    station: "1floor",
     forRoles: ["waiter"],
     completed: false,
   },
@@ -150,46 +629,8 @@ const allTasks: Task[] = [
     description: "Слідкувати за якістю обслуговування та задоволеністю гостей",
     category: "during-work",
     difficulty: "hard",
-    forRoles: ["waiter"],
-    completed: false,
-  },
-
-  // Before Closing - Helper Tasks
-  {
-    id: "h6",
-    title: "Зібрати посуд",
-    description: "Зібрати весь використаний посуд",
-    category: "before-closing",
-    difficulty: "easy",
-    forRoles: ["helper"],
-    completed: false,
-  },
-  {
-    id: "h7",
-    title: "Винести сміття",
-    description: "Винести сміття з залу та кухні",
-    category: "before-closing",
-    difficulty: "easy",
-    forRoles: ["helper"],
-    completed: false,
-  },
-
-  // Before Closing - Waiter Tasks
-  {
-    id: "w6",
-    title: "Закрити касу",
-    description: "Підрахувати виручку та закрити касу",
-    category: "before-closing",
-    difficulty: "hard",
-    forRoles: ["waiter"],
-    completed: false,
-  },
-  {
-    id: "w7",
-    title: "Заповнити звіт",
-    description: "Заповнити звіт про роботу зміни",
-    category: "before-closing",
-    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1floor",
     forRoles: ["waiter"],
     completed: false,
   },
@@ -197,20 +638,26 @@ const allTasks: Task[] = [
 
 const mockCompletedTasks = [
   { taskId: "h1", completedBy: "Помічник Тестовий", completedAt: new Date() },
-  { taskId: "w1", completedBy: "Офіціант Тестовий", completedAt: new Date() },
+  { taskId: "bo1", completedBy: "Офіціант Тестовий", completedAt: new Date() },
   { taskId: "h4", completedBy: "Помічник Тестовий", completedAt: new Date() },
 ]
 
 export default function TasksPage() {
   const { user } = useAuth()
   const [tasks, setTasks] = useState<Task[]>(allTasks)
+  const [sellDishes, setSellDishes] = useState<SellDish[]>(allSellDishes)
   const [selectedWorker, setSelectedWorker] = useState<string>("all")
+  const [selectedDay, setSelectedDay] = useState<string>("ЗАВЖДИ")
 
   const isAdmin = user?.role === "admin"
   const userRole = user?.role as "waiter" | "helper"
 
-  // Filter tasks based on user role
-  const userTasks = tasks.filter((task) => (!isAdmin ? task.forRoles.includes(userRole) : true))
+  // Filter tasks based on user role and selected day
+  const userTasks = tasks.filter((task) => {
+    const roleMatch = !isAdmin ? task.forRoles.includes(userRole) : true
+    const dayMatch = selectedDay === "ЗАВЖДИ" || task.day === selectedDay || task.day === "ЗАВЖДИ"
+    return roleMatch && dayMatch
+  })
 
   const toggleTask = (taskId: string) => {
     setTasks((prev) =>
@@ -223,6 +670,22 @@ export default function TasksPage() {
               completedAt: !task.completed ? new Date() : undefined,
             }
           : task,
+      ),
+    )
+  }
+
+  const updateDishQuantity = (dishId: string, increment: boolean) => {
+    setSellDishes((prev) =>
+      prev.map((dish) =>
+        dish.id === dishId
+          ? {
+              ...dish,
+              quantity: increment ? dish.quantity + 1 : Math.max(0, dish.quantity - 1),
+              completed: increment ? dish.quantity + 1 > 0 : Math.max(0, dish.quantity - 1) > 0,
+              completedBy: `${user?.firstName} ${user?.lastName}`,
+              completedAt: new Date(),
+            }
+          : dish,
       ),
     )
   }
@@ -258,276 +721,4 @@ export default function TasksPage() {
         return <CleaningServices className="h-5 w-5" />
     }
   }
-
-  const getCategoryTitle = (category: Task["category"]) => {
-    switch (category) {
-      case "before-opening":
-        return "Перед відкриттям"
-      case "during-work":
-        return "Під час роботи"
-      case "before-closing":
-        return "Перед закриттям"
-    }
-  }
-
-  const TaskCard = ({ task }: { task: Task }) => (
-    <Card className="mb-4">
-      <CardContent className="p-4">
-        <div className="flex items-start space-x-3">
-          <Checkbox
-            checked={task.completed}
-            onCheckedChange={() => toggleTask(task.id)}
-            disabled={isAdmin}
-            className="mt-1"
-          />
-          <div className="flex-1">
-            <div className="flex items-center space-x-2 mb-2">
-              <h3 className={`font-medium ${task.completed ? "line-through text-gray-500" : ""}`}>{task.title}</h3>
-              {getDifficultyIcon(task.difficulty)}
-              <Badge variant={task.forRoles.includes("helper") ? "secondary" : "default"}>
-                {task.forRoles.includes("helper") ? "Помічник" : "Офіціант"}
-              </Badge>
-            </div>
-            <p className={`text-sm text-gray-600 ${task.completed ? "line-through" : ""}`}>{task.description}</p>
-            {task.completed && task.completedBy && (
-              <div className="mt-2 flex items-center space-x-2 text-xs text-green-600">
-                <CheckCircle2 className="h-3 w-3" />
-                <span>Виконано: {task.completedBy}</span>
-                {task.completedAt && <span>о {task.completedAt.toLocaleTimeString()}</span>}
-              </div>
-            )}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-
-  const CategorySection = ({ category }: { category: Task["category"] }) => {
-    const categoryTasks = getTasksByCategory(category)
-    const progress = getCategoryProgress(category)
-
-    return (
-      <Card className="mb-6">
-        <CardHeader>
-          <div className="flex items-center space-x-3">
-            {getCategoryIcon(category)}
-            <div className="flex-1">
-              <CardTitle className="text-lg">{getCategoryTitle(category)}</CardTitle>
-              <CardDescription>
-                {categoryTasks.filter((t) => t.completed).length} з {categoryTasks.length} завдань виконано
-              </CardDescription>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-orange-600">{Math.round(progress)}%</div>
-            </div>
-          </div>
-          <Progress value={progress} className="mt-2" />
-        </CardHeader>
-        <CardContent>
-          {categoryTasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
-          ))}
-        </CardContent>
-      </Card>
-    )
-  }
-
-  if (isAdmin) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Чек-лист завдань</h1>
-          <p className="text-gray-600">Адміністративний перегляд виконання завдань</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center space-x-3">
-                <Users className="h-8 w-8 text-blue-500" />
-                <div>
-                  <div className="text-2xl font-bold">12</div>
-                  <div className="text-sm text-gray-600">Активних працівників</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center space-x-3">
-                <CheckCircle2 className="h-8 w-8 text-green-500" />
-                <div>
-                  <div className="text-2xl font-bold">{tasks.filter((t) => t.completed).length}</div>
-                  <div className="text-sm text-gray-600">Виконаних завдань</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center space-x-3">
-                <ShieldCheck className="h-8 w-8 text-orange-500" />
-                <div>
-                  <div className="text-2xl font-bold">
-                    {Math.round((tasks.filter((t) => t.completed).length / tasks.length) * 100)}%
-                  </div>
-                  <div className="text-sm text-gray-600">Загальний прогрес</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="overview">Огляд</TabsTrigger>
-            <TabsTrigger value="by-worker">За працівниками</TabsTrigger>
-            <TabsTrigger value="by-category">За категоріями</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Останні виконані завдання</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {mockCompletedTasks.map((completed, index) => {
-                    const task = tasks.find((t) => t.id === completed.taskId)
-                    return (
-                      <div key={index} className="flex items-center space-x-3 mb-3 p-3 bg-green-50 rounded-lg">
-                        <CheckCircle2 className="h-5 w-5 text-green-500" />
-                        <div className="flex-1">
-                          <div className="font-medium">{task?.title}</div>
-                          <div className="text-sm text-gray-600">
-                            {completed.completedBy} • {completed.completedAt.toLocaleTimeString()}
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Активні працівники</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {["Офіціант Тестовий", "Помічник Тестовий", "Влад Пекарський", "Саша Маркович"].map((worker, index) => (
-                    <div key={index} className="flex items-center space-x-3 mb-3 p-3 bg-gray-50 rounded-lg">
-                      <Avatar>
-                        <AvatarFallback>
-                          {worker
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="font-medium">{worker}</div>
-                        <div className="text-sm text-gray-600">
-                          {Math.floor(Math.random() * 5) + 1} завдань виконано сьогодні
-                        </div>
-                      </div>
-                      <Badge variant="outline">Онлайн</Badge>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="by-worker">
-            <Card>
-              <CardHeader>
-                <CardTitle>Завдання за працівниками</CardTitle>
-                <CardDescription>Перегляд виконання завдань кожним працівником</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <User className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Функція в розробці</h3>
-                  <p className="text-gray-600">Детальний перегляд за працівниками буде доступний незабаром</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="by-category">
-            <div className="space-y-6">
-              <CategorySection category="before-opening" />
-              <CategorySection category="during-work" />
-              <CategorySection category="before-closing" />
-            </div>
-          </TabsContent>
-        </Tabs>
-
-        <FFStatus
-          title="Розширена аналітика"
-          description="Детальна статистика, звіти та аналітика виконання завдань будуть доступні в майбутніх оновленнях"
-        />
-      </div>
-    )
-  }
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Мій чек-лист</h1>
-        <p className="text-gray-600">Завдання для {user?.role === "helper" ? "помічника офіціанта" : "офіціанта"}</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <Coffee className="h-8 w-8 text-blue-500" />
-              <div>
-                <div className="text-2xl font-bold">{Math.round(getCategoryProgress("before-opening"))}%</div>
-                <div className="text-sm text-gray-600">Перед відкриттям</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <UtensilsCrossed className="h-8 w-8 text-green-500" />
-              <div>
-                <div className="text-2xl font-bold">{Math.round(getCategoryProgress("during-work"))}%</div>
-                <div className="text-sm text-gray-600">Під час роботи</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center space-x-3">
-              <CleaningServices className="h-8 w-8 text-orange-500" />
-              <div>
-                <div className="text-2xl font-bold">{Math.round(getCategoryProgress("before-closing"))}%</div>
-                <div className="text-sm text-gray-600">Перед закриттям</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="space-y-6">
-        <CategorySection category="before-opening" />
-        <CategorySection category="during-work" />
-        <CategorySection category="before-closing" />
-      </div>
-
-      <FFStatus
-        title="Персональна статистика"
-        description="Ваша особиста статистика виконання завдань та досягнення будуть доступні в наступних оновленнях"
-      />
-    </div>
-  )
 }
