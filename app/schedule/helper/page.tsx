@@ -605,6 +605,7 @@ export default function SchedulePage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
+            <Link href="/ff">
             <Button
               variant="outline"
               className="w-full border-orange-200 text-orange-600 hover:bg-orange-50"
@@ -612,6 +613,7 @@ export default function SchedulePage() {
             >
               Запросити вихідний
             </Button>
+            </Link>
           </CardContent>
         </Card>
 

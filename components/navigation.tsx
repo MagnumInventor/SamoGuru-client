@@ -25,7 +25,7 @@ import {
 import { useAuth, getRoleDisplayName } from "@/lib/auth"
 
 const allNavItems = [
-  { href: "/", label: "Головна", icon: User, roles: ["admin", "waiter", "helper"] },
+  { href: "/", label: "Головна", icon: User, roles: ["waiter", "helper"] },
   { href: "/schedule", label: "*Повний розклад роботи", icon: Calendar, roles: ["admin"] },
   { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
   { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },

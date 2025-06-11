@@ -25,8 +25,11 @@ interface Task {
   id: string
   title: string
   description: string
+  // before-openign - Перед відкриттям, before-closing - перед закриттям, during-work - завдання під час роботи (за тижневим розкладом) 
   category: "before-opening" | "during-work" | "before-closing"
   difficulty: "easy" | "medium" | "hard"
+  day: "Понеділок" | "Вівторок" | "Середа" | "Четвер" | "Пятниця" | "Субота" | "Неділя" | "ЗАВЖДИ"
+  station: "1floor" | "2floor" | "3floor" | "1front" | "1back" | "6" | "67" | "8"
   forRoles: ("waiter" | "helper")[]
   completed: boolean
   completedBy?: string
@@ -34,14 +37,16 @@ interface Task {
 }
 
 const allTasks: Task[] = [
-  // Before Opening - Helper Tasks
+  // Opening
   {
     id: "h1",
-    title: "Протерти столи",
-    description: "Протерти всі столи вологою серветкою",
+    title: "Миття вікон",
+    description: "Миття усіх вікон спеціальним засобом, не забуваємо про вікно за пивоварнею.",
     category: "before-opening",
-    difficulty: "easy",
-    forRoles: ["helper"],
+    difficulty: "medium",
+    day: "Понеділок"
+    station: "1floor",
+    forRoles: ["waiter"],
     completed: false,
   },
   {

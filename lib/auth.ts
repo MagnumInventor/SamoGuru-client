@@ -60,11 +60,11 @@ export const useAuth = create<AuthStore>()(
 export const getRoleDisplayName = (role: string): string => {
   switch (role) {
     case "waiter":
-      return "Офіціант"
+      return "Фіц"
     case "helper":
-      return "Помічник офіціанта"
+      return "Малий/мала"
     case "admin":
-      return "Адміністратор"
+      return "Адмін"
     default:
       return role
   }
