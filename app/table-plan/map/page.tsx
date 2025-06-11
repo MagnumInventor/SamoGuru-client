@@ -18,7 +18,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/restaurant-scheme.png"
+              src="/images/scheme/100s.png"
               alt="Схема ресторану - 1 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -68,7 +68,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/tables-200s-scheme.png"
+              src="/images/scheme/200s.png"
               alt="Схема столиків 200s - 2 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -118,7 +118,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/tables-300s-scheme.png"
+              src="/images/scheme/300s.png"
               alt="Схема столиків 300s - 3 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -152,6 +152,48 @@ export default function TablePlanMapPage() {
         </CardContent>
       </Card>
       
+
+{/* 1 Поверх  (бар - двір) - 400-ті */}
+      <Card className="border-purple-200 mb-6">
+        <CardHeader>
+          <CardTitle className="text-xl flex items-center gap-2">
+            <MapPin className="h-5 w-5 text-purple-500" />
+            Схема столиків 300-ті (3 Поверх)
+          </CardTitle>
+          <CardDescription>Детальна схема розташування столиків 302-308 та допоміжних зон</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <img
+              src="/images/scheme/400s.png"
+              alt="Схема столиків 300s - 3 поверх"
+              className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
+            />
+          </div>
+          <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+            <div className="bg-white p-2 rounded border">
+              <span className="font-medium">Столики:</span> 401-414
+            </div>
+            <div className="bg-white p-2 rounded border">
+              <span className="font-medium">Вхід в ресторан</span>
+            </div>
+          </div>
+          <div className="mt-3 p-3 bg-purple-50 rounded-lg">
+            <div className="flex items-center gap-2 mb-2">
+              <UserCheck className="h-4 w-4 text-purple-600" />
+              <span className="font-medium text-purple-800">Станції помічників: <strong>Гриль</strong> в Ковчезі</span>
+            </div>
+            <div className="grid grid-cols-1 gap-2 text-sm">
+              <div className="flex items-center gap-1">
+                <Users className="h-3 w-3 text-green-600" />
+                <span><strong>Офіціанти:</strong> Бар-двір</span>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+
       {/* Яруса - 500s */}
       <Card className="border-green-200 mb-6">
         <CardHeader>
@@ -164,7 +206,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/tables-500s-scheme.png"
+              src="/images/scheme/500s.png"
               alt="Схема столиків 500s - Яруса"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -174,7 +216,7 @@ export default function TablePlanMapPage() {
               <span className="font-medium">Столики:</span> 501-508
             </div>
             <div className="bg-white p-2 rounded border">
-              <span className="font-medium">Стіл для посуду</span>
+              <span className="font-medium">Стіл для брудного посуду</span>
             </div>
             <div className="bg-white p-2 rounded border">
               <span className="font-medium">Зона Яруса</span>
@@ -214,7 +256,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/tables-600s-scheme.png"
+              src="/images/scheme/600s.png"
               alt="Схема столиків 600s - Пивниця"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -260,7 +302,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/tables-svetlitsa-scheme.png"
+              src="/images/scheme/700s.png"
               alt="Схема столиків - Світлиця"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -306,7 +348,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/tables-girnitsa-scheme.png"
+              src="/images/scheme/800s.png"
               alt="Схема столиків - Гірниця"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -319,7 +361,7 @@ export default function TablePlanMapPage() {
               <span className="font-medium">Столики:</span> 802-808
             </div>
             <div className="bg-white p-2 rounded border">
-              <span className="font-medium">Гірнича зона</span>
+              <span className="font-medium">Гірниця зона</span>
             </div>
             <div className="bg-white p-2 rounded border">
               <span className="font-medium">Окрема зала</span>
