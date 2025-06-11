@@ -26,10 +26,14 @@ import { useAuth, getRoleDisplayName } from "@/lib/auth"
 
 const allNavItems = [
   { href: "/", label: "Головна", icon: User, roles: ["waiter", "helper"] },
+
+  { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
+  { href: "/tasks", label: "Виконання плану", icon: CheckSquare, roles: ["admin"] },
+  { href: "/tasks", label: "Робота", icon: CheckSquare, roles: ["helper"] },
+
   { href: "/schedule", label: "*Повний розклад роботи", icon: Calendar, roles: ["admin"] },
   { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
   { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
-  { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["admin", "waiter", "helper"] },
 
   { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["waiter", "helper"] },
   { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
@@ -40,7 +44,7 @@ const allNavItems = [
   
   { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, 
   { href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
-   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
+  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
 ]
 
 export function Navigation() {
