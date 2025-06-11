@@ -1,28 +1,23 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button" // Added import
 import {
   CheckCircle2,
   Clock,
-  Users,
   Coffee,
   UtensilsCrossed,
   WashingMachine as CleaningServices,
-  ShieldCheck,
   AlertTriangle,
-  User,
   Plus,
   Minus,
 } from "lucide-react"
 import { useAuth } from "@/lib/auth"
-import FFStatus from "@/components/ff-status"
 
 interface Task {
   id: string
@@ -103,21 +98,23 @@ export default function TasksPage() {
   const { user } = useAuth()
   const [tasks, setTasks] = useState<Task[]>(allTasks)
   const [sellDishes, setSellDishes] = useState<SellDish[]>(allSellDishes)
-  const [selectedWorker, setSelectedWorker] = useState<string>("all")
   const [selectedDay, setSelectedDay] = useState<string>("ЗАВЖДИ")
   const [selectedStation, setSelectedStation] = useState<string>("")
   
   const isAdmin = user?.role === "admin"
   const userRole = user?.role as "waiter" | "helper" | "admin"
 
-  // Set initial station based on role
-  if (!selectedStation) {
-    if (userRole === "waiter" && waiterStations.length > 0) {
-      setSelectedStation(waiterStations[0])
-    } else if (userRole === "helper" && helperStations.length > 0) {
-      setSelectedStation(helperStations[0])
+  // Set initial station based on role (useEffect to avoid state update on render)
+  useEffect(() => {
+    if (!selectedStation) {
+      if (userRole === "waiter" && waiterStations.length > 0) {
+        setSelectedStation(waiterStations[0])
+      } else if (userRole === "helper" && helperStations.length > 0) {
+        setSelectedStation(helperStations[0])
+      }
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userRole, selectedStation])
 
   // Filter tasks based on role, station, and day
   const userTasks = tasks.filter((task) => {
@@ -388,7 +385,7 @@ export default function TasksPage() {
                     >
                       <Checkbox 
                         checked={task.completed}
-                        onCheckedChange={() => toggleTask(task.id)}
+                        onCheckedChange={() => toggleTask(task.id)} // Accepts boolean, but we only need the event
                         className="mt-1 mr-4"
                       />
                       <div className="flex-1">
