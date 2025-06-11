@@ -33,21 +33,40 @@ interface Task {
   completedAt?: Date
 }
 
+interface SellDish {
+  id: string
+  title: string
+// ДОРОБИТИ ОПЦІЮ КІЛЬКОСТІ ПРОДАНИХ СТРАВ
+  //option: counter
+  forRoles: ("waiter")[]
+  completed: boolean
+  completedBy?: string
+  completedAt?: Date
+}
+
+const allTasks: SellDish[] = [
+  { id: "sd1",
+    title: "Раки (2 кг)",
+    forRoles: [""]
+    conpleted: false
+  },
+]
+
 const allTasks: Task[] = [
-  // Before Opening - Helper Tasks
+  // ЗАВДАННЯ ПОМІЧНИКА - ПВ
   {
     id: "h1",
-    title: "Протерти столи",
-    description: "Протерти всі столи вологою серветкою",
+    title: "Допомогти офіціант під час відкриття (до зборів)",
+    description: "Протерти стакани, прибори, посуд мікрофіброю, витерти всі столи вологою серветкою, ",
     category: "before-opening",
-    difficulty: "easy",
+    difficulty: "medium",
     forRoles: ["helper"],
     completed: false,
   },
   {
     id: "h2",
-    title: "Розставити серветки",
-    description: "Поставити серветки на всі столи",
+    title: "Бути присутнім та УВАЖНО слухати інформацію з брифінгу",
+    description: "Враховуючи всю актуальну ситуацію, накази, деталі/уточнення",
     category: "before-opening",
     difficulty: "easy",
     forRoles: ["helper"],
@@ -55,8 +74,8 @@ const allTasks: Task[] = [
   },
   {
     id: "h3",
-    title: "Перевірити чистоту підлоги",
-    description: "Переконатися що підлога чиста, при потребі підмести",
+    title: "Підготовка станції до початку роботи",
+    description: "Переконатися що всі поверхні чисті, ",
     category: "before-opening",
     difficulty: "easy",
     forRoles: ["helper"],
