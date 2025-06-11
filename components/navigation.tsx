@@ -52,7 +52,7 @@ export function Navigation() {
     logout()
   }
 
-  // Filter navigation items based on user role
+  // ФІЛЬТРУВАННЯ НАВІГАЦІЇ ЗАЛЕЖНО ВІД РОЛІ
   const navItems = allNavItems.filter((item) => item.roles.includes(user?.role || "helper"))
 
   return (
@@ -65,7 +65,7 @@ export function Navigation() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* НОУТ */}
         <nav className="hidden lg:flex items-center space-x-4">
           {navItems.map((item) => {
             const Icon = item.icon
@@ -120,7 +120,7 @@ export function Navigation() {
           </DropdownMenu>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* МОБІЛЬНА */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
@@ -128,7 +128,7 @@ export function Navigation() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px] flex flex-col">
-            {/* Fixed Header */}
+            
             <div className="px-4 py-2 bg-orange-50 rounded-md mb-4">
               <div className="font-medium text-orange-900">
                 {user?.firstName} {user?.lastName}
@@ -136,7 +136,7 @@ export function Navigation() {
               <div className="text-sm text-orange-600">{getRoleDisplayName(user?.role || "")}</div>
             </div>
 
-            {/* Scrollable Content */}
+            {/* СКРОЛ */}
             <div className="flex-1 overflow-y-auto">
               <div className="flex flex-col space-y-2">
                 {navItems.map((item) => {
@@ -171,7 +171,7 @@ export function Navigation() {
               </div>
             </div>
 
-            {/* Fixed Footer */}
+            {/* Footer */}
             <div className="pt-4 border-t">
               <Button
                 onClick={handleLogout}
