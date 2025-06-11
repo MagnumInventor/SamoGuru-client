@@ -580,10 +580,16 @@ export default function MenuPage() {
         <TabsList className="grid w-full grid-cols-6 mb-8">
           <TabsTrigger value="main">🍖 Основні</TabsTrigger>
           <TabsTrigger value="grill">🔥 Мангал</TabsTrigger>
+          <TabsTrigger value="khachapuri"> Хачапурі</TabsTrigger>
           <TabsTrigger value="khinkali">🥟 Хінкалі</TabsTrigger>
+          <TabsTrigger value="garnish"> Гарніри</TabsTrigger>
+          <TabsTrigger value="snacks"> Закуски</TabsTrigger>
+          <TabsTrigger value="soups"> Супи</TabsTrigger>
+          <TabsTrigger value="childmenu"> Дитяче меню</TabsTrigger>
+          <TabsTrigger value="friture"> Фритюр</TabsTrigger>
           <TabsTrigger value="salads">🥗 Салати</TabsTrigger>
           <TabsTrigger value="desserts">🍰 Десерти</TabsTrigger>
-          <TabsTrigger value="bar">🍺 Бар</TabsTrigger>
+          <TabsTrigger value="drinks">🍺 Напої</TabsTrigger>
         </TabsList>
 
         {/* Food Categories */}
