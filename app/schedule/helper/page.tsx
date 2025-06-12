@@ -27,7 +27,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "1",
     13: "1",
     14: "1",
@@ -60,7 +60,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "16",
     13: "1",
     14: "1",
@@ -93,7 +93,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "1",
     13: "1",
     14: "1",
@@ -126,7 +126,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "1",
     13: "1",
     14: "1",
@@ -159,7 +159,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "1",
     13: "1",
     14: "1",
@@ -192,7 +192,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "16",
     14: "1",
@@ -225,7 +225,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "16",
     14: "1",
@@ -258,7 +258,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "1",
     13: "16",
     14: "16",
@@ -291,7 +291,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "16",
     13: "16",
     14: "1",
@@ -324,7 +324,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "16",
     13: "0",
     14: "0",
@@ -357,7 +357,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "0",
     14: "0",
@@ -390,7 +390,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "0",
     14: "0",
@@ -423,7 +423,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "0",
     14: "0",
@@ -456,7 +456,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "0",
     14: "0",
@@ -489,7 +489,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "1",
     13: "0",
     14: "0",
@@ -522,7 +522,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "0",
     14: "0",
@@ -555,7 +555,7 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "0",
+    11: "extra",
     12: "0",
     13: "0",
     14: "16",
@@ -608,8 +608,8 @@ export default function SchedulePage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Розклад роботи помічників</h1>
-        <p className="text-gray-600">{currentMonth} 2025 - Графік роботи помічників (14 співробітників)</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Розклад роботи помічників <strong>12.05-31.05</strong></h1>
+        <p className="text-gray-600">Червень 2025 - Графік роботи помічників (17 співробітників)</p>
       </div>
 
       <div className="mb-6 flex flex-wrap gap-4">
@@ -651,7 +651,7 @@ export default function SchedulePage() {
             <Calendar className="h-5 w-5 text-orange-500 mr-2" />
             {currentMonth} 2025 - Помічники (14 співробітників)
           </CardTitle>
-          <CardDescription>Графік роботи помічників: Максим Скак. - Ярослав Борода</CardDescription>
+          <CardDescription>Графік роботи помічників: Максим Скак. - Евеліна </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">
