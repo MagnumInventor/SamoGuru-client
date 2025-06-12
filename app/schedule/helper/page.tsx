@@ -27,24 +27,24 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "extra",
+    11: "0",
     12: "1",
     13: "1",
     14: "1",
-    15: "0",
+    15: "extra-1",
     16: "0",
     17: "0",
     18: "1",
     19: "16",
     20: "1",
-    21: "0",
-    22: "0",
+    21: "extra-1",
+    22: "extra-1",
     23: "0",
     24: "1",
     25: "1",
     26: "1",
     27: "0",
-    28: "0",
+    28: "extra-1",
     29: "0",
     30: "1",
     31: "16"
@@ -60,25 +60,25 @@ const helperScheduleData = {
     8: "0",
     9: "0",
     10: "0",
-    11: "extra",
+    11: "0",
     12: "16",
     13: "1",
     14: "1",
     15: "0",
     16: "0",
-    17: "16",
+    17: "extra-16",
     18: "1",
     19: "1",
     20: "1",
     21: "0",
-    22: "0",
+    22: "extra-1",
     23: "0",
     24: "1",
     25: "1",
     26: "16",
-    27: "0",
+    27: "extra-1",
     28: "0",
-    29: "0",
+    29: "extra-1",
     30: "1",
     31: "1"
   },
@@ -98,20 +98,20 @@ const helperScheduleData = {
     13: "1",
     14: "1",
     15: "0",
-    16: "16",
+    16: "extra-16",
     17: "0",
     18: "1",
     19: "1",
     20: "1",
     21: "0",
-    22: "0",
+    22: "extra-1",
     23: "0",
     24: "1",
     25: "1",
     26: "1",
-    27: "0",
+    27: "extra-1",
     28: "0",
-    29: "0",
+    29: "extra-1",
     30: "16",
     31: "1"
   },
@@ -592,7 +592,8 @@ export default function SchedulePage() {
   const getShiftColor = (shift: string | null) => {
     if (shift === "1") return "bg-blue-100 text-blue-800 border-blue-200"
     if (shift === "16") return "bg-green-100 text-green-800 border-green-200"
-    if (shift === "extra") return "bg-gray-900 text-white border-gray-900" // Black for extra shifts
+    if (shift === "extra-1") return "bg-gray-900 text-white border-gray-900" 
+    if (shift === "extra-16") return "bf-gray-900 text-white border-gray-900" // Black for extra shifts
     if (shift === "0") return "bg-gray-100 text-gray-400 border-gray-200" // Light gray for rest
     return "bg-gray-100 text-gray-800 border-gray-200"
   }
@@ -600,7 +601,8 @@ export default function SchedulePage() {
   const getShiftText = (shift: string | null) => {
     if (shift === "1") return "1"
     if (shift === "16") return "16"
-    if (shift === "extra") return "E" // E for Extra
+    if (shift === "extra-16") return "E-Half" // E for Extra
+    if (shift === "extra-1") return "E-Full"
     if (shift === "0") return ""
     return ""
   }
@@ -649,7 +651,7 @@ export default function SchedulePage() {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Calendar className="h-5 w-5 text-orange-500 mr-2" />
-            {currentMonth} 2025 - Помічники (14 співробітників)
+            {currentMonth} 2025 - Помічники (17 співробітників)
           </CardTitle>
           <CardDescription>Графік роботи помічників: Максим Скак. - Евеліна </CardDescription>
         </CardHeader>
