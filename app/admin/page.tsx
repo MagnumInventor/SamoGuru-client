@@ -24,9 +24,9 @@ const adminStats = [
 ]
 
 const recentEmployees = [
-  { name: "Андріана", role: "waiter", joinDate: "22.01.2024", status: "active" },
-  { name: "Олександр Маркович", role: "helper", joinDate: "20.01.2024", status: "training" },
-  { name: "Ярослав", role: "waiter", joinDate: "18.01.2024", status: "active" },
+  { name: "Захар", role: "helper", joinDate: "11.05.2025", status: "active" },
+  { name: "Олександр Маркович", role: "helper", joinDate: "6.05.2025", status: "training" },
+  { name: "Ярослав", role: "waiter", joinDate: "2.05.2024", status: "active" },
 ]
 
 export default function AdminPage() {
@@ -73,7 +73,7 @@ export default function AdminPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Button className="h-20 bg-orange-500 hover:bg-orange-600 flex flex-col items-center justify-center">
               <Plus className="h-6 w-6 mb-2" />
-              Додати співробітника
+              Додати страву/напій
             </Button>
             <Button
               variant="outline"
@@ -98,41 +98,6 @@ export default function AdminPage() {
             </Button>
           </div>
         </section>
-
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Recent Employees */}
-          <Card className="border-orange-200">
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Users className="h-5 w-5 text-orange-500 mr-2" />
-                Нові співробітники
-              </CardTitle>
-              <CardDescription>Останні доданні члени команди</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentEmployees.map((employee, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <div className="font-medium">{employee.name}</div>
-                      <div className="text-sm text-gray-600">
-                        {employee.role === "waiter" ? "Офіціант" : "Помічник офіціанта"}
-                      </div>
-                      <div className="text-xs text-gray-500">{employee.joinDate}</div>
-                    </div>
-                    <Badge
-                      className={
-                        employee.status === "active" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
-                      }
-                    >
-                      {employee.status === "active" ? "Активний" : "Навчання"}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </ProtectedRoute>
   )
