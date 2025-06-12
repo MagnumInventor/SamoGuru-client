@@ -13,9 +13,9 @@ export default function HomePage() {
           Ласкаво просимо до <span className="text-orange-100">САМоГУРу</span>
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-orange-100">
-          Платформа для злагодженого та ефективного навчання та роботи ресторанного персоналу
+          Середовище злагодженої роботи та ефективного навчання ресторанного персоналу
         </p>
-        <Link href="/checklist">
+        <Link href="/tasks">
         <Button size="lg" variant="secondary" className="bg-white text-orange-600 hover:bg-orange-50">
           Розпочати роботу
         </Button>
@@ -54,7 +54,7 @@ export default function HomePage() {
           <CardHeader className="text-center">
             <Brain className="h-12 w-12 text-orange-500 mx-auto mb-4" />
             <CardTitle className="text-orange-600">Тестування знань</CardTitle>
-            <CardDescription>Перевірте свої знання меню, бару, процедур</CardDescription>
+            <CardDescription>Перевірте свої знання меню, бару, процедур*</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/tests">
