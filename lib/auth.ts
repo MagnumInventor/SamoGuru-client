@@ -21,9 +21,9 @@ interface AuthStore {
 
 // ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
 const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: string }> = {
-  admin69: { role: "admin", name: "Адміністратор", surname: "системи" },
-  waiter52: { role: "waiter", name: "Офіціант", surname: "тестовий" },
-  helper1488: { role: "helper", name: "Помічник", surname: "навчальний" },
+  admin123: { role: "admin", name: "Адміністратор", surname: "системи" },
+  waiter123: { role: "waiter", name: "Офіціант", surname: "тестовий" },
+  helper123: { role: "helper", name: "Помічник", surname: "навчальний" },
 }
 
 
