@@ -18,11 +18,11 @@ const currentMonth = "Червень 2025"
 const waiterScheduleData = {
   // верхній список з IMG_5233
   Ігор: {
-    1: "1",
+    1: "0",
     2: "0",
     3: "0",
-    4: "1",
-    5: "1",
+    4: "0",
+    5: "0",
     6: "1",
     7: "0",
     8: "0",
@@ -889,6 +889,7 @@ export default function WaiterSchedulePage() {
   const getShiftColor = (shift: string | null) => {
     if (shift === "1") return "bg-blue-100 text-blue-800 border-blue-200"
     if (shift === "0") return "bg-gray-800 text-white" // day off
+    if (shift === "0") return "bg-black-500 text-white" 
     return "bg-gray-100 text-gray-800 border-gray-200"
   }
 
