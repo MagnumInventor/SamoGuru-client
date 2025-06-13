@@ -35,29 +35,20 @@ const servingRules = {
         id: 2,
         name: "За коментарем",
         description: "Страви з особливими вимогами в коментарі",
-        category: "З звичайною вилкою",
         rules: ["Звертати увагу на коментар в чеку", "Сервірування може бути змінене"],
         searchTerms: ["коментар", "особливе", "зміна"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
         id: 3,
-        name: "Бульйон з півня",
+        name: "Всі бульйони та зупи (бульйон з півня, )",
         description: "Перша страва",
         category: "З звичайною ложкою",
-        rules: ["Подавати з звичайною ложкою", "Гаряча подача"],
+        rules: ["Подавати з звичайною столовою ложкою", "Гаряча подача"],
         searchTerms: ["бульйон", "півень", "суп", "перша"],
-        image: "/placeholder.svg?height=300&width=400",
+        image: "/супи.svg?height=300&width=400",
       },
-      {
-        id: 4,
-        name: "Дитячий бульйон",
-        description: "Перша страва для дітей",
-        category: "З звичайною ложкою",
-        rules: ["Подавати з звичайною ложкою", "Менша порція"],
-        searchTerms: ["дитячий", "бульйон", "діти", "перша"],
-        image: "/placeholder.svg?height=300&width=400",
-      },
+
       {
         id: 5,
         name: "Грибна зупа",
@@ -144,7 +135,7 @@ const servingRules = {
         name: "Равлики в ткемалі",
         description: "Грузинська закуска",
         category: "Окремо",
-        rules: ["Особлива подача", "З ткемалі соусом", "Традиційне сервірування"],
+        rules: ["Особлива подача", "З маленькою 2-зубою вилкою та щипцями"],
         searchTerms: ["равлики", "ткемалі", "грузинська", "закуска"],
         image: "/placeholder.svg?height=300&width=400",
       },
@@ -153,7 +144,7 @@ const servingRules = {
         name: "Шоті",
         description: "Грузинський хліб",
         category: "Окремо",
-        rules: ["Подається на дошці", "З маленькими металевими ручками", "Традиційна подача"],
+        rules: ["Подається на дошці з маленькими металевими ручками"],
         searchTerms: ["шоті", "грузинський", "хліб", "дошка"],
         image: "/placeholder.svg?height=300&width=400",
       },
@@ -162,7 +153,7 @@ const servingRules = {
         name: "Грузинський презент",
         description: "ВАЖЛИВО! Особлива подача",
         category: "Окремо",
-        rules: ["1 шоті на лодочку з молотком", "Соусниця з 30 грам зеленої олії", "ДУЖЕ ВАЖЛИВО!"],
+        rules: ["1 шоті на коробочку з молотком", "Соусниця з 30 грам зеленої олії", "ДУЖЕ ВАЖЛИВО!"],
         special: "ВАЖЛИВО",
         searchTerms: ["грузинський", "презент", "лодочка", "молоток", "зелена олія"],
         image: "/placeholder.svg?height=300&width=400",
@@ -223,13 +214,13 @@ const servingRules = {
         description: "Класичний італійський кавовий напій",
         category: "З печевом, ложкою та блюдцем",
         rules: [
-          "Подавати в кавовій чашці (70-80 мл)",
-          "На блюдці з кавовою ложечкою",
-          "Печево на блюдці",
-          "Окремо склянка води та дощечка замість блюдця для води",
+          "Подається в мальненькій чорній чашці",
+          "Додатково склянка води (0,2л) та дощечка замість блюдця",
+          "На з кавовою ложечкою",
+          "Печево біля чашки",
           "Подавати одразу після приготування",
         ],
-        volume: "25-30 мл",
+        volume: "25-35 мл",
         temperature: "65-70°C",
         special: "З водою та дощечкою",
         searchTerms: ["еспресо", "кава", "італійський", "вода"],
@@ -244,7 +235,6 @@ const servingRules = {
           "Подається з бару в більшій кавовій чашці",
           "На блюдці з кавовою ложечкою",
           "Печево на блюдці",
-          "Можна додати молоко окремо за бажанням",
         ],
         volume: "90 мл",
         temperature: "65-70°C",
@@ -256,7 +246,7 @@ const servingRules = {
         name: "Допіо",
         description: "Подвійний еспресо",
         category: "З печевом, ложкою та блюдцем",
-        rules: ["На блюдці з кавовою ложечкою", "Печево на блюдці", "Подавати гарячим одразу після приготування"],
+        rules: ["На дощечці з кавовою ложечкою", "Печево", "Подавати гарячим одразу після приготування"],
         volume: "60 мл",
         temperature: "65-70°C",
         searchTerms: ["допіо", "подвійний", "еспресо", "кава"],
@@ -277,21 +267,36 @@ const servingRules = {
   },
 }
 
-export default function ServingPage() {
-  const [selectedCategory, setSelectedCategory] = useState("food")
-  const [selectedItem, setSelectedItem] = useState<any>(null)
-  const [searchQuery, setSearchQuery] = useState("")
+type ServingItem = {
+  id: number
+  name: string
+  description: string
+  category?: string
+  rules: string[]
+  searchTerms: string[]
+  volume?: string
+  temperature?: string
+  special?: string
+  image?: string
+}
 
-  const currentCategory = servingRules[selectedCategory as keyof typeof servingRules]
+// Main component
+export default function ServingPage() {
+  const [selectedCategory, setSelectedCategory] = useState<"food" | "drinks">("food")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedItem, setSelectedItem] = useState<ServingItem | null>(null)
+
+  const currentCategory =
+    selectedCategory === "food" ? servingRules.food : servingRules.drinks
 
   // Filter items based on search query
-  const filteredItems = currentCategory.items.filter((item) => {
+  const filteredItems = currentCategory.items.filter((item: ServingItem) => {
     if (!searchQuery) return true
     const query = searchQuery.toLowerCase()
     return (
       item.name.toLowerCase().includes(query) ||
       item.description.toLowerCase().includes(query) ||
-      item.category.toLowerCase().includes(query) ||
+      (item.category && item.category.toLowerCase().includes(query)) ||
       item.searchTerms.some((term) => term.toLowerCase().includes(query))
     )
   })
@@ -299,13 +304,14 @@ export default function ServingPage() {
   // Group items by category
   const groupedItems = filteredItems.reduce(
     (acc, item) => {
-      if (!acc[item.category]) {
-        acc[item.category] = []
+      const category = item.category ?? "Інше"
+      if (!acc[category]) {
+        acc[category] = []
       }
-      acc[item.category].push(item)
+      acc[category].push(item)
       return acc
     },
-    {} as Record<string, typeof filteredItems>,
+    {} as Record<string, ServingItem[]>,
   )
 
   return (
@@ -335,7 +341,11 @@ export default function ServingPage() {
         </div>
       </div>
 
-      <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+      <Tabs
+        value={selectedCategory}
+        onValueChange={(value) => setSelectedCategory(value as "food" | "drinks")}
+        className="w-full"
+      >
         <TabsList className="grid w-full grid-cols-2 mb-8">
           <TabsTrigger value="food" className="flex items-center">
             🍽️ Їжа
