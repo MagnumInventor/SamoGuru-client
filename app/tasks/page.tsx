@@ -44,30 +44,551 @@ interface SellDish {
 }
 
 const allTasks: Task[] = [
-  // Example tasks (reduced for brevity)
+// ======= 1st Floor Daily Tasks =======
+  {
+    id: "1f-m1",
+    title: "Миття усіх вікон",
+    description: "Миття усіх вікон спеціальним засобом, не забуваємо про вікно за пивоварнею",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Понеділок",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-t1",
+    title: "Чистка ніжок столів",
+    description: "Ретельно почистіть з допомогою щітки та миючого засобу усі ніжки столів та стільців",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Вівторок",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-w1",
+    title: "Генеральне прибирання станції",
+    description: "Генеральне прибирання станції офіціанта всередині",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Середа",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-th1",
+    title: "Чистка підлоги хімією",
+    description: "Чистимо за допомогою хімії підлогу. Замінюємо воду і миємо ще раз чистою",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Четвер",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-f1",
+    title: "Чистка сидінь за лавками",
+    description: "Почистити усі сидіння за лавками та пропилососити шпарини між сидіннями за 101-102-103",
+    category: "during-work",
+    difficulty: "medium",
+    day: "П'ятниця",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-sa1",
+    title: "Миття ліфта та поличок",
+    description: "Помийте шторку ліфта, ліфт у середині та зверху прорезиненою ганчіркою. Поличку біля ліфта помити ретельно з додаванням неохлору",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Субота",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-su1",
+    title: "Чистка подушок",
+    description: "Почистити всі подушки",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Неділя",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+
+  // ======= 1st Floor Opening Tasks =======
+  {
+    id: "1f-bo1",
+    title: "Перевірка світильників",
+    description: "Перевірте справність усіх світильників, включіть та виключіть вимикачі. Включіть світло над пивоварнею",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo2",
+    title: "Протирання світильників",
+    description: "Протріть світильники за 104-110 столами вологою мікрофіброю рожевого кольору",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo3",
+    title: "Протирання перегородки",
+    description: "Протерти від крихт та пилюки перегородку між 106-108 столом",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo4",
+    title: "Чистка тач-скріна",
+    description: "Протерти тач-скрін прорезиненою ганчіркою жовтого кольору",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo5",
+    title: "Чистка декорацій",
+    description: "Протріть підвіконники, декорацію Ковчег та мідну ливну у становку",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo6",
+    title: "Чистка жуйок",
+    description: "Селимо жуйки, під столами та на підлозі за допомогою шпателя для жуйок",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo7",
+    title: "Прибирання павутиння",
+    description: "Детально прибираємо усе павутиння за допомогою піпідастру",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo8",
+    title: "Чистка балок",
+    description: "Збризкуємо балки та мох чистою водою (стіл 104, кабіна 109-110)",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo9",
+    title: "Підготовка підставок",
+    description: "Розставляємо підставки для сумок, попередньо перевіривши їх на справність та чистоту",
+    category: "before-opening",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-bo10",
+    title: "Підготовка холодильника",
+    description: "Протираємо від крихт та дезинфікуємо розчином неохлору. Виставляємо температуру +2°C",
+    category: "before-opening",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+
+  // ======= 1st Floor Closing Tasks =======
+  {
+    id: "1f-cl1",
+    title: "Збір брудного посуду",
+    description: "Весь брудний посуд зносимо на мийку",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter", "helper"],
+    completed: false
+  },
+  {
+    id: "1f-cl2",
+    title: "Перекриття столів",
+    description: "Робимо перекриття столів",
+    category: "before-closing",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-cl3",
+    title: "Знесення хлібнички",
+    description: "Знести хлібничку на мийку",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter", "helper"],
+    completed: false
+  },
+  {
+    id: "1f-cl4",
+    title: "Перевірка обладнання",
+    description: "Перевірити на справність кораблики для рахунків, коробки для приборів",
+    category: "before-closing",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "1f-cl5",
+    title: "Прибирання станції презенту",
+    description: "Прибираємо станцію презенту, виключаємо тостерницю, виносимо сміття",
+    category: "before-closing",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+
+  // ======= 2nd Floor Tasks =======
+  {
+    id: "2f-m1",
+    title: "Миття вікон",
+    description: "Помийте вікна з використанням засобу для миття вікон та витерти насухо",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Понеділок",
+    station: "2 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "2f-t1",
+    title: "Чистка ніжок столів",
+    description: "Почистіть ніжки столів та стільців щіткою з використанням миючого засобу",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Вівторок",
+    station: "2 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "2f-w1",
+    title: "Пилососіння шпарин",
+    description: "Попилососити шпарини сидінь за 207-208 столом",
+    category: "during-work",
+    difficulty: "easy",
+    day: "Середа",
+    station: "2 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "2f-th1",
+    title: "Генеральне прибирання станцій",
+    description: "Генеральне прибирання станцій офіціанта зверху та в середині",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Четвер",
+    station: "2 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "2f-f1",
+    title: "Чистка світильників",
+    description: "Протріть усі світильники, тачскрін та телевізори прорезиновою ганчіркою",
+    category: "during-work",
+    difficulty: "medium",
+    day: "П'ятниця",
+    station: "2 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "2f-sa1",
+    title: "Миття ліфта",
+    description: "Помийте шторку ліфта, ліфт у середині та зверху, шахту ліфта прорезиненою ганчіркою",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Субота",
+    station: "2 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "2f-su1",
+    title: "Чистка картин",
+    description: "Протріть рами картин прорезиновою ганчіркою. Протріть картини за 208 столом",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Неділя",
+    station: "2 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+
+  // ======= 3rd Floor Tasks =======
+  {
+    id: "3f-m1",
+    title: "Миття вікон",
+    description: "Миття усіх вікон спеціальним засобом для миття скла",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Понеділок",
+    station: "3 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "3f-t1",
+    title: "Чистка ніжок меблів",
+    description: "Ретельно почистити з допомогою щітки та миючого засобу усі ніжки столів та стільців",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Вівторок",
+    station: "3 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "3f-w1",
+    title: "Миття черепиці",
+    description: "Помити черепицю над кабінетом",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Середа",
+    station: "3 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "3f-th1",
+    title: "Чистка люстр",
+    description: "Протерти усі люстри та деревяні перетинки",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Четвер",
+    station: "3 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "3f-f1",
+    title: "Миття балок",
+    description: "Ретельно вимити балки та огорожу на 3 поверсі",
+    category: "during-work",
+    difficulty: "hard",
+    day: "П'ятниця",
+    station: "3 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "3f-sa1",
+    title: "Чистка ліфтів",
+    description: "Чистимо ліфти, поличку дерев'яну що перед ліфтом помити ретельно із спец. засобом",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Субота",
+    station: "3 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "3f-su1",
+    title: "Чистка диванів",
+    description: "Пропилососити шпарини диванів",
+    category: "during-work",
+    difficulty: "easy",
+    day: "Неділя",
+    station: "3 поверх",
+    forRoles: ["waiter"],
+    completed: false
+  },
+
+  // ======= Helper Tasks =======
   {
     id: "h1",
-    title: "Допомогти офіціанту під час відкриття",
-    description: "Протерти стакани, прибори, посуд",
+    title: "Допомога офіціантам",
+    description: "Допомогти офіціанту під час відкриття (до зборів)",
     category: "before-opening",
     difficulty: "medium",
     day: "ЗАВЖДИ",
     station: "1 поверх",
     forRoles: ["helper"],
-    completed: false,
+    completed: false
   },
   {
-    id: "w1",
-    title: "Обслуговувати гостей",
-    description: "Приймати замовлення та подавати страви",
+    id: "h2",
+    title: "Прибирання столів",
+    description: "Прибирати столи після гостей, швидко прибрати та протерти стіл",
     category: "during-work",
-    difficulty: "hard",
+    difficulty: "easy",
     day: "ЗАВЖДИ",
     station: "1 поверх",
-    forRoles: ["waiter"],
-    completed: false,
+    forRoles: ["helper"],
+    completed: false
   },
-]
+  {
+    id: "h3",
+    title: "Поповнення серветок",
+    description: "Слідкувати щоб на столах завжди були серветки",
+    category: "during-work",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h4",
+    title: "Збір брудного посуду",
+    description: "Допомога у зборі та перенесенні брудного посуду на мийку",
+    category: "during-work",
+    difficulty: "easy",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h5",
+    title: "Підтримання чистоти",
+    description: "Миття та дезинфекція поверхонь у залі та кухні",
+    category: "during-work",
+    difficulty: "medium",
+    day: "ЗАВЖДИ",
+    station: "1 поверх",
+    forRoles: ["helper"],
+    completed: false
+  },
+
+
+
+
+    // ======= Передня Station Tasks =======
+  {
+    id: "front-m1",
+    title: "Чистка спинок диванів",
+    description: "Почистити спинки диванів за допомогою засобу з щіткою",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Понеділок",
+    station: "Передня",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "front-t1",
+    title: "Чистка ніжок меблів",
+    description: "Почистіть ніжки столів та стільців щіткою з використанням миючого засобу",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Вівторок",
+    station: "Передня",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "front-w1",
+    title: "Чистка шкатулок для приборів",
+    description: "Помити щітками шкатулки для приборів",
+    category: "during-work",
+    difficulty: "easy",
+    day: "Середа",
+    station: "Передня",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "front-th1",
+    title: "Миття підлоги",
+    description: "Помийте підлогу з використанням щітки та миючого засобу",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Четвер",
+    station: "Передня",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "front-f1",
+    title: "Чистка жуйок та столів",
+    description: "Почистіть жуйки шпателем, помийте ганчіркою столи знизу",
+    category: "during-work",
+    difficulty: "hard",
+    day: "П'ятниця",
+    station: "Передня",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "front-sa1",
+    title: "Чистка світильників",
+    description: "Помити світильники зовні та всередині",
+    category: "during-work",
+    difficulty: "medium",
+    day: "Субота",
+    station: "Передня",
+    forRoles: ["waiter"],
+    completed: false
+  },
+  {
+    id: "front-su1",
+    title: "Генеральне прибирання станції",
+    description: "Генеральне прибирання станції офіціанта всередині",
+    category: "during-work",
+    difficulty: "hard",
+    day: "Неділя",
+    station: "Передня",
+    forRoles: ["waiter"],
+    completed: false
+  },
+];
 
 const allSellDishes: SellDish[] = [
   { 
@@ -83,7 +604,7 @@ const allSellDishes: SellDish[] = [
 const helperStations = ["Гриль", "Нижній бар", "Верхній бар", "Кухня"];
 const waiterStations = [
   "1 поверх", "2 поверх", "3 поверх", 
-  "Двір-бар", "Яруса", "Пивниця", 
+  "Передня", "Яруса", "Пивниця", 
   "Світлиця", "Гірниця"
 ];
 
@@ -118,7 +639,11 @@ export default function TasksPage() {
 
   // Filter tasks based on role, station, and day
   const userTasks = tasks.filter((task) => {
-    const roleMatch = !isAdmin ? task.forRoles.includes(userRole) : true
+    const roleMatch = !isAdmin
+      ? (userRole === "waiter" || userRole === "helper")
+        ? task.forRoles.includes(userRole)
+        : false
+      : true
     const stationMatch = selectedStation ? task.station === selectedStation : true
     const dayMatch = selectedDay === "ЗАВЖДИ" || task.day === selectedDay || task.day === "ЗАВЖДИ"
     return roleMatch && stationMatch && dayMatch
@@ -276,7 +801,7 @@ export default function TasksPage() {
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
                               <h4 className="font-medium">{task.title}</h4>
-                              <Badge variant="secondary">{task.station}</Badge>
+                              <Badge>{task.station}</Badge>
                             </div>
                             <p className="text-sm text-gray-600">{task.description}</p>
                             <div className="flex items-center mt-2 space-x-2 text-sm">
@@ -423,18 +948,14 @@ export default function TasksPage() {
                     <p className="text-sm text-gray-600">Ціль: 10 порцій</p>
                   </div>
                   <div className="flex items-center">
-                    <Button 
-                      variant="outline" 
-                      size="icon"
+                    <Button
                       onClick={() => updateDishQuantity(dish.id, false)}
                       disabled={dish.quantity === 0}
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
                     <span className="mx-4 font-medium">{dish.quantity}</span>
-                    <Button 
-                      variant="outline" 
-                      size="icon"
+                    <Button
                       onClick={() => updateDishQuantity(dish.id, true)}
                     >
                       <Plus className="h-4 w-4" />
