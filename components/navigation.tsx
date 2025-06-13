@@ -35,13 +35,13 @@ const allNavItems = [
   { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
   { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
 
-  { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["waiter", "helper"] },
-  { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
-
   { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["helper"] }, 
-  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
+
   { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper"] }, 
+    { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
+    { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["waiter", "helper"] },
   
+    { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, 
   { href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
