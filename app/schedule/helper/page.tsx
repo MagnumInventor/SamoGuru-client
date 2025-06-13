@@ -636,7 +636,7 @@ export default function SchedulePage() {
         </div>
         <div className="flex items-center space-x-2">
           <div className="w-6 h-6 bg-gray-900 text-white rounded flex items-center justify-center text-xs font-medium">
-            E
+            E-half/full
           </div>
           <span className="text-sm text-gray-600">Додаткова зміна</span>
         </div>
