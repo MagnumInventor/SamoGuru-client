@@ -12,10 +12,17 @@ import Image from "next/image"
 const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
 
 // Month name
-const currentMonth = "Червень"
+const currentMonth = "Червень (актуальний станом на 12.05.2025)"
+
+// Тип для розкладу помічників
+type HelperScheduleData = {
+  [employee: string]: {
+    [day: number]: string
+  }
+}
 
 // Helper schedule data - 14 workers from Максим Скак to Ярослав Борода (from IMG_5159)
-const helperScheduleData = {
+const helperScheduleData: HelperScheduleData = {
    "Максим Скак.": {
     1: "0",
     2: "0",

@@ -12,7 +12,7 @@ import Image from "next/image"
 const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
 
 // МІСЯЦЬ
-const currentMonth = "Червень 2025"
+const currentMonth = "Червень 2025 (актуальний станом на 12.05.2025)"
 
 // Тип для розкладу офіціантів
 type WaiterSchedule = {
@@ -21,10 +21,9 @@ type WaiterSchedule = {
   }
 }
 
-// Combined waiter schedule data from IMG_5233 - both sections combined
 const waiterScheduleData: WaiterSchedule = {
-  // верхній список з IMG_5233
-  
+
+// ПЕРША ЗМІНА (1,2,3)
   "Ігор": {
     "1": "1",
     "2": "0",
@@ -904,14 +903,16 @@ export default function WaiterSchedulePage() {
           <span className="text-sm text-gray-600">Денна зміна (9:00-23:00)</span>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-green-100 border border-green-200 rounded flex items-center justify-center text-xs font-medium text-green-800">
-            16
+          <div className="w-6 h-6 bg-gray-900 rounded">
+            <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-grey-100">
+            E
           </div>
-          <span className="text-sm text-gray-600">Вечірня зміна (16:00-23:00)</span>
+          </div>
+          <span className="text-sm text-gray-900">Додаткова повна зміна</span>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-gray-800 rounded"></div>
-          <span className="text-sm text-gray-600">Вихідний</span>
+          <div className="w-6 h-6 bg-gray-200 border border-grey-400 rounded"></div>
+          <span className="text-sm text-gray-900">Вихідний</span>
         </div>
       </div>
 
