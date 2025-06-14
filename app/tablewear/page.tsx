@@ -44,10 +44,11 @@ const dishwareData = {
         items: [
           {
             id: 1,
-            name: "Глибокі тарілки",
-            description: "Для супів та бульйонів",
+            name: "ВСІ глибокі тарілки",
+            description: "Для супів, бульйонів та салатів",
             station: "Кухня",
-            dish: { name: "Борщ", link: "/dishes/borscht" },
+            dish: { name: "Сала", link: "/dishes/borscht" },
+            disg:
             searchTerms: ["тарілка", "суп", "глибока", "кухня"],
           },
           {
