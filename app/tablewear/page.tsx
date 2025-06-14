@@ -22,7 +22,7 @@ type DishwareItem = {
   id: number
   name: string
   description: string
-  station: "Верхній бар" | "Нижній бар" | "Кухня" | "Гриль"
+  station: "Верхній бар" | "Кімната персоналу" | "Кухня" | "Гриль"
   dish?: {
     name: string
     link: string
@@ -137,32 +137,16 @@ const dishwareData = {
         ],
       },
       {
-        name: "Нижній бар",
+        name: "Кімната персоналу",
         icon: <GlassWater className="h-4 w-4 mr-1" />,
         items: [
           {
-            id: 11,
-            name: "Склянки для соків",
-            description: "Для свіжовичавлених соків та фрешів",
-            station: "Нижній бар",
-            dish: { name: "Апельсиновий фреш", link: "/drinks/juice" },
-            searchTerms: ["склянка", "сік", "нижній бар"],
-          },
-          {
-            id: 12,
-            name: "Шоти",
-            description: "Для міцних напоїв та шотів",
-            station: "Нижній бар",
-            dish: { name: "Текіла", link: "/drinks/tequila" },
-            searchTerms: ["шот", "міцний", "нижній бар"],
-          },
-          {
             id: 13,
-            name: "Келихи для шампанського",
-            description: "Для ігристих вин та шампанського",
-            station: "Нижній бар",
-            dish: { name: "Шампанське", link: "/drinks/champagne" },
-            searchTerms: ["келих", "шампанське", "нижній бар"],
+            name: "Прибори для персоналу",
+            description: "Відрізняються від звичайних та десертних приборів своєю формою, матеріалом, ручкою, тд",
+            station: "Кімната персоналу",
+            dish: { name: "Їжа для персоналу", link: "/food/personal" },
+            searchTerms: ["пластикові тарілки", "ножі", "вилки", "ложки"],
           },
         ],
       },
