@@ -14,8 +14,15 @@ const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
 // МІСЯЦЬ
 const currentMonth = "Червень 2025"
 
+// Тип для розкладу офіціантів
+type WaiterSchedule = {
+  [employee: string]: {
+    [day: string]: string
+  }
+}
+
 // Combined waiter schedule data from IMG_5233 - both sections combined
-const waiterScheduleData = {
+const waiterScheduleData: WaiterSchedule = {
   // верхній список з IMG_5233
   
   "Ігор": {
@@ -865,13 +872,18 @@ export default function WaiterSchedulePage() {
 
   const getShiftColor = (shift: string | null) => {
     if (shift === "1") return "bg-blue-100 text-blue-800 border-blue-200"
-    if (shift === "0") return "bg-gray-800 text-white" // day off
-    if (shift === "0") return "bg-black-500 text-white" 
+    if (shift === "16") return "bg-green-100 text-green-800 border-green-200"
+    if (shift === "extra-1") return "bg-gray-900 text-white border-gray-900" 
+    if (shift === "extra-16") return "bf-gray-900 text-white border-gray-900" // Black for extra shifts
+    if (shift === "0") return "bg-gray-100 text-gray-400 border-gray-200" // Light gray for rest
     return "bg-gray-100 text-gray-800 border-gray-200"
   }
 
   const getShiftText = (shift: string | null) => {
     if (shift === "1") return "1"
+    if (shift === "16") return "16"
+    if (shift === "extra-16") return "E-16" // E for Extra
+    if (shift === "extra-1") return "E-1"
     if (shift === "0") return ""
     return ""
   }

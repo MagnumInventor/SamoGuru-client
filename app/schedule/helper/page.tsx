@@ -601,8 +601,8 @@ export default function SchedulePage() {
   const getShiftText = (shift: string | null) => {
     if (shift === "1") return "1"
     if (shift === "16") return "16"
-    if (shift === "extra-16") return "E-Half" // E for Extra
-    if (shift === "extra-1") return "E-Full"
+    if (shift === "extra-16") return "E-16" // E for Extra
+    if (shift === "extra-1") return "E-1"
     if (shift === "0") return ""
     return ""
   }

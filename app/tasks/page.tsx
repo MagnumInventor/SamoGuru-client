@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
-import { Button } from "@/components/ui/button" // Added import
+import { Button } from "@/components/ui/button" 
 import {
   CheckCircle2,
   Clock,
@@ -19,7 +19,7 @@ import {
 } from "lucide-react"
 import { useAuth } from "@/lib/auth"
 
-interface Task {
+interface WaiterTask {
   id: string
   title: string
   description: string
@@ -33,18 +33,261 @@ interface Task {
   completedAt?: Date
 }
 
-interface SellDish {
+interface HelperTask {
   id: string
   title: string
-  quantity: number
-  forRoles: ("waiter" | "helper")[]
+  description: string
+  category: "before-opening" | "during-work" | "before-closing"
+  difficulty: "easy" | "medium" | "hard"
+  station: string
+  forRoles: ("helper")[]
   completed: boolean
   completedBy?: string
   completedAt?: Date
 }
 
-const allTasks: Task[] = [
-// ======= 1st Floor Daily Tasks =======
+interface SellDish {
+  id: string
+  title: string
+  quantity: number
+  forRoles: ("waiter")[]
+  completed: boolean
+  completedBy?: string
+  completedAt?: Date
+}
+
+
+// ВИБІР СТАНЦІЇ
+const helperStations = ["Гриль", "Нижній бар", "Верхній бар", "Кухня"];
+const waiterStations = [
+  "1 поверх", "2 поверх", "3 поверх", 
+  "Передня", "Яруса", "Пивниця", 
+  "Світлиця", "Гірниця"
+];
+
+// ВИБІР ДНЯ ТИЖНЯ
+const days = [
+  "Понеділок", "Вівторок", "Середа", 
+  "Четвер", "П'ятниця", "Субота", 
+  "Неділя", "ЗАВЖДИ"
+];
+
+
+const allHelperTasks: HelperTask[] = [
+    // ======= Helper Tasks =======
+
+// Гриль Station Tasks
+  {
+    id: "h1",
+    title: "Допомога офіціантам",
+    description: "Сервірування страв, та рознесення їх до офіціантів",
+    category: "before-opening",
+    difficulty: "medium",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h2",
+    title: "Прибирання станції",
+    description: "Пітримання чистоти на станції Гриль (біля ліфта), за потреби миття та дезинфекція поверхонь",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h3",
+    title: "Натираня столових приборів",
+    description: "Прибори для сервірування страв, мають бути натерті до блиску",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Гриль",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h4",
+    title: "Збір брудного посуду",
+    description: "Допомога у зборі та перенесенні брудного посуду на мийку",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h5",
+    title: "Управління ліфтом",
+    description: "Брудний посуд з ліфту на мийку, чистий посуд з мийки на ліфт",
+    category: "during-work",
+    difficulty: "hard",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+
+
+// Нижній бар Station Tasks
+  {
+    id: "h1",
+    title: "Допомога офіціантам",
+    description: "Сервірування напоїв, та рознесення їх до офіціантів",
+    category: "before-opening",
+    difficulty: "medium",
+    station: "Нижній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h3",
+    title: "Натираня бокалів, келихів та стаканів",
+    description: "Посуд для напоїв, мають бути натерті до блиску",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Нижній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h4",
+    title: "Збір брудного посуду",
+    description: "Допомога у зборі та перенесенні брудного посуду зі столу (біля сходів на двір) на мийку (станція Гриль)",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Нижній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h5",
+    title: "Перенесення посуду",
+    description: "За прохання бармена перенести чистий посуд з верхнього бару на нижній бар",
+    category: "during-work",
+    difficulty: "hard",
+    station: "Нижній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+
+
+// Верхній бар Station Tasks
+  {
+    id: "h1",
+    title: "Допомога офіціантам",
+    description: "Сервірування страв та напоїв, відповідне рознесення їх до офіціантів",
+    category: "before-opening",
+    difficulty: "medium",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+    {
+    id: "h5",
+    title: "Управління ліфтом",
+    description: "Брудний посуд з станцій на ліфт, чистий посуд (для напоїв) з ліфту на барну стійку (верхній/нижній бар)",
+    category: "during-work",
+    difficulty: "hard",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h3",
+    title: "Натираня бокалів, келихів та стаканів",
+    description: "Посуд для напоїв, мають бути натерті до блиску",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+    {
+    id: "h3",
+    title: "Розставлення чистого, натертого посуду на полички верхнього бару",
+    description: "Посуд для напоїв, мають бути натерті до блиску",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h5",
+    title: "Перенесення посуду",
+    description: "За прохання бармена перенести чистий посуд з верхнього бару на нижній бар",
+    category: "during-work",
+    difficulty: "hard",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h2",
+    title: "Прибирання станції",
+    description: "Пітримання чистоти на станції Гриль (барна стійка), за потреби миття та дезинфекція поверхонь",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Верхній бар",
+    forRoles: ["helper"],
+    completed: false
+  },
+
+  // Нижня кухня Station Tasks
+  {
+    id: "h1",
+    title: "Допомога офіціантам",
+    description: "Сервірування страв, відповідне рознесення їх до офіціантів (501-808 столи)",
+    category: "before-opening",
+    difficulty: "medium",
+    station: "Кухня",
+    forRoles: ["helper"],
+    completed: false
+  },
+    {
+    id: "h5",
+    title: "Чергування КП (кімнати персоналу)",
+    description: "Регулярно перевіряти стан чистоти на КП, прибирати сміття, мити поверхні, складати одяг",
+    category: "during-work",
+    difficulty: "medium",
+    station: "Кухня",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h3",
+    title: "Натираня бокалів, келихів та стаканів",
+    description: "Посуд для напоїв, мають бути натерті до блиску",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Кухня",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h5",
+    title: "Перенесення посуду",
+    description: "За прохання бармена перенести чистий посуд з верхнього бару на нижній бар",
+    category: "during-work",
+    difficulty: "hard",
+    station: "Кухня",
+    forRoles: ["helper"],
+    completed: false
+  },
+  {
+    id: "h2",
+    title: "Прибирання станції",
+    description: "Пітримання чистоти на станції Гриль (барна стійка), за потреби миття та дезинфекція поверхонь",
+    category: "during-work",
+    difficulty: "easy",
+    station: "Кухня",
+    forRoles: ["helper"],
+    completed: false
+  },
+]
+
+const allWaiterTasks: WaiterTask[] = [
   {
     id: "1f-m1",
     title: "Миття усіх вікон",
@@ -450,66 +693,6 @@ const allTasks: Task[] = [
     completed: false
   },
 
-  // ======= Helper Tasks =======
-  {
-    id: "h1",
-    title: "Допомога офіціантам",
-    description: "Допомогти офіціанту під час відкриття (до зборів)",
-    category: "before-opening",
-    difficulty: "medium",
-    day: "ЗАВЖДИ",
-    station: "1 поверх",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h2",
-    title: "Прибирання столів",
-    description: "Прибирати столи після гостей, швидко прибрати та протерти стіл",
-    category: "during-work",
-    difficulty: "easy",
-    day: "ЗАВЖДИ",
-    station: "1 поверх",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h3",
-    title: "Поповнення серветок",
-    description: "Слідкувати щоб на столах завжди були серветки",
-    category: "during-work",
-    difficulty: "easy",
-    day: "ЗАВЖДИ",
-    station: "1 поверх",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h4",
-    title: "Збір брудного посуду",
-    description: "Допомога у зборі та перенесенні брудного посуду на мийку",
-    category: "during-work",
-    difficulty: "easy",
-    day: "ЗАВЖДИ",
-    station: "1 поверх",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h5",
-    title: "Підтримання чистоти",
-    description: "Миття та дезинфекція поверхонь у залі та кухні",
-    category: "during-work",
-    difficulty: "medium",
-    day: "ЗАВЖДИ",
-    station: "1 поверх",
-    forRoles: ["helper"],
-    completed: false
-  },
-
-
-
-
     // ======= Передня Station Tasks =======
   {
     id: "front-m1",
@@ -600,20 +783,8 @@ const allSellDishes: SellDish[] = [
   },
 ]
 
-// Station options
-const helperStations = ["Гриль", "Нижній бар", "Верхній бар", "Кухня"];
-const waiterStations = [
-  "1 поверх", "2 поверх", "3 поверх", 
-  "Передня", "Яруса", "Пивниця", 
-  "Світлиця", "Гірниця"
-];
-
-// Days for dropdown
-const days = [
-  "Понеділок", "Вівторок", "Середа", 
-  "Четвер", "П'ятниця", "Субота", 
-  "Неділя", "ЗАВЖДИ"
-];
+const allTasks = [...allWaiterTasks, ...allHelperTasks]
+type Task = WaiterTask | HelperTask
 
 export default function TasksPage() {
   const { user } = useAuth()
@@ -641,11 +812,14 @@ export default function TasksPage() {
   const userTasks = tasks.filter((task) => {
     const roleMatch = !isAdmin
       ? (userRole === "waiter" || userRole === "helper")
-        ? task.forRoles.includes(userRole)
+        ? task.forRoles.includes(userRole as any)
         : false
       : true
     const stationMatch = selectedStation ? task.station === selectedStation : true
-    const dayMatch = selectedDay === "ЗАВЖДИ" || task.day === selectedDay || task.day === "ЗАВЖДИ"
+    const dayMatch =
+      "day" in task
+        ? selectedDay === "ЗАВЖДИ" || task.day === selectedDay || task.day === "ЗАВЖДИ"
+        : true
     return roleMatch && stationMatch && dayMatch
   })
 
@@ -806,7 +980,7 @@ export default function TasksPage() {
                             <p className="text-sm text-gray-600">{task.description}</p>
                             <div className="flex items-center mt-2 space-x-2 text-sm">
                               {getDifficultyIcon(task.difficulty)}
-                              <span>{task.day}</span>
+                              {"day" in task && <span>{task.day}</span>}
                               {task.completedBy && (
                                 <span className="text-green-600">Виконано: {task.completedBy}</span>
                               )}
@@ -920,7 +1094,7 @@ export default function TasksPage() {
                         <p className="text-sm text-gray-600 mt-1">{task.description}</p>
                         <div className="flex items-center mt-2 space-x-2 text-sm">
                           {getDifficultyIcon(task.difficulty)}
-                          <span className="text-gray-500">{task.day}</span>
+                          {"day" in task && <span className="text-gray-500">{task.day}</span>}
                         </div>
                       </div>
                     </div>
