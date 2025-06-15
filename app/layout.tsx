@@ -8,8 +8,8 @@ import { ClientLayout } from "@/components/client-layout"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "САМоГуру - Платформа для ресторанного персоналу Ковчегу",
-  description: "Управління розкладом, завданнями, навчання та тестування для ресторанного персоналу",
+  title: "САМоГуру - Платформа для персоналу ресторану Ковчег",
+  description: "Повноцінний путівник для стажерів та помічників, корисні функції для персоналу: інтерактивний розклад роботи, завдання, навчання, тестування, та багато іншого.",
 }
 
 export default function RootLayout({

@@ -22,7 +22,7 @@ const tutorials = {
     },
     {
       id: 2,
-      title: "Салат Вах-Вах: секрети приготування",
+      title: "Салат Вах-Вах",
       description: "Унікальний грузинський салат з 4 різними соусами",
       type: "video",
       duration: "15 хв",
@@ -32,7 +32,7 @@ const tutorials = {
     },
     {
       id: 3,
-      title: "Цезар з креветкою: класична техніка",
+      title: "Цезар з креветкою, чим відрізняється від Нового Цезарідзе",
       description: "Правильне приготування соусу та подача креветок",
       type: "video",
       duration: "10 хв",
@@ -54,22 +54,12 @@ const tutorials = {
   grill: [
     {
       id: 5,
-      title: "Мангалиця у вогні: робота з відкритим вогнем",
+      title: "Мангалиця у вогні",
       description: "Техніка приготування мангалиці на відкритому вогні",
       type: "video",
       duration: "25 хв",
       difficulty: "Складний",
       rating: 4.9,
-      thumbnail: "/placeholder.svg?height=200&width=300",
-    },
-    {
-      id: 6,
-      title: "Морський окунь в печі Пурне",
-      description: "Особливості роботи з грузинською піччю та рибою",
-      type: "video",
-      duration: "20 хв",
-      difficulty: "Середній",
-      rating: 4.8,
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
     {
@@ -97,7 +87,7 @@ const tutorials = {
     {
       id: 9,
       title: "Чебуреки: робота з тістом та фритюром",
-      description: "Техніка розкочування тіста та правильне смаження",
+      description: "Техніка розкочування тіста та смаження",
       type: "video",
       duration: "18 хв",
       difficulty: "Середній",
@@ -116,8 +106,8 @@ const tutorials = {
     },
     {
       id: 11,
-      title: "Картопля фрі: секрети хрусткості",
-      description: "Подвійне смаження та правильна подача",
+      title: "Картопля фрі",
+      description: "Смаження та подача",
       type: "video",
       duration: "14 хв",
       difficulty: "Легкий",
@@ -129,7 +119,7 @@ const tutorials = {
     {
       id: 12,
       title: "М'ясна дошка: компонування та подача",
-      description: "Правильне розміщення компонентів та температурна подача",
+      description: "Правильне розміщення компонентів",
       type: "video",
       duration: "20 хв",
       difficulty: "Середній",
@@ -170,7 +160,7 @@ const tutorials = {
   soups: [
     {
       id: 16,
-      title: "Бульйон з півня: основи наваристості",
+      title: "Бульйон з півня",
       description: "Техніка варіння прозорого наваристого бульйону",
       type: "video",
       duration: "25 хв",
@@ -180,7 +170,7 @@ const tutorials = {
     },
     {
       id: 17,
-      title: "Харчо з ягнятини: грузинські спеції",
+      title: "Харчо з ягнятини",
       description: "Робота з традиційними грузинськими спеціями",
       type: "video",
       duration: "20 хв",
@@ -190,8 +180,8 @@ const tutorials = {
     },
     {
       id: 18,
-      title: "Журик: польський суп з ковбасою",
-      description: "Особливості приготування закваски та подачі",
+      title: "Журик",
+      description: "Особливості приготування та подачі",
       type: "video",
       duration: "18 хв",
       difficulty: "Середній",
@@ -211,18 +201,8 @@ const tutorials = {
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
     {
-      id: 20,
-      title: "Начинка для хінкалі: пропорції м'яса",
-      description: "Правильні пропорції м'яса та спецій",
-      type: "video",
-      duration: "12 хв",
-      difficulty: "Середній",
-      rating: 4.8,
-      thumbnail: "/placeholder.svg?height=200&width=300",
-    },
-    {
       id: 21,
-      title: "Смажені хінкалі: унікальна техніка",
+      title: "Смажені хінкалі: унікальна техніка (єдина в Тернополі)",
       description: "Особливості смаження хінкалі до хрусткої скоринки",
       type: "video",
       duration: "14 хв",
@@ -232,8 +212,8 @@ const tutorials = {
     },
     {
       id: 22,
-      title: "Хінкалі з сиром: сирна начинка",
-      description: "Робота з різними видами сиру та їх поєднання",
+      title: "Хінкалі з сиром",
+      description: "Робота з 7 видами сиру та їх поєднання",
       type: "video",
       duration: "16 хв",
       difficulty: "Середній",
@@ -244,8 +224,8 @@ const tutorials = {
   desserts: [
     {
       id: 23,
-      title: "Тірамісу: класична техніка",
-      description: "Приготування маскарпоне крему та збирання десерту",
+      title: "Тірамісу",
+      description: "Приготування маскарпоне крему та cthdshedfyya десерту",
       type: "video",
       duration: "20 хв",
       difficulty: "Середній",
@@ -263,19 +243,9 @@ const tutorials = {
       thumbnail: "/placeholder.svg?height=200&width=300",
     },
     {
-      id: 25,
-      title: "Еклери: заварне тісто та крем",
-      description: "Техніка приготування заварного тіста та начинок",
-      type: "video",
-      duration: "30 хв",
-      difficulty: "Складний",
-      rating: 4.7,
-      thumbnail: "/placeholder.svg?height=200&width=300",
-    },
-    {
       id: 26,
-      title: "Чізкейк: робота з сиром філадельфія",
-      description: "Правильна консистенція та запікання чізкейка",
+      title: "Чіколяда",
+      description: "Поєднання шоколадного тістечка з морозтивом",
       type: "video",
       duration: "22 хв",
       difficulty: "Середній",

@@ -45,10 +45,10 @@ const allNavItems = [
   
     { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, 
-  { href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
+  //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
   
-  { href: "/p&p", label: "Формальності", icon: TrendingUp, roles: ["helper", "waiter", "admin"] },
+  { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter", "admin"] },
 ]
 
 export function Navigation() {

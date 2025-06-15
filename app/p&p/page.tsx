@@ -31,7 +31,6 @@ export default function LegalDocumentsPage() {
           </TabsTrigger>
         </TabsList>
 
-        {/* Privacy Policy */}
         <TabsContent value="privacy">
           <Card className="mb-6 border-blue-200">
             <CardHeader className="pb-3">
