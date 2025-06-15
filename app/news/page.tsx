@@ -4,7 +4,18 @@ import { Button } from "@/components/ui/button"
 import { Newspaper, Users, Calendar, TrendingUp, Award, Coffee } from "lucide-react"
 import { demoNewsData } from "@/lib/demo-data"
 
-const news = demoNewsData
+type NewsArticle = {
+  id: number
+  title: string
+  description: string
+  category: string
+  date: string
+  author: string
+  priority?: string
+  image?: string
+}
+
+const news: NewsArticle[] = demoNewsData
 
 const announcements = [
   {
@@ -162,7 +173,7 @@ export default function NewsPage() {
                   <Badge className={getCategoryColor(article.category)}>{getCategoryText(article.category)}</Badge>
                 </div>
                 <div className="absolute top-4 right-4">
-                  <Badge className={getPriorityColor(article.priority)}>
+                  <Badge className={getPriorityColor(article.priority ?? "")}>
                     {article.priority === "high" && "Важливо"}
                     {article.priority === "medium" && "Середньо"}
                     {article.priority === "low" && "Інформація"}
@@ -173,18 +184,6 @@ export default function NewsPage() {
                 <CardTitle className="text-lg">{article.title}</CardTitle>
                 <CardDescription>{article.description}</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
-                  <div className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {article.date}
-                  </div>
-                  <div>{article.author}</div>
-                </div>
-                <Button variant="outline" className="w-full border-orange-200 text-orange-600 hover:bg-orange-50">
-                  Читати повністю
-                </Button>
-              </CardContent>
             </Card>
           ))}
         </div>
