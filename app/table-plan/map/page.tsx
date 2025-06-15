@@ -166,7 +166,7 @@ export default function TablePlanMapPage() {
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
               src="/images/scheme/400s.png"
-              alt="Схема столиків 300s - 3 поверх"
+              alt="Схема столиків 400s - 1 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
           </div>
