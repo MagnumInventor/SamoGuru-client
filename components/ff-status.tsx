@@ -13,7 +13,12 @@ export default function FFStatus() {
     { name: "Меню ресторану", status: "ready", type: "client" },
     { name: "Розклад роботи", status: "ready", type: "client" },
     { name: "План столиків", status: "ready", type: "client" },
+        { name: "Список завданнь", status: "ready", type: "client" },
     { name: "Тестування знань", status: "ready", type: "client" },
+
+
+
+
     { name: "Реєстрація користувачів", status: "ff", type: "server" },
     { name: "API для розкладу", status: "ff", type: "server" },
     { name: "Завантаження відео", status: "ff", type: "server" },

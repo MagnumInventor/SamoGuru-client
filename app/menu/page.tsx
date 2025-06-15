@@ -987,5 +987,3 @@ export default function MenuPage() {
     </div>
   )
 }
-
-// ...menuCategories object goes here...

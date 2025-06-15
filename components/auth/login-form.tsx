@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useAuth } from "@/lib/auth"
 import { Eye, EyeOff, LogIn, Info } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
@@ -72,29 +71,10 @@ export function LoginForm() {
             </Button>
           </form>
 
-          {/* Demo credentials info */}
-          <Alert className="mt-6 border-blue-200 bg-blue-50">
-            <Info className="h-4 w-4" />
-            <AlertDescription className="text-sm">
-              <div className="font-medium mb-2">Тестові паролі:</div>
-              <div className="space-y-1 text-xs">
-                <div>
-                  <strong>samoguru123</strong> - Адміністратор
-                </div>
-                <div>
-                  <strong>waiter123</strong> - Офіціант
-                </div>
-                <div>
-                  <strong>helper123</strong> - Помічник
-                </div>
-              </div>
-            </AlertDescription>
-          </Alert>
-
           {/* FF Notice */}
           <div className="mt-4 p-3 bg-gray-100 rounded-md">
             <div className="text-xs text-gray-600 text-center">
-              <strong>FF:</strong> Реєстрація та серверна автентифікація будуть додані пізніше
+              <strong>FF:</strong> Повноцінна реєстрація та серверна автентифікація будуть додані пізніше
             </div>
           </div>
         </CardContent>

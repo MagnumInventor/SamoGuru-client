@@ -44,7 +44,7 @@ export default function HomePage() {
             <CardDescription>Відео/текстові інструкції для вивчення меню з кухні та бару</CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/tutorials">
+            <Link href="/menu">
               <Button className="w-full bg-orange-500 hover:bg-orange-600">Почати навчання</Button>
             </Link>
           </CardContent>
@@ -77,7 +77,6 @@ export default function HomePage() {
         </Card>
       </section>
 
-      {/* FF Status Section */}
       <section>
         <FFStatus />
       </section>
