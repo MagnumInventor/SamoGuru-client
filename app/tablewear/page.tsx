@@ -48,7 +48,7 @@ const dishwareData = {
             description: "Для супів, бульйонів та салатів",
             station: "Кухня",
             dish: { name: "Сала", link: "/dishes/borscht" },
-            disg:
+            disg: { name: "Глибока тарілка", link: "/dishes/deep-plate" },
             searchTerms: ["тарілка", "суп", "глибока", "кухня"],
           },
           {
