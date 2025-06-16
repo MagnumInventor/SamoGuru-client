@@ -22,7 +22,7 @@ type DishwareItem = {
   id: number
   name: string
   description: string
-  station: "Верхній бар" | "Кімната персоналу" | "Кухня" | "Гриль"
+  station: "Верхній бар" | "Нижній бар" | "Кімната персоналу" | "Кухня" | "Гриль"
   dish?: {
     name: string
     link: string

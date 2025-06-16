@@ -181,12 +181,17 @@ export default function TablePlanMapPage() {
           <div className="mt-3 p-3 bg-purple-50 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <UserCheck className="h-4 w-4 text-purple-600" />
-              <span className="font-medium text-purple-800">Станції помічників: <strong>Гриль</strong> в Ковчезі</span>
+              <span className="font-medium text-purple-800">Станції персоналу:</span>
             </div>
+
             <div className="grid grid-cols-1 gap-2 text-sm">
               <div className="flex items-center gap-1">
                 <Users className="h-3 w-3 text-green-600" />
                 <span><strong>Офіціанти:</strong> Бар-двір</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Users className="h-3 w-3 text-orange-600" />
+                <span><strong>Помічники:</strong> Гриль</span>
               </div>
             </div>
           </div>
