@@ -24,7 +24,7 @@ const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: str
   admin123: { role: "admin", name: "Адміністратор", surname: "системи" },
   waiter123: { role: "waiter", name: "Офіціант", surname: "тестовий" },
   helper123: { role: "helper", name: "Помічник", surname: "робочий" },
-  treinee123: { role: "trainee", name: "Стажер", surname: "навчальний" },
+  trainee123: { role: "trainee", name: "Стажер", surname: "навчальний" },
 }
 
 
