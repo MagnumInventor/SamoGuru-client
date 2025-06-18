@@ -22,6 +22,7 @@ import {
   UtensilsCrossed,
   Coffee,
   CheckSquare,
+  Soup,
 } from "lucide-react"
 import { useAuth, getRoleDisplayName } from "@/lib/auth"
 
@@ -41,7 +42,7 @@ const allNavItems = [
 
   { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper"] }, 
     { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
-    { href: "/menu", label: "Меню", icon: UtensilsCrossed, roles: ["waiter", "helper"] },
+    { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter", "helper"] },
   
     { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, 
@@ -49,6 +50,20 @@ const allNavItems = [
   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
   
   { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter", "admin"] },
+
+
+  // МЕНЮ ДЛЯ СТАЖЕРІВ
+  { href: "/my-path/trainee", label: "Стажування", icon: User, roles: ["trainee"] },
+
+  { href: "/rules/trainee", label: "Правила", icon: FileText, roles: ["trainee"] },
+  { href: "/tasks/trainee", label: "Завдання", icon: CheckSquare, roles: ["trainee"] },
+  { href: "/table-plan/map", label: "План закладу", icon:  BookOpen, roles: ["trainee"] },
+  { href: "/serving", label: "Сервірування", icon:  Soup, roles: ["trainee"] },
+  { href: "/tablewear", label: "Посуд та ліфт", icon:  BookOpen, roles: ["trainee"] },
+
+    { href: "/tests/trainee/main.tsx", label: "Тестування", icon: Brain, roles: ["trainee"] },
+
+  { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["trainee"] }, 
 ]
 
 export function Navigation() {

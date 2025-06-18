@@ -25,11 +25,15 @@ export const demoScheduleData = {
       for (let day = 1; day <= 31; day++) {
         const random = Math.random()
         if (random < 0.3) {
-          scheduleData[employee][day] = null // day off
+          scheduleData[employee][day] = null // ВИХІДНИЙ
+        } else if (random < 0.5) {
+          scheduleData[employee][day] = "1" // ПОВНА ЗМІНА
         } else if (random < 0.7) {
-          scheduleData[employee][day] = "1" // day shift
+          scheduleData[employee][day] = "16" // 2 ЗМІНА
+        } else if (random < 0.85) {
+          scheduleData[employee][day] = "16-extra" // ДОДАТКОВА НЕПОВНА ЗМІНА
         } else {
-          scheduleData[employee][day] = "16" // night shift
+          scheduleData[employee][day] = "1-extra" // ДОДАТКОВА ПОВНА ЗМІНА
         }
       }
     })

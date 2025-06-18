@@ -8,7 +8,7 @@ export interface User {
   firstName: string
   lastName: string
   phone: string
-  role: "waiter" | "helper" | "admin"
+  role: "waiter" | "helper" | "admin" | "trainee"
   isAuthenticated: boolean
 }
 
@@ -19,11 +19,12 @@ interface AuthStore {
   isAuthenticated: () => boolean
 }
 
-// ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
+// ТИМЧАСОВИЙ ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
 const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: string }> = {
   admin123: { role: "admin", name: "Адміністратор", surname: "системи" },
   waiter123: { role: "waiter", name: "Офіціант", surname: "тестовий" },
-  helper123: { role: "helper", name: "Помічник", surname: "навчальний" },
+  helper123: { role: "helper", name: "Помічник", surname: "робочий" },
+  treinee123: { role: "trainee", name: "Стажер", surname: "навчальний" },
 }
 
 

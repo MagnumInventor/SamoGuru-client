@@ -7,7 +7,7 @@ import { LoginForm } from "./login-form"
 
 interface ProtectedRouteProps {
   children: React.ReactNode
-  requiredRole?: "waiter" | "helper" | "admin"
+  requiredRole?: "waiter" | "helper" | "admin" | "trainee "
 }
 
 export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
