@@ -2,44 +2,43 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Trophy, Clock, BarChart3, ImageIcon } from "lucide-react"
 
 const sections = [
   {
     key: "tasks",
     title: "Завдання",
-    description: "Огляд основних завдань офіціанта та помічника.",
-    studyLink: "/study/tasks",
-    testLink: "/tests/tasks",
+    description: "Знання основних завдань помічника.",
+    studyLink: "/tasks/trainee",
+    testLink: "/tests/trainee/tasks",
   },
   {
     key: "serving",
     title: "Сервірування",
     description: "Правила сервірування столу та подачі страв.",
-    studyLink: "/study/serving",
-    testLink: "/tests/serving",
+    studyLink: "/serving",
+    testLink: "/tests/trainee/serving",
   },
   {
     key: "tablewear",
     title: "Посуд",
     description: "Типи посуду, догляд та використання.",
-    studyLink: "/study/tablewear",
-    testLink: "/tests/tablewear",
+    studyLink: "/tablewear",
+    testLink: "/tests/trainee/tablewear",
   },
   {
     key: "rules",
     title: "Правила",
     description: "Важливі правила роботи у залі та на кухні.",
-    studyLink: "/study/rules",
-    testLink: "/tests/rules",
+    studyLink: "/rules/trainee",
+    testLink: "/tests/trainee/rules",
   },
   {
     key: "table-nomeration",
     title: "Нумерація столів",
     description: "Схема та логіка нумерації столів у ресторані.",
-    studyLink: "/study/table-nomeration",
-    testLink: "/tests/table-nomeration",
+    studyLink: "/table-plan/map",
+    testLink: "/tests/trainee/table-nomeration",
   },
 ]
 

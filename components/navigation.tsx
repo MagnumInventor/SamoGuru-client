@@ -61,7 +61,7 @@ const allNavItems = [
   { href: "/serving", label: "Сервірування", icon:  Soup, roles: ["trainee"] },
   { href: "/tablewear", label: "Посуд та ліфт", icon:  BookOpen, roles: ["trainee"] },
 
-    { href: "/tests/trainee/main.tsx", label: "Тестування", icon: Brain, roles: ["trainee"] },
+    { href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
 
   { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["trainee"] }, 
 ]

@@ -15,7 +15,7 @@ interface HelperTask {
   description: string
   category: "before-opening" | "during-work" | "before-closing"
   difficulty: "easy" | "medium" | "hard"
-  station: string
+  station: string[]
   forRoles: ("helper")[]
   completed: boolean
   completedBy?: string
@@ -32,215 +32,116 @@ const helperStations = [
 ];
 
 const allHelperTasks: HelperTask[] = [
-// Гриль Station Tasks
+      // ЗАВДАННЯ ДЛЯ ВСІХ СТАНЦІЙ (ГРИЛЬ, КУХНЯ, ВЕРХНІЙ БАР, НИЖНІЙ БАР)
+
   {
     id: "h1",
-    title: "Допомога офіціантам",
-    description: "Сервірування страв, та рознесення їх до офіціантів",
-    category: "before-opening",
-    difficulty: "medium",
-    station: "Верхній бар",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h2",
     title: "Прибирання станції",
-    description: "Пітримання чистоти на станції Гриль (біля ліфта), за потреби миття та дезинфекція поверхонь",
+    description: "Пітримання чистоти на робочій станції, за потреби миття та дезинфекція поверхонь",
     category: "during-work",
-    difficulty: "easy",
-    station: "Верхній бар",
+    difficulty: "medium",
+    station: ["Верхній бар", "Гриль", "Кухня", "Нижній бар"],
     forRoles: ["helper"],
     completed: false
   },
-  {
-    id: "h3",
-    title: "Натираня столових приборів",
-    description: "Прибори для сервірування страв, мають бути натерті до блиску",
-    category: "during-work",
-    difficulty: "easy",
-    station: "Гриль",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
+    {
     id: "h4",
     title: "Збір брудного посуду",
     description: "Допомога у зборі та перенесенні брудного посуду на мийку",
     category: "during-work",
-    difficulty: "easy",
-    station: "Верхній бар",
+    difficulty: "hard",
+    station: ["Нижній бар", "Гриль", "Кухня"],
     forRoles: ["helper"],
     completed: false
   },
-  {
+    {
+    id: "h3",
+    title: "Натираня столових приборів",
+    description: "Прибори для сервірування страв/напоїв, мають бути натерті до блиску",
+    category: "during-work",
+    difficulty: "easy",
+    station: ["Гриль", "Кухня", "Верхній бар", "Нижній бар"],
+    forRoles: ["helper"],
+    completed: false
+  },
+    {
     id: "h5",
     title: "Управління ліфтом",
-    description: "Брудний посуд з ліфту на мийку, чистий посуд з мийки на ліфт",
+    description: "1) ГРИЛЬ: брудний посуд з ліфту/двору на мийку, чистий посуд (для страв) з мийки на в ліфт; 2) ВЕРХНІЙ БАР: Брудний посуд/скло в ліфт на кухню (2 --> 1)(ДЖОНІ), чистий посуд на барну стійку. 2.2) Готові страви з кухні (2-ий ліфт) до офіціантів (200-ті столи);",
     category: "during-work",
     difficulty: "hard",
-    station: "Верхній бар",
+    station: ["Верхній бар", "Нижній бар", "Гриль"],
     forRoles: ["helper"],
     completed: false
   },
 
 
-// Нижній бар Station Tasks
+    // ЗАВДАННЯ ДЛЯ БАРНИХ СТАНЦІЙ (ВЕРХНІЙ БАР, НИЖНІЙ БАР)
+
   {
     id: "h6",
     title: "Допомога офіціантам",
     description: "Сервірування напоїв, та рознесення їх до офіціантів",
     category: "before-opening",
     difficulty: "medium",
-    station: "Нижній бар",
+    station: ["Нижній бар", "Верхній бар"],
     forRoles: ["helper"],
     completed: false
   },
-  {
+    {
     id: "h7",
     title: "Натираня бокалів, келихів та стаканів",
     description: "Посуд для напоїв, мають бути натерті до блиску",
     category: "during-work",
     difficulty: "easy",
-    station: "Нижній бар",
+    station: ["Нижній бар", "Верхній бар"],
     forRoles: ["helper"],
     completed: false
   },
-  {
-    id: "h8",
-    title: "Збір брудного посуду",
-    description: "Допомога у зборі та перенесенні брудного посуду зі столу (біля сходів на двір) на мийку (станція Гриль)",
-    category: "during-work",
-    difficulty: "easy",
-    station: "Нижній бар",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
+    {
     id: "h9",
     title: "Перенесення посуду",
     description: "За прохання бармена перенести чистий посуд з верхнього бару на нижній бар",
     category: "during-work",
     difficulty: "hard",
-    station: "Нижній бар",
-    forRoles: ["helper"],
-    completed: false
-  },
-
-
-// Верхній бар Station Tasks
-  {
-    id: "h10",
-    title: "Допомога офіціантам",
-    description: "Сервірування страв та напоїв, відповідне рознесення їх до офіціантів",
-    category: "before-opening",
-    difficulty: "medium",
-    station: "Верхній бар",
-    forRoles: ["helper"],
-    completed: false
-  },
-    {
-    id: "h11",
-    title: "Управління ліфтом",
-    description: "Брудний посуд з станцій на ліфт, чистий посуд (для напоїв) з ліфту на барну стійку (верхній/нижній бар)",
-    category: "during-work",
-    difficulty: "hard",
-    station: "Верхній бар",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h12",
-    title: "Натираня бокалів, келихів та стаканів",
-    description: "Посуд для напоїв, мають бути натерті до блиску",
-    category: "during-work",
-    difficulty: "easy",
-    station: "Верхній бар",
+    station: ["Верхній бар", "Нижній бар"],
     forRoles: ["helper"],
     completed: false
   },
     {
     id: "h13",
-    title: "Розставлення чистого, натертого посуду на полички верхнього бару",
+    title: "Розставлення чистого, натертого посуду на стелажі бару",
     description: "Посуд для напоїв, мають бути натерті до блиску",
     category: "during-work",
     difficulty: "easy",
-    station: "Верхній бар",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h14",
-    title: "Перенесення посуду",
-    description: "За прохання бармена перенести чистий посуд з верхнього бару на нижній бар",
-    category: "during-work",
-    difficulty: "hard",
-    station: "Верхній бар",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h15",
-    title: "Прибирання станції",
-    description: "Пітримання чистоти на станції Гриль (барна стійка), за потреби миття та дезинфекція поверхонь",
-    category: "during-work",
-    difficulty: "easy",
-    station: "Верхній бар",
+    station: ["Верхній бар", "Нижній бар"],
     forRoles: ["helper"],
     completed: false
   },
 
-  // Нижня кухня Station Tasks
+  // ЗАВДАННЯ ДЛЯ КУХОННИХ СТАНЦІЙ (ГРИЛЬ, КУХНЯ)
+
   {
-    id: "h16",
+    id: "h1",
     title: "Допомога офіціантам",
-    description: "Сервірування страв, відповідне рознесення їх до офіціантів (501-808 столи)",
+    description: "Сервірування страв, та рознесення їх до офіціантів",
     category: "before-opening",
     difficulty: "medium",
-    station: "Кухня",
+    station: ["кухня", "Гриль"],
     forRoles: ["helper"],
     completed: false
   },
-    {
+      {
     id: "h17",
-    title: "Чергування КП (кімнати персоналу)",
-    description: "Регулярно перевіряти стан чистоти на КП, прибирати сміття, мити поверхні, складати одяг",
+    title: "Контроль КП (кімнати персоналу)",
+    description: "Регулярно (за можливості) перевіряти стан чистоти на КП, прибирати сміття, протерати поверхні, складати одяг",
     category: "during-work",
     difficulty: "medium",
-    station: "Кухня",
+    station: ["Кухня"],
     forRoles: ["helper"],
     completed: false
   },
-  {
-    id: "h18",
-    title: "Натираня бокалів, келихів та стаканів",
-    description: "Посуд для напоїв, мають бути натерті до блиску",
-    category: "during-work",
-    difficulty: "easy",
-    station: "Кухня",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h19",
-    title: "Перенесення посуду",
-    description: "За прохання бармена перенести чистий посуд з верхнього бару на нижній бар",
-    category: "during-work",
-    difficulty: "hard",
-    station: "Кухня",
-    forRoles: ["helper"],
-    completed: false
-  },
-  {
-    id: "h20",
-    title: "Прибирання станції",
-    description: "Пітримання чистоти на станції Гриль (барна стійка), за потреби миття та дезинфекція поверхонь",
-    category: "during-work",
-    difficulty: "easy",
-    station: "Кухня",
-    forRoles: ["helper"],
-    completed: false
-  },
+
 
 // ДОДАТКОВІ ЗАВДАННЯ (20.06)
 
@@ -250,11 +151,16 @@ const allHelperTasks: HelperTask[] = [
     description: "Перевірити стан форми, чи все чисте та випрасуване, чи є пошкодження. Якщо є - повідомити адміністратора, якщо все добре - відправити звіт",
     category: "before-closing",
     difficulty: "easy",
-    station: "Верхній бар" | "Нижній бар" | "Гриль" | "Кухня",
+    station: ["Верхній бар", "Нижній бар", "Гриль", "Кухня"],
     forRoles: ["helper"],
     completed: false
   }
 ];
+
+
+
+
+
 
 export default function TasksPage() {
   const { user } = useAuth()
@@ -269,8 +175,7 @@ export default function TasksPage() {
   }, [selectedStation])
 
   // Filter tasks by station
-  const userTasks = tasks.filter((task) => task.station === selectedStation)
-
+  const userTasks = tasks.filter((task) => task.station.includes(selectedStation))
   const toggleTask = (taskId: string) => {
     setTasks((prev) =>
       prev.map((task) =>
