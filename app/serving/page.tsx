@@ -79,9 +79,9 @@ const servingRules = {
       {
         id: 8,
         name: "Фруктові льоди",
-        description: "Морозиво з фруктами",
+        description: "Морозиво з фруктовим смаком",
         category: "З десертною ложкою",
-        rules: ["Подавати з десертною ложкою", "Холодна подача"],
+        rules: ["Подавати з десертною ложкою", "холодне"],
         searchTerms: ["фруктові", "льоди", "морозиво", "десерт"],
         image: "/placeholder.svg?height=300&width=400",
       },
@@ -90,14 +90,14 @@ const servingRules = {
         name: "Пивні льоди",
         description: "Морозиво з пивним смаком",
         category: "З десертною ложкою",
-        rules: ["Подавати з десертною ложкою", "Оригінальний смак"],
+        rules: ["Подавати з десертною ложкою", "холодне"],
         searchTerms: ["пивні", "льоди", "морозиво", "пиво"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
         id: 10,
         name: "Чоколяда",
-        description: "Тарілка з імітацією шоколадного боба",
+        description: "Морозиво, шоколадний фондан, ягоди",
         category: "З десертною ложкою",
         rules: ["Подавати з десертною ложкою", "Тарілка з імітацією шоколадного боба"],
         searchTerms: ["чоколяда", "шоколад", "боб", "десерт"],
@@ -106,7 +106,7 @@ const servingRules = {
       {
         id: 11,
         name: "Багратоні",
-        description: "Схожий на наполеон",
+        description: "Аналогія на торт наполеон",
         category: "З десертною ложкою та вилкою",
         rules: ["Подавати з десертною ложкою та вилкою", "Делікатна подача"],
         searchTerms: ["багратоні", "наполеон", "торт", "десерт"],
@@ -124,7 +124,7 @@ const servingRules = {
       {
         id: 13,
         name: "Страви з собою",
-        description: "В коробках для винесення",
+        description: "В фірмових коробках для винесення",
         category: "Окремо",
         rules: ["В коробках з собою", "Враховувати соуси", "Перевірити комплектність"],
         searchTerms: ["з собою", "коробка", "винесення", "соуси"],
@@ -136,7 +136,7 @@ const servingRules = {
         description: "Грузинська закуска",
         category: "Окремо",
         rules: ["Особлива подача", "З маленькою 2-зубою вилкою та щипцями"],
-        searchTerms: ["равлики", "ткемалі", "грузинська", "закуска"],
+        searchTerms: ["равлики", "ткемалі", "оригінальна подача"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
@@ -153,7 +153,7 @@ const servingRules = {
         name: "Грузинський презент",
         description: "ВАЖЛИВО! Особлива подача",
         category: "Окремо",
-        rules: ["1 шоті на коробочку з молотком", "Соусниця з 30 грам зеленої олії", "ДУЖЕ ВАЖЛИВО!"],
+        rules: ["Шоті на коробочку з молотком", "Соусниця з 30 грам зеленої олії", "З СОБОЮ: Шоті завернуте в 2 паперові пакети"],
         special: "ВАЖЛИВО",
         searchTerms: ["грузинський", "презент", "лодочка", "молоток", "зелена олія"],
         image: "/placeholder.svg?height=300&width=400",
@@ -180,13 +180,13 @@ const servingRules = {
         description: "Алкогольні та безалкогольні коктейлі",
         category: "З трубочкою",
         rules: ["Подати на підносі з трубочкою"],
-        searchTerms: ["коктейлі", "коктейль", "алкогольні", "безалкогольні"],
+        searchTerms: ["коктейль", "алкогольні", "оригінальна подача"],
         image: "/placeholder.svg?height=300&width=400",
       },
       {
         id: 19,
         name: "Фреші",
-        description: "Свіжовичавлені соки з фруктів",
+        description: "Свіжовичавлені соки з фруктів в льоді",
         category: "З трубочкою",
         rules: ["Подавати одразу після приготування", "З трубочкою"],
         searchTerms: ["фреші", "фреш", "свіжовичавлені", "фрукти"],
@@ -195,12 +195,11 @@ const servingRules = {
       {
         id: 20,
         name: "Рістретто",
-        description: "Концентрований еспресо, менший об'єм",
+        description: "Половина допіо (15мл)",
         category: "З печевом, ложкою та блюдцем",
         rules: [
-          "Подавати в маленькій кавовій чашці (60-70 мл)",
           "На блюдці з кавовою ложечкою",
-          "Печево або цукерка на блюдці",
+          "Печево на блюдці",
           "Подавати гарячим одразу після приготування",
         ],
         volume: "15-20 мл",
@@ -246,7 +245,7 @@ const servingRules = {
         name: "Допіо",
         description: "Подвійний еспресо",
         category: "З печевом, ложкою та блюдцем",
-        rules: ["На дощечці з кавовою ложечкою", "Печево", "Подавати гарячим одразу після приготування"],
+        rules: ["На блюдці з кавовою ложечкою", "Печево", "Подавати гарячим одразу після приготування"],
         volume: "60 мл",
         temperature: "65-70°C",
         searchTerms: ["допіо", "подвійний", "еспресо", "кава"],
@@ -367,7 +366,7 @@ export default function ServingPage() {
             </CardHeader>
           </Card>
 
-          {/* Search Results Info */}
+      
           {searchQuery && (
             <div className="mb-6 p-3 bg-gray-50 border border-gray-200 rounded-md">
               <p className="text-sm text-gray-600">
@@ -376,7 +375,7 @@ export default function ServingPage() {
             </div>
           )}
 
-          {/* Items by Category */}
+       
           {Object.entries(groupedItems).map(([categoryName, items]) => (
             <div key={categoryName} className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
@@ -403,7 +402,7 @@ export default function ServingPage() {
                       )}
                     </CardHeader>
                     <CardContent>
-                      {/* Photo Placeholder */}
+                    
                       <div className="mb-4 bg-gray-100 rounded-lg h-48 flex items-center justify-center">
                         <div className="text-center text-gray-500">
                           <ImageIcon className="h-12 w-12 mx-auto mb-2" />
@@ -412,7 +411,6 @@ export default function ServingPage() {
                         </div>
                       </div>
 
-                      {/* Rules Preview */}
                       <div className="mb-4">
                         <h4 className="font-medium mb-2 text-sm">Основні правила:</h4>
                         <ul className="space-y-1">
@@ -474,7 +472,7 @@ export default function ServingPage() {
             </div>
           ))}
 
-          {/* No Results */}
+
           {searchQuery && filteredItems.length === 0 && (
             <div className="text-center py-12">
               <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
@@ -485,7 +483,7 @@ export default function ServingPage() {
         </TabsContent>
       </Tabs>
 
-      {/* Detailed Item Dialog */}
+   
       {selectedItem && (
         <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
           <DialogContent className="sm:max-w-2xl">
@@ -498,7 +496,7 @@ export default function ServingPage() {
               <DialogDescription>{selectedItem.description}</DialogDescription>
             </DialogHeader>
             <div className="grid gap-6">
-              {/* Photo Section */}
+      
               <div className="relative h-60 w-full bg-gray-100 rounded-md flex items-center justify-center">
                 <div className="text-center text-gray-500">
                   <ImageIcon className="h-16 w-16 mx-auto mb-4" />
@@ -508,7 +506,7 @@ export default function ServingPage() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
-                {/* Rules */}
+          
                 <div>
                   <h4 className="font-medium mb-3 flex items-center">
                     <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
@@ -524,7 +522,6 @@ export default function ServingPage() {
                   </ul>
                 </div>
 
-                {/* Details */}
                 <div>
                   <h4 className="font-medium mb-3 flex items-center">
                     <Info className="h-5 w-5 text-blue-500 mr-2" />
