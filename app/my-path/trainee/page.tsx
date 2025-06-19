@@ -10,18 +10,18 @@ import { CheckCircle, Clock, Star, Trophy, BookOpen, Users, Target } from "lucid
 const pathStages = [
   {
     id: 1,
-    title: "Ознайомлений",
+    title: "Теорія",
     description: "Основні аспекти роботи працівника",
     status: "completed",
     progress: 100,
     requirements: [
-      { task: "Ознайомлення з історією Ковчегу", completed: true },
-      { task: "Базовий етикет у ресторані", completed: true },
-      { task: "Управлння ліфтом", completed: true },
-      { task: "Перевірка знань", completed: true },
+      { task: "Ознайомлення з розташуванням столів та станцій (схема + на практиці)", completed: true },
+      { task: "Правила сервірування напоїв та страв", completed: true },
+      { task: "Управління посудом та ліфтом", completed: true },
+      { task: "Знати правила та поради для помічників", completed: true },
     ],
     duration: "1 день",
-    mentor: "Адміністратор",
+    mentor: "Адміністратор + СамоГуру",
   },
   {
     id: 2,
