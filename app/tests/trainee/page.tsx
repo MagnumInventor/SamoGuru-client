@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -647,8 +649,8 @@ export default function TestsPage() {
         </Card>
       </div>
 
-      {/* Test Categories by Groups */}
-      {Object.entries(groupedCategories).map(([groupName, tests]) => (
+  
+     {Object.entries(groupedCategories).map(([groupName, tests]) => (
         <div key={groupName} className="mb-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
             {tests[0]?.icon}
