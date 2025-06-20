@@ -1,154 +1,569 @@
-"use client"
+import React, { useState } from 'react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Progress } from '@/components/ui/progress'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Label } from '@/components/ui/label'
+import { Checkbox } from '@/components/ui/checkbox'
+import { 
+  Brain, 
+  Clock, 
+  Trophy, 
+  CheckCircle, 
+  XCircle, 
+  BarChart3,
+  Camera,
+  Users,
+  Map,
+  Utensils,
+  ArrowsUpFromLine,
+  BookOpen
+} from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Trophy, Clock, BarChart3, ImageIcon } from "lucide-react"
 
-const sections = [
+
+// СПИСОК ТЕСТІВ
+
+const testCategories = [
   {
-    key: "tasks",
-    title: "Завдання",
-    description: "Знання основних завдань помічника.",
-    studyLink: "/tasks/trainee",
-    testLink: "/tests/trainee/tasks",
+    id: 1,
+    title: "Знання сервірування страв/напоїв",
+    description: "Правильна подача страв, етикет сервірування",
+    questions: 14,
+    duration: "7 хв",
+    difficulty: "Середній",
+    lastScore: 88,
+    attempts: 2,
+    icon: <Users className="h-5 w-5" />,
+    category: 'service'
   },
   {
-    key: "serving",
-    title: "Сервірування",
-    description: "Правила сервірування столу та подачі страв.",
-    studyLink: "/serving",
-    testLink: "/tests/trainee/serving",
+    id: 2,
+    title: "Планування ресторану",
+    description: "Знання розташування столів, зон та маршрутів",
+    questions: 16,
+    duration: "8 хв",
+    difficulty: "Складний",
+    lastScore: 75,
+    attempts: 3,
+    icon: <Map className="h-5 w-5" />,
+    category: 'layout'
   },
   {
-    key: "tablewear",
-    title: "Посуд",
-    description: "Типи посуду, догляд та використання.",
-    studyLink: "/tablewear",
-    testLink: "/tests/trainee/tablewear",
+    id: 3,
+    title: "Тестування посуду",
+    description: "Знання різних видів посуду та їх використання",
+    questions: 12,
+    duration: "6 хв",
+    difficulty: "Легкий",
+    lastScore: 92,
+    attempts: 1,
+    icon: <Utensils className="h-5 w-5" />,
+    category: 'dishes',
+    isExternal: true
   },
   {
-    key: "rules",
-    title: "Правила",
-    description: "Важливі правила роботи у залі та на кухні.",
-    studyLink: "/rules/trainee",
-    testLink: "/tests/trainee/rules",
+    id: 4,
+    title: "Правила використання ліфту",
+    description: "Безпека та етикет використання ліфту в ресторані",
+    questions: 8,
+    duration: "4 хв",
+    difficulty: "Легкий",
+    lastScore: null,
+    attempts: 0,
+    icon: <ArrowsUpFromLine className="h-5 w-5" />,
+    category: 'elevator'
   },
   {
-    key: "table-nomeration",
-    title: "Нумерація столів",
-    description: "Схема та логіка нумерації столів у ресторані.",
-    studyLink: "/table-plan/map",
-    testLink: "/tests/trainee/table-nomeration",
-  },
+    id: 5,
+    title: "Правила та обов'язки",
+    description: "Основні правила роботи та обов'язки співробітників",
+    questions: 10,
+    duration: "5 хв",
+    difficulty: "Легкий",
+    lastScore: null,
+    attempts: 0,
+    icon: <BookOpen className="h-5 w-5" />,
+    category: 'rules'
+  }
 ]
 
-function PhotoGrid({ count = 6 }) {
-  return (
-    <div className="grid grid-cols-3 gap-4 mb-6">
-      {Array.from({ length: count }).map((_, idx) => (
-        <div
-          key={idx}
-          className="w-full aspect-[4/3] bg-gray-100 rounded-lg flex items-center justify-center border border-dashed border-gray-300"
-        >
-          <ImageIcon className="h-8 w-8 text-gray-300" />
-        </div>
-      ))}
-    </div>
-  )
+
+
+
+
+
+
+
+
+
+// ПИТАННЯ ПО СЕРВІРУВАННІ
+const serviceQuestions = [
+  {
+    id: 1,
+    question: "Яка правильна послідовність подачі страв?",
+    type: "single",
+    options: [
+      "Закуски → Перші страви → Основні → Десерт",
+      "Основні → Закуски → Перші → Десерт",
+      "Перші → Основні → Закуски → Десерт",
+      "Десерт → Основні → Перші → Закуски"
+    ],
+    correct: 0
+  },
+  {
+    id: 2,
+    question: "Оберіть правильні способи сервірування вина:",
+    type: "multiple",
+    options: [
+      "Показати етикетку гостю перед відкриттям",
+      "Дати спробувати сомельє",
+      "Наливати спочатку жінкам",
+      "Тримати пляшку за горлечко"
+    ],
+    correct: [0, 2, 3]
+  },
+  {
+    id: 3,
+    question: "Що зображено на фотографії?",
+    type: "image",
+    image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZjNmNGY2Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSI0MCIgZmlsbD0iI2U1ZTdlYiIvPgo8dGV4dCB4PSIxMDAiIHk9IjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjM2MzYzIiBmb250LXNpemU9IjEyIj5QbGF0ZTwvdGV4dD4KPC9zdmc+",
+    options: [
+      "Десертна тарілка",
+      "Основна тарілка",
+      "Супова тарілка",
+      "Салатна тарілка"
+    ],
+    correct: 1
+  }
+]
+
+
+
+
+
+
+// ПИТАННЯ ПО ПЛАНУВАННЮ РЕСТОРАНУ
+const layoutQuestions = [
+  {
+    id: 1,
+    question: "Де розташована VIP зона в ресторані?",
+    type: "single",
+    options: [
+      "На першому поверсі біля входу",
+      "На другому поверсі в окремій кімнаті",
+      "В центрі основного залу",
+      "На терасі"
+    ],
+    correct: 1
+  },
+  {
+    id: 2,
+    question: "Які зони є в ресторані? (оберіть всі правильні)",
+    type: "multiple",
+    options: [
+      "Основний зал",
+      "VIP кімната",
+      "Літня тераса",
+      "Бар-зона",
+      "Дитяча кімната"
+    ],
+    correct: [0, 1, 2, 3]
+  },
+  {
+    id: 3,
+    question: "Яка ємність основного залу?",
+    type: "single",
+    options: [
+      "50 осіб",
+      "80 осіб",
+      "120 осіб",
+      "150 осіб"
+    ],
+    correct: 2
+  }
+]
+
+
+
+
+
+
+// ПИТАННЯ ПО ЛІФТУ
+const elevatorQuestions = [
+  {
+    id: 1,
+    question: "Максимальна вага для ліфту:",
+    type: "single",
+    options: [
+      "500 кг",
+      "750 кг",
+      "1000 кг",
+      "1200 кг"
+    ],
+    correct: 2
+  },
+  {
+    id: 2,
+    question: "Що потрібно робити при використанні ліфту з гостями?",
+    type: "multiple",
+    options: [
+      "Пропустити гостей першими",
+      "Натиснути кнопку поверху",
+      "Стояти біля панелі управління",
+      "Вийти останнім"
+    ],
+    correct: [0, 1, 2]
+  },
+  {
+    id: 3,
+    question: "В якому випадку заборонено користуватися ліфтом?",
+    type: "single",
+    options: [
+      "При пожежі",
+      "З великою кількістю посуду",
+      "Пізно ввечері",
+      "З дітьми"
+    ],
+    correct: 0
+  }
+]
+
+
+
+
+
+
+
+
+// ПИТАННЯ ПО ПРАВИЛАМ ТА ОБОВ'ЯЗКАМ
+const rulesQuestions = [
+  {
+    id: 1,
+    question: "Коли потрібно приходити на роботу?",
+    type: "single",
+    options: [
+      "Точно в час",
+      "За 15 хвилин до початку",
+      "За 30 хвилин до початку",
+      "Коли зручно"
+    ],
+    correct: 1
+  },
+  {
+    id: 2,
+    question: "Що входить в обов'язки офіціанта?",
+    type: "multiple",
+    options: [
+      "Прийняття замовлень",
+      "Подача страв",
+      "Прибирання столів",
+      "Розрахунок з гостями",
+      "Приготування страв"
+    ],
+    correct: [0, 1, 2, 3]
+  },
+  {
+    id: 3,
+    question: "Як правильно звертатися до гостей?",
+    type: "single",
+    options: [
+      "На ти",
+      "На ви",
+      "По імені",
+      "Як зручно"
+    ],
+    correct: 1
+  }
+]
+
+
+
+
+
+
+
+const getQuestionsForCategory = (category: any) => {
+  switch (category) {
+    case 'service': return serviceQuestions
+    case 'layout': return layoutQuestions
+    case 'elevator': return elevatorQuestions
+    case 'rules': return rulesQuestions
+    default: return serviceQuestions.slice(0, 3) // fallback
+  }
 }
 
-export default function TraineeMainPage() {
-  return (
-    <div className="container mx-auto px-2 md:px-8 py-8">
-      <h1 className="text-4xl font-extrabold text-gray-900 mb-12 text-center">Навчання та тестування</h1>
+type Question = {
+  id: number;
+  question: string;
+  type: string;
+  options: string[];
+  correct: number | number[];
+  image?: string;
+};
 
-      <div className="space-y-16 mb-20">
-        {sections.map((section) => (
-          <Card
-            key={section.key}
-            className="shadow-xl border-2 border-orange-200 bg-white rounded-2xl overflow-hidden"
-          >
-            <CardHeader className="bg-orange-50 px-8 py-6">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                <div>
-                  <CardTitle className="text-3xl mb-2">{section.title}</CardTitle>
-                  <CardDescription className="text-lg">{section.description}</CardDescription>
-                </div>
-                <div className="flex gap-4">
-                  <div className="w-32 h-24 bg-gray-100 rounded-lg flex items-center justify-center border border-dashed border-gray-300">
-                    <ImageIcon className="h-10 w-10 text-gray-300" />
-                  </div>
-                  <div className="w-32 h-24 bg-gray-100 rounded-lg flex items-center justify-center border border-dashed border-gray-300">
-                    <ImageIcon className="h-10 w-10 text-gray-300" />
-                  </div>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="px-8 py-8">
-              {/* More empty containers for photos in questions, titles, etc */}
-              <PhotoGrid count={6} />
-              <div className="flex flex-col md:flex-row gap-6">
-                <Button
-                  className="flex-1 py-6 text-xl bg-blue-100 text-blue-900 border-2 border-blue-200 hover:bg-blue-200 font-semibold rounded-lg"
-                  variant="outline"
-                  asChild
-                >
-                  <a href={section.studyLink}>Перейти до навчання</a>
-                </Button>
-                <Button
-                  className="flex-1 py-6 text-xl bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg"
-                  asChild
-                >
-                  <a href={section.testLink}>Перейти до тесту</a>
-                </Button>
-              </div>
-              {/* Even more empty containers for photos */}
-              <div className="mt-8">
-                <PhotoGrid count={3} />
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+type TestCategory = {
+  id: number;
+  title: string;
+  description: string;
+  questions: number;
+  duration: string;
+  difficulty: string;
+  lastScore: number | null;
+  attempts: number;
+  icon: React.JSX.Element;
+  category: string;
+  isExternal?: boolean;
+};
 
-      {/* General Exam Section */}
-      <div className="mb-20">
-        <Card className="shadow-2xl border-2 border-red-300 bg-red-50 rounded-2xl overflow-hidden">
-          <CardHeader className="bg-red-100 px-8 py-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div>
-                <CardTitle className="text-3xl text-red-700 mb-2">Загальний іспит</CardTitle>
-                <CardDescription className="text-lg text-red-700">
-                  Найскладніший тест, який охоплює всі теми та питання з навчання.
-                </CardDescription>
+export default function TestsPage() {
+  const [currentTest, setCurrentTest] = useState<TestCategory | null>(null)
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [answers, setAnswers] = useState<any[]>([])
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+  const [selectedMultiple, setSelectedMultiple] = useState<number[]>([])
+  const [showResults, setShowResults] = useState(false)
+  const [questions, setQuestions] = useState<Question[]>([])
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case "Легкий":
+        return "bg-green-100 text-green-800"
+      case "Середній":
+        return "bg-yellow-100 text-yellow-800"
+      case "Складний":
+        return "bg-red-100 text-red-800"
+      default:
+        return "bg-gray-100 text-gray-800"
+    }
+  }
+
+  const getScoreColor = (score: number | null) => {
+    if (score === null) return "text-gray-400"
+    if (score >= 80) return "text-green-600"
+    if (score >= 60) return "text-yellow-600"
+    return "text-red-600"
+  }
+
+  const startTest = (test: TestCategory | null) => {
+    if (test === null || typeof test !== 'object' || !('category' in test)) return;
+  
+    if ('isExternal' in test && test.isExternal) {
+      alert("Переадресація на сторінку тестування посуду...")
+      return
+    }
+    
+    const testQuestions = getQuestionsForCategory(test.category)
+    setQuestions(testQuestions)
+    setCurrentTest(test)
+    setCurrentQuestion(0)
+    setAnswers([])
+    setSelectedAnswer(null)
+    setSelectedMultiple([])
+    setShowResults(false)
+  }
+
+  const nextQuestion = () => {
+    const question = questions[currentQuestion]
+    let answer = null
+
+    if (question.type === 'multiple') {
+      if (selectedMultiple.length === 0) return
+      answer = selectedMultiple
+    } else {
+      if (selectedAnswer === null) return
+      answer = selectedAnswer
+    }
+
+    const newAnswers = [...answers, answer]
+    setAnswers(newAnswers)
+
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1)
+      setSelectedAnswer(null)
+      setSelectedMultiple([])
+    } else {
+      setShowResults(true)
+    }
+  }
+
+  const calculateScore = () => {
+    let correct = 0
+    answers.forEach((answer, index) => {
+      const question = questions[index]
+      if (question.type === 'multiple') {
+        const correctAnswers = question.correct
+        const userAnswers = answer
+        if (
+          Array.isArray(correctAnswers) &&
+          Array.isArray(userAnswers) &&
+          JSON.stringify([...correctAnswers].sort()) === JSON.stringify([...userAnswers].sort())
+        ) {
+          correct++
+        }
+      } else {
+        if (answer === question.correct) {
+          correct++
+        }
+      }
+    })
+    return Math.round((correct / questions.length) * 100)
+  }
+
+  const handleMultipleChoice = (index: number, checked: string | boolean) => {
+    if (checked) {
+      setSelectedMultiple([...selectedMultiple, index])
+    } else {
+      setSelectedMultiple(selectedMultiple.filter(i => i !== index))
+    }
+  }
+
+  if (currentTest && !showResults) {
+    const question = questions[currentQuestion]
+    const progress = ((currentQuestion + 1) / questions.length) * 100
+
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-bold">{currentTest.title}</h1>
+            <Badge className="bg-orange-100 text-orange-800">
+              {currentQuestion + 1} з {questions.length}
+            </Badge>
+          </div>
+          <Progress value={progress} className="mb-4" />
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl">{question.question}</CardTitle>
+            {question.type === 'multiple' && (
+              <p className="text-sm text-gray-600">Оберіть всі правильні варіанти</p>
+            )}
+            {question.type === 'image' && question.image && (
+              <div className="mt-4">
+                <img 
+                  src={question.image} 
+                  alt="Зображення для питання" 
+                  className="w-full max-w-md mx-auto rounded-lg border"
+                />
               </div>
-              <div className="flex gap-4">
-                <div className="w-32 h-24 bg-gray-100 rounded-lg flex items-center justify-center border border-dashed border-gray-300">
-                  <ImageIcon className="h-10 w-10 text-gray-300" />
-                </div>
-                <div className="w-32 h-24 bg-gray-100 rounded-lg flex items-center justify-center border border-dashed border-gray-300">
-                  <ImageIcon className="h-10 w-10 text-gray-300" />
-                </div>
-              </div>
-            </div>
+            )}
           </CardHeader>
-          <CardContent className="px-8 py-8">
-            <PhotoGrid count={6} />
-            <Button
-              className="w-full py-6 text-xl bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
-              asChild
-            >
-              <a href="/tests/general-exam">Пройти загальний іспит</a>
-            </Button>
-            <div className="mt-8">
-              <PhotoGrid count={3} />
+          <CardContent>
+            {question.type === 'multiple' ? (
+              <div className="space-y-3">
+                {question.options.map((option, index) => (
+                  <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-50">
+                    <Checkbox
+                      id={`option-${index}`}
+                      checked={selectedMultiple.includes(index)}
+                      onCheckedChange={(checked) => handleMultipleChoice(index, checked)}
+                    />
+                    <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
+                      {option}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <RadioGroup
+                value={selectedAnswer?.toString()}
+                onValueChange={(value) => setSelectedAnswer(Number.parseInt(value))}
+              >
+                {question.options.map((option, index) => (
+                  <div key={index} className="flex items-center space-x-2 p-3 rounded-lg hover:bg-gray-50">
+                    <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                    <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
+                      {option}
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            )}
+
+            <div className="flex justify-between mt-6">
+              <Button variant="outline" onClick={() => setCurrentTest(null)}>
+                Скасувати тест
+              </Button>
+              <Button
+                onClick={nextQuestion}
+                disabled={
+                  question.type === 'multiple' 
+                    ? selectedMultiple.length === 0 
+                    : selectedAnswer === null
+                }
+                className="bg-orange-500 hover:bg-orange-600"
+              >
+                {currentQuestion < questions.length - 1 ? "Наступне питання" : "Завершити тест"}
+              </Button>
             </div>
           </CardContent>
         </Card>
       </div>
+    )
+  }
 
-      {/* Statistics Section (bottom) */}
-      <div className="grid md:grid-cols-3 gap-6 mt-12">
+  if (showResults) {
+    const score = calculateScore()
+
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
+        <Card>
+          <CardHeader className="text-center">
+            <div className="mx-auto mb-4">
+              {score >= 80 ? (
+                <Trophy className="h-16 w-16 text-yellow-500" />
+              ) : score >= 60 ? (
+                <CheckCircle className="h-16 w-16 text-green-500" />
+              ) : (
+                <XCircle className="h-16 w-16 text-red-500" />
+              )}
+            </div>
+            <CardTitle className="text-2xl">Результат тесту</CardTitle>
+            <CardDescription>Ви завершили тест "{currentTest?.title}"</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-4xl font-bold mb-4 text-orange-600 text-center">{score}%</div>
+            
+            <div className="space-y-2 mb-6 text-center">
+              {score >= 80 && <p className="text-green-600">Відмінний результат! 🎉</p>}
+              {score >= 60 && score < 80 && <p className="text-yellow-600">Хороший результат! Є над чим працювати.</p>}
+              {score < 60 && <p className="text-red-600">Рекомендуємо повторити навчальні матеріали.</p>}
+            </div>
+
+            <div className="flex gap-4 justify-center">
+              <Button variant="outline" onClick={() => setCurrentTest(null)}>
+                Повернутися до тестів
+              </Button>
+              <Button onClick={() => startTest(currentTest)} className="bg-orange-500 hover:bg-orange-600">
+                Пройти ще раз
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  const groupedCategories = {
+    'Меню та страви': testCategories.filter(t => t.category === 'menu'),
+    'Обслуговування': testCategories.filter(t => t.category === 'service'),
+    'Планування': testCategories.filter(t => t.category === 'layout'),
+    'Посуд та обладнання': testCategories.filter(t => t.category === 'dishes' || t.category === 'elevator'),
+    'Правила та обов\'язки': testCategories.filter(t => t.category === 'rules')
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Тестування знань</h1>
+        <p className="text-gray-600">Перевірте свої знання меню та процедур ресторану</p>
+      </div>
+
+      {/* Stats Overview */}
+      <div className="grid md:grid-cols-3 gap-6 mb-8">
         <Card className="border-orange-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
@@ -159,14 +574,9 @@ export default function TraineeMainPage() {
           <CardContent>
             <div className="text-2xl font-bold text-orange-600 mb-1">78%</div>
             <div className="text-sm text-gray-600">Середній бал</div>
-            <div className="mt-2 p-2 bg-yellow-50 rounded-md">
-              <div className="text-xs text-yellow-800">
-                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
-              </div>
-            </div>
           </CardContent>
         </Card>
+
         <Card className="border-orange-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
@@ -175,16 +585,13 @@ export default function TraineeMainPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600 mb-1">9</div>
-            <div className="text-sm text-gray-600">З 12 доступних</div>
-            <div className="mt-2 p-2 bg-yellow-50 rounded-md">
-              <div className="text-xs text-yellow-800">
-                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
-              </div>
+            <div className="text-2xl font-bold text-orange-600 mb-1">
+              {testCategories.filter(t => t.attempts > 0).length}
             </div>
+            <div className="text-sm text-gray-600">З {testCategories.length} доступних</div>
           </CardContent>
         </Card>
+
         <Card className="border-orange-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
@@ -195,15 +602,69 @@ export default function TraineeMainPage() {
           <CardContent>
             <div className="text-2xl font-bold text-orange-600 mb-1">2.5</div>
             <div className="text-sm text-gray-600">Години цього тижня</div>
-            <div className="mt-2 p-2 bg-yellow-50 rounded-md">
-              <div className="text-xs text-yellow-800">
-                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
-              </div>
-            </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Test Categories by Groups */}
+      {Object.entries(groupedCategories).map(([groupName, tests]) => (
+        <div key={groupName} className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+            {tests[0]?.icon}
+            <span className="ml-2">{groupName}</span>
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tests.map((test) => (
+              <Card key={test.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-lg mb-2 flex items-center">
+                        {test.icon}
+                        <span className="ml-2">{test.title}</span>
+                      </CardTitle>
+                      <CardDescription>{test.description}</CardDescription>
+                    </div>
+                    <Badge className={getDifficultyColor(test.difficulty)}>{test.difficulty}</Badge>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600">
+                    <div className="flex items-center">
+                      <Brain className="h-4 w-4 mr-2" />
+                      {test.questions} питань
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="h-4 w-4 mr-2" />
+                      {test.duration}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <div className="text-sm text-gray-600">Останній результат:</div>
+                      <div className={`text-lg font-semibold ${getScoreColor(test.lastScore)}`}>
+                        {test.lastScore ? `${test.lastScore}%` : "Не пройдено"}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-gray-600">Спроб:</div>
+                      <div className="text-lg font-semibold">{test.attempts}</div>
+                    </div>
+                  </div>
+
+                  <Button 
+                    className="w-full bg-orange-500 hover:bg-orange-600" 
+                    onClick={() => startTest(test)}
+                  >
+                    {test.isExternal ? "Перейти до тесту" : (test.attempts > 0 ? "Пройти знову" : "Розпочати тест")}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
