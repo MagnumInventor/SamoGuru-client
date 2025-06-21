@@ -388,14 +388,7 @@ export default function TestsPage() {
     return "text-red-600"
   }
 
-  const startTest = (test: TestCategory | null) => {
-    if (test === null || typeof test !== 'object' || !('category' in test)) return;
-  
-    if ('isExternal' in test && test.isExternal) {
-      alert("Переадресація на сторінку тестування посуду...")
-      return
-    }
-    
+  const startTest = (test: TestCategory) => {
     const testQuestions = getQuestionsForCategory(test.category)
     setQuestions(testQuestions)
     setCurrentTest(test)
@@ -579,7 +572,10 @@ export default function TestsPage() {
               <Button variant="outline" onClick={() => setCurrentTest(null)}>
                 Повернутися до тестів
               </Button>
-              <Button onClick={() => startTest(currentTest)} className="bg-orange-500 hover:bg-orange-600">
+              <Button
+                onClick={() => currentTest && startTest(currentTest)}
+                className="bg-orange-500 hover:bg-orange-600"
+              >
                 Пройти ще раз
               </Button>
             </div>
@@ -648,8 +644,8 @@ export default function TestsPage() {
         </Card>
       </div>
 
-  
-     {Object.entries(groupedCategories).map(([groupName, tests]) => (
+      {/* Test Categories by Groups */}
+      {Object.entries(groupedCategories).map(([groupName, tests]) => (
         <div key={groupName} className="mb-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
             {tests[0]?.icon}
@@ -695,12 +691,21 @@ export default function TestsPage() {
                     </div>
                   </div>
 
-                  <Button 
-                    className="w-full bg-orange-500 hover:bg-orange-600" 
-                    onClick={() => startTest(test)}
-                  >
-                    {test.isExternal ? "Перейти до тесту" : (test.attempts > 0 ? "Пройти знову" : "Розпочати тест")}
-                  </Button>
+                  {test.isExternal ? (
+                    <Button 
+                      className="w-full bg-orange-500 hover:bg-orange-600" 
+                      onClick={() => window.open('./dishes-test', '_blank')}
+                    >
+                      Перейти до тесту
+                    </Button>
+                  ) : (
+                    <Button 
+                      className="w-full bg-orange-500 hover:bg-orange-600" 
+                      onClick={() => startTest(test)}
+                    >
+                      {test.attempts > 0 ? "Пройти знову" : "Розпочати тест"}
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             ))}

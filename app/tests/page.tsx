@@ -220,7 +220,6 @@ export default function TestsPage() {
               {score < 60 && <p className="text-red-600">Рекомендуємо повторити навчальні матеріали.</p>}
             </div>
 
-            {/* Questions Review */}
             <div className="mt-8 mb-6">
               <h3 className="text-lg font-medium mb-4">Огляд питань:</h3>
               <div className="space-y-6">
