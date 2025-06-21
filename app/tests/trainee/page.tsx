@@ -103,40 +103,39 @@ const testCategories = [
 const serviceQuestions = [
   {
     id: 1,
-    question: "Яка правильна послідовність подачі страв?",
+    question: "Для яких напоїв не подається печево?",
     type: "single",
     options: [
-      "Закуски → Перші страви → Основні → Десерт",
-      "Основні → Закуски → Перші → Десерт",
-      "Перші → Основні → Закуски → Десерт",
-      "Десерт → Основні → Перші → Закуски"
+      "Чай, капучіно, какао, кава по-ірландськи",
+      "Лате, мокко",
+      "Кава по-ірландськи, рістретто",
+      "Рістретто, еспресо, допіо"
     ],
     correct: 0
   },
   {
     id: 2,
-    question: "Оберіть правильні способи сервірування вина:",
-    type: "multiple",
+    question: "До яких страв дається столова ложка",
+    type: "single",
     options: [
-      "Показати етикетку гостю перед відкриттям",
-      "Дати спробувати сомельє",
-      "Наливати спочатку жінкам",
-      "Тримати пляшку за горлечко"
+      "Тільки на дошку з виямкою для ложки",
+      "Всі перші страви",
+      "Супи, крім ланчів",
+      "Всі гарячі страви"
     ],
-    correct: [0, 2, 3]
+    correct: 1,
   },
   {
     id: 3,
-    question: "Що зображено на фотографії?",
-    type: "image",
-    image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjZjNmNGY2Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9Ijc1IiByPSI0MCIgZmlsbD0iI2U1ZTdlYiIvPgo8dGV4dCB4PSIxMDAiIHk9IjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjM2MzYzIiBmb250LXNpemU9IjEyIj5QbGF0ZTwvdGV4dD4KPC9zdmc+",
+    question: "Яке хачапурі подається з 2 вилками?",
+    type: "single",
     options: [
-      "Десертна тарілка",
-      "Основна тарілка",
-      "Супова тарілка",
-      "Салатна тарілка"
+      "З ростбіфом",
+      "З лисичками",
+      "По-аджарськи",
+      "По-мергельськи"
     ],
-    correct: 1
+    correct: 2
   }
 ]
 
