@@ -137,7 +137,7 @@ const servingRules = {
         category: "Окремо",
         rules: ["Особлива подача", "З маленькою 2-зубою вилкою та щипцями"],
         searchTerms: ["равлики", "ткемалі", "оригінальна подача"],
-        image: "/public/images/serving/snails.jpg",
+        image: "/images/serving/snails.jpg",
       },
       {
         id: 15,
@@ -172,7 +172,7 @@ const servingRules = {
         category: "З трубочкою",
         rules: ["Обов'язково з трубочкою", "Трубочка має бути в упаковці до моменту подачі"],
         searchTerms: ["соки", "сік", "фреш", "трубочка"],
-        image: "/public/images/serving/juice.jpg",
+        image: "/images/serving/juice.jpg",
       },
       {
         id: 18,
@@ -181,7 +181,7 @@ const servingRules = {
         category: "З трубочкою",
         rules: ["Подати на підносі з трубочкою"],
         searchTerms: ["коктейль", "алкогольні", "оригінальна подача"],
-        image: "/public/images/serving/juice.jpg",
+        image: "/images/serving/juice.jpg",
       },
       {
         id: 19,
@@ -190,7 +190,7 @@ const servingRules = {
         category: "З трубочкою",
         rules: ["Подавати одразу після приготування", "З трубочкою"],
         searchTerms: ["фреші", "фреш", "свіжовичавлені", "фрукти"],
-        image: "/public/images/serving/juice.jpg",
+        image: "/images/serving/juice.jpg",
       },
       {
         id: 20,
@@ -205,7 +205,7 @@ const servingRules = {
         volume: "15-20 мл",
         temperature: "65-70°C",
         searchTerms: ["рістретто", "еспресо", "кава", "концентрований"],
-        image: "/public/images/serving/espresso.jpg",
+        image: "/images/serving/espresso.jpg",
       },
       {
         id: 21,
@@ -224,7 +224,7 @@ const servingRules = {
         temperature: "65-70°C",
         special: "З водою та дощечкою",
         searchTerms: ["еспресо", "кава", "італійський", "вода", ],
-        image: "/public/images/serving/espresso.jpg",
+        image: "/images/serving/espresso.jpg",
       },
       {
         id: 22,
@@ -240,7 +240,7 @@ const servingRules = {
         volume: "90 мл",
         temperature: "65-70°C",
         searchTerms: ["американо", "кава", "розбавлений", "молоко"],
-        image: "/public/images/serving/coffee_drinks.jpg",
+        image: "/images/serving/coffee_drinks.jpg",
       },
       {
         id: 23,
@@ -251,7 +251,7 @@ const servingRules = {
         volume: "60 мл",
         temperature: "65-70°C",
         searchTerms: ["допіо", "подвійний", "еспресо", "кава"],
-        image: "/public/images/serving/espresso.jpg",
+        image: "/images/serving/espresso.jpg",
       },
 
       {
@@ -274,7 +274,7 @@ const servingRules = {
         rules: ["На підносі", "Зі стаканом для напою"],
         volume: "250 мл",
         searchTerms: ["напій", "pepsi", "содова", "газований"],
-        image: "/public/images/serving/pepsi.jpg",
+        image: "/images/serving/pepsi.jpg",
       },
       {
         id: 26,
