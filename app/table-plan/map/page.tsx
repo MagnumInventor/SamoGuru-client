@@ -54,9 +54,7 @@ export default function TablePlanMapPage() {
             </div>
           </div>
         </CardContent>
-      </Card>
-
-      {/* 2 Поверх - 200-ті */}
+      
       <Card className="border-blue-200 mb-6">
         <CardHeader>
           <CardTitle className="text-xl flex items-center gap-2">
@@ -158,7 +156,7 @@ export default function TablePlanMapPage() {
         <CardHeader>
           <CardTitle className="text-xl flex items-center gap-2">
             <MapPin className="h-5 w-5 text-purple-500" />
-            Схема столиків 300-ті (3 Поверх)
+            Схема столиків 400-ті (1 поверх - двір)
           </CardTitle>
           <CardDescription>Детальна схема розташування столиків 302-308 та допоміжних зон</CardDescription>
         </CardHeader>
