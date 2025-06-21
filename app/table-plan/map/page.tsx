@@ -54,6 +54,7 @@ export default function TablePlanMapPage() {
             </div>
           </div>
         </CardContent>
+      </Card>
       
       <Card className="border-blue-200 mb-6">
         <CardHeader>
