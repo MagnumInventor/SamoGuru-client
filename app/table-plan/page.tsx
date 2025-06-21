@@ -13,7 +13,7 @@ export default function TablePlanPage() {
         <p className="text-gray-600">Інтерактивна карта розташування зон ресторану</p>
       </div>
 
-      {/* Redirect to Map */}
+      {/* ПЕРЕАДРЕСАЦІЯ НА ІНШУ СТОРІНКУ */}
       <Card className="border-orange-200 max-w-2xl mx-auto">
         <CardHeader className="text-center">
           <MapPin className="h-16 w-16 text-orange-500 mx-auto mb-4" />
@@ -21,11 +21,11 @@ export default function TablePlanPage() {
           <CardDescription>Переглядайте інтерактивну карту з розташуванням зон та столиків</CardDescription>
         </CardHeader>
         <CardContent className="text-center">
-          <Link href="/table-plan/map">
-            <Button size="lg" className="bg-orange-500 hover:bg-orange-600">
-              Відкрити карту ресторану
-            </Button>
-          </Link>
+                                                    <Link href="/tests/trainee">
+                                                      <Button size="lg" className="bg-orange-500 hover:bg-orange-600">
+                                                        Відкрити схематику Ковчегу
+                                                      </Button>
+                                                    </Link>
         </CardContent>
       </Card>
     </div>

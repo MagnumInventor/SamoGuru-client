@@ -8,6 +8,9 @@ import { Progress } from '@/components/ui/progress'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
+
+
+// ІКОНКИ
 import { 
   Brain, 
   Clock, 

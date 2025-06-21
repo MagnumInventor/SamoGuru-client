@@ -7,7 +7,9 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
-import { Brain, Trophy, Clock, CheckCircle, XCircle, BarChart3 } from "lucide-react"
+import { Brain, Trophy, Clock, CheckCircle, XCircle, BarChart3, Link } from "lucide-react"
+
+// ПИТАННЯ З ФАЙЛУ
 import { demoTestQuestions } from "@/lib/demo-data"
 
 const testCategories = [
@@ -133,6 +135,7 @@ export default function TestsPage() {
     })
     return Math.round((correct / sampleQuestions.length) * 100)
   }
+
 
   if (currentTest && !showResults) {
     const question = sampleQuestions[currentQuestion]
@@ -272,6 +275,16 @@ export default function TestsPage() {
               <Button variant="outline" onClick={() => setCurrentTest(null)}>
                 Повернутися до тестів
               </Button>
+
+
+                                                    <Link href="/tests/trainee">
+                                                      <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
+                                                        Перейти на тестування для стажера
+                                                      </Button>
+                                                    </Link>
+
+
+
               <Button onClick={() => startTest(currentTest)} className="bg-orange-500 hover:bg-orange-600">
                 Пройти ще раз
               </Button>
