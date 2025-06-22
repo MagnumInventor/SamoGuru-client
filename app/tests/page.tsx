@@ -362,7 +362,6 @@ export default function TestsPage() {
         </Card>
       </div>
 
-      {/* Test Categories */}
       <div className="grid md:grid-cols-2 gap-6">
         {testCategories.map((test) => (
           <Card key={test.id} className="hover:shadow-lg transition-shadow border-orange-100">

@@ -21,7 +21,7 @@ export default function TablePlanPage() {
           <CardDescription>Переглядайте інтерактивну карту з розташуванням зон та столиків</CardDescription>
         </CardHeader>
         <CardContent className="text-center">
-                                                    <Link href="/tests/trainee">
+                                                    <Link href="/table-plan/map">
                                                       <Button size="lg" className="bg-orange-500 hover:bg-orange-600">
                                                         Відкрити схематику Ковчегу
                                                       </Button>

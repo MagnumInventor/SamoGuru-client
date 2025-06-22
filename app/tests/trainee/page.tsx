@@ -22,7 +22,8 @@ import {
   Map,
   Utensils,
   ArrowsUpFromLine,
-  BookOpen
+  BookOpen,
+  Link
 } from 'lucide-react'
 
 
@@ -694,13 +695,25 @@ export default function TestsPage() {
                     </div>
                   </div>
 
+
+
+
+
                   {test.isExternal ? (
+                    <Link href="/trainee/tablewear">
                     <Button 
                       className="w-full bg-orange-500 hover:bg-orange-600" 
                       onClick={() => window.open('./dishes-test', '_blank')}
                     >
                       Перейти до тесту
                     </Button>
+                    </Link>
+
+
+
+
+
+
                   ) : (
                     <Button 
                       className="w-full bg-orange-500 hover:bg-orange-600" 
