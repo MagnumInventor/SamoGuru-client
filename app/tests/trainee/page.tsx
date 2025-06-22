@@ -597,6 +597,8 @@ export default function TestsPage() {
     'Правила та обов\'язки': testCategories.filter(t => t.category === 'rules')
   }
 
+                                 const subay = 1;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
@@ -681,6 +683,8 @@ export default function TestsPage() {
                     </div>
                   </div>
 
+                  
+                {/* РЕЗУЛЬТАТ ПРЕВЮ НА ФФ 
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <div className="text-sm text-gray-600">Останній результат:</div>
@@ -693,7 +697,7 @@ export default function TestsPage() {
                       <div className="text-lg font-semibold">{test.attempts}</div>
                     </div>
                   </div>
-
+*/}
 
 
 
@@ -702,7 +706,7 @@ export default function TestsPage() {
                     <Link href="/trainee/tablewear">
                     <Button 
                       className="w-full bg-orange-500 hover:bg-orange-600" 
-                      onClick={() => window.open('./dishes-test', '_blank')}
+                      onClick={() => window.open('/tablewear', '_blank')}
                     >
                       Перейти до тесту
                     </Button>
@@ -710,15 +714,12 @@ export default function TestsPage() {
 
 
 
-
-
-
                   ) : (
                     <Button 
                       className="w-full bg-orange-500 hover:bg-orange-600" 
-                      onClick={() => startTest(test)}
+                      onClick={() => window.open('/final', '_blank')}
                     >
-                      {test.attempts > 0 ? "Пройти знову" : "Розпочати тест"}
+                      {subay > 0 ? "Пройти знову" : "Розпочати фінальний тест"}
                     </Button>
                   )}
                 </CardContent>
