@@ -34,24 +34,24 @@ const testCategories = [
   {
     id: 1,
     title: "Знання сервірування страв/напоїв",
-    description: "Правильна подача страв, етикет сервірування",
-    questions: 14,
-    duration: "7 хв",
+    description: "Правильна подача страв, прибори для сервірування",
+    questions: 3,
+    duration: "1 хв",
     difficulty: "Середній",
-    lastScore: 88,
-    attempts: 2,
+    //lastScore: 88,
+    //attempts: 2,
     icon: <Users className="h-5 w-5" />,
     category: 'service'
   },
   {
     id: 2,
     title: "Планування ресторану",
-    description: "Знання розташування столів, зон та маршрутів",
-    questions: 16,
-    duration: "8 хв",
+    description: "Знання розташування столів, зон та маршрутів переміщення",
+    questions: 3,
+    duration: "1 хв",
     difficulty: "Складний",
-    lastScore: 75,
-    attempts: 3,
+    //lastScore: 75,
+    //attempts: 3,
     icon: <Map className="h-5 w-5" />,
     category: 'layout'
   },
@@ -62,33 +62,33 @@ const testCategories = [
     questions: 12,
     duration: "6 хв",
     difficulty: "Легкий",
-    lastScore: 92,
-    attempts: 1,
+    //lastScore: 92,
+    //attempts: 1,
     icon: <Utensils className="h-5 w-5" />,
     category: 'dishes',
     isExternal: true
   },
   {
     id: 4,
-    title: "Правила використання ліфту",
-    description: "Безпека та етикет використання ліфту в ресторані",
+    title: "Правила використання обладнання",
+    description: "Безпека та етикет використання ліфту та різного обладнання",
     questions: 8,
     duration: "4 хв",
     difficulty: "Легкий",
-    lastScore: null,
-    attempts: 0,
+    //lastScore: null,
+    //attempts: 0,
     icon: <ArrowsUpFromLine className="h-5 w-5" />,
     category: 'elevator'
   },
   {
     id: 5,
     title: "Правила та обов'язки",
-    description: "Основні правила роботи та обов'язки співробітників",
+    description: "Основні правила роботи та обов'язки помічників",
     questions: 10,
     duration: "5 хв",
     difficulty: "Легкий",
-    lastScore: null,
-    attempts: 0,
+    //lastScore: null,
+    //attempts: 0,
     icon: <BookOpen className="h-5 w-5" />,
     category: 'rules'
   }
@@ -99,11 +99,7 @@ const testCategories = [
 
 
 
-
-
-
-
-// ПИТАННЯ ПО СЕРВІРУВАННІ
+// ПИТАННЯ ПО СЕРВІРУВАННІ      ГОТОВО - 3
 const serviceQuestions = [
   {
     id: 1,
@@ -142,13 +138,7 @@ const serviceQuestions = [
     correct: 2
   }
 ]
-
-
-
-
-
-
-// ПИТАННЯ ПО ПЛАНУВАННЮ РЕСТОРАНУ
+// ПИТАННЯ ПО ПЛАНУВАННЮ РЕСТОРАНУ ГОТОВО - 3
 const layoutQuestions = [
   {
     id: 1,
@@ -188,67 +178,78 @@ const layoutQuestions = [
     correct: 2
   }
 ]
-
-
-
-
-
-
-// ПИТАННЯ ПО ЛІФТУ
+// ПИТАННЯ ПО ОБЛАДНАННІ ГОТОВО (ТІЛЬКИ ЛІФТ) - 5
 const elevatorQuestions = [
   {
     id: 1,
-    question: "Максимальна вага для ліфту:",
+    question: "На який поверх потрібно відправляти Джоні (ліфт для посуду) за відсутності потреби у завантеженні/розвантаженні",
     type: "single",
     options: [
-      "500 кг",
-      "750 кг",
-      "1000 кг",
-      "1200 кг"
+      "1 - Гриль (біля мийки)",
+      "2 - Верхній бар",
+      "3 - Під стріхою",
+      "Відпрявляти за проханням"
     ],
-    correct: 2
+    correct: 0
   },
-  {
+    {
     id: 2,
-    question: "Що потрібно робити при використанні ліфту з гостями?",
-    type: "multiple",
+    question: "Коли можна керувати панеллю з поверхами, якщо ліфт не на твоєму поверсі?",
+    type: "single",
     options: [
-      "Пропустити гостей першими",
-      "Натиснути кнопку поверху",
-      "Стояти біля панелі управління",
-      "Вийти останнім"
+      "На нижні поверхи для завантаження",
+      "Це заборонено правилами безпеки",
+      "Технічно неможливо",
+      "Вертати на свою станцію",
+      "На верхні поверхи для розвантаження"
     ],
-    correct: [0, 1, 2]
+    correct: 1
   },
   {
     id: 3,
-    question: "В якому випадку заборонено користуватися ліфтом?",
+        question: "На яку станцію потрібно відправляти ліфт для страв за відсутності потреби у завантеженні/розвантаженні та інших страв",
     type: "single",
     options: [
-      "При пожежі",
-      "З великою кількістю посуду",
-      "Пізно ввечері",
-      "З дітьми"
+      "На любий поверх",
+      "Лишати на своїй станції",
+      "Залежно від прохання персоналу",
+      "Завжди на кухню - К"
     ],
-    correct: 0
+    correct: 3,
+  },
+  {
+    id: 4,
+    question: "На що потрібно звертати увагу при завантаженні ліфта для посуду?",
+    type: "multiple",
+    options: [
+      "На габарити на борти ліфту",
+      "Стабільність стопок з посуду",
+      "Зачекати на повне загруження ліфту",
+      "Вагу посуду (важкий - низ, легкий - верх)",
+    ],
+    correct: [0,1,3]
+  },
+    {
+    id: 5,
+    question: "Коли розпочинати та закінчувати зміну?",
+    type: "multiple",
+    options: [
+      "Зранку - без форми якомога швидше",
+      "Ввечері - після виконання усіх завданнь",
+      "Ввечері - перед виходом із закладу",
+      "Зранку - в робочій формі, перед виконанням роботи",
+    ],
+    correct: [0,1,3]
   }
 ]
-
-
-
-
-
-
-
-
-// ПИТАННЯ ПО ПРАВИЛАМ ТА ОБОВ'ЯЗКАМ
+// ПИТАННЯ ПО ПРАВИЛАМ ТА ОБОВ'ЯЗКАМ ГОТОВО - 6
 const rulesQuestions = [
   {
     id: 1,
     question: "Що робити у вільний час від замовленнь на станції Верхній бар?",
     type: "multiple",
     options: [
-      "Очікувати на сервірування замовленнь",
+      "Очікувати на сервірування готових замовленнь",
       "Переміщатися по станціях за іншими завданнями",
       "Перетирати погано натерті стакани/бокали",
       "Підтримувати чистоту та порядок на станції"
@@ -268,31 +269,30 @@ const rulesQuestions = [
     correct: [0, 1]
   },
 
-// ДОПИСАТИ 2 ТЕСТИ 
-
     {
     id: 3,
     question: "Що робити у вільний час на станції нижній бар?",
     type: "multiple",
     options: [
-      "Сервірувати на передавати гарячі напої",
-      "Переміщатися по станціях за іншими завданнями",
-      "Перетирати погано натерті стакани/бокали",
+      "Підмітати та мити зону з 500-800-ми столами",
+      "Перевіряти та натерати скляний посуд з барних стійок",
+      "Носити брудний посуд на мийку (або до станції Гриль)",
+      "Насипати соняшникове насіння у відповідний сервірувальний посуд",
       "Підтримувати чистоту та порядок на станції"
     ],
-    correct: [1, 2]
+    correct: [1, 2, 4]
   },
     {
     id: 4,
     question: "Що робити у вільний час на станції Гриль?",
     type: "multiple",
     options: [
-      "Очікувати на сервірування замовленнь",
-      "Переміщатися по станціях за іншими завданнями",
-      "Перетирати погано натерті стакани/бокали",
+      "Переносити брудний посуд з двору на мийку",
+      "Прибирати туалет чи хост",
+      "Перетирати погано натерті прибори",
       "Підтримувати чистоту та порядок на станції"
     ],
-    correct: [0, 3]
+    correct: [0,2,3]
   },
 
 
@@ -601,10 +601,9 @@ export default function TestsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Тестування знань</h1>
-        <p className="text-gray-600">Перевірте свої знання меню та процедур ресторану</p>
+        <p className="text-gray-600">Перевірка теоретичних знань під закінчення стажування на посаду помічника офіціанта</p>
       </div>
 
-      {/* Stats Overview */}
       <div className="grid md:grid-cols-3 gap-6 mb-8">
         <Card className="border-orange-200">
           <CardHeader className="pb-3">
@@ -614,8 +613,8 @@ export default function TestsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600 mb-1">78%</div>
-            <div className="text-sm text-gray-600">Середній бал</div>
+            <div className="text-2xl font-bold text-orange-600 mb-1">86%</div>
+            <div className="text-sm text-gray-600">*Середній бал</div>
           </CardContent>
         </Card>
 
@@ -623,14 +622,14 @@ export default function TestsPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
               <Trophy className="h-5 w-5 text-orange-500 mr-2" />
-              Пройдено тестів
+              Розроблено тестів
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-600 mb-1">
-              {testCategories.filter(t => t.attempts > 0).length}
+                       5
             </div>
-            <div className="text-sm text-gray-600">З {testCategories.length} доступних</div>
+                                   <div className="text-sm text-gray-600">З яких доступно 17 питаннь</div>
           </CardContent>
         </Card>
 
@@ -638,12 +637,12 @@ export default function TestsPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
               <Clock className="h-5 w-5 text-orange-500 mr-2" />
-              Час навчання
+              Середній час фінального тесту
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600 mb-1">2.5</div>
-            <div className="text-sm text-gray-600">Години цього тижня</div>
+            <div className="text-2xl font-bold text-orange-600 mb-1">7</div>
+            <div className="text-sm text-gray-600">Хвилини на всі питання</div>
           </CardContent>
         </Card>
       </div>
