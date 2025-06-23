@@ -80,7 +80,7 @@ const testCategories: TestCategory[] = [
     {
       id: 4,
       title: "Правила використання обладнання",
-    description: "Безпека та етикет використання ліфту та різного обладнання",
+    description: "Безпека та правила використання ліфту та різного обладнання",
     questions: elevatorQuestions.length,
     duration: "4 хв",
     difficulty: "Легкий",
