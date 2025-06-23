@@ -21,7 +21,6 @@ type TestCategory = {
   difficulty: string
   icon: React.ReactNode
   category: string
-  isExternal?: boolean
   isTableware?: boolean
   isFinal?: boolean
 }
@@ -76,32 +75,30 @@ const testCategories: TestCategory[] = [
       //attempts: 1,
       icon: <Utensils className="h-5 w-5" />,
       category: 'dishes',
-      isExternal: true
+      questionsList: tablewareQuestions,
     },
     {
       id: 4,
       title: "Правила використання обладнання",
-      description: "Безпека та етикет використання ліфту та різного обладнання",
-      questions: 8,
-      duration: "4 хв",
-      difficulty: "Легкий",
-      //lastScore: null,
-      //attempts: 0,
-      icon: <ArrowsUpFromLine className="h-5 w-5" />,
-      category: 'elevator'
-    },
+    description: "Безпека та етикет використання ліфту та різного обладнання",
+    questions: elevatorQuestions.length,
+    duration: "4 хв",
+    difficulty: "Легкий",
+    icon: <ArrowsUpFromLine className="h-5 w-5" />,
+    category: 'elevator',
+    questionsList: elevatorQuestions,
+  },
     {
       id: 5,
       title: "Правила та обов'язки",
       description: "Основні правила роботи та обов'язки помічників",
-      questions: 10,
-      duration: "5 хв",
-      difficulty: "Легкий",
-      //lastScore: null,
-      //attempts: 0,
-      icon: <BookOpen className="h-5 w-5" />,
-      category: 'rules'
-    },
+    questions: rulesQuestions.length,
+    duration: "5 хв",
+    difficulty: "Легкий",
+    icon: <BookOpen className="h-5 w-5" />,
+    category: 'rules',
+    questionsList: rulesQuestions,
+  },
     {
       id: 6,
       title: "Фінальний тест",
@@ -156,6 +153,7 @@ const serviceQuestions: Question[] = [
     correct: 2
   }
 ]
+
 
 const layoutQuestions: Question[] = [
   {
@@ -720,6 +718,7 @@ export default function TestsPage() {
               </div>
 
 
+
               <div className="mt-8 text-center">
         <Card className="border-green-200 bg-green-50 max-w-3xl mx-auto">
           <CardHeader className="pb-4">
@@ -747,7 +746,7 @@ export default function TestsPage() {
       </div>
 
               <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => startTest(test)}>
-                Розпочати тест
+                {test.attempts > 0 ? "Пройти знову" : "Розпочати тест"}
               </Button>
             </CardContent>
           </Card>
