@@ -1,6 +1,6 @@
 
 
-"use client"
+{/*"use client"
 
 import React, { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -651,7 +651,6 @@ export default function TestsPage() {
         </Card>
       </div>
 
-      {/* Test Categories by Groups */}
       {Object.entries(groupedCategories).map(([groupName, tests]) => (
         <div key={groupName} className="mb-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
@@ -699,7 +698,7 @@ export default function TestsPage() {
                       <div className="text-lg font-semibold">{test.attempts}</div>
                     </div>
                   </div>
-*/}
+
 
 
 
@@ -730,3 +729,4 @@ export default function TestsPage() {
     </div>
   )
 }
+*/}
