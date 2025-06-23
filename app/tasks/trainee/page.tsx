@@ -33,7 +33,16 @@ const helperStations = [
 
 const allHelperTasks: HelperTask[] = [
       // ЗАВДАННЯ ДЛЯ ВСІХ СТАНЦІЙ (ГРИЛЬ, КУХНЯ, ВЕРХНІЙ БАР, НИЖНІЙ БАР)
-
+  {
+    id: "h20",
+    title: "Підготовка станції",
+    description: "Викинути все сміття, забрати лишні речі, перевірити достатню кількість приборів та підносів",
+    category: "before-opening"
+    difficulty: "medium",
+    station: ["Верхній бар", "Гриль", "Кухня", "Нижній бар"],
+    forRoles: ["helper"],
+    completed: false
+  },
   {
     id: "h1",
     title: "Прибирання станції",
