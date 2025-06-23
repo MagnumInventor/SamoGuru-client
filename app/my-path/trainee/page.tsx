@@ -5,133 +5,238 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { CheckCircle, Clock, Star, Trophy, BookOpen, Users, Target } from "lucide-react"
+import { CheckCircle, Clock, Star, Trophy, BookOpen, Users, Target, Utensils, Map, ArrowRight, Link } from "lucide-react"
+import { Label } from "@radix-ui/react-label"
+import { Checkbox } from "@radix-ui/react-checkbox"
 
-const pathStages = [
-  {
-    id: 1,
-    title: "Теорія",
-    description: "Основні аспекти роботи працівника",
-    status: "completed",
-    progress: 100,
-    requirements: [
-      { task: "Ознайомлення з розташуванням столів та станцій (схема + на практиці)", completed: true },
-      { task: "Правила сервірування напоїв та страв", completed: true },
-      { task: "Управління посудом та ліфтом", completed: true },
-      { task: "Знати правила та поради для помічників", completed: true },
-    ],
-    duration: "1 день",
-    mentor: "Адміністратор + СамоГуру",
-  },
-  {
-    id: 2,
-    title: "Стажист (помічник)",
-    description: "Практична робота під наглядом",
-    status: "in-progress",
-    progress: 65,
-    requirements: [
-      { task: "Пів/зміна на кожній позиції (гриль, кухня, нижній/верхній бар)", completed: true },
-      { task: "Сервірування напоїв, страв", completed: true },
-      { task: "Знання номерації столів", completed: false },
-    ],
-    duration: "3-5 днів",
-    mentor: "Помічник",
-  },
-  {
-    id: 3,
-    title: "Молодший офіціант",
-    description: "Самостійна робота з базовими обов'язками",
-    status: "locked",
-    progress: 0,
-    requirements: [
-      { task: "Самостійне обслуговування станції", completed: false },
-      { task: "Робота з скаргами гостей", completed: false },
-      { task: "Навчання новачків", completed: false },
-      { task: "Іспит з меню та процедур", completed: false },
-    ],
-    duration: "1 місяць",
-    mentor: "Офіціант",
-  },
-  {
-    id: 4,
-    title: "Офіціант",
-    description: "Повноцінний член команди фіців",
-    status: "locked",
-    progress: 0,
-    requirements: [
-      { task: "Робота у всіх секціях", completed: false },
-      { task: "Управління конфліктами", completed: false },
-    ],
-    duration: "До кінця життя"
-  },
-]
+export default function AssistantGuidePage() {
+  const [activeTab, setActiveTab] = useState("guide")
 
-const achievements = [
-  {
-    id: 1,
-    title: "Перший день",
-    description: "Успішно завершили перший робочий день",
-    icon: Star,
-    earned: true,
-    date: "15.01.2024",
-  },
-]
-
-export default function MyPathPage() {
-  const [selectedStage, setSelectedStage] = useState(pathStages[1]) // Current stage
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "completed":
-        return "bg-green-100 text-green-800"
-      case "in-progress":
-        return "bg-blue-100 text-blue-800"
-      case "locked":
-        return "bg-gray-100 text-gray-800"
-      default:
-        return "bg-gray-100 text-gray-800"
+  // Основні навички для стажера
+  const coreSkills = [
+    {
+      title: "Сервірування страв/напоїв",
+      steps: [
+        "Розкладка базових приборів (ножа, виделки, ложки)",
+        "Розміщення сервірувальних наборів за типами напоїв",
+        "Контроль чистоти столових приборів"
+      ]
+    },
+    {
+      title: "Робота з ліфтом",
+      steps: [
+        "Безпечне завантаження посуду",
+        "Координація між поверхами",
+        "Екстрені процедури при застряганні"
+      ]
+    },
+    {
+      title: "Комунікація",
+      steps: [
+        "Стандартні фрази привітання гостей",
+        "Передача інформації офіціантам",
+        "Обробка базових запитів гостей (навігація, меню, туалет)"
+      ]
     }
-  }
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case "completed":
-        return "Завершено"
-      case "in-progress":
-        return "В процесі"
-      case "locked":
-        return "Заблоковано"
-      default:
-        return "Невідомо"
-    }
-  }
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "completed":
-        return <CheckCircle className="h-5 w-5 text-green-500" />
-      case "in-progress":
-        return <Clock className="h-5 w-5 text-blue-500" />
-      case "locked":
-        return <Target className="h-5 w-5 text-gray-400" />
-      default:
-        return null
-    }
-  }
+  ]
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Мій професійний шлях</h1>
-        <p className="text-gray-600">Відстежуйте свій прогрес та досягнення в ресторані</p>
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Путівник стажера-помічника</h1>
+        <p className="text-gray-600">Основні навички та алгоритми дій для успішного старту</p>
       </div>
 
-      {/* FF Notice */}
-      <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-        <div className="text-sm text-yellow-800">
-          <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-          зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
+      {/* Навігаційні таби */}
+      <div className="flex border-b mb-6">
+        <Button
+          variant="ghost"
+          className={`rounded-none ${activeTab === "guide" ? "border-b-2 border-orange-500" : ""}`}
+          onClick={() => setActiveTab("guide")}
+        >
+          Основний путівник
+        </Button>
+        <Button
+          variant="ghost"
+          className={`rounded-none ${activeTab === "tips" ? "border-b-2 border-orange-500" : ""}`}
+          onClick={() => setActiveTab("tips")}
+        >
+          Поради та лайфхаки
+        </Button>
+        <Button
+          variant="ghost"
+          className={`rounded-none ${activeTab === "info" ? "border-b-2 border-orange-500" : ""}`}
+          onClick={() => setActiveTab("info")}
+        >
+          Загальна інформація
+        </Button>
+      </div>
+
+      {activeTab === "guide" && (
+        <div className="space-y-6">
+          {/* Блок з основними навичками */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Utensils className="h-5 w-5 mr-2" />
+                Основні навички помічника
+              </CardTitle>
+              <CardDescription>Критично важливі дії, які необхідно освоїти в першу чергу</CardDescription>
+            </CardHeader>
+            <CardContent className="grid md:grid-cols-3 gap-6">
+              {coreSkills.map((skill, index) => (
+                <div key={index} className="border rounded-lg p-4">
+                  <h3 className="font-medium mb-3">{skill.title}</h3>
+                  <ul className="space-y-2">
+                    {skill.steps.map((step, i) => (
+                      <li key={i} className="flex items-start">
+                        <ArrowRight className="h-4 w-4 mt-1 mr-2 flex-shrink-0 text-orange-500" />
+                        <span>{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Карта ресторану */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Map className="h-5 w-5 mr-2" />
+                Карта залу та зон відповідальності
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500">
+                [Тут буде інтерактивна карта ресторану]
+              </div>
+              <div className="mt-4 text-sm text-gray-600">
+                <p>Зони відповідальності помічника позначені жовтим кольором</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
+      )}
+
+      {activeTab === "tips" && (
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Поради від досвідчених офіціантів */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Users className="h-5 w-5 mr-2" />
+                Поради від старших колег
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <p>"Завжди тримайте в кишені 2-3 резервні ручки - це рятує в пікові години"</p>
+                <p className="text-sm text-gray-600 mt-1">- Олександр, офіціант з 5-річним досвідом</p>
+              </div>
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <p>"Перш ніж зайти на кухню, уявіть собі весь маршрут - це економить 30% часу"</p>
+                <p className="text-sm text-gray-600 mt-1">- Марія, старший офіціант</p>
+              </div>
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <p>"Завжди перевіряйте чистоти підносу перед виносом замовлення"</p>
+                <p className="text-sm text-gray-600 mt-1">- Загальне правило</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Особисті нотатки */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <BookOpen className="h-5 w-5 mr-2" />
+                Ваші особисті нотатки
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <textarea 
+                className="w-full h-64 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                placeholder="Записуйте тут свої спостереження, поради, які отримали, чи особливості роботи..."
+              />
+              <Button className="mt-3 bg-orange-500 hover:bg-orange-600">
+                Зберегти нотатки
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {activeTab === "info" && (
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Загальна інформація</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-medium mb-2">Графік роботи</h3>
+                  <p>Стажер працює з 10:00 до 18:00</p>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2">Тривалість стажування</h3>
+                  <p>Стажування на кожній з 4 станцій по 1 повній зміні, вихід на ставку визначає адміністратор залежно від успішності стажування та результатів</p><Link href="/app/tests/trainee">тестування</Link>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2">Контактні особи</h3>
+                  <p>Адміністратор: (тел. 067-327-9853)</p>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2">Важливі процедури</h3>
+                  <p>Звітність одягу здається щодня до 17:45</p>
+                  <p>Форма одягу: чорний низ, фірмова біла/кофейна сорочка, закрите взуття, охайний зовнішій вигляд</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* FAQ */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Часті запитання</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h3 className="font-medium">Що робити, якщо розбили посуд з напоєм/стравою?</h3>
+                <p className="text-gray-600">Повідомити про інцедент посудомийницям на мийці біля станції Гриль, якщо цього не достатньо повідомити адміністраторам</p>
+              </div>
+              <div>
+                <h3 className="font-medium">Як поміняти воду у кулері?</h3>
+                <p className="text-gray-600">Виконувати у наступній послідовністі: 1 - Зняти стару/пусту баклашку та віднести на стелажі біля курилки, 2 - Взяти повну баклашку ОБЕРЕЖНО ВАЖЧЕ, та віднести до кулера, 3 - Відкрити/проколоти пломбу, 4 - ШВИДКО Перевернути та вставити голко баклашки в кулер, ПОРАДА: Варто звернутися до колег, щоби не розлити багато води</p>
+              </div>
+              <div>
+                <h3 className="font-medium">Що робити якщо погане самопочуття?</h3>
+                <p className="text-gray-600">ВАЖЛИВО зразу повідомити про це адміністратору та колегам по станції, аптечка на 3 поверсі в кабінеті</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Прогрес бар */}
+      <div className="mt-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Trophy className="h-5 w-5 mr-2" />
+              Ваш прогрес
+            </CardTitle>
+            <CardDescription>Загальний прогрес адаптації</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-2 flex justify-between">
+              <span>Завершено 65% тренувальної програми</span>
+              <span>3 з 5 днів</span>
+            </div>
+            <Progress value={65} className="h-3" />
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
