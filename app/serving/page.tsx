@@ -29,7 +29,7 @@ const servingRules = {
         category: "З звичайною вилкою",
         rules: ["2 вилки для хачапурі по-аджарськи", "Подавати гарячим"],
         searchTerms: ["хачапурі", "аджарськи", "грузинська", "сир"],
-        image: "/placeholder.svg?height=300&width=400",
+        image: "https://samogon.org/image/cache/catalog/kovcheg/2021/gruzinska-vipichka/adzharske-6.22-242x242.jpg?height=300&width=400",
       },
       {
         id: 2,
