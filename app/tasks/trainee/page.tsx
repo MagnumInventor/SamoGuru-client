@@ -74,6 +74,16 @@ const allHelperTasks: HelperTask[] = [
     forRoles: ["helper"],
     completed: false
   },
+  {
+    id: "h19",
+    title: "Контроль стану підносів",
+    description: "Перевірка стану підносів, їх чистота та наявність. За потреби - миття (віднести на мийку) та повернення на станцію",
+    category: "during-work",
+    difficulty: "easy",
+    station: ["Верхній бар", "Нижній бар", "Гриль", "Кухня"],
+    forRoles: ["helper"],
+    completed: false
+  },
 
 
     // ЗАВДАННЯ ДЛЯ БАРНИХ СТАНЦІЙ (ВЕРХНІЙ БАР, НИЖНІЙ БАР)
