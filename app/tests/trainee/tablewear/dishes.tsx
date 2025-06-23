@@ -19,7 +19,7 @@ type Question = {
 const quizData: Question[] = [
   {
     id: 1,
-    image: "/public/images/test/trainee/dishes/serving-plate.jpg",
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
     question: "Сервірувальна тарілка (світла)",
     options: [
       "Кухня",
@@ -27,19 +27,43 @@ const quizData: Question[] = [
     ],
     correctAnswer: 1,
     explanation: "Сервірувальна тарілка використовується на станції офіціанта для сервірування столу гостям.",
-    backImage: "/public/images/test/trainee/serving/default-serving.jpg"
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
   },
   {
     id: 2,
-    image: "/public/images/test/trainee/dishes/serving-plate.jpg",
-    question: "Сервірувальна тарілка (світла)",
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
+    question: "Сервірувальна тарілка (темна)",
     options: [
       "Кухня",
       "Станція офіціанта",
     ],
     correctAnswer: 1,
     explanation: "Сервірувальна тарілка використовується на станції офіціанта для сервірування столу гостям.",
-    backImage: "/public/images/test/trainee/serving/default-serving.jpg"
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
+  },
+    {
+    id: 3,
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
+    question: "Дерев'яна дощечка маленька",
+    options: [
+      "Верхній бар",
+      "Кухня",
+    ],
+    correctAnswer: 0,
+    explanation: "Маленька дерев'яна дощечка використовується на верхньому барі для подачі еспресо та лате.",
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
+  },
+  {
+    id: 4,
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
+    question: "Чугунна корівка",
+    options: [
+      "Кухня",
+      "Гриль",
+    ],
+    correctAnswer: 1,
+    explanation: "Чугунна корівка використовується на грилі для приготування ,,,",
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
   },
 
   // ... РЕШТА ПИТАННЬ

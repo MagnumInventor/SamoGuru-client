@@ -1,6 +1,4 @@
-"use client"
-
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -8,7 +6,6 @@ import { Progress } from '@/components/ui/progress'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
-
 
 // ІКОНКИ
 import { 
@@ -23,85 +20,81 @@ import {
   Utensils,
   ArrowsUpFromLine,
   BookOpen,
-  Link
+  ChevronLeft,
+  ChevronRight,
+  RotateCw
 } from 'lucide-react'
 
-
-
 // СПИСОК ТЕСТІВ
-
-const testCategories = [
-  {
-    id: 1,
-    title: "Знання сервірування страв/напоїв",
-    description: "Правильна подача страв, прибори для сервірування",
-    questions: 3,
-    duration: "1 хв",
-    difficulty: "Середній",
-    //lastScore: 88,
-    //attempts: 2,
-    icon: <Users className="h-5 w-5" />,
-    category: 'service'
-  },
-  {
-    id: 2,
-    title: "Планування ресторану",
-    description: "Знання розташування столів, зон та маршрутів переміщення",
-    questions: 3,
-    duration: "1 хв",
-    difficulty: "Складний",
-    //lastScore: 75,
-    //attempts: 3,
-    icon: <Map className="h-5 w-5" />,
-    category: 'layout'
-  },
-  {
-    id: 3,
-    title: "Тестування посуду",
-    description: "Знання різних видів посуду та їх використання",
-    questions: 12,
-    duration: "6 хв",
-    difficulty: "Легкий",
-    //lastScore: 92,
-    //attempts: 1,
-    icon: <Utensils className="h-5 w-5" />,
-    category: 'dishes',
-    isExternal: true
-  },
-  {
-    id: 4,
-    title: "Правила використання обладнання",
-    description: "Безпека та етикет використання ліфту та різного обладнання",
-    questions: 8,
-    duration: "4 хв",
-    difficulty: "Легкий",
-    //lastScore: null,
-    //attempts: 0,
-    icon: <ArrowsUpFromLine className="h-5 w-5" />,
-    category: 'elevator'
-  },
-  {
-    id: 5,
-    title: "Правила та обов'язки",
-    description: "Основні правила роботи та обов'язки помічників",
-    questions: 10,
-    duration: "5 хв",
-    difficulty: "Легкий",
-    //lastScore: null,
-    //attempts: 0,
-    icon: <BookOpen className="h-5 w-5" />,
-    category: 'rules'
-  }
+const testCategories: any[] = [ 
+    {
+      id: 1,
+      title: "Знання сервірування страв/напоїв",
+      description: "Правильна подача страв, прибори для сервірування",
+      questions: 3,
+      duration: "1 хв",
+      difficulty: "Середній",
+      //lastScore: 88,
+      //attempts: 2,
+      icon: <Users className="h-5 w-5" />,
+      category: 'service'
+    },
+    {
+      id: 2,
+      title: "Планування ресторану",
+      description: "Знання розташування столів, зон та маршрутів переміщення",
+      questions: 3,
+      duration: "1 хв",
+      difficulty: "Складний",
+      //lastScore: 75,
+      //attempts: 3,
+      icon: <Map className="h-5 w-5" />,
+      category: 'layout'
+    },
+    {
+      id: 3,
+      title: "Тестування посуду",
+      description: "Знання різних видів посуду та їх використання",
+      questions: 12,
+      duration: "6 хв",
+      difficulty: "Легкий",
+      //lastScore: 92,
+      //attempts: 1,
+      icon: <Utensils className="h-5 w-5" />,
+      category: 'dishes',
+      isExternal: true
+    },
+    {
+      id: 4,
+      title: "Правила використання обладнання",
+      description: "Безпека та етикет використання ліфту та різного обладнання",
+      questions: 8,
+      duration: "4 хв",
+      difficulty: "Легкий",
+      //lastScore: null,
+      //attempts: 0,
+      icon: <ArrowsUpFromLine className="h-5 w-5" />,
+      category: 'elevator'
+    },
+    {
+      id: 5,
+      title: "Правила та обов'язки",
+      description: "Основні правила роботи та обов'язки помічників",
+      questions: 10,
+      duration: "5 хв",
+      difficulty: "Легкий",
+      //lastScore: null,
+      //attempts: 0,
+      icon: <BookOpen className="h-5 w-5" />,
+      category: 'rules'
+    }
 ]
 
 
 
 
-
-
-// ПИТАННЯ ПО СЕРВІРУВАННІ      ГОТОВО - 3
 const serviceQuestions = [
-  {
+    {
     id: 1,
     question: "Для яких напоїв не подається печево?",
     type: "single",
@@ -138,7 +131,7 @@ const serviceQuestions = [
     correct: 2
   }
 ]
-// ПИТАННЯ ПО ПЛАНУВАННЮ РЕСТОРАНУ ГОТОВО - 3
+
 const layoutQuestions = [
   {
     id: 1,
@@ -178,7 +171,7 @@ const layoutQuestions = [
     correct: 2
   }
 ]
-// ПИТАННЯ ПО ОБЛАДНАННІ ГОТОВО (ТІЛЬКИ ЛІФТ) - 5
+
 const elevatorQuestions = [
   {
     id: 1,
@@ -242,7 +235,7 @@ const elevatorQuestions = [
     correct: [0,1,3]
   }
 ]
-// ПИТАННЯ ПО ПРАВИЛАМ ТА ОБОВ'ЯЗКАМ ГОТОВО - 6
+
 const rulesQuestions = [
   {
     id: 1,
@@ -324,11 +317,61 @@ const rulesQuestions = [
   }
 ]
 
+// TABLEWARE TEST DATA
+const tablewareQuestions = [
+  [
+  {
+    id: 1,
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
+    question: "Сервірувальна тарілка (світла)",
+    options: [
+      "Кухня",
+      "Станція офіціанта",
+    ],
+    correctAnswer: 1,
+    explanation: "Сервірувальна тарілка використовується на станції офіціанта для сервірування столу гостям.",
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
+  },
+  {
+    id: 2,
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
+    question: "Сервірувальна тарілка (темна)",
+    options: [
+      "Кухня",
+      "Станція офіціанта",
+    ],
+    correctAnswer: 1,
+    explanation: "Сервірувальна тарілка використовується на станції офіціанта для сервірування столу гостям.",
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
+  },
+    {
+    id: 3,
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
+    question: "Дерев'яна дощечка маленька",
+    options: [
+      "Верхній бар",
+      "Кухня",
+    ],
+    correctAnswer: 0,
+    explanation: "Маленька дерев'яна дощечка використовується на верхньому барі для подачі еспресо та лате.",
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
+  },
+  {
+    id: 4,
+    image: "/images/test/trainee/dishes/serving-plate.jpg",
+    question: "Чугунна корівка",
+    options: [
+      "Кухня",
+      "Гриль",
+    ],
+    correctAnswer: 1,
+    explanation: "Чугунна корівка використовується на грилі для приготування ,,,",
+    backImage: "/images/test/trainee/serving/default-serving.jpg"
+  },
 
-
-
-
-
+  // ... РЕШТА ПИТАННЬ
+]
+]
 
 const getQuestionsForCategory = (category: any) => {
   switch (category) {
@@ -336,8 +379,26 @@ const getQuestionsForCategory = (category: any) => {
     case 'layout': return layoutQuestions
     case 'elevator': return elevatorQuestions
     case 'rules': return rulesQuestions
-    default: return serviceQuestions.slice(0, 3) // fallback
+    case 'tableware': return tablewareQuestions
+    case 'final': return shuffleArray([
+      ...serviceQuestions,
+      ...layoutQuestions, 
+      ...elevatorQuestions,
+      ...rulesQuestions,
+      ...tablewareQuestions
+    ])
+    default: return serviceQuestions.slice(0, 3)
   }
+}
+
+// SHUFFLE FUNCTION FOR FINAL TEST
+const shuffleArray = (array: any[]) => {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
 }
 
 type Question = {
@@ -347,6 +408,9 @@ type Question = {
   options: string[];
   correct: number | number[];
   image?: string;
+  explanation?: string;
+  backImage?: string;
+  correctAnswer?: 0 | 1;
 };
 
 type TestCategory = {
@@ -361,6 +425,8 @@ type TestCategory = {
   icon: React.JSX.Element;
   category: string;
   isExternal?: boolean;
+  isTableware?: boolean;
+  isFinal?: boolean;
 };
 
 export default function TestsPage() {
@@ -371,6 +437,14 @@ export default function TestsPage() {
   const [selectedMultiple, setSelectedMultiple] = useState<number[]>([])
   const [showResults, setShowResults] = useState(false)
   const [questions, setQuestions] = useState<Question[]>([])
+  
+  // TABLEWARE TEST STATES
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [userAnswers, setUserAnswers] = useState<number[]>([])
+  const [time, setTime] = useState(0)
+  const [isQuizActive, setIsQuizActive] = useState(true)
+  const [quizCompleted, setQuizCompleted] = useState(false)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -392,6 +466,19 @@ export default function TestsPage() {
     return "text-red-600"
   }
 
+  // Timer effect for tableware test
+  useEffect(() => {
+    if (currentTest?.isTableware && isQuizActive && !quizCompleted) {
+      timerRef.current = setInterval(() => {
+        setTime(prev => prev + 1)
+      }, 1000)
+    }
+    
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current)
+    }
+  }, [isQuizActive, quizCompleted, currentTest])
+
   const startTest = (test: TestCategory) => {
     const testQuestions = getQuestionsForCategory(test.category)
     setQuestions(testQuestions)
@@ -401,6 +488,13 @@ export default function TestsPage() {
     setSelectedAnswer(null)
     setSelectedMultiple([])
     setShowResults(false)
+    
+    // Reset tableware test states
+    setIsFlipped(false)
+    setUserAnswers([])
+    setTime(0)
+    setIsQuizActive(true)
+    setQuizCompleted(false)
   }
 
   const nextQuestion = () => {
@@ -458,7 +552,319 @@ export default function TestsPage() {
     }
   }
 
-  if (currentTest && !showResults) {
+  // TABLEWARE TEST FUNCTIONS
+  const handleTablewareAnswer = (optionIndex: number) => {
+    if (!isFlipped) {
+      setUserAnswers([...userAnswers, optionIndex])
+      setIsFlipped(true)
+      setIsQuizActive(false)
+    }
+  }
+
+  const handleTablewareNext = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1)
+      setIsFlipped(false)
+      setIsQuizActive(true)
+    } else {
+      setQuizCompleted(true)
+    }
+  }
+
+  const handleTablewarePrev = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1)
+      setIsFlipped(false)
+      setIsQuizActive(true)
+      setUserAnswers(userAnswers.slice(0, -1))
+    }
+  }
+
+  const handleTablewareRestart = () => {
+    setCurrentQuestion(0)
+    setIsFlipped(false)
+    setUserAnswers([])
+    setTime(0)
+    setIsQuizActive(true)
+    setQuizCompleted(false)
+  }
+
+  const calculateTablewareScore = () => {
+    if (quizCompleted) {
+      const correctAnswers = userAnswers.filter((answer, index) => 
+        answer === questions[index].correctAnswer
+      ).length
+      
+      const timePenalty = Math.min(10, Math.floor(time / 60))
+      const rawScore = Math.floor((correctAnswers / questions.length) * 100)
+      const finalScore = Math.max(0, rawScore - timePenalty)
+      
+      return {
+        correct: correctAnswers,
+        total: questions.length,
+        percentage: finalScore,
+        time: time
+      }
+    }
+    return null
+  }
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+
+  // TABLEWARE TEST RENDER
+  if (currentTest?.isTableware && !showResults) {
+    const currentTablewareQuestion = questions[currentQuestion]
+    const progress = Math.floor((currentQuestion / questions.length) * 100)
+    const score = calculateTablewareScore()
+
+    if (quizCompleted) {
+      return (
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-3xl mx-auto">
+            <Card className="border-green-200 bg-green-50">
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">Результати тестування</CardTitle>
+                <CardDescription>
+                  Ви завершили тестування з {questions.length} питань
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-3 gap-6 mb-6">
+                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                    <div className="text-4xl font-bold text-blue-600">
+                      {score?.percentage}%
+                    </div>
+                    <div className="text-gray-600">Результат</div>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                    <div className="text-4xl font-bold text-green-600">
+                      {score?.correct}/{score?.total}
+                    </div>
+                    <div className="text-gray-600">Правильних відповідей</div>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                    <div className="text-4xl font-bold text-purple-600">
+                      {formatTime(score?.time || 0)}
+                    </div>
+                    <div className="text-gray-600">Витрачений час</div>
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <h3 className="font-semibold text-lg mb-3">Деталізація результатів:</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span>Правильні відповіді:</span>
+                      <span className="font-medium">{score?.correct}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Неправильні відповіді:</span>
+                      <span className="font-medium">{(score?.total ?? 0) - (score?.correct || 0)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Штраф за час:</span>
+                      <span className="font-medium">-{Math.min(10, Math.floor((score?.time || 0) / 60))}%</span>
+                    </div>
+                    <div className="flex justify-between border-t border-gray-200 pt-2 mt-2">
+                      <span className="font-medium">Фінальний бал:</span>
+                      <span className="font-bold text-lg">{score?.percentage}%</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4 justify-center">
+                  <Button variant="outline" onClick={() => setCurrentTest(null)}>
+                    Повернутися до тестів
+                  </Button>
+                  <Button 
+                    className="bg-blue-500 hover:bg-blue-600"
+                    onClick={handleTablewareRestart}
+                  >
+                    <RotateCw className="h-4 w-4 mr-2" />
+                    Пройти тест знову
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{currentTest.title}</h1>
+          <p className="text-gray-600">Перевірте свої знання з ресторанного сервісу</p>
+        </div>
+
+        {/* Progress and Timer */}
+        <div className="mb-6 grid grid-cols-3 gap-4 items-center">
+          <Button 
+            variant="outline" 
+            onClick={handleTablewarePrev}
+            disabled={currentQuestion === 0}
+            className="flex items-center"
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Попереднє
+          </Button>
+          
+          <div className="text-center">
+            <div className="flex items-center justify-center text-orange-600 mb-1">
+              <Clock className="h-4 w-4 mr-2" />
+              <span className="font-medium">{formatTime(time)}</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+            <div className="text-sm text-gray-600 mt-1">
+              Питання {currentQuestion + 1} з {questions.length}
+            </div>
+          </div>
+          
+          <Button 
+            variant="outline" 
+            onClick={handleTablewareNext}
+            disabled={!isFlipped}
+            className="flex items-center justify-end"
+          >
+            Наступне
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Button>
+        </div>
+
+        {/* Flip Card */}
+        <div 
+          className={`flip-card mx-auto max-w-3xl ${isFlipped ? 'flipped' : ''}`}
+          onClick={() => isFlipped && handleTablewareNext()}
+        >
+          <div className="flip-card-inner">
+            {/* Front of the card - Question */}
+            <div className="flip-card-front bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+              <Card className="border-0 shadow-none">
+                <CardHeader className="items-center">
+                  <CardTitle className="text-center text-xl mb-4">
+                    {currentTablewareQuestion?.question}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="mb-6 flex justify-center">
+                    <div className="bg-gray-100 rounded-lg h-60 w-full flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
+                        <p className="text-sm text-gray-500">Зображення: {currentTablewareQuestion?.question}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <Button 
+                      variant="outline" 
+                      className="h-24 py-4 border-blue-200 text-blue-600 hover:bg-blue-50"
+                      onClick={() => handleTablewareAnswer(0)}
+                    >
+                      {currentTablewareQuestion?.options[0]}
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="h-24 py-4 border-green-200 text-green-600 hover:bg-green-50"
+                      onClick={() => handleTablewareAnswer(1)}
+                    >
+                      {currentTablewareQuestion?.options[1]}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            {/* Back of the card - Answer */}
+            <div className="flip-card-back bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+              <Card className="border-0 shadow-none h-full flex flex-col">
+                <CardHeader className="items-center">
+                  <CardTitle className="text-center text-xl mb-2">
+                    {currentTablewareQuestion?.options[currentTablewareQuestion?.correctAnswer || 0]}
+                  </CardTitle>
+                  <CardDescription className="text-center text-green-600">
+                    Правильна відповідь
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <div className="mb-4 flex justify-center">
+                    <div className="bg-gray-100 rounded-lg h-48 w-full flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
+                        <p className="text-sm text-gray-500">Пояснення</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-700">
+                    {currentTablewareQuestion?.explanation}
+                  </div>
+                </CardContent>
+                <div className="p-6 text-center">
+                  <p className="text-gray-500 text-sm mb-2">Натисніть на картку, щоб продовжити</p>
+                  <div className="flex justify-center">
+                    <div className="animate-bounce">
+                      <ChevronRight className="h-6 w-6 text-gray-400" />
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>
+
+        <style jsx>{`
+          .flip-card {
+            perspective: 1000px;
+            height: 600px;
+          }
+          
+          .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+          }
+          
+          .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+          }
+          
+          .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+          }
+          
+          .flip-card-back {
+            transform: rotateY(180deg);
+          }
+          
+          @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+          
+          .animate-bounce {
+            animation: bounce 1.5s infinite;
+          }
+        `}</style>
+      </div>
+    )
+  }
+
+  // STANDARD TEST RENDER
+  if (currentTest && !showResults && !currentTest.isTableware) {
     const question = questions[currentQuestion]
     const progress = ((currentQuestion + 1) / questions.length) * 100
 
@@ -544,6 +950,7 @@ export default function TestsPage() {
     )
   }
 
+  // RESULTS SCREEN
   if (showResults) {
     const score = calculateScore()
 
@@ -589,15 +996,15 @@ export default function TestsPage() {
     )
   }
 
+  // MAIN TESTS PAGE
   const groupedCategories = {
     'Меню та страви': testCategories.filter(t => t.category === 'menu'),
     'Обслуговування': testCategories.filter(t => t.category === 'service'),
     'Планування': testCategories.filter(t => t.category === 'layout'),
-    'Посуд та обладнання': testCategories.filter(t => t.category === 'dishes' || t.category === 'elevator'),
-    'Правила та обов\'язки': testCategories.filter(t => t.category === 'rules')
+    'Посуд та обладнання': testCategories.filter(t => t.category === 'dishes' || t.category === 'elevator' || t.category === 'tableware'),
+    'Правила та обов\'язки': testCategories.filter(t => t.category === 'rules'),
+    'Підсумковий тест': testCategories.filter(t => t.category === 'final')
   }
-
-                                 const subay = 1;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -628,10 +1035,8 @@ export default function TestsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600 mb-1">
-                       5
-            </div>
-                                   <div className="text-sm text-gray-600">З яких доступно 17 питаннь</div>
+            <div className="text-2xl font-bold text-orange-600 mb-1">6</div>
+            <div className="text-sm text-gray-600">З яких доступно усі питання</div>
           </CardContent>
         </Card>
 
@@ -643,88 +1048,138 @@ export default function TestsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600 mb-1">7</div>
+            <div className="text-2xl font-bold text-orange-600 mb-1">12</div>
             <div className="text-sm text-gray-600">Хвилини на всі питання</div>
           </CardContent>
         </Card>
       </div>
 
       {/* Test Categories by Groups */}
-      {Object.entries(groupedCategories).map(([groupName, tests]) => (
-        <div key={groupName} className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
-            {tests[0]?.icon}
-            <span className="ml-2">{groupName}</span>
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tests.map((test) => (
-              <Card key={test.id} className="hover:shadow-lg transition-shadow border-orange-100">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-lg mb-2 flex items-center">
-                        {test.icon}
-                        <span className="ml-2">{test.title}</span>
-                      </CardTitle>
-                      <CardDescription>{test.description}</CardDescription>
+      {Object.entries(groupedCategories).map(([groupName, tests]) => 
+        tests.length > 0 && (
+          <div key={groupName} className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center">
+              {tests[0]?.icon}
+              <span className="ml-2">{groupName}</span>
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {tests.map((test) => (
+                <Card key={test.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <CardTitle className="text-lg mb-2 flex items-center">
+                          {test.icon}
+                          <span className="ml-2">{test.title}</span>
+                        </CardTitle>
+                        <CardDescription>{test.description}</CardDescription>
+                      </div>
+                      <Badge className={getDifficultyColor(test.difficulty)}>{test.difficulty}</Badge>
                     </div>
-                    <Badge className={getDifficultyColor(test.difficulty)}>{test.difficulty}</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600">
-                    <div className="flex items-center">
-                      <Brain className="h-4 w-4 mr-2" />
-                      {test.questions} питань
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 mr-2" />
-                      {test.duration}
-                    </div>
-                  </div>
-
-                  
-                {/* РЕЗУЛЬТАТ ПРЕВЮ НА ФФ 
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <div className="text-sm text-gray-600">Останній результат:</div>
-                      <div className={`text-lg font-semibold ${getScoreColor(test.lastScore)}`}>
-                        {test.lastScore ? `${test.lastScore}%` : "Не пройдено"}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600">
+                      <div className="flex items-center">
+                        <Brain className="h-4 w-4 mr-2" />
+                                                <span>{test.questions} питань</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="h-4 w-4 mr-2" />
+                        <span>{test.duration}</span>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm text-gray-600">Спроб:</div>
-                      <div className="text-lg font-semibold">{test.attempts}</div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Trophy className="h-4 w-4 mr-2" />
+                        <span className={getScoreColor(test.lastScore)}>
+                          {test.lastScore !== null ? `${test.lastScore}%` : 'Ще не пройдено'}
+                        </span>
+                      </div>
+                      <Button 
+                        onClick={() => startTest(test)}
+                        size="sm"
+                        className="bg-orange-500 hover:bg-orange-600"
+                      >
+                        Почати тест
+                      </Button>
                     </div>
-                  </div>
-*/}
-
-
-
-
-                  {test.isExternal ? (
-                    <Link href="/trainee/tablewear">
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600">
-                      Перейти до тесту
-                    </Button>
-                    </Link>
-
-
-
-                  ) : (
-                    <Button 
-                      className="w-full bg-orange-500 hover:bg-orange-600" 
-                      onClick={() => window.open('/final', '_blank')}
-                    >
-                      {subay > 0 ? "Пройти знову" : "Розпочати фінальний тест"}
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      )}
+
+      {/* Final Section with Tips */}
+      <div className="mt-12">
+        <Card className="border-blue-200 bg-blue-50">
+          <CardHeader>
+            <CardTitle className="flex items-center text-blue-800">
+              <BookOpen className="h-5 w-5 mr-2" />
+              Поради щодо підготовки
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <h3 className="font-medium flex items-center">
+                  <Users className="h-4 w-4 mr-2 text-blue-600" />
+                  Практика з колегами
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Організуйте групові тренування для покращення навичок обслуговування.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-medium flex items-center">
+                  <Map className="h-4 w-4 mr-2 text-blue-600" />
+                  Вивчення плану залу
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Запам'ятовуйте розташування столів та маршрути руху для ефективної роботи.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-medium flex items-center">
+                  <Utensils className="h-4 w-4 mr-2 text-blue-600" />
+                  Знайомство з меню
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Вивчайте інгредієнти та способи приготування страв для консультацій гостей.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Final Test Reminder */}
+      <div className="mt-8 text-center">
+        <Card className="border-green-200 bg-green-50 max-w-3xl mx-auto">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center justify-center text-green-800">
+              <ArrowsUpFromLine className="h-5 w-5 mr-2" />
+              Фінальний тест
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4">
+              Після завершення всіх тематичних тестів рекомендуємо пройти фінальний тест,
+              який включає питання з усіх тем для комплексної перевірки знань.
+            </p>
+            <Button 
+              onClick={() => {
+                const finalTest = testCategories.find(t => t.isFinal)
+                if (finalTest) startTest(finalTest)
+              }}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              Почати фінальний тест
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
