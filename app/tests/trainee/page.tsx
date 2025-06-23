@@ -704,10 +704,7 @@ export default function TestsPage() {
 
                   {test.isExternal ? (
                     <Link href="/trainee/tablewear">
-                    <Button 
-                      className="w-full bg-orange-500 hover:bg-orange-600" 
-                      onClick={() => window.open('/tablewear', '_blank')}
-                    >
+                    <Button className="w-full bg-orange-500 hover:bg-orange-600">
                       Перейти до тесту
                     </Button>
                     </Link>

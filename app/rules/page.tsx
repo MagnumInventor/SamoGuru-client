@@ -154,6 +154,7 @@ export default function RulesPage() {
           {newOrders.map((order) => (
             <Card key={order.id} className="hover:shadow-lg transition-shadow border-orange-100">
               <CardHeader>
+                
                 <div className="flex items-start justify-between">
                   <div>
                     <CardTitle className="text-lg">{order.title}</CardTitle>
@@ -168,6 +169,7 @@ export default function RulesPage() {
                     )}
                   </div>
                 </div>
+
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
