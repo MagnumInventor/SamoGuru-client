@@ -108,6 +108,17 @@ const testCategories: TestCategory[] = [
       //attempts: 0,
       icon: <BookOpen className="h-5 w-5" />,
       category: 'rules'
+    },
+    {
+      id: 6,
+      title: "Фінальний тест",
+      description: "Комплексний тест з усіх тем для підсумкової перевірки знань",
+      questions: 31, // sum of all questions
+      duration: "12 хв",
+      difficulty: "Складний",
+      icon: <Trophy className="h-5 w-5" />, // or any suitable icon
+      category: 'final',
+      isFinal: true
     }
 ]
 
@@ -560,7 +571,93 @@ export default function TestsPage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
-  // ... (рендеринг флеш-карток та стандартних тестів без змін)
+  // FLASHCARD UI for tableware test
+  if (currentTest?.category === 'tableware') {
+    // Flashcard-style UI for tableware test
+    const q = questions[currentQuestion]
+    const score = calculateTablewareScore()
+    const progress = Math.round(((currentQuestion + (quizCompleted ? 1 : 0)) / questions.length) * 100)
+
+    if (quizCompleted && score) {
+      // Results screen for tableware test
+      return (
+        <div className="container mx-auto px-4 py-8 max-w-2xl">
+          <Card className="border-green-200 bg-green-50">
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl">Результати тестування</CardTitle>
+              <CardDescription>Ви завершили тестування з {score.total} питань</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-6 mb-6">
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <div className="text-4xl font-bold text-blue-600">{score.percentage}%</div>
+                  <div className="text-gray-600">Результат</div>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <div className="text-4xl font-bold text-green-600">{score.correct}/{score.total}</div>
+                  <div className="text-gray-600">Правильних відповідей</div>
+                </div>
+                <div className="text-center p-4 bg-white rounded-lg border border-gray-200">
+                  <div className="text-4xl font-bold text-purple-600">{formatTime(score.time)}</div>
+                  <div className="text-gray-600">Витрачений час</div>
+                </div>
+              </div>
+              <div className="flex gap-4 justify-center mt-6">
+                <Button variant="outline" onClick={() => {
+                  setCurrentTest(null)
+                  setQuizCompleted(false)
+                  setShowResults(false)
+                }}>Повернутися до тестів</Button>
+                <Button onClick={handleTablewareRestart} className="bg-orange-500 hover:bg-orange-600">Пройти ще раз</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )
+    }
+
+    // Flashcard UI
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-xl">
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-gray-700">Питання {currentQuestion + 1} з {questions.length}</div>
+          <div className="text-gray-700">Час: {formatTime(time)}</div>
+        </div>
+        <Progress value={progress} className="mb-6" />
+        <div className={`flip-card${isFlipped ? ' flipped' : ''} mb-8`} style={{height: 400}}>
+          <div className="flip-card-inner" style={{height: 400}}>
+            {/* Front */}
+            <div className="flip-card-front bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center" style={{height: 400}}>
+              {q.image && <img src={q.image} alt="Зображення" className="mb-4 max-h-40 object-contain" />}
+              <div className="text-lg font-semibold mb-4 text-center">{q.question}</div>
+              <div className="grid grid-cols-2 gap-4 w-full">
+                {q.options.map((opt, idx) => (
+                  <Button key={idx} variant="outline" className={`h-20 ${isFlipped ? 'opacity-50 pointer-events-none' : ''}`} onClick={() => handleTablewareAnswer(idx)}>{opt}</Button>
+                ))}
+              </div>
+            </div>
+            {/* Back */}
+            <div className="flip-card-back bg-blue-50 rounded-lg shadow-lg p-6 flex flex-col items-center justify-center" style={{height: 400}}>
+              {q.backImage && <img src={q.backImage} alt="Зворотне зображення" className="mb-4 max-h-40 object-contain" />}
+              <div className="text-lg font-semibold mb-2 text-center">{q.options[q.correctAnswer ?? 0]}</div>
+              <div className="text-gray-700 text-center mb-4">{q.explanation}</div>
+              <div className="flex gap-4 mt-4">
+                <Button variant="outline" onClick={handleTablewarePrev} disabled={currentQuestion === 0}>Назад</Button>
+                <Button onClick={handleTablewareNext} className="bg-green-500 hover:bg-green-600">{currentQuestion === questions.length - 1 ? 'Завершити' : 'Далі'}</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style jsx>{`
+          .flip-card { perspective: 1000px; }
+          .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+          .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+          .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+          .flip-card-back { transform: rotateY(180deg); }
+        `}</style>
+      </div>
+    )
+  }
 
   // RESULTS SCREEN - виправлено кнопки
   if (showResults) {
@@ -720,7 +817,6 @@ function getDifficultyColor(difficulty: string): string {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <Trophy className="h-4 w-4 mr-2" />
-                        {/* Видалено відображення результатів */}
                         <span className="text-gray-400">Новий тест</span>
                       </div>
                       <Button 
