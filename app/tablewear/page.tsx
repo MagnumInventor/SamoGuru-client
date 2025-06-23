@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
-import { Search, Utensils, GlassWater, Coffee, Badge} from "lucide-react"
+import { Search, Utensils, GlassWater, Coffee, UtensilsCrossed, Beef} from "lucide-react"
 //, Grill, Kitchen }
 import {
   Dialog,
@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import Image from "next/image"
 
 
 
@@ -39,16 +40,15 @@ const dishwareData = {
     groups: [
       {
         name: "Кухня",
-        icon: <Utensils className="h-4 w-4 mr-1" />,
-        // RITCHEN ICONS NEEDED TO BE ADDED
+        icon: <UtensilsCrossed className="h-4 w-4 mr-1" />,
         items: [
           {
             id: 1,
             name: "ВСІ глибокі тарілки",
             description: "Для супів, бульйонів та салатів",
             station: "Кухня",
-            dish: { name: "Сала", link: "/dishes/borscht" },
-            disg: { name: "Глибока тарілка", link: "/dishes/deep-plate" },
+            dish: { name: "Тарілка для перших страв", link: "/dishes/borscht" },
+            image: "/images/deep-plate.jpg",
             searchTerms: ["тарілка", "суп", "глибока", "кухня"],
           },
           {
@@ -71,7 +71,7 @@ const dishwareData = {
       },
       {
         name: "Гриль",
-        icon: <Utensils className="h-4 w-4 mr-1" />,
+        icon: <Beef className="h-4 w-4 mr-1" />,
         // GRILL ICON NEEDED TO BE ADDED
         items: [
           {
@@ -214,6 +214,31 @@ export default function DishwarePage() {
         </div>
       </div>
 
+<Card className="border-blue-200 bg-blue-50">
+          <CardHeader>
+            <CardTitle className="flex items-center text-blue-800">
+              <span className="mr-2">📌</span>
+              Правила розподілу посуду
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-blue-700 space-y-3">
+            <div>
+              <strong>1. Звичайний посуд:</strong> Все окрім посуду для напоїв. Поділяється на:
+              <ul className="list-disc pl-5 mt-1">
+                <li><strong>Верхній бар:</strong> АБСОЛЮТНО все</li>
+                <li><strong>Нижній бар:</strong> Все окрім посуду для кави</li>
+              </ul>
+            </div>
+            <div>
+              <strong>2. Транспортування:</strong> Звичайний посуд для страв заноситься з мийки:
+              <ul className="list-disc pl-5 mt-1">
+                <li>На стелаж до станції гриль</li>
+                <li>Ліфтом вниз на кухню</li>
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
+
       <Tabs
         value={selectedCategory}
         onValueChange={(value) => setSelectedCategory(value as "regular" | "drinkware")}
@@ -266,7 +291,6 @@ export default function DishwarePage() {
                       <CardHeader>
                         <CardTitle className="text-lg">{item.name}</CardTitle>
                         <CardDescription>{item.description}</CardDescription>
-                        <Badge className="bg-green-100 text-green-800 w-fit">{item.station}</Badge>
                       </CardHeader>
                       <CardContent>
                         {/* Photo Placeholder */}
@@ -433,30 +457,6 @@ export default function DishwarePage() {
 
       {/* General Rules */}
       <div className="mt-12 space-y-6">
-        <Card className="border-blue-200 bg-blue-50">
-          <CardHeader>
-            <CardTitle className="flex items-center text-blue-800">
-              <span className="mr-2">📌</span>
-              Правила розподілу посуду
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="text-sm text-blue-700 space-y-3">
-            <div>
-              <strong>1. Звичайний посуд:</strong> Все окрім посуду для напоїв. Поділяється на:
-              <ul className="list-disc pl-5 mt-1">
-                <li><strong>Верхній бар:</strong> АБСОЛЮТНО все</li>
-                <li><strong>Нижній бар:</strong> Все окрім посуду для кави</li>
-              </ul>
-            </div>
-            <div>
-              <strong>2. Транспортування:</strong> Звичайний посуд для страв заноситься з мийки:
-              <ul className="list-disc pl-5 mt-1">
-                <li>На стелаж до станції гриль</li>
-                <li>Ліфтом вниз на кухню</li>
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
 
         <Card className="border-green-200 bg-green-50">
           <CardHeader>

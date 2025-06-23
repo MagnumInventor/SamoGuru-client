@@ -218,9 +218,9 @@ export default function LegalDocumentsPage() {
                 <div>
                   <p className="text-gray-700 font-medium mb-2">Користувач зобов'язується:</p>
                   <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>Не передавати свої дані доступу третім особам</li>
+                    <li>Не передавати універсальні дані доступу до інтерфейсу працівників третім особам</li>
                     <li>Використовувати платформу лише в робочих цілях</li>
-                    <li>Повідомляти про виявлені помилки або порушення безпеки</li>
+                    <li>Повідомляти про виявлені помилки або порушення безпеки розробнику</li>
                   </ul>
                 </div>
               </CardContent>
@@ -266,7 +266,7 @@ export default function LegalDocumentsPage() {
               <CardContent>
                 <p className="text-gray-700">
                   Ці умови регулюються законодавством України. Всі спори розглядаються в судах 
-                  України за місцем реєстрації Компанії.
+                  України.
                 </p>
               </CardContent>
             </Card>
@@ -292,7 +292,7 @@ export default function LegalDocumentsPage() {
               </CardHeader>
               <CardContent>
                 <div className="mb-3">
-                  <p className="text-gray-700 font-medium">Сайт "САМоГуру"</p>
+                  <p className="text-gray-700 font-medium">Сайт "САМоГУРу"</p>
                 </div>
                 <div className="flex items-center mb-2">
                   <Mail className="h-4 w-4 text-gray-600 mr-2" />
