@@ -94,6 +94,14 @@ const categoryTabs: { value: FoodCategory; label: string }[] = [
   { value: "bar", label: "🍷 Бар" },
 ]
 
+// Add bar subcategories (in Ukrainian)
+const barTabs = [
+  { value: "nonalco", label: "Безалкогольні" },
+  { value: "coffee", label: "Кавові напої" },
+  { value: "cocktails", label: "Коктейлі" },
+  { value: "alco", label: "Алкогольні напої" },
+]
+
 // ===== Helpers =====
 const getTypeColor = (type?: string) => {
   switch (type) {
@@ -139,13 +147,25 @@ const getTypeText = (type?: string) => {
 
 // ОСНОВНИЙ КОМПОНЕНТ (СПИСОК МЕНЮ)
 export default function MenuPage() {
+  const [section, setSection] = useState<"menu" | "bar">("menu")
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<FoodCategory>("main")
+  const [selectedBarTab, setSelectedBarTab] = useState<string>("alco")
   const [selectedDish, setSelectedDish] = useState<FoodItem | BarItem | null>(null)
+  const [selectedAllergen, setSelectedAllergen] = useState<string | null>(null)
 
-  // ФІЛЬТРАЦІЯ ПО ІМЕНІ
+  // Collect all allergens from menu items for filter dropdown
+  const allAllergens = Array.from(
+    new Set(
+      Object.values(demoMenuData)
+        .flat()
+        .flatMap(item => ("allergens" in item && item.allergens ? item.allergens : []))
+    )
+  ).filter(Boolean)
+
+  // ФІЛЬТРАЦІЯ ПО ІМЕНІ + алерген
   const getFilteredItems = (category: FoodCategory) => {
-    const items = {
+    let items: (FoodItem | BarItem)[] = {
       "main": [
         {
           id: 1,
@@ -218,7 +238,7 @@ export default function MenuPage() {
         {
           id: 6,
           name: "Хінкалі зі свининою та телятиною",
-          ingredients: "🥩 свинина, 🥩 телятина, 🧅 цибуля синя, 🌿 кінза, 🌶️ чилі, 🥟 тісто",
+          ingredients: "🥩 свинина, 🥩 телятина, 🧱 цибуля синя, 🌿 кінза, 🌶️ чилі, 🥟 тісто",
           cookingTime: "15 хв",
           weight: "70 гр (1 шт)",
           description: "Соковита начинка з м'ясного дуету телятини та свинини в ніжному тісті.",
@@ -245,7 +265,7 @@ export default function MenuPage() {
         {
           id: 8,
           name: "Грузинський з лісовим фундуком",
-          ingredients: "🍅 помідор чері, 🥒 огірок, 🌶️ перець болгарський, 🧅 цибуля синя, 🌰 фундук, 🌿 кінза",
+          ingredients: "🍅 помідор чері, 🥒 огірок, 🌶️ перець болгарський, 🧱 цибуля синя, 🌰 фундук, 🌿 кінза",
           cookingTime: "15 хв",
           weight: "330 гр",
           description: "Вдале поєднання свіжих овочів, з додаванням запашної кінзи та горіхового соусу.",
@@ -257,7 +277,7 @@ export default function MenuPage() {
         {
           id: 9,
           name: "Вах-Вах",
-          ingredients: "🍅 помідори різних видів, 🧀 бринза, 🥒 огірок, 🧅 цибуля синя, 🥬 рукола",
+          ingredients: "🍅 помідори різних видів, 🧀 бринза, 🥒 огірок, 🧱 цибуля синя, 🥬 рукола",
           cookingTime: "15 хв",
           weight: "240 гр",
           description: "Унікальний грузинський салат із свіжих та вялених томатів, у поєднанні із мусом з овечої бринзи. Поєднує у собі 4 соуса.",
@@ -303,7 +323,7 @@ export default function MenuPage() {
           alcohol: "3.6%",
           volumes: ["0.3л", "0.5л", "1л", "3л (Пивна вежа)"],
           price: "від 80 ₴",
-          type: "beer",
+          type: "beer" as const,
         },
         {
           id: 13,
@@ -313,7 +333,7 @@ export default function MenuPage() {
           alcohol: "4.6%",
           volumes: ["0.3л", "0.5л", "1л", "3л (Пивна вежа)"],
           price: "від 85 ₴",
-          type: "beer",
+          type: "beer" as const,
         },
         {
           id: 14,
@@ -323,7 +343,7 @@ export default function MenuPage() {
           alcohol: "6%",
           volumes: ["0.3л", "0.5л", "1л", "3л (Пивна вежа)"],
           price: "від 90 ₴",
-          type: "beer",
+          type: "beer" as const,
         },
         {
           id: 15,
@@ -333,7 +353,7 @@ export default function MenuPage() {
           alcohol: "8.2%",
           volumes: ["0.3л", "0.5л", "1л", "3л (Пивна вежа)"],
           price: "від 95 ₴",
-          type: "beer",
+          type: "beer" as const,
         },
         {
           id: 16,
@@ -343,7 +363,7 @@ export default function MenuPage() {
           alcohol: "3.6-8.2%",
           volumes: ["4x100мл"],
           price: "180 ₴",
-          type: "beer",
+          type: "beer" as const,
         },
         {
           id: 17,
@@ -353,7 +373,7 @@ export default function MenuPage() {
           alcohol: "0%",
           volumes: ["0.35л"],
           price: "65 ₴",
-          type: "beer",
+          type: "beer" as const,
         },
         // Наливки
         {
@@ -365,7 +385,7 @@ export default function MenuPage() {
           ingredients: "Обліпиха, цукровий сироп, лимонна кислота",
           volumes: ["від 50мл до безкінченності"],
           price: "від 45 ₴",
-          type: "tincture",
+          type: "tincture" as const,
         },
         {
           id: 19,
@@ -376,7 +396,7 @@ export default function MenuPage() {
           ingredients: "Корінь калгану, корінь солодки, паличка кориці, цедра лимона, мед",
           volumes: ["від 50мл до безкінченності"],
           price: "від 55 ₴",
-          type: "tincture",
+          type: "tincture" as const,
         },
         {
           id: 20,
@@ -387,7 +407,7 @@ export default function MenuPage() {
           ingredients: "Малина, цукор",
           volumes: ["від 50мл до безкінченності"],
           price: "від 40 ₴",
-          type: "tincture",
+          type: "tincture" as const,
         },
         {
           id: 21,
@@ -398,7 +418,7 @@ export default function MenuPage() {
           ingredients: "Спеції (кориця, гвоздика, кардамон, аніс, бадьян, перець духмяний), цукор, цедра апельсину",
           volumes: ["від 50мл до безкінченності"],
           price: "від 60 ₴",
-          type: "tincture",
+          type: "tincture" as const,
         },
         {
           id: 22,
@@ -409,7 +429,7 @@ export default function MenuPage() {
           ingredients: "Корінь хрону, перець чілі, мед",
           volumes: ["від 50мл до безкінченності"],
           price: "від 50 ₴",
-          type: "tincture",
+          type: "tincture" as const,
         },
         {
           id: 23,
@@ -420,7 +440,7 @@ export default function MenuPage() {
           ingredients: "Смородина, цукор",
           volumes: ["від 50мл до безкінченності"],
           price: "від 45 ₴",
-          type: "tincture",
+          type: "tincture" as const,
         },
         // Чача та самогон
         {
@@ -431,7 +451,7 @@ export default function MenuPage() {
           alcohol: "40°",
           volumes: ["50мл", "100мл"],
           price: "від 80 ₴",
-          type: "brandy",
+          type: "brandy" as const,
         },
         {
           id: 25,
@@ -441,7 +461,7 @@ export default function MenuPage() {
           alcohol: "42°",
           volumes: ["50мл", "100мл"],
           price: "від 70 ₴",
-          type: "brandy",
+          type: "brandy" as const,
         },
         {
           id: 26,
@@ -451,7 +471,7 @@ export default function MenuPage() {
           alcohol: "42°",
           volumes: ["50мл", "100мл"],
           price: "від 70 ₴",
-          type: "brandy",
+          type: "brandy" as const,
         },
         // Бренді та коньяк
         {
@@ -463,7 +483,7 @@ export default function MenuPage() {
           country: "Вірменія",
           volumes: ["50мл", "100мл"],
           price: "від 120 ₴",
-          type: "brandy",
+          type: "brandy" as const,
         },
         {
           id: 28,
@@ -474,7 +494,7 @@ export default function MenuPage() {
           country: "Україна",
           volumes: ["50мл", "100мл"],
           price: "від 100 ₴",
-          type: "brandy",
+          type: "brandy" as const,
         },
         {
           id: 29,
@@ -485,7 +505,7 @@ export default function MenuPage() {
           country: "Грузія",
           volumes: ["50мл", "100мл"],
           price: "від 110 ₴",
-          type: "brandy",
+          type: "brandy" as const,
         },
         // Горілка
         {
@@ -497,7 +517,7 @@ export default function MenuPage() {
           country: "Україна",
           volumes: ["50мл", "100мл", "пляшка"],
           price: "від 60 ₴",
-          type: "vodka",
+          type: "vodka" as const,
         },
         {
           id: 31,
@@ -508,7 +528,7 @@ export default function MenuPage() {
           country: "Україна",
           volumes: ["50мл", "100мл", "пляшка"],
           price: "від 70 ₴",
-          type: "vodka",
+          type: "vodka" as const,
         },
         {
           id: 32,
@@ -519,7 +539,7 @@ export default function MenuPage() {
           country: "Швеція",
           volumes: ["50мл", "100мл"],
           price: "від 90 ₴",
-          type: "vodka",
+          type: "vodka" as const,
         },
         {
           id: 33,
@@ -530,7 +550,7 @@ export default function MenuPage() {
           country: "Україна",
           volumes: ["50мл", "100мл"],
           price: "від 80 ₴",
-          type: "vodka",
+          type: "vodka" as const,
         },
         // Ром
         {
@@ -542,7 +562,7 @@ export default function MenuPage() {
           country: "Куба",
           volumes: ["50мл", "100мл"],
           price: "від 120 ₴",
-          type: "rum",
+          type: "rum" as const,
         },
         {
           id: 35,
@@ -553,7 +573,7 @@ export default function MenuPage() {
           country: "Куба",
           volumes: ["50мл", "100мл"],
           price: "від 130 ₴",
-          type: "rum",
+          type: "rum" as const,
         },
         {
           id: 36,
@@ -564,7 +584,7 @@ export default function MenuPage() {
           country: "Ірландія",
           volumes: ["50мл", "100мл"],
           price: "від 140 ₴",
-          type: "rum",
+          type: "rum" as const,
         },
         // Джин
         {
@@ -576,7 +596,7 @@ export default function MenuPage() {
           country: "Велика Британія",
           volumes: ["50мл", "100мл"],
           price: "від 110 ₴",
-          type: "gin",
+          type: "gin" as const,
         },
         {
           id: 38,
@@ -587,7 +607,7 @@ export default function MenuPage() {
           country: "Велика Британія",
           volumes: ["50мл", "100мл"],
           price: "від 120 ₴",
-          type: "gin",
+          type: "gin" as const,
         },
         // Віскі
         {
@@ -600,7 +620,7 @@ export default function MenuPage() {
           type_detail: "Односолодовий скоч",
           volumes: ["50мл", "100мл"],
           price: "від 180 ₴",
-          type: "whisky",
+          type: "whisky" as const,
         },
         {
           id: 40,
@@ -612,7 +632,7 @@ export default function MenuPage() {
           type_detail: "Купажоване віскі",
           volumes: ["50мл", "100мл"],
           price: "від 150 ₴",
-          type: "whisky",
+          type: "whisky" as const,
         },
       ],
       khachapuri: [],
@@ -623,10 +643,49 @@ export default function MenuPage() {
       friture: [],
       drinks: []
     }[category] || []
+    // Filter by allergen if selected
+    if (selectedAllergen) {
+      items = items.filter(
+        item =>
+          !("allergens" in item) ||
+          !item.allergens ||
+          !item.allergens.includes(selectedAllergen)
+      )
+    }
     return items.filter((item) =>
       (item.name?.toLowerCase() ?? "").includes(searchTerm.toLowerCase()) ||
       (item.description?.toLowerCase() ?? "").includes(searchTerm.toLowerCase())
     )
+  }
+
+  // Filter bar items by subcategory
+  const getFilteredBarItems = (barTab: string) => {
+    let items = getFilteredItems("bar")
+    // Example: you can adjust the logic below to match your real data structure
+    if (barTab === "nonalco") {
+      items = items.filter(item =>
+        ("category" in item && item.category?.toLowerCase().includes("безалкоголь")) ||
+        ("type" in item && item.type === "beer" && item.name?.toLowerCase().includes("б/а"))
+      )
+    } else if (barTab === "coffee") {
+      items = items.filter(item =>
+        ("category" in item && item.category?.toLowerCase().includes("кава")) ||
+        item.name?.toLowerCase().includes("кава") ||
+        item.name?.toLowerCase().includes("еспресо")
+      )
+    } else if (barTab === "cocktails") {
+      items = items.filter(item =>
+        ("category" in item && item.category?.toLowerCase().includes("коктейль")) ||
+        item.name?.toLowerCase().includes("коктейль")
+      )
+    } else if (barTab === "alco") {
+      items = items.filter(item =>
+        "type" in item &&
+        ["beer", "tincture", "brandy", "vodka", "rum", "gin", "whisky"].includes(item.type)
+        && !item.name?.toLowerCase().includes("б/а")
+      )
+    }
+    return items
   }
 
   return (
@@ -636,8 +695,27 @@ export default function MenuPage() {
         <p className="text-gray-600">Повний каталог страв та напоїв з інгредієнтами та алергенами</p>
       </div>
 
-      <div className="mb-8">
-        <div className="relative max-w-md">
+      {/* Section Switcher */}
+      <div className="flex gap-4 mb-8">
+        <Button
+          variant={section === "menu" ? "default" : "outline"}
+          className={section === "menu" ? "bg-orange-500 text-white" : ""}
+          onClick={() => setSection("menu")}
+        >
+          Меню
+        </Button>
+        <Button
+          variant={section === "bar" ? "default" : "outline"}
+          className={section === "bar" ? "bg-orange-500 text-white" : ""}
+          onClick={() => setSection("bar")}
+        >
+          Бар
+        </Button>
+      </div>
+
+      {/* Search and Allergen Filter */}
+      <div className="mb-8 flex flex-col md:flex-row gap-4 items-center">
+        <div className="relative max-w-md w-full">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
             placeholder="Пошук страв та напоїв..."
@@ -646,225 +724,236 @@ export default function MenuPage() {
             className="pl-10"
           />
         </div>
+        <div className="flex items-center gap-2 w-full md:w-auto">
+          <span className="text-sm text-gray-600">Без алергену:</span>
+          <select
+            className="border rounded px-2 py-1 text-sm"
+            value={selectedAllergen || ""}
+            onChange={e => setSelectedAllergen(e.target.value || null)}
+          >
+            <option value="">Всі страви</option>
+            {allAllergens.map((allergen, idx) => (
+              <option key={idx} value={allergen}>{allergen}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <Tabs value={selectedCategory} onValueChange={v => setSelectedCategory(v as FoodCategory)} className="w-full">
-        <TabsList className="grid w-full grid-cols-6 mb-8">
-          {categoryTabs.map(tab => (
-            <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
-          ))}
-        </TabsList>
+      {/* Tabs for Menu or Bar */}
+      {section === "menu" ? (
+        <Tabs value={selectedCategory} onValueChange={v => setSelectedCategory(v as FoodCategory)} className="w-full">
+          <TabsList className="grid w-full grid-cols-6 mb-8">
+            {/* Food category tabs */}
+            {categoryTabs.map(tab => (
+              <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
+            ))}
+          </TabsList>
 
-        {/* Render Food Categories */}
-        {categoryTabs
-          .filter(tab => tab.value !== "bar")
-          .map(tab => (
+          {/* Render Food Categories */}
+          {categoryTabs
+            .filter(tab => tab.value !== "bar")
+            .map(tab => (
+              <TabsContent key={tab.value} value={tab.value}>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {getFilteredItems(tab.value).map(item => (
+                    <Card key={item.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
+                          <CardTitle className="text-lg">{item.name}</CardTitle>
+                          <div className="text-lg font-bold text-orange-600">{item.price}</div>
+                        </div>
+                        {("ingredients" in item) && item.ingredients && (
+                          <CardDescription className="text-sm">{item.ingredients}</CardDescription>
+                        )}
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-gray-700 mb-4">{item.description}</p>
+                        <div className="space-y-2 mb-4">
+                          {("cookingTime" in item) && item.cookingTime && (
+                            <div className="flex items-center text-sm text-gray-600">
+                              <Clock className="h-4 w-4 mr-2" />
+                              {item.cookingTime}
+                            </div>
+                          )}
+                          {("weight" in item) && item.weight && (
+                            <div className="flex items-center text-sm text-gray-600">
+                              <Users className="h-4 w-4 mr-2" />
+                              {item.weight}
+                            </div>
+                          )}
+                        </div>
+                        {("allergens" in item) && item.allergens && item.allergens.length > 0 && (
+                          <div className="mb-4">
+                            <div className="text-xs text-gray-600 mb-1">Алергени:</div>
+                            <div className="flex flex-wrap gap-1">
+                              {item.allergens.map((allergen, idx) => (
+                                <Badge key={idx} className="bg-red-100 text-red-800 text-xs">{allergen}</Badge>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        {("warning" in item) && item.warning && (
+                          <div className="flex items-center text-xs text-orange-600 mb-4">
+                            <AlertTriangle className="h-3 w-3 mr-1" />
+                            {item.warning}
+                          </div>
+                        )}
+                        {("isWeighted" in item) && item.isWeighted && (
+                          <Badge className="bg-blue-100 text-blue-800 mb-4">Вагова страва</Badge>
+                        )}
+                        <div className="flex space-x-2">
+                          {("images" in item) && item.images && (
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button variant="outline" className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50">
+                                  <ImageIcon className="h-4 w-4 mr-2" />
+                                  Фото
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                  <DialogTitle>{item.name} - Фото</DialogTitle>
+                                  <DialogDescription>Фотографії страви</DialogDescription>
+                                </DialogHeader>
+                                <div className="grid gap-4 py-4">
+                                  {item.images.map((image, idx) => (
+                                    <div key={idx} className="relative h-60 w-full">
+                                      <img
+                                        src={image || "/placeholder.svg"}
+                                        alt={`${item.name} - фото ${idx + 1}`}
+                                        className="h-full w-full object-cover rounded-md"
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                                <div className="p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-800">
+                                  <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу,
+                                  якщо ви справді зацікавлені у запуску цієї функції,{" "}
+                                  <a href="/ff" className="underline font-medium">зверніться до розробника</a>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                          )}
+                          {("videoUrl" in item) && item.videoUrl && (
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button variant="outline" className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50">
+                                  <Video className="h-4 w-4 mr-2" />
+                                  Відео
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                  <DialogTitle>{item.name} - Відео</DialogTitle>
+                                  <DialogDescription>Відео приготування страви</DialogDescription>
+                                </DialogHeader>
+                                <div className="flex flex-col items-center justify-center py-8">
+                                  <Video className="h-16 w-16 text-orange-300 mb-4" />
+                                  <p className="text-center mb-4">Відео приготування страви "{item.name}"</p>
+                                  <Button
+                                    variant="outline"
+                                    className="flex items-center border-orange-200 text-orange-600 hover:bg-orange-50"
+                                    onClick={() => window.open(item.videoUrl, "_blank")}
+                                  >
+                                    <ExternalLink className="h-4 w-4 mr-2" />
+                                    Відкрити відео
+                                  </Button>
+                                </div>
+                                <div className="p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-800">
+                                  <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу,
+                                  якщо ви справді зацікавлені у запуску цієї функції,{" "}
+                                  <a href="/ff" className="underline font-medium">зверніться до розробника</a>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                          )}
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => setSelectedDish(item)}>
+                          Детальніше
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            ))}
+        </Tabs>
+      ) : (
+        <Tabs value={selectedBarTab} onValueChange={setSelectedBarTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-4 mb-8">
+            {barTabs.map(tab => (
+              <TabsTrigger key={tab.value} value={tab.value}>{tab.label}</TabsTrigger>
+            ))}
+          </TabsList>
+          {barTabs.map(tab => (
             <TabsContent key={tab.value} value={tab.value}>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {getFilteredItems(tab.value).map(item => (
-                  <Card key={item.id} className="hover:shadow-lg transition-shadow border-orange-100">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <CardTitle className="text-lg">{item.name}</CardTitle>
-                        <div className="text-lg font-bold text-orange-600">{item.price}</div>
-                      </div>
-                      {("ingredients" in item) && item.ingredients && (
-                        <CardDescription className="text-sm">{item.ingredients}</CardDescription>
-                      )}
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-gray-700 mb-4">{item.description}</p>
-                      <div className="space-y-2 mb-4">
-                        {("cookingTime" in item) && item.cookingTime && (
-                          <div className="flex items-center text-sm text-gray-600">
-                            <Clock className="h-4 w-4 mr-2" />
-                            {item.cookingTime}
+                {getFilteredBarItems(tab.value).map(item => {
+                  const barItem = item as BarItem
+                  return (
+                    <Card key={barItem.id} className="hover:shadow-lg transition-shadow border-orange-100">
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <CardTitle className="text-lg">{barItem.name}</CardTitle>
+                            <CardDescription className="text-sm font-medium text-orange-600">{barItem.category}</CardDescription>
                           </div>
-                        )}
-                        {("weight" in item) && item.weight && (
-                          <div className="flex items-center text-sm text-gray-600">
-                            <Users className="h-4 w-4 mr-2" />
-                            {item.weight}
+                          <div className="text-right">
+                            <div className="text-lg font-bold text-orange-600">{barItem.price}</div>
+                            <Badge className={getTypeColor(barItem.type)}>{getTypeText(barItem.type)}</Badge>
                           </div>
-                        )}
-                      </div>
-                      {("allergens" in item) && item.allergens && item.allergens.length > 0 && (
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-gray-700 mb-4">{barItem.description}</p>
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Міцність:</span>
+                            <span className="font-medium">{barItem.alcohol}</span>
+                          </div>
+                          {barItem.country && (
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Країна:</span>
+                              <span className="font-medium">{barItem.country}</span>
+                            </div>
+                          )}
+                          {barItem.type_detail && (
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Тип:</span>
+                              <span className="font-medium">{barItem.type_detail}</span>
+                            </div>
+                          )}
+                          {barItem.ingredients && (
+                            <div className="mt-3">
+                              <div className="text-xs text-gray-600 mb-1">Інгредієнти:</div>
+                              <p className="text-xs text-gray-700">{barItem.ingredients}</p>
+                            </div>
+                          )}
+                        </div>
                         <div className="mb-4">
-                          <div className="text-xs text-gray-600 mb-1">Алергени:</div>
+                          <div className="text-xs text-gray-600 mb-1">Доступні об'єми:</div>
                           <div className="flex flex-wrap gap-1">
-                            {item.allergens.map((allergen, idx) => (
-                              <Badge key={idx} className="bg-red-100 text-red-800 text-xs">{allergen}</Badge>
+                            {barItem.volumes.map((volume, idx) => (
+                              <Badge key={idx} variant="outline" className="text-xs">{volume}</Badge>
                             ))}
                           </div>
                         </div>
-                      )}
-                      {("warning" in item) && item.warning && (
-                        <div className="flex items-center text-xs text-orange-600 mb-4">
-                          <AlertTriangle className="h-3 w-3 mr-1" />
-                          {item.warning}
-                        </div>
-                      )}
-                      {("isWeighted" in item) && item.isWeighted && (
-                        <Badge className="bg-blue-100 text-blue-800 mb-4">Вагова страва</Badge>
-                      )}
-                      <div className="flex space-x-2">
-                        {("images" in item) && item.images && (
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button variant="outline" className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50">
-                                <ImageIcon className="h-4 w-4 mr-2" />
-                                Фото
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-md">
-                              <DialogHeader>
-                                <DialogTitle>{item.name} - Фото</DialogTitle>
-                                <DialogDescription>Фотографії страви</DialogDescription>
-                              </DialogHeader>
-                              <div className="grid gap-4 py-4">
-                                {item.images.map((image, idx) => (
-                                  <div key={idx} className="relative h-60 w-full">
-                                    <img
-                                      src={image || "/placeholder.svg"}
-                                      alt={`${item.name} - фото ${idx + 1}`}
-                                      className="h-full w-full object-cover rounded-md"
-                                    />
-                                  </div>
-                                ))}
-                              </div>
-                              <div className="p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-800">
-                                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу,
-                                якщо ви справді зацікавлені у запуску цієї функції,{" "}
-                                <a href="/ff" className="underline font-medium">зверніться до розробника</a>
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        )}
-                        {("videoUrl" in item) && item.videoUrl && (
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button variant="outline" className="flex-1 border-orange-200 text-orange-600 hover:bg-orange-50">
-                                <Video className="h-4 w-4 mr-2" />
-                                Відео
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-md">
-                              <DialogHeader>
-                                <DialogTitle>{item.name} - Відео</DialogTitle>
-                                <DialogDescription>Відео приготування страви</DialogDescription>
-                              </DialogHeader>
-                              <div className="flex flex-col items-center justify-center py-8">
-                                <Video className="h-16 w-16 text-orange-300 mb-4" />
-                                <p className="text-center mb-4">Відео приготування страви "{item.name}"</p>
-                                <Button
-                                  variant="outline"
-                                  className="flex items-center border-orange-200 text-orange-600 hover:bg-orange-50"
-                                  onClick={() => window.open(item.videoUrl, "_blank")}
-                                >
-                                  <ExternalLink className="h-4 w-4 mr-2" />
-                                  Відкрити відео
-                                </Button>
-                              </div>
-                              <div className="p-4 bg-red-50 border border-red-200 rounded-md text-sm text-red-800">
-                                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу,
-                                якщо ви справді зацікавлені у запуску цієї функції,{" "}
-                                <a href="/ff" className="underline font-medium">зверніться до розробника</a>
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        )}
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => setSelectedDish(item)}>
-                        Детальніше
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
+                      </CardContent>
+                      <CardFooter>
+                        <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => setSelectedDish(barItem)}>
+                          Детальніше
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  )
+                })}
               </div>
             </TabsContent>
           ))}
-
-        {/* Bar Menu */}
-        <TabsContent value="bar">
-          <div className="mb-6">
-            <Card className="border-orange-200 bg-orange-50">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Wine className="h-5 w-5 text-orange-500 mr-2" />
-                  Меню Бар
-                </CardTitle>
-                <CardDescription>
-                  Власне пиво, наливки на горілці Nemiroff, преміум алкоголь з усього світу
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {getFilteredItems("bar").map(item => {
-              const barItem = item as BarItem
-              return (
-                <Card key={barItem.id} className="hover:shadow-lg transition-shadow border-orange-100">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle className="text-lg">{barItem.name}</CardTitle>
-                        <CardDescription className="text-sm font-medium text-orange-600">{barItem.category}</CardDescription>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-orange-600">{barItem.price}</div>
-                        <Badge className={getTypeColor(barItem.type)}>{getTypeText(barItem.type)}</Badge>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-700 mb-4">{barItem.description}</p>
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600">Міцність:</span>
-                        <span className="font-medium">{barItem.alcohol}</span>
-                      </div>
-                      {barItem.country && (
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600">Країна:</span>
-                          <span className="font-medium">{barItem.country}</span>
-                        </div>
-                      )}
-                      {barItem.type_detail && (
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600">Тип:</span>
-                          <span className="font-medium">{barItem.type_detail}</span>
-                        </div>
-                      )}
-                      {barItem.ingredients && (
-                        <div className="mt-3">
-                          <div className="text-xs text-gray-600 mb-1">Інгредієнти:</div>
-                          <p className="text-xs text-gray-700">{barItem.ingredients}</p>
-                        </div>
-                      )}
-                    </div>
-                    <div className="mb-4">
-                      <div className="text-xs text-gray-600 mb-1">Доступні об'єми:</div>
-                      <div className="flex flex-wrap gap-1">
-                        {barItem.volumes.map((volume, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">{volume}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => setSelectedDish(barItem)}>
-                      Детальніше
-                    </Button>
-                  </CardFooter>
-                </Card>
-              )
-            })}
-          </div>
-          {/* ...Bar info and education blocks unchanged... */}
-        </TabsContent>
-      </Tabs>
+        </Tabs>
+      )}
 
       {/* Selected Dish/Drink Dialog */}
       {selectedDish && (
