@@ -620,9 +620,20 @@ export default function TestsPage() {
     'Підсумковий тест': testCategories.filter(t => t.isFinal)
   }
 
-  function getDifficultyColor(difficulty: any): string | undefined {
-    throw new Error('Function not implemented.')
+function getDifficultyColor(difficulty: string): string {
+  switch (difficulty) {
+    case "Легкий":
+      return "bg-green-100 text-green-800"
+    case "Середній":
+      return "bg-yellow-100 text-yellow-800"
+    case "Складний":
+      return "bg-red-100 text-red-800"
+    case "Важкий":
+      return "bg-red-200 text-red-900"
+    default:
+      return "bg-gray-100 text-gray-800"
   }
+}
 
   return (
     <div className="container mx-auto px-4 py-8">
