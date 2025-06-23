@@ -90,8 +90,6 @@ const categoryTabs: { value: FoodCategory; label: string }[] = [
   { value: "friture", label: "Фритюр" },
   { value: "salads", label: "🥗 Салати" },
   { value: "desserts", label: "🍰 Десерти" },
-  { value: "drinks", label: "🍺 Напої" },
-  { value: "bar", label: "🍷 Бар" },
 ]
 
 // Add bar subcategories (in Ukrainian)
