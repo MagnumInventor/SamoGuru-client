@@ -37,7 +37,7 @@ const allHelperTasks: HelperTask[] = [
     id: "h20",
     title: "Підготовка станції",
     description: "Викинути все сміття, забрати лишні речі, перевірити достатню кількість приборів та підносів",
-    category: "before-opening"
+    category: "before-opening",
     difficulty: "medium",
     station: ["Верхній бар", "Гриль", "Кухня", "Нижній бар"],
     forRoles: ["helper"],
