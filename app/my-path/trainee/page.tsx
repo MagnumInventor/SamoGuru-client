@@ -146,21 +146,33 @@ export default function AssistantGuidePage() {
             </CardContent>
           </Card>
 
-          {/* Особисті нотатки */}
+          {/* Взаємодія */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <BookOpen className="h-5 w-5 mr-2" />
-                Ваші особисті нотатки
+                Повідомлення розробнику
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <textarea 
+              <textarea
+                id="dev-message"
                 className="w-full h-64 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                placeholder="Записуйте тут свої спостереження, поради, які отримали, чи особливості роботи..."
+                placeholder="Записуйте тут свої поради, уточнення, найдені помилки на сайті..."
+                onChange={e => window.localStorage.setItem("devMessageDraft", e.target.value)}
+                defaultValue={typeof window !== "undefined" ? window.localStorage.getItem("devMessageDraft") || "" : ""}
               />
-              <Button className="mt-3 bg-orange-500 hover:bg-orange-600">
-                Зберегти нотатки
+              <Button
+                className="mt-3 bg-orange-500 hover:bg-orange-600"
+                onClick={() => {
+                  const textarea = document.getElementById("dev-message") as HTMLTextAreaElement | null
+                  const text = textarea?.value || ""
+                  window.localStorage.setItem("devMessageDraft", text)
+                  const mailto = `mailto:markoleks08@gmail.com?subject=Порада/помилка%20від%20стажера&body=${encodeURIComponent(text)}`
+                  window.location.href = mailto
+                }}
+              >
+                Надіслати
               </Button>
             </CardContent>
           </Card>
