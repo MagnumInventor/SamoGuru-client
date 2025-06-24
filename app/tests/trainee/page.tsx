@@ -387,7 +387,19 @@ export default function TestsPage() {
     setShowResults(false)
   }
 
+  // Defensive: do not render test if no questionsList
   const currentQuestions: Question[] = currentTest?.questionsList || []
+
+  // Defensive: if currentTest is set but has no questionsList, return to main page
+  if (currentTest && (!currentQuestions || currentQuestions.length === 0)) {
+    setCurrentTest(null)
+    return null
+  }
+
+  // Defensive: if currentQuestion is out of bounds, reset to 0
+  if (currentTest && currentQuestion >= currentQuestions.length) {
+    setCurrentQuestion(0)
+  }
 
   const nextQuestion = () => {
     if (selectedAnswer !== null) {
