@@ -9,8 +9,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Brain, Trophy, Clock, Map, CheckCircle, XCircle, BarChart3, Link, ArrowsUpFromLine, BookOpen, Users, Utensils } from "lucide-react"
 
-// ПИТАННЯ З ФАЙЛУ
-import { demoTestQuestions } from "@/lib/demo-data"
 
 type TestCategory = {
   id: number
@@ -21,7 +19,6 @@ type TestCategory = {
   difficulty: string
   icon: React.ReactNode
   category: string
-  isTableware?: boolean
   isFinal?: boolean
 }
 
@@ -32,10 +29,10 @@ type Question = {
   type: "single" | "multiple"
   options: string[]
   correct: number | number[]
-  // Optionally, add image/explanation for tableware if needed
-  image?: string
-  explanation?: string
-  backImage?: string
+      // Optionally, add image/explanation for tableware if needed
+  //image?: string
+  //explanation?: string
+  //backImage?: string
 }
 
 // СПИСОК ТЕСТІВ
@@ -255,7 +252,7 @@ const elevatorQuestions: Question[] = [
       "Ввечері - перед виходом із закладу",
       "Зранку - в робочій формі, перед виконанням роботи",
     ],
-    correct: [0,1,3]
+    correct: [1,3]
   }
 ]
 
