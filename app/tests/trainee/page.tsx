@@ -9,9 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Brain, Trophy, Clock, Map, CheckCircle, XCircle, BarChart3, Link, ArrowsUpFromLine, BookOpen, Users, Utensils } from "lucide-react"
 
-// ПИТАННЯ З ФАЙЛУ
-import { demoTestQuestions } from "@/lib/demo-data"
-
+// --- Types ---
 type TestCategory = {
   id: number
   title: string
@@ -21,102 +19,21 @@ type TestCategory = {
   difficulty: string
   icon: React.ReactNode
   category: string
-  isTableware?: boolean
   isFinal?: boolean
+  questionsList: Question[]
 }
 
-// Define a unified Question type
 type Question = {
   id: number
   question: string
   type: "single" | "multiple"
   options: string[]
   correct: number | number[]
-  // Optionally, add image/explanation for tableware if needed
-  image?: string
-  explanation?: string
-  backImage?: string
 }
 
-// СПИСОК ТЕСТІВ
-const testCategories: TestCategory[] = [ 
-    {
-      id: 1,
-      title: "Знання сервірування страв/напоїв",
-      description: "Правильна подача страв, прибори для сервірування",
-      questions: 3,
-      duration: "1 хв",
-      difficulty: "Середній",
-      //lastScore: 88,
-      //attempts: 2,
-      icon: <Users className="h-5 w-5" />,
-      category: 'service'
-    },
-    {
-      id: 2,
-      title: "Планування ресторану",
-      description: "Знання розташування столів, зон та маршрутів переміщення",
-      questions: 3,
-      duration: "1 хв",
-      difficulty: "Складний",
-      //lastScore: 75,
-      //attempts: 3,
-      icon: <Map className="h-5 w-5" />,
-      category: 'layout'
-    },
-    {
-      id: 3,
-      title: "Тестування посуду",
-      description: "Знання різних видів посуду та їх використання",
-      questions: 12,
-      duration: "6 хв",
-      difficulty: "Легкий",
-      //lastScore: 92,
-      //attempts: 1,
-      icon: <Utensils className="h-5 w-5" />,
-      category: 'dishes',
-      //questionsList: tablewareQuestions,
-    },
-    {
-      id: 4,
-      title: "Правила використання обладнання",
-    description: "Безпека та правила використання ліфту та різного обладнання",
-    questions: 5, //elevatorQuestions.length,
-    duration: "4 хв",
-    difficulty: "Легкий",
-    icon: <ArrowsUpFromLine className="h-5 w-5" />,
-    category: 'elevator',
-    //questionsList: elevatorQuestions,
-  },
-    {
-      id: 5,
-      title: "Правила та обов'язки",
-      description: "Основні правила роботи та обов'язки помічників",
-    questions: 5, //rulesQuestions.length,
-    duration: "5 хв",
-    difficulty: "Легкий",
-    icon: <BookOpen className="h-5 w-5" />,
-    category: 'rules',
-    //questionsList: rulesQuestions,
-  },
-    {
-      id: 6,
-      title: "Фінальний тест",
-      description: "Комплексний тест з усіх тем для підсумкової перевірки знань",
-      questions: 31, // sum of all questions
-      duration: "12 хв",
-      difficulty: "Складний",
-      icon: <Trophy className="h-5 w-5" />, // or any suitable icon
-      category: 'final',
-      isFinal: true
-    }
-]
-
-
-
-
+// --- Questions Data ---
 const serviceQuestions: Question[] = [
-    {
+  {
     id: 1,
     question: "Для яких напоїв не подається печево?",
     type: "single",
@@ -153,8 +70,6 @@ const serviceQuestions: Question[] = [
     correct: 2
   }
 ]
-
-
 const layoutQuestions: Question[] = [
   {
     id: 1,
@@ -194,7 +109,6 @@ const layoutQuestions: Question[] = [
     correct: 2
   }
 ]
-
 const elevatorQuestions: Question[] = [
   {
     id: 1,
@@ -208,7 +122,7 @@ const elevatorQuestions: Question[] = [
     ],
     correct: 0
   },
-    {
+  {
     id: 2,
     question: "Коли можна керувати панеллю з поверхами, якщо ліфт не на твоєму поверсі?",
     type: "single",
@@ -223,7 +137,7 @@ const elevatorQuestions: Question[] = [
   },
   {
     id: 3,
-        question: "На яку станцію потрібно відправляти ліфт для страв за відсутності потреби у завантеженні/розвантаженні та інших страв",
+    question: "На яку станцію потрібно відправляти ліфт для страв за відсутності потреби у завантеженні/розвантаженні та інших страв",
     type: "single",
     options: [
       "На любий поверх",
@@ -243,9 +157,9 @@ const elevatorQuestions: Question[] = [
       "Зачекати на повне загруження ліфту",
       "Вагу посуду (важкий - низ, легкий - верх)",
     ],
-    correct: [0,1,3]
+    correct: [0, 1, 3]
   },
-    {
+  {
     id: 5,
     question: "Коли розпочинати та закінчувати зміну?",
     type: "multiple",
@@ -255,10 +169,9 @@ const elevatorQuestions: Question[] = [
       "Ввечері - перед виходом із закладу",
       "Зранку - в робочій формі, перед виконанням роботи",
     ],
-    correct: [0,1,3]
+    correct: [0, 1, 3]
   }
 ]
-
 const rulesQuestions: Question[] = [
   {
     id: 1,
@@ -272,7 +185,7 @@ const rulesQuestions: Question[] = [
     ],
     correct: [2, 3]
   },
-    {
+  {
     id: 2,
     question: "Що робити у вільний час на станції кухня?",
     type: "multiple",
@@ -284,8 +197,7 @@ const rulesQuestions: Question[] = [
     ],
     correct: [0, 1]
   },
-
-    {
+  {
     id: 3,
     question: "Що робити у вільний час на станції нижній бар?",
     type: "multiple",
@@ -298,7 +210,7 @@ const rulesQuestions: Question[] = [
     ],
     correct: [1, 2, 4]
   },
-    {
+  {
     id: 4,
     question: "Що робити у вільний час на станції Гриль?",
     type: "multiple",
@@ -308,10 +220,8 @@ const rulesQuestions: Question[] = [
       "Перетирати погано натерті прибори",
       "Підтримувати чистоту та порядок на станції"
     ],
-    correct: [0,2,3]
+    correct: [0, 2, 3]
   },
-
-
   {
     id: 5,
     question: "Що входить в обов'язки помічника?",
@@ -339,8 +249,6 @@ const rulesQuestions: Question[] = [
     correct: 1
   }
 ]
-
-// TABLEWARE TEST DATA - normalized to Question type
 const tablewareQuestions: Question[] = [
   {
     id: 1,
@@ -350,10 +258,7 @@ const tablewareQuestions: Question[] = [
       "Кухня",
       "Станція офіціанта",
     ],
-    correct: 1,
-    image: "/images/test/trainee/dishes/serving-plate.jpg",
-    explanation: "Сервірувальна тарілка використовується на станції офіціанта для сервірування столу гостям.",
-    backImage: "/images/test/trainee/serving/default-serving.jpg"
+    correct: 1
   },
   {
     id: 2,
@@ -363,10 +268,7 @@ const tablewareQuestions: Question[] = [
       "Кухня",
       "Станція офіціанта",
     ],
-    correct: 1,
-    image: "/images/test/trainee/dishes/serving-plate.jpg",
-    explanation: "Сервірувальна тарілка використовується на станції офіціанта для сервірування столу гостям.",
-    backImage: "/images/test/trainee/serving/default-serving.jpg"
+    correct: 1
   },
   {
     id: 3,
@@ -376,10 +278,7 @@ const tablewareQuestions: Question[] = [
       "Верхній бар",
       "Кухня",
     ],
-    correct: 0,
-    image: "/images/test/trainee/dishes/serving-plate.jpg",
-    explanation: "Маленька дерев'яна дощечка використовується на верхньому барі для подачі еспресо та лате.",
-    backImage: "/images/test/trainee/serving/default-serving.jpg"
+    correct: 0
   },
   {
     id: 4,
@@ -389,14 +288,9 @@ const tablewareQuestions: Question[] = [
       "Кухня",
       "Гриль",
     ],
-    correct: 1,
-    image: "/images/test/trainee/dishes/serving-plate.jpg",
-    explanation: "Чугунна корівка використовується на грилі для приготування страв.",
-    backImage: "/images/test/trainee/serving/default-serving.jpg"
+    correct: 1
   }
 ]
-
-// Create a final test with all questions mixed
 const finalTestQuestions: Question[] = [
   ...serviceQuestions,
   ...layoutQuestions,
@@ -405,8 +299,68 @@ const finalTestQuestions: Question[] = [
   ...tablewareQuestions
 ]
 
+// --- Test Categories ---
+const testCategories: TestCategory[] = [
+  {
+    id: 1,
+    title: "Знання сервірування страв/напоїв",
+    description: "Правильна подача страв, прибори для сервірування",
+    questions: serviceQuestions.length,
+    duration: "1 хв",
+    difficulty: "Середній",
+    icon: <Users className="h-5 w-5" />,
+    category: 'service',
+    questionsList: serviceQuestions
+  },
+  {
+    id: 2,
+    title: "Планування ресторану",
+    description: "Знання розташування столів, зон та маршрутів переміщення",
+    questions: layoutQuestions.length,
+    duration: "1 хв",
+    difficulty: "Складний",
+    icon: <Map className="h-5 w-5" />,
+    category: 'layout',
+    questionsList: layoutQuestions
+  },
+  {
+    id: 3,
+    title: "Тестування посуду",
+    description: "Знання різних видів посуду та їх використання",
+    questions: tablewareQuestions.length,
+    duration: "6 хв",
+    difficulty: "Легкий",
+    icon: <Utensils className="h-5 w-5" />,
+    category: 'dishes',
+    questionsList: tablewareQuestions
+  },
+  {
+    id: 4,
+    title: "Правила використання обладнання",
+    description: "Безпека та правила використання ліфту та різного обладнання",
+    questions: elevatorQuestions.length,
+    duration: "4 хв",
+    difficulty: "Легкий",
+    icon: <ArrowsUpFromLine className="h-5 w-5" />,
+    category: 'elevator',
+    questionsList: elevatorQuestions
+  },
+  {
+    id: 5,
+    title: "Правила та обов'язки",
+    description: "Основні правила роботи та обов'язки помічників",
+    questions: rulesQuestions.length,
+    duration: "5 хв",
+    difficulty: "Легкий",
+    icon: <BookOpen className="h-5 w-5" />,
+    category: 'rules',
+    questionsList: rulesQuestions
+  }
+]
+
+// --- Component Logic ---
 export default function TestsPage() {
-  const [currentTest, setCurrentTest] = useState<any>(null)
+  const [currentTest, setCurrentTest] = useState<TestCategory | null>(null)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
@@ -425,20 +379,15 @@ export default function TestsPage() {
     }
   }
 
-  const getScoreColor = (score: number | null) => {
-    if (score === null) return "text-gray-400"
-    if (score >= 80) return "text-green-600"
-    if (score >= 60) return "text-yellow-600"
-    return "text-red-600"
-  }
-
-  const startTest = (test: any) => {
+  const startTest = (test: TestCategory) => {
     setCurrentTest(test)
     setCurrentQuestion(0)
     setAnswers([])
     setSelectedAnswer(null)
     setShowResults(false)
   }
+
+  const currentQuestions: Question[] = currentTest?.questionsList || []
 
   const nextQuestion = () => {
     if (selectedAnswer !== null) {
@@ -466,8 +415,7 @@ export default function TestsPage() {
     return Math.round((correct / currentQuestions.length) * 100)
   }
 
-  const currentQuestions: Question[] = currentTest?.questionsList || []
-
+  // --- Test UI ---
   if (currentTest && !showResults) {
     const question = currentQuestions[currentQuestion]
     const progress = ((currentQuestion + 1) / currentQuestions.length) * 100
@@ -483,7 +431,6 @@ export default function TestsPage() {
           </div>
           <Progress value={progress} className="mb-4" />
         </div>
-
         <Card>
           <CardHeader>
             <CardTitle className="text-xl">{question.question}</CardTitle>
@@ -502,7 +449,6 @@ export default function TestsPage() {
                 </div>
               ))}
             </RadioGroup>
-
             <div className="flex justify-between mt-6">
               <Button variant="outline" onClick={() => setCurrentTest(null)}>
                 Скасувати тест
@@ -521,9 +467,8 @@ export default function TestsPage() {
     )
   }
 
-  if (showResults) {
+  if (showResults && currentTest) {
     const score = calculateScore()
-
     return (
       <div className="container mx-auto px-4 py-8 max-w-2xl">
         <Card>
@@ -547,13 +492,11 @@ export default function TestsPage() {
               {answers.filter((answer, index) => answer === currentQuestions[index].correct).length} з{" "}
               {currentQuestions.length}
             </div>
-
             <div className="space-y-2 mb-6 text-center">
               {score >= 80 && <p className="text-green-600">Відмінний результат! 🎉</p>}
               {score >= 60 && score < 80 && <p className="text-yellow-600">Хороший результат! Є над чим працювати.</p>}
               {score < 60 && <p className="text-red-600">Рекомендуємо повторити навчальні матеріали.</p>}
             </div>
-
             <div className="mt-8 mb-6">
               <h3 className="text-lg font-medium mb-4">Огляд питань:</h3>
               <div className="space-y-6">
@@ -601,21 +544,10 @@ export default function TestsPage() {
                 })}
               </div>
             </div>
-
             <div className="flex gap-4 justify-center">
               <Button variant="outline" onClick={() => setCurrentTest(null)}>
                 Повернутися до тестів
               </Button>
-
-
-                                                    <Link href="/tests/trainee">
-                                                      <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
-                                                        Перейти на тестування для стажера
-                                                      </Button>
-                                                    </Link>
-
-
-
               <Button onClick={() => startTest(currentTest)} className="bg-orange-500 hover:bg-orange-600">
                 Пройти ще раз
               </Button>
@@ -626,14 +558,14 @@ export default function TestsPage() {
     )
   }
 
+  // --- Main Page with Test List ---
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Тестування знань</h1>
         <p className="text-gray-600">Перевірте свої знання меню та процедур ресторану</p>
       </div>
-
-      {/* Stats Overview */}
+      {/* Stats Overview - can be removed or left as is */}
       <div className="grid md:grid-cols-3 gap-6 mb-8">
         <Card className="border-orange-200">
           <CardHeader className="pb-3">
@@ -716,14 +648,19 @@ export default function TestsPage() {
                   {test.duration}
                 </div>
               </div>
-
-
-
-              <div className="mt-8 text-center">
-        <Card className="border-green-200 bg-green-50 max-w-3xl mx-auto">
+              <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => startTest(test)}>
+                Розпочати тест
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      {/* Final Test Block */}
+      <div className="mt-12">
+        <Card className="border-green-200 bg-green-50 max-w-2xl mx-auto">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center justify-center text-green-800">
-              <ArrowsUpFromLine className="h-5 w-5 mr-2" />
+              <Trophy className="h-5 w-5 mr-2" />
               Фінальний тест
             </CardTitle>
           </CardHeader>
@@ -732,25 +669,27 @@ export default function TestsPage() {
               Після завершення всіх тематичних тестів рекомендуємо пройти фінальний тест,
               який включає питання з усіх тем для комплексної перевірки знань.
             </p>
-            <Button 
-              onClick={() => {
-                const finalTest = testCategories.find(t => t.isFinal)
-                if (finalTest) startTest(finalTest)
-              }}
+            <Button
+              onClick={() =>
+                startTest({
+                  id: 999,
+                  title: "Фінальний тест",
+                  description: "Комплексний тест з усіх тем для підсумкової перевірки знань",
+                  questions: finalTestQuestions.length,
+                  duration: "12 хв",
+                  difficulty: "Складний",
+                  icon: <Trophy className="h-5 w-5" />,
+                  category: "final",
+                  isFinal: true,
+                  questionsList: finalTestQuestions,
+                })
+              }
               className="bg-green-600 hover:bg-green-700"
             >
               Почати фінальний тест
             </Button>
           </CardContent>
         </Card>
-      </div>
-
-              <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={() => startTest(test)}>
-                {test.attempts > 0 ? "Пройти знову" : "Розпочати тест"}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
       </div>
     </div>
   )
