@@ -109,9 +109,20 @@ export default function AssistantGuidePage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500">
-                [Тут буде інтерактивна карта ресторану]
-              </div>
+              <a
+                href="/app/table-plan/map"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block mb-2"
+              >
+                <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500 hover:shadow-lg hover:ring-2 hover:ring-orange-400 transition cursor-pointer">
+                  <iframe
+                    src="/app/table-plan/map"
+                    title="Інтерактивна карта ресторану"
+                    className="w-full h-full rounded-lg border-0"
+                  />
+                </div>
+              </a>
               <div className="mt-4 text-sm text-gray-600">
                 <p>Зони відповідальності помічника позначені жовтим кольором</p>
               </div>
@@ -122,25 +133,28 @@ export default function AssistantGuidePage() {
 
       {activeTab === "tips" && (
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Поради від досвідчених офіціантів */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Users className="h-5 w-5 mr-2" />
-                Поради від старших колег
+                Поради від колег
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="p-3 bg-blue-50 rounded-lg">
-                <p>"Завжди тримайте в кишені 2-3 резервні ручки - це рятує в пікові години"</p>
-                <p className="text-sm text-gray-600 mt-1">- Олександр, офіціант з 5-річним досвідом</p>
+                <p>"Завжди тримайте в під рукою чек до замовлення - це рятує в пікові години"</p>
+                <p className="text-sm text-gray-600 mt-1">- Порада від офіціантів</p>
               </div>
               <div className="p-3 bg-blue-50 rounded-lg">
-                <p>"Перш ніж зайти на кухню, уявіть собі весь маршрут - це економить 30% часу"</p>
-                <p className="text-sm text-gray-600 mt-1">- Марія, старший офіціант</p>
+                <p>"Уважно читайте чек та коментарі до них перед сервіруванням та віднесенням замовлення"</p>
+                <p className="text-sm text-gray-600 mt-1">- Порада від адміністратора</p>
               </div>
               <div className="p-3 bg-blue-50 rounded-lg">
-                <p>"Завжди перевіряйте чистоти підносу перед виносом замовлення"</p>
+                <p>"Перш ніж заносити замовлення, уявіть собі весь маршрут - та врахуйте що можна зробити по дорозі"</p>
+                <p className="text-sm text-gray-600 mt-1">- ???, старший офіціант</p>
+              </div>
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <p>"Завжди перевіряйте чистоту посуду та підносу перед передачею замовлення"</p>
                 <p className="text-sm text-gray-600 mt-1">- Загальне правило</p>
               </div>
             </CardContent>
