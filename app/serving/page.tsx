@@ -535,7 +535,9 @@ export default function ServingPage() {
                 {selectedItem.name}
                 {selectedItem.special === "ВАЖЛИВО" && <AlertTriangle className="h-5 w-5 ml-2 text-red-500" />}
               </DialogTitle>
-              <DialogDescription>{selectedItem.description}</DialogDescription>
+              <DialogDescription>
+                {selectedItem.description}
+              </DialogDescription>
             </DialogHeader>
             <div className="grid gap-6">
               <div className="relative h-60 w-full bg-gray-100 rounded-md flex items-center justify-center">
@@ -543,8 +545,9 @@ export default function ServingPage() {
                   <img
                     src={selectedItem.image}
                     alt={selectedItem.name}
-                    className="h-full max-h-56 w-auto mx-auto rounded object-contain"
-                    style={{ maxWidth: "100%" }}
+                    width={400}
+                    height={400}
+                    className="h-[400px] w-[400px] mx-auto rounded object-contain"
                   />
                 ) : (
                   <div className="text-center text-gray-500">
@@ -556,7 +559,6 @@ export default function ServingPage() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
-          
                 <div>
                   <h4 className="font-medium mb-3 flex items-center">
                     <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
