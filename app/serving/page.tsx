@@ -426,13 +426,21 @@ export default function ServingPage() {
                       )}
                     </CardHeader>
                     <CardContent>
-                    
                       <div className="mb-4 bg-gray-100 rounded-lg h-48 flex items-center justify-center">
-                        <div className="text-center text-gray-500">
-                          <ImageIcon className="h-12 w-12 mx-auto mb-2" />
-                          <p className="text-sm">Фото приклад сервірування</p>
-                          <p className="text-xs">Буде додано пізніше</p>
-                        </div>
+                        {item.image ? (
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-full max-h-44 w-auto mx-auto rounded object-contain"
+                            style={{ maxWidth: "100%" }}
+                          />
+                        ) : (
+                          <div className="text-center text-gray-500">
+                            <ImageIcon className="h-12 w-12 mx-auto mb-2" />
+                            <p className="text-sm">Фото приклад сервірування</p>
+                            <p className="text-xs">Буде додано пізніше</p>
+                          </div>
+                        )}
                       </div>
 
                       <div className="mb-4">
@@ -520,13 +528,21 @@ export default function ServingPage() {
               <DialogDescription>{selectedItem.description}</DialogDescription>
             </DialogHeader>
             <div className="grid gap-6">
-      
               <div className="relative h-60 w-full bg-gray-100 rounded-md flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <ImageIcon className="h-16 w-16 mx-auto mb-4" />
-                  <p className="text-lg font-medium mb-2">Фото приклад сервірування</p>
-                  <p className="text-sm">{selectedItem.name}</p>
-                </div>
+                {selectedItem.image ? (
+                  <img
+                    src={selectedItem.image}
+                    alt={selectedItem.name}
+                    className="h-full max-h-56 w-auto mx-auto rounded object-contain"
+                    style={{ maxWidth: "100%" }}
+                  />
+                ) : (
+                  <div className="text-center text-gray-500">
+                    <ImageIcon className="h-16 w-16 mx-auto mb-4" />
+                    <p className="text-lg font-medium mb-2">Фото приклад сервірування</p>
+                    <p className="text-sm">{selectedItem.name}</p>
+                  </div>
+                )}
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
