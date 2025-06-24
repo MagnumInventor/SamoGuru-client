@@ -9,7 +9,11 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Brain, Trophy, Clock, Map, CheckCircle, XCircle, BarChart3, Link, ArrowsUpFromLine, BookOpen, Users, Utensils } from "lucide-react"
 
+<<<<<<< HEAD
 // --- Types ---
+=======
+
+>>>>>>> ed7d3080e9bceb88acd9cb9e79499def75ad0c67
 type TestCategory = {
   id: number
   title: string
@@ -29,6 +33,13 @@ type Question = {
   type: "single" | "multiple"
   options: string[]
   correct: number | number[]
+<<<<<<< HEAD
+=======
+      // Optionally, add image/explanation for tableware if needed
+  //image?: string
+  //explanation?: string
+  //backImage?: string
+>>>>>>> ed7d3080e9bceb88acd9cb9e79499def75ad0c67
 }
 
 // --- Questions Data ---
@@ -169,7 +180,11 @@ const elevatorQuestions: Question[] = [
       "Ввечері - перед виходом із закладу",
       "Зранку - в робочій формі, перед виконанням роботи",
     ],
+<<<<<<< HEAD
     correct: [0, 1, 3]
+=======
+    correct: [1,3]
+>>>>>>> ed7d3080e9bceb88acd9cb9e79499def75ad0c67
   }
 ]
 const rulesQuestions: Question[] = [
