@@ -44,7 +44,7 @@ export default function AssistantGuidePage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Путівник стажера-помічника</h1>
-        <p className="text-gray-600">Основні навички та алгоритми дій для успішного старту</p>
+        <p className="text-gray-600">Основні навички та алгоритми дій для успішного початку роботи</p>
       </div>
 
       {/* Навігаційні таби */}
@@ -117,14 +117,14 @@ export default function AssistantGuidePage() {
               >
                 <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500 hover:shadow-lg hover:ring-2 hover:ring-orange-400 transition cursor-pointer">
                   <iframe
-                    src="/app/table-plan/map"
+                    src="table-plan/map"
                     title="Інтерактивна карта ресторану"
                     className="w-full h-full rounded-lg border-0"
                   />
                 </div>
               </a>
               <div className="mt-4 text-sm text-gray-600">
-                <p>Зони відповідальності помічника позначені жовтим кольором</p>
+                <p>Детальніше у розділі "План закладу"</p>
               </div>
             </CardContent>
           </Card>
@@ -245,7 +245,7 @@ export default function AssistantGuidePage() {
         </div>
       )}
 
-      {/* Прогрес бар */}
+      {/* Прогрес бар 
       <div className="mt-8">
         <Card>
           <CardHeader>
@@ -263,7 +263,7 @@ export default function AssistantGuidePage() {
             <Progress value={65} className="h-3" />
           </CardContent>
         </Card>
-      </div>
+      </div>*/}
     </div>
   )
 }
