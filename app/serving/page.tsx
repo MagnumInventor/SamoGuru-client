@@ -404,7 +404,7 @@ export default function ServingPage() {
       {/* FF Notice */}
       <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
         <div className="text-sm text-blue-800">
-          <strong>FF:</strong> Фотографії прикладів сервірування будуть додані після налаштування медіа сервера
+          <strong>FF:</strong> Всі фотографії прикладів сервірування будуть додані пізніше
         </div>
       </div>
 
