@@ -98,12 +98,12 @@ const layoutQuestions: Question[] = [
   },
   {
     id: 3,
-    question: "На які столи замовлення відносяться напряму з кухні/нижнього бару (окрім гарячих напоїв)?",
+    question: "На які столи замовлення помічники відносять напряму з кухні/нижнього бару (окрім гарячих напоїв)?",
     type: "single",
     options: [
       "100-ті, 400-ті, 500-ті",
       "100-ті, 200-ті, 300-ті, 400-ті",
-      "500-ті, 700-ті, 800-ті",
+      "500-ті, 600-ті, 700-ті, 800-ті",
       "400-ті, 500-ті, 600-ті, 700-ті, 800-ті"
     ],
     correct: 2
@@ -244,9 +244,10 @@ const rulesQuestions: Question[] = [
       "Смачного!",
       "Ваша (назва страви), нехай смакує!",
       "Утриматись від коментарів",
+      "Помічник не може подавати страву гостю"
       "Приємного апетиту!"
     ],
-    correct: 1
+    correct: 3
   }
 ]
 const tablewareQuestions: Question[] = [
@@ -306,8 +307,8 @@ const testCategories: TestCategory[] = [
     title: "Знання сервірування страв/напоїв",
     description: "Правильна подача страв, прибори для сервірування",
     questions: serviceQuestions.length,
-    duration: "1 хв",
-    difficulty: "Середній",
+    duration: "1.5 хв",
+    difficulty: "Складний",
     icon: <Users className="h-5 w-5" />,
     category: 'service',
     questionsList: serviceQuestions
@@ -339,7 +340,7 @@ const testCategories: TestCategory[] = [
     title: "Правила використання обладнання",
     description: "Безпека та правила використання ліфту та різного обладнання",
     questions: elevatorQuestions.length,
-    duration: "4 хв",
+    duration: ">2 хв",
     difficulty: "Легкий",
     icon: <ArrowsUpFromLine className="h-5 w-5" />,
     category: 'elevator',
@@ -350,7 +351,7 @@ const testCategories: TestCategory[] = [
     title: "Правила та обов'язки",
     description: "Основні правила роботи та обов'язки помічників",
     questions: rulesQuestions.length,
-    duration: "5 хв",
+    duration: "2.5 хв",
     difficulty: "Легкий",
     icon: <BookOpen className="h-5 w-5" />,
     category: 'rules',
@@ -583,17 +584,13 @@ export default function TestsPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
               <BarChart3 className="h-5 w-5 text-orange-500 mr-2" />
-              Загальна статистика
+              Проміжна статистика
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-600 mb-1">78%</div>
             <div className="text-sm text-gray-600">Середній бал</div>
             <div className="mt-2 p-2 bg-yellow-50 rounded-md">
-              <div className="text-xs text-yellow-800">
-                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -602,17 +599,13 @@ export default function TestsPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
               <Trophy className="h-5 w-5 text-orange-500 mr-2" />
-              Пройдено тестів
+              Розроблено тестів для помічників
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600 mb-1">9</div>
-            <div className="text-sm text-gray-600">З 12 доступних</div>
+            <div className="text-2xl font-bold text-orange-600 mb-1">5</div>
+            <div className="text-sm text-gray-600">З них доступно 17 питань</div>
             <div className="mt-2 p-2 bg-yellow-50 rounded-md">
-              <div className="text-xs text-yellow-800">
-                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -621,17 +614,13 @@ export default function TestsPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
               <Clock className="h-5 w-5 text-orange-500 mr-2" />
-              Час навчання
+              Середній час
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600 mb-1">2.5</div>
-            <div className="text-sm text-gray-600">Години цього тижня</div>
+            <div className="text-2xl font-bold text-orange-600 mb-1">4</div>
+            <div className="text-sm text-gray-600">Хвилини на проходження підсумкового тестування</div>
             <div className="mt-2 p-2 bg-yellow-50 rounded-md">
-              <div className="text-xs text-yellow-800">
-                <strong>FF:</strong> Наразі це не функціонує через відсутність фінансування та серверу, якщо ви справді
-                зацікавлені у запуску цієї функції, зверніться до розробника (+380960427745)
-              </div>
             </div>
           </CardContent>
         </Card>
