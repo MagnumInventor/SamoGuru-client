@@ -51,6 +51,14 @@ const rules = [
 ]
 
 const newOrders = [
+    {
+    id: 6,
+    title: "Зміна в графіку",
+    description: "У наступні дні 2 зміна помічників починається о 12:00 (замість 16:00): ПТ, СБ, НД",
+    priority: "medium",
+    deadline: "25.05.2025",
+    status: "active",
+  },
   {
     id: 1,
     title: "Штраф за не підтримання порядку в КП",
