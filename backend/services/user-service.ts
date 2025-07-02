@@ -20,7 +20,15 @@ export class UserService {
   static async getUserFines(userId: string): Promise<Fine[]> {
     const db = await getDatabase()
     const fines = await db.collection("fines").find({ userId }).sort({ date: -1 }).toArray()
-    return fines as Fine[]
+    return fines.map((fine: any) => ({
+      _id: fine._id,
+      userId: fine.userId,
+      date: fine.date,
+      amount: fine.amount,
+      comment: fine.comment,
+      isPaid: fine.isPaid,
+      createdAt: fine.createdAt,
+    })) as Fine[]
   }
 
   static async addFine(fine: Omit<Fine, "_id" | "createdAt">): Promise<string> {
@@ -49,7 +57,18 @@ export class UserService {
     }
 
     const shifts = await db.collection("workShifts").find(query).sort({ date: -1 }).toArray()
-    return shifts as WorkShift[]
+    return shifts.map((shift: any) => ({
+      _id: shift._id,
+      userId: shift.userId,
+      date: shift.date,
+      startTime: shift.startTime,
+      endTime: shift.endTime,
+      isCompleted: shift.isCompleted,
+      tips: shift.tips,
+      salesPercentage: shift.salesPercentage,
+      totalSales: shift.totalSales,
+      createdAt: shift.createdAt,
+    })) as WorkShift[]
   }
 
   static async addWorkShift(shift: Omit<WorkShift, "_id" | "createdAt">): Promise<string> {

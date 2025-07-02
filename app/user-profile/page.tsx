@@ -223,7 +223,9 @@ export default function ProfilePage() {
               {isEditing ? (
                 <Textarea
                   value={editedDescription}
-                  onChange={(e) => setEditedDescription(e.target.value)}
+                  onChange={(e) => {
+                      return setEditedDescription(e.target.value)
+                  }}
                   placeholder="Розкажіть про себе..."
                   className="min-h-[100px]"
                 />
