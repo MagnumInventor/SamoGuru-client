@@ -12,7 +12,7 @@ import { useAuth } from "@/lib/auth"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
 // import { register } from "node:module" // Remove this line
 
-export async function LoginForm() {
+export function LoginForm() {
   const [isRegistering, setIsRegistering] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
