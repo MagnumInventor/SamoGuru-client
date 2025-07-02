@@ -23,10 +23,13 @@ import {
   Coffee,
   CheckSquare,
   Soup,
+  Smile,
 } from "lucide-react"
 import { useAuth, getRoleDisplayName } from "@/lib/auth"
 
 const allNavItems = [
+  { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
+  
   { href: "/", label: "Головна", icon: User, roles: ["waiter", "helper"] },
 
   { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
