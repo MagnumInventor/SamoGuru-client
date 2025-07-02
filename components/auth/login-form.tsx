@@ -10,8 +10,9 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useAuth } from "@/lib/auth"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
+// import { register } from "node:module" // Remove this line
 
-export function LoginForm() {
+export async function LoginForm() {
   const [isRegistering, setIsRegistering] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -28,6 +29,8 @@ export function LoginForm() {
 
 
 const { login } = useAuth();
+// const success = await login(formData.password) // Remove this line from top-level
+// const result = await register(formData) // Remove this line from top-level
 
 
 

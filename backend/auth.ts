@@ -4,59 +4,93 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
 export interface User {
-  id: string
+  // id: string
   firstName: string
   lastName: string
   phone: string
   role: "waiter" | "helper" | "admin" | "trainee"
-  isAuthenticated: boolean
+  token: boolean
 }
 
 interface AuthStore {
   user: User | null
-  login: (password: string) => boolean
+  login: (phone: string, password: string) => Promise<boolean>
+  register: (data: {
+    firstName: string
+    lastName: string
+    phone: string
+    password: string
+    role: string
+  }) => Promise<{ success: boolean; message: string}>
   logout: () => void
   isAuthenticated: () => boolean
 }
 
-// ТИМЧАСОВИЙ ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
+const API_URL = "/api" // or locarhost:5000
+
+// BACKEND LOGIN 
+export const useAuth = create<AuthStore>()(
+  persist(
+    (set, get) => ({
+      user: null,
+      login: async ( phone: string, password: string) => {
+        try {
+          const res = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone, password}),
+          })
+          if (!res.ok) return false
+          const data = await res.json()
+          if (data.token && data.user) {
+            set({ user: { ...data.user, token: data.token} })
+            return true
+          }
+          return false
+        } catch {
+          return false
+        } 
+      },
+      register: async ({firstName, lastName, phone, password, role}) => {
+        try {
+          const res = await fetch(`${API_URL}/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firstName, lastName, phone, password, role}),
+          })
+          const data = await res.json()
+          if (res.ok) {
+            return { success: true, message: data.message || "Реєстрація успішна"}
+          }
+          return { success: false, message: data.message || "Помилка при реєстрації"}
+         } catch {
+          return { success: false, message: "Помилка мережа, перевірте справність з'єднання"}
+        }
+      },
+      logout: () => set({ user: null }),
+      isAuthenticated: () => !!get().user?.token,
+    }),
+    {
+      name: "samoguru-auth",
+    }
+  )
+)
+
+
+
+{/* ТИМЧАСОВИЙ ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
 const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: string }> = {
   admin123: { role: "admin", name: "Адміністратор", surname: "системи" },
   waiter123: { role: "waiter", name: "Офіціант", surname: "тестовий" },
   helper123: { role: "helper", name: "Помічник", surname: "робочий" },
   trainee123: { role: "trainee", name: "Стажер", surname: "навчальний" },
 }
+*/}
+
 
 
 // ПОВНОЦІННА РЕЄСТРАЦІЯ
-export const useAuth = create<AuthStore>()(
-  persist(
-    (set, get) => ({
-      user: null,
-      login: (password: string) => {
-        const userInfo = VALID_PASSWORDS[password]
-        if (userInfo) {
-          const user: User = {
-            id: Math.random().toString(36).substr(2, 9),
-            firstName: userInfo.name,
-            lastName: userInfo.surname,
-            phone: "+380 XX XXX XX XX",
-            role: userInfo.role as any,
-            isAuthenticated: true,
-          }
-          set({ user })
-          return true
-        }
-        return false
-      },
-      logout: () => set({ user: null }),
-      isAuthenticated: () => !!get().user?.isAuthenticated,
-    }),
-    {
-      name: "samoguru-auth",
-    },
-  ),
-)
+// (Disabled: see backend implementation above)
 
 export const getRoleDisplayName = (role: string): string => {
   switch (role) {
