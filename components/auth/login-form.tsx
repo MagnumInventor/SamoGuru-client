@@ -117,6 +117,7 @@ const { login } = useAuth();
                       <SelectItem value="waiter">Офіціант</SelectItem>
                       <SelectItem value="helper">Помічник офіціанта</SelectItem>
                       <SelectItem value="admin">Адміністратор</SelectItem>
+                      <SelectItem value="trainee">Помічник - стажер</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
