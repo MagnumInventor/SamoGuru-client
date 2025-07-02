@@ -23,9 +23,18 @@ export function LoginForm() {
   })
   const [error, setError] = useState("")
 
-  const { login } = useAuth()
+  
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+const { login } = useAuth();
+
+
+
+
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
 
@@ -35,13 +44,18 @@ export function LoginForm() {
     }
 
     if (isRegistering) {
-      if (!formData.firstName || !formData.lastName || !formData.phone || !formData.role) {
-        setError("Заповніть всі поля")
-        return
+      setError("Реєстрація наразі недоступна.")
+      return
+    } else {
+      try {
+        const success = await login(formData.password)
+        if (!success) {
+          setError("Невірний номер телефону або пароль")
+        }
+      } catch (err) {
+        setError("Сталася помилка при вході.")
       }
     }
-
-    login(formData.password)
   }
 
   return (
@@ -69,8 +83,7 @@ export function LoginForm() {
                       value={formData.firstName}
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       placeholder="Введіть ім'я"
-                      required
-                    />
+                      required />
                   </div>
                   <div>
                     <Label htmlFor="lastName">Прізвище</Label>
@@ -79,8 +92,7 @@ export function LoginForm() {
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                       placeholder="Введіть прізвище"
-                      required
-                    />
+                      required />
                   </div>
                 </div>
 
@@ -92,8 +104,7 @@ export function LoginForm() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+380 XX XXX XX XX"
-                    required
-                  />
+                    required />
                 </div>
 
                 <div>
@@ -121,8 +132,7 @@ export function LoginForm() {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="Введіть пароль"
-                  required
-                />
+                  required />
                 <Button
                   type="button"
                   variant="ghost"
@@ -159,7 +169,7 @@ export function LoginForm() {
                   setIsRegistering(!isRegistering)
                   setError("")
                   setFormData({ firstName: "", lastName: "", phone: "", role: "", password: "" })
-                }}
+                } }
                 className="text-orange-600 hover:text-orange-700"
               >
                 {isRegistering ? "Вже маєте акаунт? Увійти" : "Немає акаунту? Зареєструватися"}

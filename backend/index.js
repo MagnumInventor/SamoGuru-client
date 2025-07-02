@@ -8,6 +8,10 @@ app.use(express.json());
 // Підключення до бази
 connectDB();
 
+// Підключення роутів
+const authRoutes = require('./routes/auth');
+app.use('/api', authRoutes); // <-- Додаємо цей рядок
+
 // Роут (тимчасово)
 app.get('/', (req, res) => {
   res.send('Samoguru API working');
