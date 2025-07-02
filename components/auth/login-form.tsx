@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useAuth, validatePassword } from "@/lib/auth"
+import { useAuth } from "@/lib/auth"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
 
 export function LoginForm() {
@@ -29,8 +29,8 @@ export function LoginForm() {
     e.preventDefault()
     setError("")
 
-    if (!validatePassword(formData.password)) {
-      setError("Невірний пароль")
+    if (!formData.password || formData.password.length < 6) {
+      setError("Пароль має містити щонайменше 6 символів")
       return
     }
 
@@ -41,12 +41,7 @@ export function LoginForm() {
       }
     }
 
-    login({
-      firstName: formData.firstName || "Користувач",
-      lastName: formData.lastName || "",
-      phone: formData.phone || "",
-      role: (formData.role as any) || "waiter",
-    })
+    login(formData.password)
   }
 
   return (
@@ -103,7 +98,7 @@ export function LoginForm() {
 
                 <div>
                   <Label htmlFor="role">Роль у ресторані</Label>
-                  <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value })}>
+                  <Select value={formData.role} onValueChange={(value: any) => setFormData({ ...formData, role: value })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Оберіть роль" />
                     </SelectTrigger>
