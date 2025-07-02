@@ -99,4 +99,11 @@ export function AdminPanel({ onUpdate }: AdminPanelProps) {
           <Tabs defaultValue="tokens" className="space-y-4">
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="tokens">Токени</TabsTrigger>
-              <TabsTrigger value="schedule">Розкл\
+              <TabsTrigger value="schedule">Розклад</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
