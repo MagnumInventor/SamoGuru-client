@@ -118,6 +118,8 @@ export const getRoleDisplayName = (role: string): string => {
       return "Фіц"
     case "helper":
       return "Малий/мала"
+    case "trainee":
+      return "Стажер"
     case "admin":
       return "Адмін"
     default:
