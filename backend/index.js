@@ -1,22 +1,35 @@
+// server/index.js
+
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./db');
 require('dotenv').config();
 
 const app = express();
-app.use(express.json());
+const PORT = process.env.PORT || 3000;
 
-// Підключення до бази
-connectDB();
+// Middleware
+app.use(cors()); // дозволяє запити з фронтенду
+app.use(express.json()); // парсить JSON запити
 
-// Підключення роутів
+// Підключення до бази даних
+connectDB()
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err.message);
+    process.exit(1); // завершити процес, якщо підключення провалено
+  });
+
+// Роутинг
 const authRoutes = require('./routes/auth');
-app.use('/api', authRoutes); // <-- Додаємо цей рядок
+app.use('/api', authRoutes);
 
-// Роут (тимчасово)
+// Системний ping (для перевірки)
 app.get('/', (req, res) => {
-  res.send('Samoguru API working');
+  res.send('✅ Samoguru API is running');
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+// Запуск сервера
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
