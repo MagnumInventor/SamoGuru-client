@@ -9,7 +9,7 @@ export interface User {
   email: string
   phone: string
   role: "waiter" | "helper" | "admin" | "trainee"
-  token: samogurusecret // JWT token string
+  token: string // JWT token string
 }
 
 interface AuthStore {
@@ -52,43 +52,71 @@ export const useAuth = create<AuthStore>()(
           return false
         }
       },
-      register: async ({
-        firstName,
-        lastName,
-        email,
-        password,
-        token,
-        phone,
-        role,
-      }) => {
-        try {
-          const res = await fetch(`/api/auth/register-employee`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email,
-              password,
-              token,
-              phone,
-              firstName,
-              lastName,
-              role,
-              profile: {
-                name: `${firstName} ${lastName}`,
-                position: role,
-                department: "",
-              },
-            }),
-          })
-          const data = await res.json()
-          if (res.ok) {
-            return { success: true, message: data.message || "Реєстрація успішна" }
-          }
-          return { success: false, message: data.message || "Помилка при реєстрації" }
-        } catch {
-          return { success: false, message: "Помилка мережі, перевірте з'єднання" }
-        }
+register: async ({
+  firstName,
+  lastName,
+  email,
+  password,
+  token,
+  phone,
+  role,
+}) => {
+  try {
+    // Only require token for roles other than trainee
+    if (role !== "trainee" && !token) {
+      return { 
+        success: false, 
+        message: "Токен обов'язковий для цієї ролі" 
+      };
+    }
+
+    const payload: {
+      email: string;
+      password: string;
+      phone: string;
+      firstName: string;
+      lastName: string;
+      role: string;
+      profile: {
+        name: string;
+        position: string;
+        department: string;
+      };
+      token?: string;
+    } = {
+      email,
+      password,
+      phone,
+      firstName,
+      lastName,
+      role,
+      profile: {
+        name: `${firstName} ${lastName}`,
+        position: role,
+        department: "",
       },
+    };
+
+    // Only include token in payload if it exists (for non-trainee roles)
+    if (token) {
+      payload.token = token;
+    }
+
+    const res = await fetch(`/api/auth/register-employee`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    
+    const data = await res.json();
+    if (res.ok) {
+      return { success: true, message: data.message || "Реєстрація успішна" };
+    }
+    return { success: false, message: data.message || "Помилка при реєстрації" };
+  } catch {
+    return { success: false, message: "Помилка мережі, перевірте з'єднання" };
+  }
+},
       logout: () => set({ user: null }),
       isAuthenticated: () => !!get().user?.token,
     }),
