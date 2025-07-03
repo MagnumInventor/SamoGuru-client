@@ -31,7 +31,7 @@ interface AuthStore {
 const API_URL = "/api"
 
 export const useAuth = create<AuthStore>()(
-  persist(
+  persist<AuthStore>(
     (set, get) => ({
       user: null,
       login: async (email: string, password: string) => {
@@ -97,8 +97,6 @@ export const useAuth = create<AuthStore>()(
     }
   )
 )
-
-
 
 {/* ТИМЧАСОВИЙ ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
 const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: string }> = {
