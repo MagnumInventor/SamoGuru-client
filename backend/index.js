@@ -25,7 +25,7 @@ connectDB()
 
 // Роутинг
 const authRoutes = require('./routes/auth');
-app.use('/api', authRoutes);
+app.use('/api/auth', authRoutes);
 
 // Системний ping (для перевірки)
 app.get('/', (req, res) => {
