@@ -18,9 +18,11 @@ interface AuthStore {
   register: (data: {
     firstName: string
     lastName: string
+    email: string
     phone: string
     password: string
     role: string
+    token?: boolean
   }) => Promise<{ success: boolean; message: string}>
   logout: () => void
   isAuthenticated: () => boolean
@@ -51,22 +53,43 @@ export const useAuth = create<AuthStore>()(
           return false
         } 
       },
-      register: async ({firstName, lastName, phone, password, role}) => {
-        try {
-          const res = await fetch(`${API_URL}/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ firstName, lastName, phone, password, role}),
-          })
-          const data = await res.json()
-          if (res.ok) {
-            return { success: true, message: data.message || "Реєстрація успішна"}
-          }
-          return { success: false, message: data.message || "Помилка при реєстрації"}
-         } catch {
-          return { success: false, message: "Помилка мережа, перевірте справність з'єднання"}
-        }
-      },
+      register: async ({
+  firstName,
+  lastName,
+  email,
+  password,
+  token,
+  phone,
+  role,
+}) => {
+  try {
+    const res = await fetch(`/api/auth/register-employee`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+        token,
+        phone,
+        firstName,
+        lastName,
+        role,
+        profile: {
+          name: `${firstName} ${lastName}`,
+          position: role,
+          department: "", // You can add a department field to your form if needed
+        },
+      }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      return { success: true, message: data.message || "Реєстрація успішна" };
+    }
+    return { success: false, message: data.message || "Помилка при реєстрації" };
+  } catch {
+    return { success: false, message: "Помилка мережі, перевірте з'єднання" };
+  }
+},
       logout: () => set({ user: null }),
       isAuthenticated: () => !!get().user?.token,
     }),
