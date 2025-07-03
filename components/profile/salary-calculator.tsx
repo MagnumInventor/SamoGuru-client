@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { DollarSign, Plus } from "lucide-react"
-import type { User, WorkShift, Fine } from "@/lib/models/user"
+import type { User, WorkShift, Fine } from "@/backend/models/user"
 
 interface SalaryCalculatorProps {
   user: User

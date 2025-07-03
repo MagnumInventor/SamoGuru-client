@@ -4,8 +4,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
-import { useAuth } from "@/lib/auth"
-import { redirectToFF } from "@/lib/ff-redirect"
+import { useAuth } from "@/backend/auth"
+import { redirectToFF } from "@/backend/ff-redirect"
 import Image from "next/image"
 
 // Days of the week abbreviations

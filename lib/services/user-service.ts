@@ -1,5 +1,5 @@
-import { getDatabase } from "@/lib/mongodb"
-import type { User, Fine, WorkShift, InternshipProgress } from "@/lib/models/user"
+import { getDatabase } from "@/backend/mongodb"
+import type { User, Fine, WorkShift, InternshipProgress } from "@/backend/models/user"
 import { ObjectId } from "mongodb"
 
 export class UserService {

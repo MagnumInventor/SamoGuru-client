@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Newspaper, Users, Calendar, TrendingUp, Award, Coffee } from "lucide-react"
-import { demoNewsData } from "@/lib/demo-data"
+import { demoNewsData } from "@/backend/demo-data"
 
 type NewsArticle = {
   id: number

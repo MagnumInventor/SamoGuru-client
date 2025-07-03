@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
 import { CheckCircle2, Clock, AlertTriangle, Coffee, UtensilsCrossed, WashingMachine as CleaningServices } from "lucide-react"
-import { useAuth } from "@/lib/auth"
+import { useAuth } from "@/backend/auth"
 
 interface HelperTask {
   id: string

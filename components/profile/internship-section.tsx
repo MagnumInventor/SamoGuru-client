@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { GraduationCap, CheckCircle, Clock, Target } from "lucide-react"
-import type { InternshipProgress } from "@/lib/models/user"
+import type { InternshipProgress } from "@/backend/models/user"
 
 interface InternshipSectionProps {
   progress: InternshipProgress | null

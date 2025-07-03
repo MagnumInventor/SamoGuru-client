@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ChevronLeft, ChevronRight, MapPin } from "lucide-react"
-import type { WorkShift } from "@/lib/models/user"
+import type { WorkShift } from "@/backend/models/user"
 
 interface ProfileCalendarProps {
   workShifts: WorkShift[]

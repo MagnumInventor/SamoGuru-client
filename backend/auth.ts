@@ -4,17 +4,17 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
 export interface User {
-  // id: string
   firstName: string
   lastName: string
+  email: string
   phone: string
   role: "waiter" | "helper" | "admin" | "trainee"
-  token: boolean
+  token: string // JWT token string
 }
 
 interface AuthStore {
   user: User | null
-  login: (phone: string, password: string) => Promise<boolean>
+  login: (email: string, password: string) => Promise<boolean>
   register: (data: {
     firstName: string
     lastName: string
@@ -22,74 +22,73 @@ interface AuthStore {
     phone: string
     password: string
     role: string
-    token?: boolean
-  }) => Promise<{ success: boolean; message: string}>
+    token?: string
+  }) => Promise<{ success: boolean; message: string }>
   logout: () => void
   isAuthenticated: () => boolean
 }
 
-const API_URL = "/api" // or locarhost:5000
+const API_URL = "/api"
 
-// BACKEND LOGIN 
 export const useAuth = create<AuthStore>()(
   persist(
     (set, get) => ({
       user: null,
-      login: async ( phone: string, password: string) => {
+      login: async (email: string, password: string) => {
         try {
           const res = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone, password}),
+            body: JSON.stringify({ email, password }),
           })
           if (!res.ok) return false
           const data = await res.json()
           if (data.token && data.user) {
-            set({ user: { ...data.user, token: data.token} })
+            set({ user: { ...data.user, token: data.token } })
             return true
           }
           return false
         } catch {
           return false
-        } 
+        }
       },
       register: async ({
-  firstName,
-  lastName,
-  email,
-  password,
-  token,
-  phone,
-  role,
-}) => {
-  try {
-    const res = await fetch(`/api/auth/register-employee`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+        firstName,
+        lastName,
         email,
         password,
         token,
         phone,
-        firstName,
-        lastName,
         role,
-        profile: {
-          name: `${firstName} ${lastName}`,
-          position: role,
-          department: "", // You can add a department field to your form if needed
-        },
-      }),
-    });
-    const data = await res.json();
-    if (res.ok) {
-      return { success: true, message: data.message || "Реєстрація успішна" };
-    }
-    return { success: false, message: data.message || "Помилка при реєстрації" };
-  } catch {
-    return { success: false, message: "Помилка мережі, перевірте з'єднання" };
-  }
-},
+      }) => {
+        try {
+          const res = await fetch(`/api/auth/register-employee`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email,
+              password,
+              token,
+              phone,
+              firstName,
+              lastName,
+              role,
+              profile: {
+                name: `${firstName} ${lastName}`,
+                position: role,
+                department: "",
+              },
+            }),
+          })
+          const data = await res.json()
+          if (res.ok) {
+            return { success: true, message: data.message || "Реєстрація успішна" }
+          }
+          return { success: false, message: data.message || "Помилка при реєстрації" }
+        } catch {
+          return { success: false, message: "Помилка мережі, перевірте з'єднання" }
+        }
+      },
       logout: () => set({ user: null }),
       isAuthenticated: () => !!get().user?.token,
     }),

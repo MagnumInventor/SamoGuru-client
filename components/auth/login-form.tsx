@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useAuth } from "@/lib/auth"
+import { useAuth } from "@/backend/auth"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
 
 export function LoginForm() {
@@ -23,35 +23,44 @@ export function LoginForm() {
   })
   const [error, setError] = useState("")
 
-  const { login } = useAuth()
+const { login, register } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    if (isRegistering) {
-      // For waiter/helper require token, for trainee skip token validation
-      if (formData.role !== "trainee") {
-        const tokenRes = await fetch("/api/auth/validate-token", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token: formData.token }),
-        })
-        const tokenData = await tokenRes.json()
-        if (!tokenData.valid) {
-          setError(tokenData.message || "Токен недійсний")
-          return
-        }
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
+  if (isRegistering) {
+    // For waiter/helper require token, for trainee skip token validation
+    if (formData.role !== "trainee") {
+      const tokenRes = await fetch("/api/auth/validate-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: formData.token }),
+      });
+      const tokenData = await tokenRes.json();
+      if (!tokenData.valid) {
+        setError(tokenData.message || "Токен недійсний");
+        return;
       }
-      // Register user
-      // TODO: Implement registration logic or import the register function from the correct source.
-      setError("Реєстрація наразі недоступна. Зверніться до адміністратора.");
-      return;
-    } else {
-      // Login logic
-      const success = await login(formData.password)
-      if (!success) setError("Невірний email або пароль")
     }
+    // Register user
+    const result = await register({
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      token: formData.role !== "trainee" ? formData.token : undefined,
+      phone: formData.phone,
+      role: formData.role,
+    });
+    if (!result.success) setError(result.message);
+    else setIsRegistering(false);
+    return;
+  } else {
+    // Login logic
+    const success = await login(formData.email, formData.password);
+    if (!success) setError("Невірний email або пароль");
   }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">

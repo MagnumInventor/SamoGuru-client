@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Brain, Trophy, Clock, CheckCircle, XCircle, BarChart3, Link } from "lucide-react"
 
 // ПИТАННЯ З ФАЙЛУ
-import { demoTestQuestions } from "@/lib/demo-data"
+import { demoTestQuestions } from "@/backend/demo-data"
 
 const testCategories = [
   {

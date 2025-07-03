@@ -17,7 +17,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react"
-import { useAuth } from "@/lib/auth"
+import { useAuth } from "@/backend/auth"
 
 interface WaiterTask {
   id: string

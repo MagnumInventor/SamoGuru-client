@@ -24,7 +24,7 @@ import {
   CheckSquare,
   Soup,
 } from "lucide-react"
-import { useAuth, getRoleDisplayName } from "@/lib/auth"
+import { useAuth, getRoleDisplayName } from "@/backend/auth"
 
 const allNavItems = [
   { href: "/", label: "Головна", icon: User, roles: ["waiter", "helper"] },

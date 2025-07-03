@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { AlertTriangle, Plus, Camera } from "lucide-react"
-import type { Fine } from "@/lib/models/user"
+import type { Fine } from "@/backend/models/user"
 
 interface FinesSectionProps {
   fines: Fine[]

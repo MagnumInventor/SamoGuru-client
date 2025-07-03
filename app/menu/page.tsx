@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog"
 
 
-import { demoMenuData } from "@/lib/full-menu"
+import { demoMenuData } from "@/backend/full-menu"
 
 // ===== Types =====
 type FoodCategory =
