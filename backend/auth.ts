@@ -9,7 +9,7 @@ export interface User {
   email: string
   phone: string
   role: "waiter" | "helper" | "admin" | "trainee"
-  token: string // JWT token string
+  token: samogurusecret // JWT token string
 }
 
 interface AuthStore {
