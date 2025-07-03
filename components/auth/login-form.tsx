@@ -133,6 +133,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       <SelectValue placeholder="Оберіть роль" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="admin">Адміністратор</SelectItem>
                       <SelectItem value="waiter">Офіціант</SelectItem>
                       <SelectItem value="helper">Помічник офіціанта</SelectItem>
                       <SelectItem value="trainee">Стажер</SelectItem>
