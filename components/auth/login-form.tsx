@@ -12,7 +12,7 @@ import { useAuth } from "@/lib/auth"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
 // import { register } from "node:module" // Remove this line
 
-export function LoginForm() {
+export async function LoginForm() {
   const [isRegistering, setIsRegistering] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -29,37 +29,25 @@ export function LoginForm() {
 
 
 const { login } = useAuth();
-// const success = await login(formData.password) // Remove this line from top-level
-// const result = await register(formData) // Remove this line from top-level
 
-
-
-
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-
-    if (!formData.password || formData.password.length < 6) {
-      setError("Пароль має містити щонайменше 6 символів")
-      return
-    }
-
-    if (isRegistering) {
-      setError("Реєстрація наразі недоступна.")
-      return
-    } else {
-      try {
-        const success = await login(formData.password)
-        if (!success) {
-          setError("Невірний номер телефону або пароль")
-        }
-      } catch (err) {
-        setError("Сталася помилка при вході.")
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
+  if (isRegistering) {
+    // TODO: Implement registration logic here or call your registration API
+    setError("Функція реєстрації ще не реалізована.");
+    return;
+  } else {
+    try {
+      const success = await login(formData.password);
+      if (!success) {
+        setError("Невірний номер телефону або пароль");
       }
+    } catch (err) {
+      setError("Сталася помилка при вході.");
     }
   }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
