@@ -3,19 +3,25 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",                
+    "dev": "nodemon index.js"                
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "description": "",
+  "description": "Samoguru backend server",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "lucide-react": "^0.525.0",
     "mongoose": "^8.16.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"                      
+  },
+  "engines": {
+    "node": ">=18.0.0"                       
   }
 }
