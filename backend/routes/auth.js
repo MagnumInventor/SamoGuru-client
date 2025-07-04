@@ -6,6 +6,34 @@ const AdminInvitation = require('../models/AdminInvitation');
 const { generateJWT, hashPassword, comparePassword, validateToken } = require('../services/authService');
 const router = express.Router();
 
+
+// POST /api/auth/bootstrap-superadmin
+router.post('/bootstrap-superadmin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    // Check if any admin exists
+    const existingAdmin = await User.findOne({ role: 'admin' });
+    if (existingAdmin) {
+      return res.status(403).json({ message: "Superadmin already exists" });
+    }
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password required" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const user = new User({
+      email,
+      password: hashedPassword,
+      role: 'admin',
+      isActive: true,
+      profile: { name: "Superadmin", position: "Superadmin", department: "" }
+    });
+    await user.save();
+    res.status(201).json({ message: "Superadmin created" });
+  } catch (err) {
+    res.status(500).json({ message: "Error creating superadmin" });
+  }
+});
+
 // POST /api/auth/validate-token
 router.post('/validate-token', async (req, res) => {
   const { token } = req.body;

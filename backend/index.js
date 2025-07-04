@@ -27,6 +27,9 @@ connectDB()
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const bootstrapRoutes = require('./routes/bootstrap-superadmin');
+app.use('/api/auth', bootstrapRoutes);
+
 // Системний ping (для перевірки)
 app.get('/', (req, res) => {
   res.send('✅ Samoguru API is running');
