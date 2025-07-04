@@ -1,15 +1,14 @@
 // server/index.js
 
+// ВАЖЛИВО: dotenv має бути першим!
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./db');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-//const authRoutes = require('./routes/auth');
-//app.use('/api/auth', authRoutes);
 
 // Middleware
 app.use(cors()); // дозволяє запити з фронтенду
