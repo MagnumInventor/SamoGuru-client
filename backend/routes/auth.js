@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const InvitationToken = require('../models/InvitationToken');
 const AdminInvitation = require('../models/AdminInvitation');
-const { generateJWT, hashPassword, comparePassword, validateToken } = require('../services/authService');
+const { generateJWT, hashPassword, comparePassword, validateToken } = require('../services/authServices');
 const router = express.Router();
 
 
