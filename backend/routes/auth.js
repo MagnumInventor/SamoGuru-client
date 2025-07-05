@@ -10,6 +10,7 @@ const router = express.Router();
 // TEST ROUTE
 router.get('/test', (req, res) => res.send('API is working!'));
 
+
 // POST /api/auth/bootstrap-superadmin
 router.post('/bootstrap-superadmin', async (req, res) => {
   try {
@@ -36,6 +37,7 @@ router.post('/bootstrap-superadmin', async (req, res) => {
     res.status(500).json({ message: "Error creating superadmin" });
   }
 });
+
 
 
 
