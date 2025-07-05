@@ -7,6 +7,9 @@ const { generateJWT, hashPassword, comparePassword, validateToken } = require('.
 const router = express.Router();
 
 
+// TEST ROUTE
+router.get('/test', (req, res) => res.send('API is working!'));
+
 // POST /api/auth/bootstrap-superadmin
 router.post('/bootstrap-superadmin', async (req, res) => {
   try {
@@ -34,6 +37,8 @@ router.post('/bootstrap-superadmin', async (req, res) => {
   }
 });
 
+
+
 // POST /api/auth/validate-token
 router.post('/validate-token', async (req, res) => {
   const { token } = req.body;
@@ -42,6 +47,8 @@ router.post('/validate-token', async (req, res) => {
   if (!found) return res.status(404).json({ valid: false, message: "Токен не знайдено або вже використаний" });
   res.json({ valid: true, employeeRole: found.employeeRole, employeeData: found.employeeData });
 });
+
+
 
 // POST /api/auth/register-employee
 router.post('/register-employee', async (req, res) => {
@@ -73,6 +80,7 @@ router.post('/register-employee', async (req, res) => {
   const jwtToken = generateJWT(user);
   res.status(201).json({ token: jwtToken, user: { email: user.email, role: user.role, profile: user.profile } });
 });
+
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
