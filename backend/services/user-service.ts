@@ -121,7 +121,7 @@ export class UserService {
     const workDays = shifts.filter((shift) => shift.isCompleted).length
     const baseSalary = workDays * user.dailySalaryRate
 
-    const tips = shifts.reduce((sum, shift) => sum + (shift.tips || 0), 0)
+    const tips = shifts.reduce((sum, shift) => sum + (shift.tips ?? 0), 0)
     const salesBonus = shifts.reduce((sum, shift) => {
       if (shift.salesPercentage && shift.totalSales) {
         return sum + (shift.totalSales * shift.salesPercentage) / 100
