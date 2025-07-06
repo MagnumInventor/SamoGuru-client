@@ -31,15 +31,9 @@ interface AuthStore {
 
 const API_URL = "/api"
 
-
-type AuthStorePersist = (
-  set: Parameters<StateCreator<AuthStore>>[0],
-  get: Parameters<StateCreator<AuthStore>>[1],
-  api: Parameters<StateCreator<AuthStore>>[2]
-) => AuthStore
-
-const authStore: AuthStorePersist = (set, get) => ({
+const authStore: StateCreator<AuthStore> = (set, get) => ({
   user: null,
+  
   login: async (email: string, password: string) => {
     try {
       const res = await fetch(`${API_URL}/login`, {
@@ -58,6 +52,7 @@ const authStore: AuthStorePersist = (set, get) => ({
       return false
     }
   },
+  
   register: async ({
     firstName,
     lastName,
@@ -121,7 +116,9 @@ const authStore: AuthStorePersist = (set, get) => ({
       return { success: false, message: "Помилка мережі, перевірте з'єднання" };
     }
   },
+  
   logout: () => set({ user: null }),
+  
   isAuthenticated: () => !!get().user?.token,
 })
 
@@ -145,8 +142,3 @@ export const getRoleDisplayName = (role: string): string => {
       return role
   }
 }
-
-
-
-// ПОВНОЦІННА РЕЄСТРАЦІЯ
-// (Disabled: see backend implementation above)
