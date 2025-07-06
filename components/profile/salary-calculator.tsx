@@ -16,7 +16,7 @@ interface SalaryCalculatorProps {
   onUpdate: () => void
 }
 
-export function SalaryCalculator({ user, workShifts, fines, onUpdate }: SalaryCalculatorProps) {
+export function SalaryCalculator({ user, workShifts, fines, onUpdate }: Readonly<SalaryCalculatorProps>) {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1)
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear())
   const [salaryData, setSalaryData] = useState({
@@ -219,11 +219,11 @@ export function SalaryCalculator({ user, workShifts, fines, onUpdate }: SalaryCa
                         <Input
                           type="number"
                           placeholder="0"
-                          value={editingTips[shift._id || ""] ?? shift.tips ?? ""}
+                          value={editingTips[shift._id ?? ""] ?? shift.tips ?? ""}
                           onChange={(e) =>
                             setEditingTips((prev) => ({
                               ...prev,
-                              [shift._id || ""]: Number.parseFloat(e.target.value) || 0,
+                              [shift._id ?? ""]: Number.parseFloat(e.target.value) || 0,
                             }))
                           }
                           className="flex-1"
@@ -231,8 +231,8 @@ export function SalaryCalculator({ user, workShifts, fines, onUpdate }: SalaryCa
                         <Button
                           size="sm"
                           onClick={() => {
-                            const tips = editingTips[shift._id || ""] ?? shift.tips ?? 0
-                            updateShiftTips(shift._id || "", tips)
+                            const tips = editingTips[shift._id ?? ""] ?? shift.tips ?? 0
+                            updateShiftTips(shift._id ?? "", tips)
                           }}
                         >
                           <Plus className="h-4 w-4" />
@@ -247,12 +247,12 @@ export function SalaryCalculator({ user, workShifts, fines, onUpdate }: SalaryCa
                         <Input
                           type="number"
                           placeholder="Сума продажів"
-                          value={editingSales[shift._id || ""]?.sales ?? shift.totalSales ?? ""}
+                          value={editingSales[shift._id ?? ""]?.sales ?? shift.totalSales ?? ""}
                           onChange={(e) =>
                             setEditingSales((prev) => ({
                               ...prev,
-                              [shift._id || ""]: {
-                                ...prev[shift._id || ""],
+                              [shift._id ?? ""]: {
+                                ...prev[shift._id ?? ""],
                                 sales: Number.parseFloat(e.target.value) || 0,
                               },
                             }))
@@ -262,12 +262,12 @@ export function SalaryCalculator({ user, workShifts, fines, onUpdate }: SalaryCa
                         <Input
                           type="number"
                           placeholder="%"
-                          value={editingSales[shift._id || ""]?.percentage ?? shift.salesPercentage ?? ""}
+                          value={editingSales[shift._id ?? ""]?.percentage ?? shift.salesPercentage ?? ""}
                           onChange={(e) =>
                             setEditingSales((prev) => ({
                               ...prev,
-                              [shift._id || ""]: {
-                                ...prev[shift._id || ""],
+                              [shift._id ?? ""]: {
+                                ...prev[shift._id ?? ""],
                                 percentage: Number.parseFloat(e.target.value) || 0,
                               },
                             }))
@@ -277,9 +277,9 @@ export function SalaryCalculator({ user, workShifts, fines, onUpdate }: SalaryCa
                         <Button
                           size="sm"
                           onClick={() => {
-                            const sales = editingSales[shift._id || ""]?.sales ?? shift.totalSales ?? 0
-                            const percentage = editingSales[shift._id || ""]?.percentage ?? shift.salesPercentage ?? 0
-                            updateShiftSales(shift._id || "", sales, percentage)
+                            const sales = editingSales[shift._id ?? ""]?.sales ?? shift.totalSales ?? 0
+                            const percentage = editingSales[shift._id ?? ""]?.percentage ?? shift.salesPercentage ?? 0
+                            updateShiftSales(shift._id ?? "", sales, percentage)
                           }}
                         >
                           <Plus className="h-4 w-4" />

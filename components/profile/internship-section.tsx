@@ -52,7 +52,7 @@ const INTERNSHIP_STAGES = [
   },
 ]
 
-export function InternshipSection({ progress, userId, onUpdate }: InternshipSectionProps) {
+export function InternshipSection({ progress, userId, onUpdate }: Readonly<InternshipSectionProps>) {
   const [updatingTask, setUpdatingTask] = useState<string | null>(null)
 
   const toggleTask = async (taskId: string, completed: boolean) => {
@@ -119,7 +119,7 @@ export function InternshipSection({ progress, userId, onUpdate }: InternshipSect
               </div>
 
               <div className="text-center p-3 bg-green-50 rounded-lg">
-                <div className="text-xl font-bold text-green-600">{progress?.completedTasks.length || 0}</div>
+                <div className="text-xl font-bold text-green-600">{progress?.completedTasks.length ?? 0}</div>
                 <div className="text-sm text-gray-600">Завершено завдань</div>
               </div>
 
