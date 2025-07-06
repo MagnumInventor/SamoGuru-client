@@ -145,6 +145,20 @@ const { login } = useAuth();
                 </Button>
               </div>
             </div>
+            
+            <div>
+              <Label htmlFor="email">Електронна пошта</Label>
+              <div className="relative">
+                <Input
+                  id="email"
+                  type="email" // Пошта завжди відображається як email
+                  value={formData.email}
+                  onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="Введіть ел.пошту"
+                  required
+                />
+              </div>
+            </div>
 
             {error && <div className="text-red-600 text-sm text-center">{error}</div>}
 
