@@ -19,7 +19,7 @@ interface FinesSectionProps {
   onUpdate: () => void
 }
 
-export function FinesSection({ fines, userRole, userId, onUpdate }: FinesSectionProps) {
+export function FinesSection({ fines, userRole, userId, onUpdate }: Readonly<FinesSectionProps>) {
   const [isAddingFine, setIsAddingFine] = useState(false)
   const [newFine, setNewFine] = useState({
     amount: "",
@@ -189,7 +189,7 @@ export function FinesSection({ fines, userRole, userId, onUpdate }: FinesSection
                     <div className="flex items-center gap-2">
                       <Checkbox
                         checked={fine.isPaid}
-                        onCheckedChange={(checked) => toggleFinePayment(fine._id || "", checked as boolean)}
+                        onCheckedChange={(checked) => toggleFinePayment(fine._id ?? "", checked as boolean)}
                       />
                       <Label className="text-sm">Сплачено</Label>
                     </div>

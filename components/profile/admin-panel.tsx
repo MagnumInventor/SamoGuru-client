@@ -9,7 +9,7 @@ interface AdminPanelProps {
   onUpdate: () => void
 }
 
-export function AdminPanel({ onUpdate }: AdminPanelProps) {
+export function AdminPanel({ onUpdate }: Readonly<AdminPanelProps>) {
   const [newToken, setNewToken] = useState({ role: '', token: '' })
   const [generatedTokens, setGeneratedTokens] = useState<any[]>([])
   const [scheduleData, setScheduleData] = useState({

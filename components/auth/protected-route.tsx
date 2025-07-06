@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
   requiredRole?: "waiter" | "helper" | "admin" | "trainee "
 }
 
-export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
+export function ProtectedRoute({ children, requiredRole }: Readonly<ProtectedRouteProps>) {
   const { user, isAuthenticated } = useAuth()
 
   if (!isAuthenticated()) {

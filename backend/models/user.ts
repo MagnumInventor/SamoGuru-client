@@ -59,7 +59,7 @@ export interface InternshipProgress {
 export interface RegistrationToken {
   _id?: string
   token: string
-  role: "waiter" | "helper" | "trainee"
+  role: "waiter" | "helper"
   isUsed: boolean
   createdBy: string
   expiresAt: Date
