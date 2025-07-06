@@ -34,7 +34,7 @@ router.post('/bootstrap-superadmin', async (req, res) => {
     await user.save();
     res.status(201).json({ message: "Superadmin created" });
   } catch (err) {
-    res.status(500).json({ message: "Error creating superadmin" });
+    console.log(`An ERROR ocured while creating SUPERadmin`)
   }
 });
 
