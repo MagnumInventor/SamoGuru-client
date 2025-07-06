@@ -28,9 +28,11 @@ if (process.env.NODE_ENV === "development") {
   clientPromise = client.connect()
 }
 
-export default clientPromise
+const finalClientPromise = clientPromise
+
+export default finalClientPromise
 
 export async function getDatabase(): Promise<Db> {
-  const client = await clientPromise
+  const client = await finalClientPromise
   return client.db("samoguru")
 }
