@@ -31,12 +31,7 @@ interface AuthStore {
 
 const API_URL = "/api"
 
-/**
- * Fix for Zustand v4/v5 type error with persist middleware.
- * 
- * If you are using Zustand v4 or above, you need to type your store creator
- * with the Persist middleware type. Import and use `PersistOptions`:
- */
+
 type AuthStorePersist = (
   set: Parameters<StateCreator<AuthStore>>[0],
   get: Parameters<StateCreator<AuthStore>>[1],
