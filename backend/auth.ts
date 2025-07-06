@@ -1,7 +1,7 @@
 "use client"
 
 import { create } from "zustand"
-import { persist, PersistOptions } from "zustand/middleware"
+import { persist } from "zustand/middleware"
 import type { StateCreator } from "zustand"
 
 export interface User {
@@ -114,9 +114,9 @@ const authStore: AuthStorePersist = (set, get) => ({
       
       const data = await res.json();
       if (res.ok) {
-        return { success: true, message: data.message || "Реєстрація успішна" };
+        return { success: true, message: data.message ?? "Реєстрація успішна" };
       }
-      return { success: false, message: data.message || "Помилка при реєстрації" };
+      return { success: false, message: data.message ?? "Помилка при реєстрації" };
     } catch {
       return { success: false, message: "Помилка мережі, перевірте з'єднання" };
     }
@@ -145,20 +145,6 @@ export const getRoleDisplayName = (role: string): string => {
       return role
   }
 }
-
-
-
-
-
-
-{/* ТИМЧАСОВИЙ ЗАХІД ЧЕРЕЗ СТАТИЧНИЙ ПАРОЛЬ
-const VALID_PASSWORDS: Record<string, { role: string; name: string; surname: string }> = {
-  admin123: { role: "admin", name: "Адміністратор", surname: "системи" },
-  waiter123: { role: "waiter", name: "Офіціант", surname: "тестовий" },
-  helper123: { role: "helper", name: "Помічник", surname: "робочий" },
-  trainee123: { role: "trainee", name: "Стажер", surname: "навчальний" },
-}
-*/}
 
 
 
