@@ -14,9 +14,9 @@ async function run() {
   try {
     await client.connect();
     await client.db("admin").command({ ping: 1 });
-    console.log("✅ Підключення до MongoDB успішне!");
+    console.log("✅ ТЕСТОВЕ Підключення до MongoDB успішне!");
   } catch (e) {
-    console.error("❌ Помилка підключення:", e);
+    console.error("❌ Помилка підключення до ТЕСТОВОГО сервера MongoDB:", e);
   } finally {
     await client.close();
   }

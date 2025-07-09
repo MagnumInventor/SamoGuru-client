@@ -1,9 +1,10 @@
-// server/index.js
+// backend/index.js
 
-// ВАЖЛИВО: dotenv має бути першим!
+// ВАЖЛИВО: dotenv (.env file) має бути першим!
 require('dotenv').config();
 
 const express = require('express');
+const mongoose = require('mongoose') // Підключення через Mongoose у файлі: db.js
 const cors = require('cors');
 const connectDB = require('./db');
 
