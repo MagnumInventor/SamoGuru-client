@@ -17,9 +17,9 @@ app.use(express.json()); // парсить JSON запити
 
 // Підключення до бази даних
 connectDB()
-  .then(() => console.log('✅ MongoDB connected'))
+  .then(() => console.log('✅ index.js MongoDB connected'))
   .catch((err) => {
-    console.error('❌ MongoDB connection error:', err.message);
+    console.error('❌ index.js MongoDB connection error:', err.message);
     process.exit(1); // завершити процес, якщо підключення провалено
   });
 
@@ -34,6 +34,11 @@ app.use('/api/auth', bootstrapRoutes);
 app.get('/', (req, res) => {
   res.send('✅ Samoguru API is running');
 });
+
+// POST method
+app.post('/register', (req, res) => {
+   // PASTE THE USER REGISTERING DATA
+})
 
 // Запуск сервера
 app.listen(PORT, '0.0.0.0', () => {

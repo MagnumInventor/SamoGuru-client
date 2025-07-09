@@ -8,6 +8,9 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useAuth } from "@/backend/auth"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
+// NEW V13 imports:
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export function LoginForm() {
   const [isRegistering, setIsRegistering] = useState(false)
@@ -25,23 +28,30 @@ export function LoginForm() {
 
 const { login, register } = useAuth();
 
+
+// ПРИЙМАЧ ЗАПИТУ
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
+
+
+  // TOKEN CHECK
+
   setError("");
   if (isRegistering) {
     // For waiter/helper require token, for trainee skip token validation
-    if (formData.role !== "trainee") {
-      const tokenRes = await fetch("/api/auth/validate-token", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: formData.token }),
-      });
-      const tokenData = await tokenRes.json();
-      if (!tokenData.valid) {
-        setError(tokenData.message ?? "Токен недійсний");
-        return;
-      }
-    }
+              if (formData.role !== "trainee") {
+                const tokenRes = await fetch("/api/auth/validate-token", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ token: formData.token }),
+                });
+                const tokenData = await tokenRes.json();
+                if (!tokenData.valid) {
+                  setError(tokenData.message ?? "Токен недійсний");
+                  return;
+                }
+              }
+              
     // Register user
     const result = await register({
       firstName: formData.firstName,
@@ -55,11 +65,18 @@ const handleSubmit = async (e: React.FormEvent) => {
     if (!result.success) setError(result.message);
     else setIsRegistering(false);
   } else {
-    // Login logic
     const success = await login(formData.email, formData.password);
-    if (!success) setError("Невірний email або пароль");
+    if (!success) setError("Невірна ел.пошта або пароль");
   }
-};
+
+  {/*
+  // AXIOS POST METHOD
+  axios.post('', {firstName, password, })
+  */}
+}
+
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -123,7 +140,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="role">Роль у ресторані</Label>
+                  <Label htmlFor="role">Посада у ресторані</Label>
                   <Select
                     value={formData.role}
                     onValueChange={value => setFormData({ ...formData, role: value })}

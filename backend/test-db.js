@@ -4,7 +4,7 @@ const uri = "mongodb+srv://MainLocalPC:TWFpbkxvY2FsUEM@samoguruclustera.9otyd1u.
 
 const client = new MongoClient(uri, {
   serverApi: {
-    version: ServerApiVersion.v1,
+    version: ServerApiVersion.v13,
     strict: true,
     deprecationErrors: true,
   }
