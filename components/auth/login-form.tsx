@@ -10,7 +10,7 @@ import { useAuth } from "@/backend/auth"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
 // NEW V13 imports:
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 export function LoginForm() {
   const [isRegistering, setIsRegistering] = useState(false)
@@ -68,14 +68,23 @@ const handleSubmit = async (e: React.FormEvent) => {
     const success = await login(formData.email, formData.password);
     if (!success) setError("Невірна ел.пошта або пароль");
   }
-
-  {/*
-  // AXIOS POST METHOD
-  axios.post('', {firstName, password, })
-  */}
 }
 
 
+    // AXIOS POST METHOD
+
+  { /*
+const handleSubmit = (e) => {
+    e.preventDefault()
+    axios.post('', {email, password})
+    .then(result => {
+        console.log(result)
+          if(result.data === "Успішно!") {
+        navigate('/home') // DIFFERENT App routing 
+          }
+    })
+}
+  */}
 
 
   return (

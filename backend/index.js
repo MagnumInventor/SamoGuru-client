@@ -36,8 +36,30 @@ app.get('/', (req, res) => {
   res.send('✅ Samoguru API is running');
 });
 
+
+
+
+// NEW V13 POST method:
+
 {/*
-// NEW V13 POST method
+
+
+app.post('/login', (req, res) => {
+  const {email, password} = req.body;
+  UserModel.findOne({email: email})
+  .then(user => {
+    if(user) {
+      if(user.password === password) {
+        res.json("Вхід виконаний успішно!")
+      } catch {
+          res.json("Неправильний пароль!")
+      }
+    } else {
+        res.json("Користувача не найдено!")
+    }
+  })
+})
+
 app.post('/register', (req, res) => {
    // PASTE THE USER REGISTERING DATA
    UserModel.create(req.body)
