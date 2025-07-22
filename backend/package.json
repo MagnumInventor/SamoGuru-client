@@ -20,11 +20,13 @@
     "express-rate-limit": "^8.0.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
+    "module": "^1.0.0",
     "mongoose": "^8.16.2",
     "nodemailer": "^7.0.5",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
+    "@types/prop-types": "^15.7.15",
     "nodemon": "^3.1.10"
   },
   "engines": {

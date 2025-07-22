@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+// AuthContext.jsx - виправлена версія
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const AuthContext = createContext();
 
@@ -61,12 +63,12 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post('/api/auth/login', { email, password });
-      const { user, accessToken } = response.data.data;
+      const { user: userData, accessToken } = response.data.data;
       
       localStorage.setItem('accessToken', accessToken);
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       
-      setUser(user);
+      setUser(userData);
       return { success: true };
     } catch (error) {
       return { 
@@ -93,15 +95,21 @@ export const AuthProvider = ({ children }) => {
     return Array.isArray(roles) ? roles.includes(user.role) : user.role === roles;
   };
 
-  const value = {
+  // Мемоїзуємо value об'єкт для оптимізації
+  const value = useMemo(() => ({
     user,
     loading,
     login,
     logout,
     hasRole
-  };
+  }), [user, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+// PropTypes валідація
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export const useAuth = () => {

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
+const PropTypes = require('prop-types');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
