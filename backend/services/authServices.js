@@ -1,39 +1,76 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const User = require('../models/User');
-const InvitationToken = require('../models/InvitationToken');
-const AdminInvitation = require('../models/AdminInvitation');
+const RefreshToken = require('../models/RefreshToken');
 
-const SALT_ROUNDS = 12;
-
-exports.generateJWT = (user) => {
-  return jwt.sign(
-    { id: user._id, role: user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: '2h' }
-  );
-};
-
-exports.generateUniqueToken = async () => {
-  let token;
-  let exists = true;
-  while (exists) {
-    token = Math.floor(10000 + Math.random() * 90000).toString();
-    exists = await InvitationToken.findOne({ token, isUsed: false });
+class AuthService {
+  // Генерація JWT токенів
+  generateTokens(userId, userRole) {
+    const payload = { userId, role: userRole };
+    
+    const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
+      expiresIn: process.env.JWT_ACCESS_EXPIRE || '15m'
+    });
+    
+    const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
+      expiresIn: process.env.JWT_REFRESH_EXPIRE || '7d'
+    });
+    
+    return { accessToken, refreshToken };
   }
-  return token;
-};
 
-exports.validateToken = async (token) => {
-  if (!/^\d{5}$/.test(token)) return false;
-  const found = await InvitationToken.findOne({ token, isUsed: false });
-  return !!found;
-};
+  // Збереження refresh токену
+  async saveRefreshToken(userId, refreshToken) {
+    // Видаляємо старі токени користувача
+    await RefreshToken.deleteMany({ userId, isActive: true });
+    
+    // Створюємо новий токен
+    const tokenDoc = new RefreshToken({
+      token: refreshToken,
+      userId
+    });
+    
+    await tokenDoc.save();
+    return tokenDoc;
+  }
 
-exports.hashPassword = async (password) => {
-  return await bcrypt.hash(password, SALT_ROUNDS);
-};
+  // Верифікація access токену
+  verifyAccessToken(token) {
+    try {
+      return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    } catch (error) {
+      return null;
+    }
+  }
 
-exports.comparePassword = async (password, hash) => {
-  return await bcrypt.compare(password, hash);
-};
+  // Верифікація refresh токену
+  async verifyRefreshToken(token) {
+    try {
+      const payload = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
+      const tokenDoc = await RefreshToken.findOne({ 
+        token, 
+        userId: payload.userId, 
+        isActive: true 
+      });
+      
+      return tokenDoc ? payload : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  // Видалення refresh токену
+  async removeRefreshToken(token) {
+    await RefreshToken.findOneAndUpdate(
+      { token },
+      { isActive: false }
+    );
+  }
+
+  // Генерація випадкового токену для email верифікації
+  generateEmailVerificationToken() {
+    return crypto.randomBytes(32).toString('hex');
+  }
+}
+
+module.exports = new AuthService();
