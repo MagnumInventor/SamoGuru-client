@@ -1,78 +1,67 @@
-const express = require('express');
+const authService = require('../services/authService');
 const User = require('../models/User');
-const InvitationToken = require('../models/InvitationToken');
-const bcrypt = require('bcryptjs');
 
+// Основне middleware для автентифікації
+const authenticate = async (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Токен доступу не надано' 
+      });
+    }
 
-const jwt = require('jsonwebtoken');
+    const token = authHeader.split(' ')[1];
+    const payload = authService.verifyAccessToken(token);
 
-exports.authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) return res.sendStatus(401);
-  const token = authHeader.split(' ')[1];
-  if (!token) return res.sendStatus(401);
+    if (!payload) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Недійсний токен доступу' 
+      });
+    }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
+    // Перевіряємо чи користувач все ще активний
+    const user = await User.findById(payload.userId);
+    if (!user || !user.isActive) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Користувач не активний' 
+      });
+    }
+
     req.user = user;
     next();
-  });
-};
-
-exports.requireAdmin = (req, res, next) => {
-  if (!req.user || req.user.role !== 'admin') return res.sendStatus(403);
-  next();
-};
-
-// POST /api/auth/register-employee
-router.post('/register-employee', async (req, res) => {
-  try {
-    const { firstName, lastName, email, password, token, phone, role } = req.body;
-
-    // Validate required fields
-    if (!email || !password || !role) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
-
-    // For waiter/helper, validate token
-    if (role !== "trainee") {
-      const invitation = await InvitationToken.findOne({ token, isUsed: false });
-      if (!invitation) {
-        return res.status(400).json({ message: "Invalid or used token" });
-      }
-      invitation.isUsed = true;
-      invitation.usedAt = new Date();
-      await invitation.save();
-    }
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // Create user
-    const user = new User({
-      email,
-      password: hashedPassword,
-      role,
-      phone,
-      invitationToken: token,
-      profile: {
-        name: `${firstName} ${lastName}`,
-        position: role,
-        department: ""
-      }
+  } catch (error) {
+    console.error('Auth middleware error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Помилка сервера автентифікації' 
     });
-    await user.save();
-
-    res.status(201).json({ message: 'Employee registered successfully' });
-  } catch (err) {
-    res.status(500).json({ error: 'Registration failed' });
   }
-});
+};
 
-module.exports = router;
+// Middleware для перевірки ролі
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Не автентифіковано' 
+      });
+    }
+
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Недостатньо прав доступу' 
+      });
+    }
+
+    next();
+  };
+};
+
+module.exports = { authenticate, authorize };
