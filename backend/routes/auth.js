@@ -1,124 +1,267 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
+const rateLimit = require('express-rate-limit');
 const User = require('../models/User');
-const InvitationToken = require('../models/InvitationToken');
-const AdminInvitation = require('../models/AdminInvitation');
-const { generateJWT, hashPassword, comparePassword, validateToken } = require('../services/authServices');
+const authService = require('../services/authService');
+const emailService = require('../services/emailService');
+const { authenticate, authorize } = require('../middleware/auth');
+
 const router = express.Router();
 
+// Rate limiting для автентифікації
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 хвилин
+  max: 5, // максимум 5 спроб входу
+  message: { 
+    success: false, 
+    message: 'Забагато спроб входу. Спробуйте пізніше.' 
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
-// TEST ROUTE
-router.get('/test', (req, res) => res.send('API is working!'));
-
-
-// POST /api/auth/bootstrap-superadmin
-router.post('/bootstrap-superadmin', async (req, res) => {
+// Вхід в систему
+router.post('/login', authLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
-    // Check if any admin exists
-    const existingAdmin = await User.findOne({ role: 'admin' });
-    if (existingAdmin) {
-      return res.status(403).json({ message: "Superadmin already exists" });
-    }
+
+    // Валідація
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password required" });
+      return res.status(400).json({
+        success: false,
+        message: 'Email та пароль обов\'язкові'
+      });
     }
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const user = new User({
-      email,
-      password: hashedPassword,
-      role: 'admin',
-      isActive: true,
-      profile: { name: "Superadmin", position: "Superadmin", department: "" }
-    });
+
+    // Пошук користувача
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user || !user.isActive) {
+      return res.status(401).json({
+        success: false,
+        message: 'Невірні облікові дані'
+      });
+    }
+
+    // Перевірка пароля
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        success: false,
+        message: 'Невірні облікові дані'
+      });
+    }
+
+    // Генерація токенів
+    const { accessToken, refreshToken } = authService.generateTokens(user._id, user.role);
+    
+    // Збереження refresh токену
+    await authService.saveRefreshToken(user._id, refreshToken);
+
+    // Оновлення часу останнього входу
+    user.lastLogin = new Date();
     await user.save();
-    res.status(201).json({ message: "Superadmin created" });
-  } catch (err) {
-    console.log(`An ERROR ocured while creating SUPERadmin`)
+
+    // HTTP-only cookie для refresh токену (більш безпечно)
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 днів
+    });
+
+    res.json({
+      success: true,
+      message: 'Успішний вхід в систему',
+      data: {
+        user: user.toJSON(),
+        accessToken
+      }
+    });
+
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера'
+    });
   }
 });
 
+// Оновлення токену
+router.post('/refresh', async (req, res) => {
+  try {
+    const { refreshToken } = req.cookies;
 
+    if (!refreshToken) {
+      return res.status(401).json({
+        success: false,
+        message: 'Refresh токен не надано'
+      });
+    }
 
+    // Верифікація refresh токену
+    const payload = await authService.verifyRefreshToken(refreshToken);
+    if (!payload) {
+      return res.status(401).json({
+        success: false,
+        message: 'Недійсний refresh токен'
+      });
+    }
 
-// POST /api/auth/validate-token
-router.post('/validate-token', async (req, res) => {
-  const { token } = req.body;
-  if (!token || !/^\d{5}$/.test(token)) return res.status(400).json({ valid: false, message: "Некоректний токен" });
-  const found = await InvitationToken.findOne({ token, isUsed: false });
-  if (!found) return res.status(404).json({ valid: false, message: "Токен не знайдено або вже використаний" });
-  res.json({ valid: true, employeeRole: found.employeeRole, employeeData: found.employeeData });
+    // Пошук користувача
+    const user = await User.findById(payload.userId);
+    if (!user || !user.isActive) {
+      return res.status(401).json({
+        success: false,
+        message: 'Користувач не знайдений'
+      });
+    }
+
+    // Генерація нових токенів
+    const tokens = authService.generateTokens(user._id, user.role);
+    
+    // Збереження нового refresh токену
+    await authService.saveRefreshToken(user._id, tokens.refreshToken);
+
+    // Оновлення cookie
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+    res.json({
+      success: true,
+      data: {
+        accessToken: tokens.accessToken
+      }
+    });
+
+  } catch (error) {
+    console.error('Refresh token error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера'
+    });
+  }
 });
 
+// Вихід з системи
+router.post('/logout', authenticate, async (req, res) => {
+  try {
+    const { refreshToken } = req.cookies;
 
+    if (refreshToken) {
+      await authService.removeRefreshToken(refreshToken);
+    }
 
-// POST /api/auth/register-employee
-router.post('/register-employee', async (req, res) => {
-  const { email, password, token, profile } = req.body;
-  if (!email || !password || !token || !profile) return res.status(400).json({ message: "Всі поля обовʼязкові" });
+    res.clearCookie('refreshToken');
+    
+    res.json({
+      success: true,
+      message: 'Успішний вихід з системи'
+    });
 
-  const invitation = await InvitationToken.findOne({ token, isUsed: false });
-  if (!invitation) return res.status(400).json({ message: "Токен недійсний або вже використаний" });
+  } catch (error) {
+    console.error('Logout error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера'
+    });
+  }
+});
 
-  const existingUser = await User.findOne({ email });
-  if (existingUser) return res.status(400).json({ message: "Користувач з такою поштою вже існує" });
+// Реєстрація користувача (тільки для адмінів)
+router.post('/register', authenticate, authorize('admin', 'super_admin'), async (req, res) => {
+  try {
+    const { email, password, firstName, lastName, role, department } = req.body;
 
-  const hashedPassword = await hashPassword(password);
-  const user = new User({
-    email,
-    password: hashedPassword,
-    invitationToken: token,
-    role: invitation.employeeRole,
-    isActive: true,
-    profile
+    // Валідація
+    if (!email || !password || !firstName || !lastName || !department) {
+      return res.status(400).json({
+        success: false,
+        message: 'Всі поля обов\'язкові'
+      });
+    }
+
+    // Перевірка чи користувач вже існує
+    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: 'Користувач з таким email вже існує'
+      });
+    }
+
+    // Створення користувача
+    const emailVerificationToken = authService.generateEmailVerificationToken();
+    
+    const user = new User({
+      email: email.toLowerCase(),
+      password,
+      firstName,
+      lastName,
+      role: role || 'employee',
+      department,
+      emailVerificationToken,
+      createdBy: req.user._id
+    });
+
+    await user.save();
+
+    // Відправка email верифікації
+    await emailService.sendVerificationEmail(user.email, emailVerificationToken);
+
+    res.status(201).json({
+      success: true,
+      message: 'Користувач створений. Перевірте email для активації.',
+      data: { user: user.toJSON() }
+    });
+
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера'
+    });
+  }
+});
+
+// Верифікація email
+router.get('/verify-email/:token', async (req, res) => {
+  try {
+    const { token } = req.params;
+
+    const user = await User.findOne({ emailVerificationToken: token });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Недійсний токен верифікації'
+      });
+    }
+
+    user.isEmailVerified = true;
+    user.emailVerificationToken = undefined;
+    await user.save();
+
+    // Редірект на фронтенд
+    res.redirect(`${process.env.CLIENT_URL}/login?verified=true`);
+
+  } catch (error) {
+    console.error('Email verification error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Помилка сервера'
+    });
+  }
+});
+
+// Отримання профілю користувача
+router.get('/me', authenticate, async (req, res) => {
+  res.json({
+    success: true,
+    data: { user: req.user.toJSON() }
   });
-  await user.save();
-
-  invitation.isUsed = true;
-  invitation.usedBy = user._id;
-  invitation.usedAt = new Date();
-  await invitation.save();
-
-  const jwtToken = generateJWT(user);
-  res.status(201).json({ token: jwtToken, user: { email: user.email, role: user.role, profile: user.profile } });
-});
-
-
-// POST /api/auth/login
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (!user) return res.status(401).json({ message: "Користувача не знайдено" });
-  const isMatch = await comparePassword(password, user.password);
-  if (!isMatch) return res.status(401).json({ message: "Невірний пароль" });
-  const token = generateJWT(user);
-  res.json({ token, user: { email: user.email, role: user.role, profile: user.profile } });
-});
-
-// POST /api/auth/register-admin
-router.post('/register-admin', async (req, res) => {
-  const { email, password, token } = req.body;
-  const invitation = await AdminInvitation.findOne({ email, token, isUsed: false, expiresAt: { $gt: new Date() } });
-  if (!invitation) return res.status(400).json({ message: "Запрошення недійсне або прострочене" });
-
-  const existingUser = await User.findOne({ email });
-  if (existingUser) return res.status(400).json({ message: "Користувач з такою поштою вже існує" });
-
-  const hashedPassword = await hashPassword(password);
-  const user = new User({
-    email,
-    password: hashedPassword,
-    role: "admin",
-    isActive: true,
-    profile: { name: "", position: "Адміністратор", department: "" }
-  });
-  await user.save();
-
-  invitation.isUsed = true;
-  await invitation.save();
-
-  const jwtToken = generateJWT(user);
-  res.status(201).json({ token: jwtToken, user: { email: user.email, role: user.role, profile: user.profile } });
 });
 
 module.exports = router;
