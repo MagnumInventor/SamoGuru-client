@@ -1,13 +1,14 @@
 {
-  "name": "my-v0-project",
+  "name": "root-samoguru",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon backend/index.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
+  "type": "module",
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "latest",
@@ -44,7 +45,7 @@
     "clsx": "^2.1.1",
     "cmdk": "latest",
     "date-fns": "4.1.0",
-    "dotenv": "^17.0.1",
+    "dotenv": "^17.2.0",
     "embla-carousel-react": "latest",
     "express": "^5.1.0",
     "immer": "latest",

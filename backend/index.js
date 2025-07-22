@@ -1,22 +1,21 @@
-const express = require('express');
-const connectDB = require('./db');
-require('dotenv').config();
+//backend/index.js
+import express from "express";
+import dotenv from "dotenv";
+
+import { connectDB } from "./db.js";
+
+import authRoutes from "./routes/auth.route.js"
+
+
+dotenv.config();
 
 const app = express();
-app.use(express.json());
+const PORT = process.env.PORT || 5000;
 
-// Підключення до бази
-connectDB();
+app.use(express.json()); // дозволояє парсити запити
+app.use("/api/auth", authRoutes);
 
-// Підключення роутів
-const authRoutes = require('./routes/auth');
-app.use('/api', authRoutes); // <-- Додаємо цей рядок
-
-// Роут (тимчасово)
-app.get('/', (req, res) => {
-  res.send('Samoguru API working');
-});
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+app.listen(5000, () => {
+  connectDB();
+  console.log("Сервер працює на порті:", PORT);
 });
