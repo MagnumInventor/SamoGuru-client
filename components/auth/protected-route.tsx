@@ -1,32 +1,23 @@
-"use client"
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from './authContext';
 
-import type React from "react"
+const ProtectedRoute = ({ children, roles = [] }) => {
+  const { user, loading } = useAuth();
 
-import { useAuth } from "@/backend/auth"
-import { LoginForm } from "./login-form"
-
-interface ProtectedRouteProps {
-  children: React.ReactNode
-  requiredRole?: "waiter" | "helper" | "admin" | "trainee "
-}
-
-export function ProtectedRoute({ children, requiredRole }: Readonly<ProtectedRouteProps>) {
-  const { user, isAuthenticated } = useAuth()
-
-  if (!isAuthenticated()) {
-    return <LoginForm />
+  if (loading) {
+    return <div>Завантаження...</div>;
   }
 
-  if (requiredRole && user?.role !== requiredRole && user?.role !== "admin") {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Доступ заборонено</h1>
-          <p className="text-gray-600">У вас немає прав для перегляду цієї сторінки</p>
-        </div>
-      </div>
-    )
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>
-}
+  if (roles.length > 0 && !roles.includes(user.role)) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;

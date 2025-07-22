@@ -1,74 +1,37 @@
-// backend/index.js
-
-// ВАЖЛИВО: dotenv (.env file) має бути першим!
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
-const express = require('express');
-const mongoose = require('mongoose') // Підключення через Mongoose у файлі: db.js
-const cors = require('cors');
-const connectDB = require('./db');
+const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin'); // твої існуючі маршрути
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors()); // дозволяє запити з фронтенду
-app.use(express.json()); // парсить JSON запити
+app.use(helmet());
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  credentials: true
+}));
+app.use(express.json({ limit: '10mb' }));
+app.use(cookieParser());
 
-// Підключення до бази даних
-connectDB()
-  .then(() => console.log('✅ index.js MongoDB connected'))
-  .catch((err) => {
-    console.error('❌ index.js MongoDB connection error:', err.message);
-    process.exit(1); // завершити процес, якщо підключення провалено
-  });
-
-// Роутинг
-const authRoutes = require('./routes/auth');
+// Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
-const bootstrapRoutes = require('./routes/bootstrap-superadmin');
-const UserModel = require('./models/User');
-app.use('/api/auth', bootstrapRoutes);
-
-// Системний ping (для перевірки)
-app.get('/', (req, res) => {
-  res.send('✅ Samoguru API is running');
-});
-
-
-
-
-// NEW V13 POST method:
-
-{/*
-
-
-app.post('/login', (req, res) => {
-  const {email, password} = req.body;
-  UserModel.findOne({email: email})
-  .then(user => {
-    if(user) {
-      if(user.password === password) {
-        res.json("Вхід виконаний успішно!")
-      } catch {
-          res.json("Неправильний пароль!")
-      }
-    } else {
-        res.json("Користувача не найдено!")
-    }
-  })
+// Database connection
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
+.then(() => console.log('MongoDB підключено'))
+.catch(err => console.error('Помилка підключення до MongoDB:', err));
 
-app.post('/register', (req, res) => {
-   // PASTE THE USER REGISTERING DATA
-   UserModel.create(req.body)
-   .then(users => res.json(users))
-   .catch(err => res.json(err))
-})
-*/}
-
-// Запуск сервера
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Сервер запущено на порті ${PORT}`);
 });
