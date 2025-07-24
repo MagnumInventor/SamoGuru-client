@@ -72,7 +72,6 @@ export function LoginForm() {
             </Button>
           </form>
 
-          {/* Demo credentials info */}
           <Alert className="mt-6 border-blue-200 bg-blue-50">
             <Info className="h-4 w-4" />
             <AlertDescription className="text-sm">
@@ -84,11 +83,13 @@ export function LoginForm() {
                 <div>
                   <strong>helper123</strong> - Помічник
                 </div>
+                <div>
+                  <strong>trainee123</strong> - Стажер
+                </div>
               </div>
             </AlertDescription>
           </Alert>
 
-          {/* FF Notice */}
           <div className="mt-4 p-3 bg-gray-100 rounded-md">
             <div className="text-xs text-gray-600 text-center">
               <strong>FF:</strong> Реєстрація та серверна автентифікація будуть додані пізніше
