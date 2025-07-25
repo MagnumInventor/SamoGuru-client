@@ -4,7 +4,7 @@ import { MapPin, Users, UserCheck } from "lucide-react"
 export default function TablePlanMapPage() {
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-semibold mb-6">План розміщення <strong>столиків</strong></h1>
+      <h1 className="text-3xl font-semibold mb-6">План розміщення (відносний розмір розмітки може не співпадати з реальним)<strong>столиків</strong></h1>
 
       {/* 1 Поверх - Основна зала */}
       <Card className="border-blue-200 mb-6">
