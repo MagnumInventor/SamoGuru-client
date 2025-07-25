@@ -117,23 +117,23 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              src="/images/scheme/300s.png"
+              src="/images/scheme/300sV2.png"
               alt="Схема столиків 300s - 3 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
           </div>
           <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
             <div className="bg-white p-2 rounded border">
-              <span className="font-medium">Столики:</span> 302-308
+              <span className="font-medium">Столики:</span> 301-308
             </div>
             <div className="bg-white p-2 rounded border">
-              <span className="font-medium">Дитяча зона</span>
+              <span className="font-medium">Дитяча ігрова зона</span>
             </div>
             <div className="bg-white p-2 rounded border">
-              <span className="font-medium">Ліфт</span>
+              <span className="font-medium">Ліфти</span>
             </div>
             <div className="bg-white p-2 rounded border">
-              <span className="font-medium">Сходи</span>
+              <span className="font-medium">Кабінет</span>
             </div>
           </div>
           <div className="mt-3 p-3 bg-purple-50 rounded-lg">
@@ -144,7 +144,7 @@ export default function TablePlanMapPage() {
             <div className="grid grid-cols-1 gap-2 text-sm">
               <div className="flex items-center gap-1">
                 <Users className="h-3 w-3 text-green-600" />
-                <span><strong>Офіціанти:</strong> Під стрихою</span>
+                <span><strong>Офіціанти:</strong> Під стріхою</span>
               </div>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function TablePlanMapPage() {
             <MapPin className="h-5 w-5 text-purple-500" />
             Схема столиків 400-ті (1 поверх - двір)
           </CardTitle>
-          <CardDescription>Детальна схема розташування столиків 302-308 та допоміжних зон</CardDescription>
+          <CardDescription>Детальна схема розташування столиків 401-414 та допоміжних зон</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
@@ -205,7 +205,7 @@ export default function TablePlanMapPage() {
             <MapPin className="h-5 w-5 text-green-500" />
             Схема столиків 500s - Яруса (1 Поверх)
           </CardTitle>
-          <CardDescription>Детальна схема розташування столиків 501-508 та допоміжних зон</CardDescription>
+          <CardDescription>Детальна схема розташування столиків 501-509 та допоміжних зон</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
