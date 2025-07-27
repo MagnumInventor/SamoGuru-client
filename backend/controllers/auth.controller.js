@@ -54,7 +54,7 @@ export const signup = async (req, res) => {
 };
 
 export const verifyEmail = async (req, res) => {
-    const {code} = req.body;
+    const { code } = req.body;
     try {
         const user = await User.findOne({
             verificationToken: code,
@@ -71,9 +71,18 @@ export const verifyEmail = async (req, res) => {
         await user.save();
 
         await sendWelcomeEmail(user.email, user.firstName);
-
+        
+        res.status(200).json({
+            success: true,
+            message: "Електронна пошта успішно підтверджена",
+            user: {
+                ...user._doc,
+                password: undefined,
+            },
+        });
     } catch (error) {
-
+        console.log("Помилка у системі верифікації", error);
+        res.status(500).json({success:false, message: "Помилка системи" });
     }
 };
 

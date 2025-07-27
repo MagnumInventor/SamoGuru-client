@@ -52,7 +52,7 @@ export const sendWelcomeEmail = async (email, name) => {
 					</div>
 					<p>Тепер ви можете використовувати всі можливості платформи для підвищення своєї продуктивності.</p>
 					<div style="text-align: center; margin: 30px 0;">
-						<a href="https://www.samoguru.run.place/dashboard" style="background-color: #10b981; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Перейти до панелі</a>
+						<a href="https://www.samoguru.run.place" style="background-color: #10b981; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Перейти до роботи</a>
 					</div>
 					<p>Якщо у вас виникнуть питання, не соромтеся звертатися до нашої служби підтримки.</p>
 					<p>Успіхів у досягненні ваших цілей!</p>
