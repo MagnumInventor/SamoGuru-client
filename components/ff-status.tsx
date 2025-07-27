@@ -13,13 +13,12 @@ export default function FFStatus() {
     { name: "Меню ресторану", status: "ready", type: "client" },
     { name: "Розклад роботи", status: "ready", type: "client" },
     { name: "План столиків", status: "ready", type: "client" },
-        { name: "Список завданнь", status: "ready", type: "client" },
+    { name: "Список завданнь", status: "ready", type: "client" },
     { name: "Тестування знань", status: "ready", type: "client" },
 
+    { name: "Реєстрація користувачів", status: "working", type: "server" },
 
 
-
-    { name: "Реєстрація користувачів", status: "ff", type: "server" },
     { name: "API для розкладу", status: "ff", type: "server" },
     { name: "Завантаження відео", status: "ff", type: "server" },
     { name: "CMS для новин", status: "ff", type: "server" },
@@ -46,6 +45,22 @@ export default function FFStatus() {
                   <div key={index} className="flex items-center justify-between">
                     <span className="text-sm">{feature.name}</span>
                     <Badge className="bg-green-100 text-green-800">
+                      <CheckCircle className="h-3 w-3 mr-1" />
+                      Готово
+                    </Badge>
+                  </div>
+                ))}
+            </div>
+          </div>
+                    <div>
+            <h4 className="font-medium mb-3 text-orange-700">Розробляється (Client-side)</h4>
+            <div className="space-y-2">
+              {features
+                .filter((f) => f.status === "working")
+                .map((feature, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <span className="text-sm">{feature.name}</span>
+                    <Badge className="bg-orange-100 text-orange-800">
                       <CheckCircle className="h-3 w-3 mr-1" />
                       Готово
                     </Badge>
