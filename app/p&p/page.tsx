@@ -159,7 +159,7 @@ export default function LegalDocumentsPage() {
                 УМОВИ ВИКОРИСТАННЯ
               </CardTitle>
               <div className="text-sm text-gray-600">
-                <strong>Дата останнього оновлення:</strong> 22 червня 2025 року
+                <strong>Дата останнього оновлення:</strong> 27 липня 2025 року
               </div>
             </CardHeader>
           </Card>
@@ -185,8 +185,8 @@ export default function LegalDocumentsPage() {
                 <div className="mb-4">
                   <p className="text-gray-700 font-medium mb-2">Поточна версія:</p>
                   <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>Авторизація за ролями (Адміністратор, Офіціант, Помічник)</li>
-                    <li>Базовий інтерфейс управління</li>
+                    <li>Авторизація за ролями (Стажер, Офіціант, Помічник)</li>
+                    <li>Базовий інтерфейс стажера та помічника офіціанта з відкритою робочою інформацією</li>
                   </ul>
                 </div>
 
@@ -194,11 +194,11 @@ export default function LegalDocumentsPage() {
                   <p className="text-gray-700 font-medium mb-2">Заплановані функції:</p>
                   <ul className="list-disc pl-6 space-y-1 text-gray-700">
                     <li>Управління розкладом співробітників</li>
-                    <li>Облік робочого часу</li>
+                    <li>Облік робочого часу та зарплати</li>
                     <li>Система завдань та повідомлень</li>
                     <li>Звіти про продуктивність</li>
                     <li>Інтеграція з касовими системами</li>
-                    <li>Мобільний додаток для співробітників</li>
+                    <li>Мобільний застосунок</li>
                   </ul>
                 </div>
               </CardContent>
@@ -212,8 +212,8 @@ export default function LegalDocumentsPage() {
                 <div className="mb-4">
                   <p className="text-gray-700 font-medium mb-2">Користувач має право:</p>
                   <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>Використовувати платформу згідно з наданою роллю</li>
-                    <li>Отримувати технічну підтримку</li>
+                    <li>Використовувати платформу згідно з наданою адміністратором роллю</li>
+                    <li>За потреби отримувати технічну підтримку</li>
                     <li>Вимагати конфіденційності своїх даних</li>
                   </ul>
                 </div>
@@ -221,9 +221,9 @@ export default function LegalDocumentsPage() {
                 <div>
                   <p className="text-gray-700 font-medium mb-2">Користувач зобов'язується:</p>
                   <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>Не передавати універсальні дані доступу до інтерфейсу працівників третім особам</li>
+                    <li>Не передавати універсальні та персональні дані доступу до платформи третім особам</li>
                     <li>Використовувати платформу лише в робочих цілях</li>
-                    <li>Повідомляти про виявлені помилки або порушення безпеки розробнику</li>
+                    <li>Обов'язково повідомляти про виявлені помилки або порушення безпеки розробнику</li>
                   </ul>
                 </div>
               </CardContent>
