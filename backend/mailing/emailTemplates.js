@@ -34,7 +34,7 @@ export const VERIFICATION_EMAIL_TEMPLATE = `
         <span style="font-size: 20px; margin-right: 12px;">⏰</span>
         <div>
           <p style="color: #92400e; font-weight: 600; margin: 0 0 4px 0; font-size: 14px;">Важливо!</p>
-          <p style="color: #b45309; margin: 0; font-size: 14px;">Код дійсний протягом 15 хвилин з міркувань безпеки</p>
+          <p style="color: #b45309; margin: 0; font-size: 14px;">Код дійсний протягом 1 годину з міркувань безпеки</p>
         </div>
       </div>
     </div>
