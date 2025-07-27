@@ -68,7 +68,7 @@ export const sendWelcomeEmail = async (email, name) => {
 		const response = await resendClient.emails.send({
 			from: `${sender.name} <${sender.email}>`,
 			to: [email],
-			subject: "Ласкаво просимо до SamoGuru! 🎉",
+			subject: "Ласкаво просимо до SamoGuru!",
 			html: welcomeTemplate,
 			tags: [
 				{
