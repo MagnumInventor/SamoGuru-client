@@ -15,7 +15,7 @@ export const sendVerificationEmail = async (email, verificationToken) => {
 			tags: [
 				{
 					name: "category",
-					value: "Email Verification"
+					value: "email_verification"
 				}
 			]
 		});
@@ -68,12 +68,12 @@ export const sendWelcomeEmail = async (email, name) => {
 		const response = await resendClient.emails.send({
 			from: `${sender.name} <${sender.email}>`,
 			to: [email],
-			subject: "Ласкаво просимо до SamoGuru!",
+			subject: "Ласкаво просимо до SamoGuru! 🎉",
 			html: welcomeTemplate,
 			tags: [
 				{
 					name: "category",
-					value: "Welcome Email"
+					value: "welcome_email"
 				}
 			]
 		});
@@ -96,7 +96,7 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
 			tags: [
 				{
 					name: "category",
-					value: "Password Reset"
+					value: "password_reset"
 				}
 			]
 		});
@@ -119,7 +119,7 @@ export const sendResetSuccessEmail = async (email) => {
 			tags: [
 				{
 					name: "category",
-					value: "Password Reset"
+					value: "password_reset_success"
 				}
 			]
 		});

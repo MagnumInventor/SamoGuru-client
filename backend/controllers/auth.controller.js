@@ -2,6 +2,8 @@ import bcryptjs from 'bcryptjs';
 import { User } from '../models/user.module.js';
 import { generateVerificationToken } from '../utils/generateVerificationToken.js';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
+import { sendVerificationEmail } from '../mailing/emails.js';
+
 
 
 export const signup = async (req, res) => {
