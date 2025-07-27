@@ -24,13 +24,7 @@ export function LoginForm() {
   const [error, setError] = useState("")
 
   
-
-
-
 const { login } = useAuth();
-
-
-
 
 
 
@@ -52,7 +46,7 @@ const { login } = useAuth();
         if (!success) {
           setError("Невірний номер телефону або пароль")
         }
-      } catch (err) {
+      } catch (error) {
         setError("Сталася помилка при вході.")
       }
     }
@@ -158,6 +152,8 @@ const { login } = useAuth();
                   required
                 />
               </div>
+                  <span className="text-xs text-gray-600">By registering you agree to receive occasional updates by email.</span>
+                  <span className="text-xs text-gray-600">Реєструючись ви автоматично погоджуєтеся на отримання повідомленнь про новини та нові функції платформи на вказану вами ел.пошту</span>
             </div>
 
             {error && <div className="text-red-600 text-sm text-center">{error}</div>}

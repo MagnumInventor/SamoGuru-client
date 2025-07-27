@@ -93,7 +93,7 @@ export default function FFStatus() {
         </div>
         <div className="mt-4 p-4 bg-red-100 border-2 border-red-300 rounded-md">
           <div className="text-sm text-red-800 mb-3">
-            <strong>⚠️ УВАГА:</strong> Більшість функцій наразі не працюють через відсутність фінансування та серверу
+            <strong>⚠️ УВАГА:</strong> Більшість функцій наразі не працюють через відсутність фінансування та часу на розробку
           </div>
           <Link href="/ff">
             <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
