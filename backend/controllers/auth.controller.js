@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import { User } from '../models/user.module.js';
 import { generateVerificationToken } from '../utils/generateVerificationToken.js';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
-import { sendPasswordResetEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
+import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
 
 
 // Реєстрація
@@ -152,11 +152,12 @@ export const forgotPassword = async (req, res) => {
         res.status(200).json({ success: true, message: "Лист для скидання паролю успішно надісланий"});
 
     } catch (error) {
-        console.log("Помилка при скиданні паролю");
+        console.log("Помилка при надсиланні листа для скидання паролю");
         res.status(400).json({ success: false, message: error.message });
     }
 };
 
+// Скидання паролю
 export const resetPassword = async (req, res) => {
 	try {
 		const { token } = req.params;
@@ -168,7 +169,7 @@ export const resetPassword = async (req, res) => {
 		});
 
 		if (!user) {
-			return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
+			return res.status(400).json({ success: false, message: "Невірний або старий код відновлення" });
 		}
 
 		// update password
@@ -181,13 +182,14 @@ export const resetPassword = async (req, res) => {
 
 		await sendResetSuccessEmail(user.email);
 
-		res.status(200).json({ success: true, message: "Password reset successful" });
+		res.status(200).json({ success: true, message: "Пароль відновлено успішно" });
 	} catch (error) {
-		console.log("Error in resetPassword ", error);
+		console.log("Помилка у відновленні паролю ", error);
 		res.status(400).json({ success: false, message: error.message });
 	}
 };
 
+// Перевірка підтвердженої сесії
 export const checkAuth = async (req, res) => {
 	try {
 		const user = await User.findById(req.userId).select("-password");
