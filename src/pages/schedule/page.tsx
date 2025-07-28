@@ -1,807 +1,190 @@
-"use client"
-
 import { useState } from "react"
 import { Button } from "@/src/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card"
-import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
-import { useAuth } from "@/lib/auth"
-import { redirectToFF } from "@/lib/ff-redirect"
-import Image from "next/image"
+import { Calendar, Upload, Download, Users, FileSpreadsheet, AlertCircle } from "lucide-react"
+import * as XLSX from 'xlsx'
 
-// Days of the week abbreviations
-const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
-
-// Month name
-const currentMonth = "Червень"
-
-// ГРафіек помічників - (17) з Максим Скакуна до Евеліни (from IMG_5159)
-type HelperSchedule = {
+type ScheduleData = {
   [employee: string]: {
-    [day: number]: string
+    [day: string]: string
   }
 }
 
-const helperScheduleData: HelperSchedule = {
-    "Максим Скак.": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "1",
-    13: "1",
-    14: "1",
-    15: "0",
-    16: "0",
-    17: "0",
-    18: "1",
-    19: "16",
-    20: "1",
-    21: "0",
-    22: "0",
-    23: "0",
-    24: "1",
-    25: "1",
-    26: "1",
-    27: "0",
-    28: "0",
-    29: "0",
-    30: "1",
-    31: "16"
-  },
-  "Аня Лемик": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "16",
-    13: "1",
-    14: "1",
-    15: "0",
-    16: "0",
-    17: "16",
-    18: "1",
-    19: "1",
-    20: "1",
-    21: "0",
-    22: "0",
-    23: "0",
-    24: "1",
-    25: "1",
-    26: "16",
-    27: "0",
-    28: "0",
-    29: "0",
-    30: "1",
-    31: "1"
-  },
-  "Влад Ярем": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "1",
-    13: "1",
-    14: "1",
-    15: "0",
-    16: "16",
-    17: "0",
-    18: "1",
-    19: "1",
-    20: "1",
-    21: "0",
-    22: "0",
-    23: "0",
-    24: "1",
-    25: "1",
-    26: "1",
-    27: "0",
-    28: "0",
-    29: "0",
-    30: "16",
-    31: "1"
-  },
-  "Захар": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "1",
-    13: "1",
-    14: "1",
-    15: "0",
-    16: "0",
-    17: "0",
-    18: "1",
-    19: "1",
-    20: "1",
-    21: "0",
-    22: "0",
-    23: "0",
-    24: "1",
-    25: "1",
-    26: "1",
-    27: "0",
-    28: "0",
-    29: "0",
-    30: "0",
-    31: "1"
-  },
-  "Саша Маркович": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "1",
-    13: "1",
-    14: "1",
-    15: "0",
-    16: "0",
-    17: "0",
-    18: "16",
-    19: "1",
-    20: "1",
-    21: "0",
-    22: "0",
-    23: "16",
-    24: "1",
-    25: "16",
-    26: "1",
-    27: "0",
-    28: "0",
-    29: "0",
-    30: "1",
-    31: "1"
-  },
-  "Мілана": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "16",
-    14: "1",
-    15: "0",
-    16: "0",
-    17: "0",
-    18: "1",
-    19: "1",
-    20: "1",
-    21: "0",
-    22: "0",
-    23: "0",
-    24: "1",
-    25: "16",
-    26: "1",
-    27: "0",
-    28: "16",
-    29: "0",
-    30: "1",
-    31: "1"
-  },
-  "Єва Комбуль": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "16",
-    14: "1",
-    15: "1",
-    16: "0",
-    17: "0",
-    18: "0",
-    19: "16",
-    20: "16",
-    21: "1",
-    22: "0",
-    23: "0",
-    24: "0",
-    25: "16",
-    26: "16",
-    27: "16",
-    28: "0",
-    29: "0",
-    30: "0",
-    31: "16"
-  },
-  "Каріна": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "1",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "1",
-    13: "16",
-    14: "16",
-    15: "0",
-    16: "0",
-    17: "0",
-    18: "1",
-    19: "16",
-    20: "1",
-    21: "0",
-    22: "0",
-    23: "0",
-    24: "16",
-    25: "1",
-    26: "1",
-    27: "0",
-    28: "0",
-    29: "0",
-    30: "1",
-    31: "1"
-  },
-  "Лінищук": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "1",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "16",
-    13: "16",
-    14: "1",
-    15: "0",
-    16: "0",
-    17: "0",
-    18: "1",
-    19: "1",
-    20: "16",
-    21: "0",
-    22: "0",
-    23: "0",
-    24: "1",
-    25: "1",
-    26: "16",
-    27: "0",
-    28: "0",
-    29: "0",
-    30: "16",
-    31: "1"
-  },
-  "Влад Пек.": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "16",
-    13: "0",
-    14: "0",
-    15: "1",
-    16: "1",
-    17: "1",
-    18: "0",
-    19: "0",
-    20: "0",
-    21: "1",
-    22: "1",
-    23: "1",
-    24: "0",
-    25: "0",
-    26: "0",
-    27: "1",
-    28: "1",
-    29: "1",
-    30: "0",
-    31: "16"
-  },
-  "Саша Гладка": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "0",
-    14: "0",
-    15: "1",
-    16: "1",
-    17: "1",
-    18: "16",
-    19: "0",
-    20: "0",
-    21: "1",
-    22: "1",
-    23: "1",
-    24: "0",
-    25: "16",
-    26: "0",
-    27: "1",
-    28: "1",
-    29: "1",
-    30: "0",
-    31: "0"
-  },
-  "Матвій Гард.": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "0",
-    14: "0",
-    15: "1",
-    16: "16",
-    17: "1",
-    18: "0",
-    19: "16",
-    20: "0",
-    21: "1",
-    22: "1",
-    23: "1",
-    24: "0",
-    25: "0",
-    26: "16",
-    27: "1",
-    28: "1",
-    29: "1",
-    30: "0",
-    31: "0"
-  },
-  "Настя Пушкар": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "0",
-    14: "0",
-    15: "1",
-    16: "1",
-    17: "16",
-    18: "0",
-    19: "0",
-    20: "0",
-    21: "1",
-    22: "1",
-    23: "1",
-    24: "16",
-    25: "0",
-    26: "0",
-    27: "1",
-    28: "1",
-    29: "1",
-    30: "16",
-    31: "0"
-  },
-  "Зоряна Грубяк": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "0",
-    14: "0",
-    15: "1",
-    16: "1",
-    17: "1",
-    18: "0",
-    19: "0",
-    20: "0",
-    21: "1",
-    22: "1",
-    23: "16",
-    24: "0",
-    25: "0",
-    26: "0",
-    27: "1",
-    28: "1",
-    29: "1",
-    30: "0",
-    31: "0"
-  },
-  "Марта": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "1",
-    13: "0",
-    14: "0",
-    15: "0",
-    16: "1",
-    17: "1",
-    18: "0",
-    19: "0",
-    20: "16",
-    21: "1",
-    22: "1",
-    23: "1",
-    24: "0",
-    25: "0",
-    26: "1",
-    27: "1",
-    28: "1",
-    29: "0",
-    30: "0",
-    31: "0"
-  },
-  "Тращук Таня": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "0",
-    14: "0",
-    15: "1",
-    16: "1",
-    17: "16",
-    18: "0",
-    19: "0",
-    20: "0",
-    21: "1",
-    22: "1",
-    23: "1",
-    24: "0",
-    25: "0",
-    26: "0",
-    27: "16",
-    28: "1",
-    29: "1",
-    30: "0",
-    31: "0"
-  },
-  "Евеліна": {
-    1: "0",
-    2: "0",
-    3: "0",
-    4: "0",
-    5: "0",
-    6: "0",
-    7: "0",
-    8: "0",
-    9: "0",
-    10: "0",
-    11: "0",
-    12: "0",
-    13: "0",
-    14: "16",
-    15: "1",
-    16: "1",
-    17: "1",
-    18: "0",
-    19: "0",
-    20: "0",
-    21: "1",
-    22: "1",
-    23: "1",
-    24: "0",
-    25: "0",
-    26: "0",
-    27: "1",
-    28: "1",
-    29: "1",
-    30: "0",
-    31: "0"
-  }
-};
+export default function SimpleSchedulePage() {
+  const [scheduleData, setScheduleData] = useState<ScheduleData>({})
+  const [currentMonth, setCurrentMonth] = useState("Липень")
+  const [currentYear, setCurrentYear] = useState(2025)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string>("")
 
-// Add waiter schedule data and helpers from waiter/page.tsx
-const waiterDaysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"];
-const waiterScheduleData = {
-  "Ігор": {
-    "1": "1", "2": "0", "3": "0", "4": "0", "5": "1", "6": "1", "7": "1", "8": "0", "9": "0", "10": "0", "11": "1", "12": "1", "13": "1", "14": "0", "15": "0", "16": "0", "17": "1", "18": "1", "19": "1", "20": "0", "21": "0", "22": "0", "23": "1", "24": "1", "25": "1", "26": "0", "27": "0", "28": "0", "29": "1", "30": "1"
-  },
-  "Олексій": {
-    "1": "0", "2": "1", "3": "1", "4": "1", "5": "0", "6": "0", "7": "0", "8": "1", "9": "1", "10": "1", "11": "0", "12": "0", "13": "0", "14": "1", "15": "1", "16": "1", "17": "0", "18": "0", "19": "0", "20": "1", "21": "1", "22": "1", "23": "0", "24": "0", "25": "0", "26": "1", "27": "1", "28": "1", "29": "0", "30": "0"
-  },
-  "Сергій": {
-    "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "0", "10": "0", "11": "0", "12": "1", "13": "1", "14": "1", "15": "0", "16": "0", "17": "0", "18": "1", "19": "1", "20": "1", "21": "0", "22": "0", "23": "0", "24": "1", "25": "1", "26": "1", "27": "0", "28": "0", "29": "0", "30": "0", "31": "1"
-  },
-  "Дмитро": {
-    "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "0", "10": "0", "11": "0", "12": "1", "13": "1", "14": "1", "15": "0", "16": "0", "17": "0", "18": "1", "19": "1", "20": "1", "21": "0", "22": "0", "23": "0", "24": "1", "25": "1", "26": "1", "27": "0", "28": "0", "29": "0", "30": "0", "31": "1"
-  },
-  "Андрій": {
-    "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "0", "10": "0", "11": "0", "12": "1", "13": "1", "14": "1", "15": "0", "16": "0", "17": "0", "18": "1", "19": "1", "20": "1", "21": "0", "22": "0", "23": "0", "24": "1", "25": "1", "26": "1", "27": "0", "28": "0", "29": "0", "30": "0", "31": "1"
-  },
-  "Олег": {
-    "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "0", "10": "0", "11": "0", "12": "1", "13": "1", "14": "1", "15": "0", "16": "0", "17": "0", "18": "1", "19": "1", "20": "1", "21": "0", "22": "0", "23": "0", "24": "1", "25": "1", "26": "1", "27": "0", "28": "0", "29": "0", "30": "0", "31": "1"
-  },
-  "Іван": {
-    "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "0", "10": "0", "11": "0", "12": "1", "13": "1", "14": "1", "15": "0", "16": "0", "17": "0", "18": "1", "19": "1", "20": "1", "21": "0", "22": "0", "23": "0", "24": "1", "25": "1", "26": "1", "27": "0", "28": "0", "29": "0", "30": "0", "31": "1"
-  },
-  "Петро": {
-    "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "0", "10": "0", "11": "0", "12": "1", "13": "1", "14": "1", "15": "0", "16": "0", "17": "0", "18": "1", "19": "1", "20": "1", "21": "0", "22": "0", "23": "0", "24": "1", "25": "1", "26": "1", "27": "0", "28": "0", "29": "0", "30": "0", "31": "1"
-  },
-  "Станіслав": {
-    "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "0", "10": "0", "11": "0", "12": "1", "13": "1", "14": "1", "15": "0", "16": "0", "17": "0", "18": "1", "19": "1", "20": "1", "21": "0", "22": "0", "23": "0", "24": "1", "25": "1", "26": "1", "27": "0", "28": "0", "29": "0", "30": "0", "31": "1"
-  },
-  "Ярослав": {
-    "1": "0", "2": "1", "3": "1", "4": "1", "5": "0", "6": "0", "7": "0", "8": "1", "9": "1", "10": "1", "11": "0", "12": "0", "13": "0", "14": "1", "15": "1", "16": "1", "17": "0", "18": "0", "19": "0", "20": "1", "21": "1", "22": "1", "23": "0", "24": "0", "25": "0", "26": "1", "27": "1", "28": "1", "29": "0", "30": "0"
-  }
-};
+  // Завантаження Excel файлу
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
 
-const getDayOfWeek = (day: number) => {
-  // June 2025 starts on Sunday (0)
-  const startDay = 0 // Sunday
-  return daysOfWeek[(startDay + day - 1) % 7]
-}
+    setLoading(true)
+    setError("")
 
-const getWaiterDayOfWeek = (day: number) => {
-  const startDay = 0; // Sunday
-  return waiterDaysOfWeek[(startDay + day - 1) % 7];
-};
+    try {
+      const data = await file.arrayBuffer()
+      const workbook = XLSX.read(data)
+      const sheetName = workbook.SheetNames[0]
+      const worksheet = workbook.Sheets[sheetName]
+      
+      // Конвертуємо в JSON
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][]
+      
+      if (jsonData.length < 2) {
+        throw new Error("Файл має містити заголовки та дані")
+      }
 
-export default function SchedulePage() {
-  const [selectedCell, setSelectedCell] = useState<{ employee: string; day: number } | null>(null)
-  const [selectedWaiterCell, setSelectedWaiterCell] = useState<{ employee: string; day: number } | null>(null);
-  const { user } = useAuth()
-  const employees = Object.keys(helperScheduleData)
+      // Перший рядок - заголовки (дні)
+      const days = jsonData[0].slice(1) // Пропускаємо першу колонку (імена)
+      
+      // Конвертуємо дані в потрібний формат
+      const newScheduleData: ScheduleData = {}
+      
+      for (let i = 1; i < jsonData.length; i++) {
+        const row = jsonData[i]
+        const employeeName = row[0]
+        
+        if (employeeName) {
+          newScheduleData[employeeName] = {}
+          
+          days.forEach((day: any, index: number) => {
+            const value = row[index + 1] || "0"
+            newScheduleData[employeeName][day.toString()] = value.toString()
+          })
+        }
+      }
 
-  const getShiftColor = (shift: string | null) => {
-    if (shift === "1") return "bg-blue-100 text-blue-800 border-blue-200"
-    if (shift === "16") return "bg-green-100 text-green-800 border-green-200"
-    if (shift === "extra-1") return "bg-gray-900 text-white border-gray-900" 
-    if (shift === "extra-16") return "bf-gray-900 text-white border-gray-900" // Black for extra shifts
-    if (shift === "0") return "bg-gray-100 text-gray-400 border-gray-200" // Light gray for rest
-    return "bg-gray-100 text-gray-800 border-gray-200"
+      setScheduleData(newScheduleData)
+    } catch (err) {
+      setError(`Помилка завантаження файлу: ${err instanceof Error ? err.message : 'Невідома помилка'}`)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const getShiftText = (shift: string | null) => {
-    if (shift === "1") return "1"
-    if (shift === "16") return "16"
-    if (shift === "extra-16") return "E-16" // E for Extra
-    if (shift === "extra-1") return "E-1"
-    if (shift === "0") return ""
-    return ""
+  // Експорт в Excel
+  const handleExport = () => {
+    if (Object.keys(scheduleData).length === 0) {
+      setError("Немає даних для експорту")
+      return
+    }
+
+    try {
+      const employees = Object.keys(scheduleData)
+      const days = Object.keys(scheduleData[employees[0]] || {}).sort((a, b) => parseInt(a) - parseInt(b))
+      
+      // Створюємо дані для експорту
+      const exportData = [
+        ['Співробітник', ...days], // Заголовки
+        ...employees.map(employee => [
+          employee,
+          ...days.map(day => scheduleData[employee][day] || "0")
+        ])
+      ]
+
+      const ws = XLSX.utils.aoa_to_sheet(exportData)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, "Графік")
+      
+      XLSX.writeFile(wb, `schedule-${currentMonth}-${currentYear}.xlsx`)
+    } catch (err) {
+      setError("Помилка експорту файлу")
+    }
   }
 
-  const getWaiterShiftColor = (shift: string | null) => {
-       if (shift === "1") return "bg-blue-100 text-blue-800 border-blue-200"
-    if (shift === "16") return "bg-green-100 text-green-800 border-green-200"
-    if (shift === "extra-1") return "bg-gray-900 text-white border-gray-900" 
-    if (shift === "extra-16") return "bf-gray-900 text-white border-gray-900" // Black for extra shifts
-    if (shift === "0") return "bg-gray-100 text-gray-400 border-gray-200" // Light gray for rest
-    return "bg-gray-100 text-gray-800 border-gray-200"
-  };
+  // Отримуємо день тижня
+  const getDayOfWeek = (day: number) => {
+    const daysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"]
+    const startDay = 1 // Понеділок для липня 2025
+    return daysOfWeek[(startDay + day - 1) % 7]
+  }
 
-  const getWaiterShiftText = (shift: string | null) => {
-    if (shift === "1") return "1"
-    if (shift === "16") return "16"
-    if (shift === "extra-16") return "E-16" // E for Extra
-    if (shift === "extra-1") return "E-1"
-    if (shift === "0") return ""
-    return "";
-  };
+  // Кольори для змін
+  const getShiftColor = (shift: string) => {
+    switch (shift) {
+      case "1": return "bg-blue-100 text-blue-800 border-blue-200"
+      case "16": return "bg-green-100 text-green-800 border-green-200"
+      case "0": return "bg-gray-100 text-gray-400 border-gray-200"
+      default: return "bg-yellow-100 text-yellow-800 border-yellow-200"
+    }
+  }
+
+  const getShiftText = (shift: string) => {
+    switch (shift) {
+      case "1": return "Д" // День
+      case "16": return "В" // Вечір
+      case "0": return "-" // Вихідний
+      default: return shift.substring(0, 2) // Перші 2 символи
+    }
+  }
+
+  const employees = Object.keys(scheduleData)
+  const days = employees.length > 0 ? 
+    Object.keys(scheduleData[employees[0]] || {}).sort((a, b) => parseInt(a) - parseInt(b)) : 
+    []
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      {/* Заголовок */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Розклад роботи помічників</h1>
-        <p className="text-gray-600">{currentMonth} 2025 - Графік роботи помічників (14 співробітників)</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Графік роботи</h1>
+        <p className="text-gray-600">{currentMonth} {currentYear}</p>
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-4">
-        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
-          <a href="/schedule">Графік помічників</a>
-        </Button>
-        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50">
-          <a href="/schedule/waiter">Графік офіціантів</a>
-        </Button>
-        {user?.role === "admin" && (
-          <Button variant="outline" className="border-purple-200 text-purple-600 hover:bg-purple-50">
-            <a href="/admin">Адмін панель</a>
-          </Button>
-        )}
-      </div>
-
-      {/* Legend */}
-      <div className="mb-6 flex flex-wrap gap-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-blue-800">
-            1
-          </div>
-          <span className="text-sm text-gray-600">Денна зміна (10:00-22:00)</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-green-100 border border-green-200 rounded flex items-center justify-center text-xs font-medium text-green-800">
-            16
-          </div>
-          <span className="text-sm text-gray-600">Вечірня зміна (16:00-02:00)</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-gray-800 rounded"></div>
-          <span className="text-sm text-gray-600">Вихідний</span>
-        </div>
-      </div>
-
-      {/* Schedule Table */}
-      <Card className="overflow-hidden">
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Calendar className="h-5 w-5 text-orange-500 mr-2" />
-            {currentMonth} 2025 - Помічники (14 співробітників)
-          </CardTitle>
-          <CardDescription>Графік роботи помічників: Максим Скак. - Ярослав Борода</CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="sticky left-0 bg-gray-50 border border-gray-200 px-4 py-2 text-left font-medium text-gray-900 min-w-[150px]">
-                    № Співробітник
-                  </th>
-                  {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => (
-                    <th key={day} className="border border-gray-200 px-2 py-2 text-center min-w-[40px]">
-                      <div className="text-xs font-medium text-gray-900">{day}</div>
-                      <div className="text-xs text-gray-500">{getDayOfWeek(day)}</div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {employees.map((employee, index) => (
-                  <tr key={employee} className="hover:bg-gray-50">
-                    <td className="sticky left-0 bg-white border border-gray-200 px-4 py-2 font-medium text-gray-900">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-500">{index + 1}</span>
-                        <span>{employee}</span>
-                      </div>
-                    </td>
-                    {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => {
-                      const shift = helperScheduleData[employee][day]
-                      return (
-                        <td
-                          key={day}
-                          className="border border-gray-200 p-1 text-center cursor-pointer hover:bg-gray-100"
-                          onClick={() => setSelectedCell({ employee, day })}
-                        >
-                          <div
-                            className={`w-6 h-6 mx-auto rounded flex items-center justify-center text-xs font-medium ${getShiftColor(shift)}`}
-                          >
-                            {getShiftText(shift)}
-                          </div>
-                        </td>
-                      )
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions */}
-      <div className="grid md:grid-cols-3 gap-4 mt-8">
-        <Card className="border-orange-200">
+      {/* Керування файлами */}
+      <div className="grid md:grid-cols-3 gap-4 mb-8">
+        <Card className="border-blue-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
-              <RefreshCw className="h-5 w-5 text-orange-500 mr-2" />
-              Заміна зміни
+              <Upload className="h-5 w-5 text-blue-500 mr-2" />
+              Завантажити Excel
             </CardTitle>
+            <CardDescription>Імпорт графіку з Excel файлу</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full bg-orange-500 hover:bg-orange-600" onClick={redirectToFF}>
-              Запросити заміну
-            </Button>
+            <div className="space-y-3">
+              <input
+                type="file"
+                accept=".xlsx,.xls"
+                onChange={handleFileUpload}
+                className="hidden"
+                id="file-upload"
+                disabled={loading}
+              />
+              <label
+                htmlFor="file-upload"
+                className={`cursor-pointer inline-flex items-center justify-center w-full px-4 py-2 border border-blue-200 rounded-md text-sm font-medium text-blue-600 bg-white hover:bg-blue-50 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                <FileSpreadsheet className="h-4 w-4 mr-2" />
+                {loading ? 'Завантаження...' : 'Вибрати файл'}
+              </label>
+              <p className="text-xs text-gray-500">
+                Підтримуються формати: .xlsx, .xls
+              </p>
+            </div>
           </CardContent>
         </Card>
 
-        <Card className="border-orange-200">
+        <Card className="border-green-200">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
-              <CalendarIcon className="h-5 w-5 text-orange-500 mr-2" />
-              Вихідний день
+              <Download className="h-5 w-5 text-green-500 mr-2" />
+              Експорт
             </CardTitle>
+            <CardDescription>Зберегти графік в Excel</CardDescription>
           </CardHeader>
           <CardContent>
             <Button
-              variant="outline"
-              className="w-full border-orange-200 text-orange-600 hover:bg-orange-50"
-              onClick={redirectToFF}
+              onClick={handleExport}
+              disabled={employees.length === 0}
+              className="w-full bg-green-500 hover:bg-green-600 disabled:opacity-50"
             >
-              Запросити вихідний
+              <Download className="h-4 w-4 mr-2" />
+              Завантажити Excel
             </Button>
           </CardContent>
         </Card>
@@ -810,93 +193,66 @@ export default function SchedulePage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
               <Users className="h-5 w-5 text-orange-500 mr-2" />
-              Доступні зміни
+              Статистика
             </CardTitle>
+            <CardDescription>Інформація про графік</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button
-              variant="outline"
-              className="w-full border-orange-200 text-orange-600 hover:bg-orange-50"
-              onClick={redirectToFF}
-            >
-              Переглянути (3)
-            </Button>
+            <div className="space-y-1 text-sm">
+              <p>Співробітників: <span className="font-medium">{employees.length}</span></p>
+              <p>Днів: <span className="font-medium">{days.length}</span></p>
+              <p>Статус: <span className={employees.length > 0 ? "text-green-600 font-medium" : "text-gray-500"}>
+                {employees.length > 0 ? "Завантажено" : "Немає даних"}
+              </span></p>
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Selected Cell Info */}
-      {selectedCell && (
-        <Card className="mt-6 border-orange-200">
-          <CardHeader>
-            <CardTitle className="text-lg">
-              Деталі зміни: {selectedCell.employee} - {selectedCell.day} червня
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Зміна:</p>
-                <p className="font-medium">
-                  {helperScheduleData[selectedCell.employee][selectedCell.day] === "1" && "Денна зміна (10:00-22:00)"}
-                  {helperScheduleData[selectedCell.employee][selectedCell.day] === "16" &&
-                    "Вечірня зміна (16:00-02:00)"}
-                  {helperScheduleData[selectedCell.employee][selectedCell.day] === "0" && "Вихідний день"}
-                </p>
-              </div>
-              <Button size="sm" className="bg-orange-500 hover:bg-orange-600" onClick={redirectToFF}>
-                Змінити
-              </Button>
+      {/* Помилки */}
+      {error && (
+        <Card className="border-red-200 bg-red-50 mb-6">
+          <CardContent className="pt-6">
+            <div className="flex items-center space-x-2 text-red-700">
+              <AlertCircle className="h-5 w-5" />
+              <span>{error}</span>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {/* Add a button to scroll to waiters' schedule */}
-      <div className="mb-6">
-        <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50" onClick={() => {
-          const el = document.getElementById("waiter-schedule-section");
-          if (el) el.scrollIntoView({ behavior: "smooth" });
-        }}>
-          Перейти до графіку офіціантів
-        </Button>
-      </div>
-
-      {/* Waiters Schedule Section */}
-      <div id="waiter-schedule-section" className="mt-16">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Розклад роботи офіціантів</h2>
-          <p className="text-gray-600">Червень 2025 - Графік роботи офіціантів ({Object.keys(waiterScheduleData).length} співробітників)</p>
-        </div>
-
-        {/* Legend for waiters */}
+      {/* Легенда */}
+      {employees.length > 0 && (
         <div className="mb-6 flex flex-wrap gap-4">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-blue-800">
-              1
+              Д
             </div>
-            <span className="text-sm text-gray-600">Денна зміна (9:00-23:00)</span>
+            <span className="text-sm text-gray-600">Денна зміна</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 bg-green-100 border border-green-200 rounded flex items-center justify-center text-xs font-medium text-green-800">
-              16
+              В
             </div>
-            <span className="text-sm text-gray-600">Вечірня зміна (16:00-23:00)</span>
+            <span className="text-sm text-gray-600">Вечірня зміна</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gray-800 rounded"></div>
+            <div className="w-6 h-6 bg-gray-100 border border-gray-200 rounded flex items-center justify-center text-xs font-medium text-gray-400">
+              -
+            </div>
             <span className="text-sm text-gray-600">Вихідний</span>
           </div>
         </div>
+      )}
 
-        {/* Waiters Schedule Table */}
+      {/* Таблиця графіку */}
+      {employees.length > 0 ? (
         <Card className="overflow-hidden">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Calendar className="h-5 w-5 text-orange-500 mr-2" />
-              Червень 2025 - Офіціанти ({Object.keys(waiterScheduleData).length} співробітників)
+              {currentMonth} {currentYear} - {employees.length} співробітників
             </CardTitle>
-            <CardDescription>Графік роботи офіціантів: Ігор - Ярослав</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
@@ -904,40 +260,40 @@ export default function SchedulePage() {
                 <thead>
                   <tr className="bg-gray-50">
                     <th className="sticky left-0 bg-gray-50 border border-gray-200 px-4 py-2 text-left font-medium text-gray-900 min-w-[150px]">
-                      № Співробітник
+                      Співробітник
                     </th>
-                    {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => (
+                    {days.map((day) => (
                       <th key={day} className="border border-gray-200 px-2 py-2 text-center min-w-[40px]">
                         <div className="text-xs font-medium text-gray-900">{day}</div>
-                        <div className="text-xs text-gray-500">{getWaiterDayOfWeek(day)}</div>
+                        <div className="text-xs text-gray-500">{getDayOfWeek(parseInt(day))}</div>
                       </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(waiterScheduleData).map((employee, index) => (
+                  {employees.map((employee, index) => (
                     <tr key={employee} className="hover:bg-gray-50">
                       <td className="sticky left-0 bg-white border border-gray-200 px-4 py-2 font-medium text-gray-900">
                         <div className="flex items-center space-x-2">
                           <span className="text-sm text-gray-500">{index + 1}</span>
-                          <span>{employee}</span>
+                          <span className="truncate max-w-[120px]" title={employee}>{employee}</span>
                         </div>
                       </td>
-                      {Array.from({ length: 30 }, (_, i) => i + 1).map((day) => {
-                        const shift = waiterScheduleData[employee][day];
+                      {days.map((day) => {
+                        const shift = scheduleData[employee][day] || "0"
                         return (
                           <td
                             key={day}
-                            className="border border-gray-200 p-1 text-center cursor-pointer hover:bg-gray-100"
-                            onClick={() => setSelectedWaiterCell({ employee, day })}
+                            className="border border-gray-200 p-1 text-center"
                           >
                             <div
-                              className={`w-6 h-6 mx-auto rounded flex items-center justify-center text-xs font-medium ${getWaiterShiftColor(shift)}`}
+                              className={`w-6 h-6 mx-auto rounded flex items-center justify-center text-xs font-medium ${getShiftColor(shift)}`}
+                              title={`${employee} - ${day} ${currentMonth}: ${shift === "1" ? "Денна зміна" : shift === "16" ? "Вечірня зміна" : shift === "0" ? "Вихідний" : shift}`}
                             >
-                              {getWaiterShiftText(shift)}
+                              {getShiftText(shift)}
                             </div>
                           </td>
-                        );
+                        )
                       })}
                     </tr>
                   ))}
@@ -946,58 +302,48 @@ export default function SchedulePage() {
             </div>
           </CardContent>
         </Card>
-
-        {/* Selected Waiter Cell Info */}
-        {selectedWaiterCell && (
-          <Card className="mt-6 border-orange-200">
-            <CardHeader>
-              <CardTitle className="text-lg">
-                Деталі зміни: {selectedWaiterCell.employee} - {selectedWaiterCell.day} червня
-              </CardTitle>
-            </CardHeader>
-{ /*
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Зміна:</p>
-                  <p className="font-medium">
-                    {waiterScheduleData[selectedWaiterCell.employee][selectedWaiterCell.day] === "1" && "Робочий день (10:00-22:00)"}
-                    {waiterScheduleData[selectedWaiterCell.employee][selectedWaiterCell.day] === "16" && "Вечірня зміна (16:00-23:00)"}
-                    {waiterScheduleData[selectedWaiterCell.employee][selectedWaiterCell.day] === "0" && "Вихідний день"}
-                  </p>
-                </div>
-                <Button size="sm" className="bg-orange-500 hover:bg-orange-600" onClick={redirectToFF}>
-                  Змінити
-                </Button>
-              </div>
-            </CardContent>
-*/}
-          </Card>
-        )}
-      </div>
-
-      {/* Original Schedule Image - MOVED TO BOTTOM */}
-      <div className="mt-12">
-        <Card className="border-orange-200">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Calendar className="h-5 w-5 text-orange-500 mr-2" />
-              Оригінальний графік помічників
-            </CardTitle>
-            <CardDescription>Зображення оригінального графіку (14 помічників) - IMG_5159</CardDescription>
-          </CardHeader>
-          <CardContent className="flex justify-center">
-            <div className="relative w-full max-w-4xl h-[500px]">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5159-6NPoArol4vMJN7CW78zfAY9TpxMDqG.jpeg"
-                alt="Оригінальний графік помічників - IMG_5159"
-                fill
-                style={{ objectFit: "contain" }}
-              />
-            </div>
+      ) : (
+        // Заглушка коли немає даних
+        <Card className="border-dashed border-2 border-gray-300">
+          <CardContent className="flex flex-col items-center justify-center py-16">
+            <FileSpreadsheet className="h-16 w-16 text-gray-400 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Немає даних графіку</h3>
+            <p className="text-gray-500 text-center mb-6 max-w-md">
+              Завантажте Excel файл з графіком роботи, щоб переглянути розклад співробітників
+            </p>
+            <label
+              htmlFor="file-upload"
+              className="cursor-pointer inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600"
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              Завантажити файл
+            </label>
           </CardContent>
         </Card>
-      </div>
+      )}
+
+      {/* Інструкції */}
+      <Card className="mt-8 border-blue-200 bg-blue-50">
+        <CardHeader>
+          <CardTitle className="text-lg text-blue-800">Як використовувати</CardTitle>
+        </CardHeader>
+        <CardContent className="text-blue-700">
+          <div className="space-y-2 text-sm">
+            <p><strong>1. Формат Excel файлу:</strong></p>
+            <ul className="list-disc list-inside ml-4 space-y-1">
+              <li>Перший рядок: заголовки (Співробітник, 1, 2, 3... до кінця місяця)</li>
+              <li>Перша колонка: імена співробітників</li>
+              <li>Значення: "1" (день), "16" (вечір), "0" (вихідний)</li>
+            </ul>
+            <p><strong>2. Приклад структури:</strong></p>
+            <div className="bg-white p-2 rounded font-mono text-xs">
+              Співробітник | 1 | 2 | 3 | ...<br/>
+              Ігор | 1 | 0 | 16 | ...<br/>
+              Олексій | 0 | 1 | 1 | ...
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }
