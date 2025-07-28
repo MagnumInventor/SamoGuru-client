@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useAuth } from "@/frontend/lib/auth"
+import { useAuth } from "@/lib/auth"
 import { LoginForm } from "./login-form"
 
 interface ProtectedRouteProps {
