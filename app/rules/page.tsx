@@ -45,15 +45,7 @@ const newOrders = [
     title: "Вилучення десерту",
     description: "В меню більше немає <strong>еклерів</strong>",
     priority: "high",
-    deadline: "25.01.2024",
-    status: "active",
-  },
-  {
-    id: 2,
-    title: "Оновлені процедури оплати",
-    description: "Нові способи оплати та процедури повернення",
-    priority: "medium",
-    deadline: "30.01.2024",
+    deadline: "25.01.2025",
     status: "active",
   }
 ]

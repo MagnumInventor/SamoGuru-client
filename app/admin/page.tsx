@@ -26,7 +26,7 @@ const adminStats = [
 const recentEmployees = [
   { name: "Захар", role: "helper", joinDate: "11.05.2025", status: "active" },
   { name: "Олександр Маркович", role: "helper", joinDate: "6.05.2025", status: "training" },
-  { name: "Ярослав", role: "waiter", joinDate: "2.05.2024", status: "active" },
+  { name: "Ярослав", role: "waiter", joinDate: "2.05.2025", status: "active" },
 ]
 
 export default function AdminPage() {

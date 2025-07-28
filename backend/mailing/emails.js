@@ -101,11 +101,12 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
 			]
 		});
 
-		console.log("Password reset email sent successfully", response);
+		console.log("Лист про скидання паролю успішно надісланий", response);
 		return response;
+
 	} catch (error) {
-		console.error(`Error sending password reset email`, error);
-		throw new Error(`Error sending password reset email: ${error}`);
+		console.error(`Помилка під час надсилання листу про скидування паролю`, error);
+		throw new Error(`Помилка під час надсилання листу про скидування паролю: ${error}`);
 	}
 };
 

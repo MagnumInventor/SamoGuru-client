@@ -73,7 +73,7 @@ const achievements = [
     description: "Успішно завершили перший робочий день",
     icon: Star,
     earned: true,
-    date: "15.01.2024",
+    date: "15.06.2025",
   },
 ]
 

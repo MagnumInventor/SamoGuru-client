@@ -53,7 +53,7 @@ export const VERIFICATION_EMAIL_TEMPLATE = `
   <div style="text-align: center; margin-top: 30px; padding: 20px;">
     <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
       <p style="color: #9ca3af; font-size: 12px; margin: 0 0 8px 0;">Це автоматичне повідомлення, будь ласка, не відповідайте на цей лист</p>
-      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2024 СамоГуру. Всі права захищені.</p>
+      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2025 СамоГуру. Всі права захищені.</p>
     </div>
   </div>
 </body>
@@ -119,7 +119,7 @@ export const PASSWORD_RESET_SUCCESS_TEMPLATE = `
   <div style="text-align: center; margin-top: 30px; padding: 20px;">
     <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
       <p style="color: #9ca3af; font-size: 12px; margin: 0 0 8px 0;">Це автоматичне повідомлення, будь ласка, не відповідайте на цей лист</p>
-      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2024 СамоГуру. Всі права захищені.</p>
+      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2025 СамоГуру. Всі права захищені.</p>
     </div>
   </div>
 </body>
@@ -187,7 +187,7 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
   <div style="text-align: center; margin-top: 30px; padding: 20px;">
     <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
       <p style="color: #9ca3af; font-size: 12px; margin: 0 0 8px 0;">Це автоматичне повідомлення, будь ласка, не відповідайте на цей лист</p>
-      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2024 СамоГуру. Всі права захищені.</p>
+      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2025 СамоГуру. Всі права захищені.</p>
     </div>
   </div>
 </body>
@@ -257,7 +257,7 @@ export const WELCOME_EMAIL_TEMPLATE = `
   <div style="text-align: center; margin-top: 30px; padding: 20px;">
     <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
       <p style="color: #9ca3af; font-size: 12px; margin: 0 0 8px 0;">Це автоматичне повідомлення, будь ласка, не відповідайте на цей лист</p>
-      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2024 СамоГуру. Всі права захищені.</p>
+      <p style="color: #d1d5db; font-size: 11px; margin: 0;">© 2025 СамоГуру. Всі права захищені.</p>
     </div>
   </div>
 </body>

@@ -1,8 +1,10 @@
 import bcryptjs from 'bcryptjs';
+import crypto from 'crypto';
+
 import { User } from '../models/user.module.js';
 import { generateVerificationToken } from '../utils/generateVerificationToken.js';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
-import { sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
+import { sendPasswordResetEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
 
 
 // Реєстрація
@@ -125,4 +127,32 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
     res.clearCookie("token");
     res.status(200).json({ success: true, message: "Ви успшіно вийшли з свого акаунта"});
+};
+
+// Забув пароль
+export const forgotPassword = async (req, res) => {
+        const { email } = req.body
+    try {
+        const user = await User.findOne({ email });
+
+        if(!user) {
+            return res.status(400).json({ success: false, message: "Користувача не найдено"});
+        }
+
+        const resetToken = crypto.randomBytes(52).toString("hex");
+        const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000;
+        
+
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordTokenExpiresAt = resetTokenExpiresAt;
+
+        await user.save();
+
+        await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+        res.status(200).json({ success: true, message: "Лист для скидання паролю успішно надісланий"});
+
+    } catch (error) {
+        console.log("Помилка при скиданні паролю");
+        res.status(400).json({ success: false, message: error.message });
+    }
 };
