@@ -3,9 +3,9 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Button } from "../../frontend/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "../../frontend/components/ui/sheet"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../frontend/components/ui/dropdown-menu"
+import { Button } from "./ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import {
   Menu,
   Calendar,
@@ -24,7 +24,7 @@ import {
   Soup,
   Smile,
 } from "lucide-react"
-import { useAuth, getRoleDisplayName } from "../../frontend/lib/auth"
+import { useAuth, getRoleDisplayName } from "../frontend/lib/auth"
 
 const allNavItems = [
   { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
