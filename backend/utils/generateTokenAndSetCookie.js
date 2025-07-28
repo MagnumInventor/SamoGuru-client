@@ -9,7 +9,7 @@ export const generateTokenAndSetCookie = (res, userId) => {
         httpOnly: true, // забороняє доступ з JS (тільки з https)
         secure: process.env.NODE_ENV === "production", // захист від XSS атак
         sameSite: "strict", // захист від CSRF атак
-        maxAge: 9 * 24 * 60 * 60 * 1000,
+        maxAge: 9 * 24 * 60 * 60 * 1000, // Тривалість життя токену (1 година)
     });
 
     return token;
