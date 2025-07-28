@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import { User } from '../models/user.module.js';
 import { generateVerificationToken } from '../utils/generateVerificationToken.js';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
-import { sendPasswordResetEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
+import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
 
 
 // Реєстрація
@@ -152,7 +152,54 @@ export const forgotPassword = async (req, res) => {
         res.status(200).json({ success: true, message: "Лист для скидання паролю успішно надісланий"});
 
     } catch (error) {
-        console.log("Помилка при скиданні паролю");
+        console.log("Помилка при надсиланні листа для скидання паролю");
         res.status(400).json({ success: false, message: error.message });
     }
+};
+
+// Скидання паролю
+export const resetPassword = async (req, res) => {
+	try {
+		const { token } = req.params;
+		const { password } = req.body;
+
+		const user = await User.findOne({
+			resetPasswordToken: token,
+			resetPasswordExpiresAt: { $gt: Date.now() },
+		});
+
+		if (!user) {
+			return res.status(400).json({ success: false, message: "Невірний або старий код відновлення" });
+		}
+
+		// update password
+		const hashedPassword = await bcryptjs.hash(password, 10);
+
+		user.password = hashedPassword;
+		user.resetPasswordToken = undefined;
+		user.resetPasswordExpiresAt = undefined;
+		await user.save();
+
+		await sendResetSuccessEmail(user.email);
+
+		res.status(200).json({ success: true, message: "Пароль відновлено успішно" });
+	} catch (error) {
+		console.log("Помилка у відновленні паролю ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
+};
+
+// Перевірка підтвердженої сесії
+export const checkAuth = async (req, res) => {
+	try {
+		const user = await User.findById(req.userId).select("-password");
+		if (!user) {
+			return res.status(400).json({ success: false, message: "User not found" });
+		}
+
+		res.status(200).json({ success: true, user });
+	} catch (error) {
+		console.log("Error in checkAuth ", error);
+		res.status(400).json({ success: false, message: error.message });
+	}
 };
