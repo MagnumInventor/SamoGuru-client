@@ -12,7 +12,7 @@ type ScheduleData = {
 
 export default function SimpleSchedulePage() {
   const [scheduleData, setScheduleData] = useState<ScheduleData>({})
-  const [currentMonth, setCurrentMonth] = useState("Липень")
+  const [currentMonth, setCurrentMonth] = useState("Серпень")
   const [currentYear, setCurrentYear] = useState(2025)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>("")
