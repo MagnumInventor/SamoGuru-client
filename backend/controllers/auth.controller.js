@@ -5,7 +5,7 @@ import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js
 import { sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
 
 
-
+// Реєстрація
 export const signup = async (req, res) => {
     const {email, firstName, password} = req.body;
     try {
@@ -53,6 +53,7 @@ export const signup = async (req, res) => {
     }
 };
 
+// Підтвердження ел.пошти
 export const verifyEmail = async (req, res) => {
     const { code } = req.body;
     try {
@@ -86,10 +87,41 @@ export const verifyEmail = async (req, res) => {
     }
 };
 
+// Вхід в акаунт
 export const login = async (req, res) => {
-    res.send("login route");
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if(!user) {
+            return res.status(400).json({ success: false, message: "Неправильні дані для входу"});
+        }
+        const isPasswordValid = await bcryptjs.compare(password, user.password);
+        if(!isPasswordValid) {
+            return res.status(400).json({ success: false, message: "Пароль для входу не співпадає"});
+        }
+
+        generateTokenAndSetCookie(res, user._id);
+
+        user.entryDate = new Date();
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Ви успішно війшли в свій акаунт",
+            user: {
+                ...user._doc,
+                password: undefined,
+            },
+        });
+
+
+    } catch (error) {
+        console.log("", error);
+        res.status(200).json({ success: true, message: error.massage})
+    }
 };
 
+// Вихід з акаунта
 export const logout = async (req, res) => {
     res.clearCookie("token");
     res.status(200).json({ success: true, message: "Ви успшіно вийшли з свого акаунта"});
