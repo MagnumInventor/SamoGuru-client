@@ -1,9 +1,9 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../frontend/components/ui/card"
-import { Button } from "../../frontend/components/ui/button"
-import { Badge } from "../../frontend/components/ui/badge"
-import { ProtectedRoute } from "../../frontend/components/auth/protected-route"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ProtectedRoute } from "@/components/auth/protected-route"
 import { Users, Calendar, FileText, BarChart3, Settings, Plus, Edit } from "lucide-react"
 
 const adminStats = [
