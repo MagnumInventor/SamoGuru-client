@@ -1,10 +1,12 @@
 {
-  "name": "frontend",
+  "name": "root",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon backend/index.js",
+    "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
+    "dev:front": "next dev",
+    "dev:back": "nodemon backend/index.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
