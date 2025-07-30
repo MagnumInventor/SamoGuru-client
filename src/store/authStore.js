@@ -1,7 +1,11 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL = import.meta.env.MODE === "development" ? "http://https://www.samoguru.run.place/api/auth" : "/api/auth";
+const API_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/api/auth"
+    : "https://www.samoguru.run.place/api/auth";
+
 
 axios.defaults.withCredentials = true;
 
@@ -49,7 +53,7 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
-	
+
 	verifyEmail: async (code) => {
 		set({ isLoading: true, error: null });
 		try {
