@@ -24,7 +24,22 @@ import {
   Soup,
   Smile,
 } from "lucide-react"
-import { useAuth, getRoleDisplayName } from "@/lib/auth"
+import { useAuthStore } from "@/src/store/authStore"
+
+const getRoleDisplayName = (role: string): string => {
+  switch (role) {
+    case "waiter":
+      return "Фіц"
+    case "helper":
+      return "Малий/мала"
+    case "admin":
+      return "Адмін"
+    case "trainee":
+      return "Стажер"
+    default:
+      return role
+  }
+}
 
 const allNavItems = [
   { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
@@ -71,10 +86,10 @@ const allNavItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuthStore()
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await logout()
   }
 
   // ФІЛЬТРУВАННЯ НАВІГАЦІЇ ЗАЛЕЖНО ВІД РОЛІ

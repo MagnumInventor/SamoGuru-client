@@ -1,13 +1,26 @@
+"use client"
+
 import { motion } from "framer-motion";
-import { useAuthStore } from "../store/authStore";
-import { formatDate } from "../utils/date";
+import { useAuthStore } from "@/src/store/authStore";
+import { formatDate } from "@/src/utils/date";
 
 const DashboardPage = () => {
 	const { user, logout } = useAuthStore();
 
-	const handleLogout = () => {
-		logout();
+	const handleLogout = async () => {
+		await logout();
 	};
+
+	if (!user) {
+		return (
+			<div className="min-h-screen flex items-center justify-center bg-gray-50">
+				<div className="text-center">
+					<h1 className="text-2xl font-bold text-gray-900 mb-2">Завантаження...</h1>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<motion.div
 			initial={{ opacity: 0, scale: 0.9 }}
@@ -28,8 +41,9 @@ const DashboardPage = () => {
 					transition={{ delay: 0.2 }}
 				>
 					<h3 className='text-xl font-semibold text-green-400 mb-3'>Profile Information</h3>
-					<p className='text-gray-300'>Name: {user.name}</p>
+					<p className='text-gray-300'>Name: {user.firstName} {user.lastName}</p>
 					<p className='text-gray-300'>Email: {user.email}</p>
+					<p className='text-gray-300'>Role: {user.role}</p>
 				</motion.div>
 				<motion.div
 					className='p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700'
@@ -40,16 +54,15 @@ const DashboardPage = () => {
 					<h3 className='text-xl font-semibold text-green-400 mb-3'>Account Activity</h3>
 					<p className='text-gray-300'>
 						<span className='font-bold'>Joined: </span>
-						{new Date(user.createdAt).toLocaleDateString("en-US", {
+						{user.createdAt ? new Date(user.createdAt).toLocaleDateString("en-US", {
 							year: "numeric",
 							month: "long",
 							day: "numeric",
-						})}
+						}) : "N/A"}
 					</p>
 					<p className='text-gray-300'>
 						<span className='font-bold'>Last Login: </span>
-
-						{formatDate(user.lastLogin)}
+						{user.lastLogin ? formatDate(user.lastLogin) : "N/A"}
 					</p>
 				</motion.div>
 			</div>
@@ -74,4 +87,5 @@ const DashboardPage = () => {
 		</motion.div>
 	);
 };
+
 export default DashboardPage;

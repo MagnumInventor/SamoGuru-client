@@ -14,7 +14,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const _dirname = path.resolve();
+const __dirname = path.resolve();
 
 app.use(cors ({ origin: "https://www.samoguru.run.place", credentials: true }));
 app.use(express.json()); // дозволояє парсити запити
@@ -22,14 +22,28 @@ app.use(cookieParser()); // дозволояє парсити вхідні cooki
 
 app.use("/api/auth", authRoutes);
 
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "/dist")));
-
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "/", "dist", "index.html"));
+if (process.env.NODE_ENV === 'production') {
+	// Сервіруємо статичні файли з Next.js білду
+	app.use(express.static(path.join(__dirname, '../.next/static')));
+	app.use(express.static(path.join(__dirname, '../out')));
+	
+	// Для всіх інших запитів віддаємо index.html (SPA fallback)
+	app.get('*', (req, res) => {
+	  // Тільки якщо це не API запит
+	  if (!req.path.startsWith('/api/')) {
+	    res.sendFile(path.join(__dirname, '../out/index.html'));
+	  } else {
+	    res.status(404).json({ error: 'API endpoint not found' });
+	  }
 	});
-}
+   }
 
+app.use(cors({
+	origin: process.env.NODE_ENV === 'production' 
+	  ? false 
+	  : 'http://localhost:3000',
+	credentials: true
+   }));
 
 app.listen(PORT, () => {
   connectDB();

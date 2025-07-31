@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src
 import { Input } from "@/src/components/ui/input"
 import { Label } from "@/src/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/src/components/ui/select"
-import { useAuth } from "../../../lib/auth"
+import { useAuthStore } from "@/src/store/authStore"
 import { Eye, EyeOff, UserPlus, LogIn } from "lucide-react"
 
 export function LoginForm() {
@@ -20,13 +20,11 @@ export function LoginForm() {
     phone: "",
     role: "",
     password: "",
+    email: "",
   })
   const [error, setError] = useState("")
 
-  
-const { login } = useAuth();
-
-
+  const { login, signup, isLoading } = useAuthStore()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,16 +36,20 @@ const { login } = useAuth();
     }
 
     if (isRegistering) {
-      setError("Реєстрація наразі недоступна.")
-      return
+      if (!formData.email || !formData.firstName || !formData.lastName) {
+        setError("Будь ласка, заповніть всі поля")
+        return
+      }
+      try {
+        await signup(formData.email, formData.password, formData.firstName + " " + formData.lastName)
+      } catch (error: any) {
+        setError(error.message || "Помилка реєстрації")
+      }
     } else {
       try {
-        const success = await login(formData.password)
-        if (!success) {
-          setError("Невірний номер телефону або пароль")
-        }
-      } catch (error) {
-        setError("Сталася помилка при вході.")
+        await login(formData.email, formData.password)
+      } catch (error: any) {
+        setError(error.message || "Невірний email або пароль")
       }
     }
   }
@@ -119,6 +121,18 @@ const { login } = useAuth();
             )}
 
             <div>
+              <Label htmlFor="email">Електронна пошта</Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="Введіть ел.пошту"
+                required
+              />
+            </div>
+
+            <div>
               <Label htmlFor="password">Пароль</Label>
               <div className="relative">
                 <Input
@@ -139,27 +153,20 @@ const { login } = useAuth();
                 </Button>
               </div>
             </div>
-            
-            <div>
-              <Label htmlFor="email">Електронна пошта</Label>
-              <div className="relative">
-                <Input
-                  id="email"
-                  type="email" // Пошта завжди відображається як email
-                  value={formData.email}
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="Введіть ел.пошту"
-                  required
-                />
-              </div>
-                  <span className="text-xs text-gray-600">By registering you agree to receive occasional updates by email.</span>
-                  <span className="text-xs text-gray-600">Реєструючись ви автоматично погоджуєтеся на отримання повідомленнь про новини та нові функції платформи на вказану вами ел.пошту</span>
-            </div>
+
+            {isRegistering && (
+              <>
+                <span className="text-xs text-gray-600">By registering you agree to receive occasional updates by email.</span>
+                <span className="text-xs text-gray-600">Реєструючись ви автоматично погоджуєтеся на отримання повідомленнь про новини та нові функції платформи на вказану вами ел.пошту</span>
+              </>
+            )}
 
             {error && <div className="text-red-600 text-sm text-center">{error}</div>}
 
-            <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600">
-              {isRegistering ? (
+            <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600" disabled={isLoading}>
+              {isLoading ? (
+                "Завантаження..."
+              ) : isRegistering ? (
                 <>
                   <UserPlus className="h-4 w-4 mr-2" />
                   Зареєструватися
@@ -179,7 +186,7 @@ const { login } = useAuth();
                 onClick={() => {
                   setIsRegistering(!isRegistering)
                   setError("")
-                  setFormData({ firstName: "", lastName: "", phone: "", role: "", password: "" })
+                  setFormData({ firstName: "", lastName: "", phone: "", role: "", password: "", email: "" })
                 } }
                 className="text-orange-600 hover:text-orange-700"
               >

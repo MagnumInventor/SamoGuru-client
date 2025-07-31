@@ -1,20 +1,36 @@
 "use client"
 
 import type React from "react"
-
-import { useAuth } from "@/lib/auth"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useAuthStore } from "@/src/store/authStore"
 import { LoginForm } from "./login-form"
+import LoadingSpinner from "@/src/components/LoadingSpinner"
 
 interface ProtectedRouteProps {
   children: React.ReactNode
-  requiredRole?: "waiter" | "helper" | "admin" | "trainee "
+  requiredRole?: "waiter" | "helper" | "admin" | "trainee"
 }
 
 export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated, isCheckingAuth, checkAuth } = useAuthStore()
+  const router = useRouter()
 
-  if (!isAuthenticated()) {
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  if (isCheckingAuth) {
+    return <LoadingSpinner />
+  }
+
+  if (!isAuthenticated) {
     return <LoginForm />
+  }
+
+  if (!user?.isVerified) {
+    router.push("/verify-email")
+    return <LoadingSpinner />
   }
 
   if (requiredRole && user?.role !== requiredRole && user?.role !== "admin") {
