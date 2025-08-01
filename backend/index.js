@@ -16,34 +16,37 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
-app.use(cors ({ origin: "https://www.samoguru.run.place", credentials: true }));
+// CORS configuration
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://www.samoguru.run.place', 'https://samoguru.run.place']
+    : 'http://localhost:3000',
+  credentials: true
+}));
+
 app.use(express.json()); // дозволояє парсити запити
 app.use(cookieParser()); // дозволояє парсити вхідні cookies
 
 app.use("/api/auth", authRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-	// Сервіруємо статичні файли з Next.js білду
-	app.use(express.static(path.join(__dirname, '../.next/static')));
-	app.use(express.static(path.join(__dirname, '../out')));
-	
-	// Для всіх інших запитів віддаємо index.html (SPA fallback)
-	app.get('*', (req, res) => {
-	  // Тільки якщо це не API запит
-	  if (!req.path.startsWith('/api/')) {
-	    res.sendFile(path.join(__dirname, '../out/index.html'));
-	  } else {
-	    res.status(404).json({ error: 'API endpoint not found' });
-	  }
-	});
-   }
-
-app.use(cors({
-	origin: process.env.NODE_ENV === 'production' 
-	  ? false 
-	  : 'http://localhost:3000',
-	credentials: true
-   }));
+  // Serve static files from Next.js build
+  app.use(express.static(path.join(__dirname, '../.next/static')));
+  
+  // Serve the Next.js build files
+  const nextBuildPath = path.join(__dirname, '../.next/server/app');
+  app.use(express.static(nextBuildPath));
+  
+  // For all other requests, serve the Next.js app
+  app.get('*', (req, res) => {
+    // Only if it's not an API request
+    if (!req.path.startsWith('/api/')) {
+      res.sendFile(path.join(__dirname, '../.next/server/app/index.html'));
+    } else {
+      res.status(404).json({ error: 'API endpoint not found' });
+    }
+  });
+}
 
 app.listen(PORT, () => {
   connectDB();
