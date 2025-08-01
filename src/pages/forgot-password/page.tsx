@@ -47,7 +47,7 @@ const ForgotPasswordPage = () => {
 								type='email'
 								placeholder='Email Address'
 								value={email}
-								onChange={(e) => setEmail(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
 								required
 							/>
 							<motion.button

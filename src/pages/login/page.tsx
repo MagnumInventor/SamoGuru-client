@@ -42,7 +42,7 @@ const LoginPage = () => {
 							type='email'
 							placeholder='Email Address'
 							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
 						/>
 
 						<Input
@@ -50,7 +50,7 @@ const LoginPage = () => {
 							type='password'
 							placeholder='Password'
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
 						/>
 
 						<div className='flex items-center mb-6'>

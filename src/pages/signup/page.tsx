@@ -52,21 +52,21 @@ const SignUpPage = () => {
 							type='text'
 							placeholder='Full Name'
 							value={name}
-							onChange={(e) => setName(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
 						/>
 						<Input
 							icon={Mail}
 							type='email'
 							placeholder='Email Address'
 							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
 						/>
 						<Input
 							icon={Lock}
 							type='password'
 							placeholder='Password'
 							value={password}
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
 						/>
 						{error && <p className='text-red-500 font-semibold mt-2'>{error}</p>}
 						<PasswordStrengthMeter password={password} />

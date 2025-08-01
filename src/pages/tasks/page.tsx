@@ -734,7 +734,7 @@ export default function TasksPage() {
   const userTasks = tasks.filter((task) => {
     const roleMatch = !isAdmin
       ? (userRole === "waiter" || userRole === "helper")
-        ? task.forRoles.includes(userRole as any)
+        ? (task.forRoles as string[]).includes(userRole)
         : false
       : true
     const stationMatch = selectedStation ? task.station === selectedStation : true
