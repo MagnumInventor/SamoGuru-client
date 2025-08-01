@@ -15,7 +15,5 @@ services:
         sync: false
       - key: RESEND_API_KEY
         value: re_aVdAmnoE_Lv8t7VgdewpYsonrCQKxZxdo
-      - key: MAILTRAP_TOKEN
-        sync: false
     healthCheckPath: /
     autoDeploy: true
