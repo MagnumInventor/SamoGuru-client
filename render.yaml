@@ -14,8 +14,8 @@ services:
       - key: JWT_SECRET
         sync: false
       - key: RESEND_API_KEY
-        sync: false
+        value: re_aVdAmnoE_Lv8t7VgdewpYsonrCQKxZxdo
       - key: MAILTRAP_TOKEN
         sync: false
     healthCheckPath: /
-    autoDeploy: true 
+    autoDeploy: true
