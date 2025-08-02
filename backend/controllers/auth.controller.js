@@ -148,7 +148,8 @@ export const forgotPassword = async (req, res) => {
 
         await user.save();
 
-        await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+        const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+        await sendPasswordResetEmail(user.email, `${clientUrl}/reset-password/${resetToken}`);
         res.status(200).json({ success: true, message: "Лист для скидання паролю успішно надісланий"});
 
     } catch (error) {
@@ -165,7 +166,7 @@ export const resetPassword = async (req, res) => {
 
 		const user = await User.findOne({
 			resetPasswordToken: token,
-			resetPasswordExpiresAt: { $gt: Date.now() },
+			resetPasswordTokenExpiresAt: { $gt: Date.now() },
 		});
 
 		if (!user) {
@@ -177,7 +178,7 @@ export const resetPassword = async (req, res) => {
 
 		user.password = hashedPassword;
 		user.resetPasswordToken = undefined;
-		user.resetPasswordExpiresAt = undefined;
+		user.resetPasswordTokenExpiresAt = undefined;
 		await user.save();
 
 		await sendResetSuccessEmail(user.email);

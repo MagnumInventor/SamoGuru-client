@@ -5,16 +5,13 @@ import { protectRoute } from "../middleware/protectRoute.js";
 
 const router = express.Router();
 
-
-router.get("/check-auth", protectRoute, checkAuth);
-
+// Register routes in a specific order
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
-
 router.post("/verify-email", verifyEmail);
-
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
+router.get("/check-auth", protectRoute, checkAuth);
 
 export default router;
