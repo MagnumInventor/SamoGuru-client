@@ -2,7 +2,7 @@ services:
   - type: web
     name: samoguru-app
     env: node
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm run build:front
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -15,5 +15,7 @@ services:
         sync: false
       - key: RESEND_API_KEY
         value: re_aVdAmnoE_Lv8t7VgdewpYsonrCQKxZxdo
-    healthCheckPath: /
+      - key: CLIENT_URL
+        value: https://www.samoguru.run.place
+    healthCheckPath: /health
     autoDeploy: true

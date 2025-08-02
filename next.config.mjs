@@ -1,26 +1,30 @@
-// next.config.mjs - заміни вміст файлу
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove static export for Render deployment
-  // output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
+  // Configure for production deployment
+  output: 'standalone',
   
-  // Базовий шлях для API (якщо потрібно)
+  // Environment variables
   env: {
     NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'production' 
-      ? '' // Той самий домен в продакшені
+      ? '' // Same domain in production
       : 'http://localhost:5000'
   },
   
-  // Enable image optimization for production
+  // Image optimization
   images: {
-    unoptimized: false
+    unoptimized: true // Disable for static hosting
   },
   
-  // Налаштування для trailing slash
+  // Trailing slash configuration
   trailingSlash: true,
   
-  // Enable strict mode for better development
+  // Enable strict mode
   reactStrictMode: true,
+  
+  // Experimental features
+  experimental: {
+    appDir: true
+  }
 };
 
 export default nextConfig;
