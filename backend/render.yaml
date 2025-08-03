@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: samoguru-app
+    name: samoguru-server
     env: node
-    buildCommand: npm install && npm run build:front
-    startCommand: npm run start:front
+    buildCommand: npm install
+    startCommand: node index.js
     envVars:
       - key: NODE_ENV
         value: production
@@ -17,5 +17,5 @@ services:
         value: re_aVdAmnoE_Lv8t7VgdewpYsonrCQKxZxdo
       - key: CLIENT_URL
         value: https://www.samoguru.run.place
-    healthCheckPath: /health
+    healthCheckPath: /health # переконайтеся, що у вас є GET /health
     autoDeploy: true

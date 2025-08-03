@@ -46,6 +46,7 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'SamoGuru API Server is running' });
 });
 
+
 // Register routes
 app.use("/api/auth", authRoutes);
 
