@@ -110,7 +110,7 @@ export default function AssistantGuidePage() {
             </CardHeader>
             <CardContent>
               <a
-                href="/app/table-plan/map"
+                href="/src/table-plan/map"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block mb-2"
