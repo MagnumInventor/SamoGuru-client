@@ -21,10 +21,7 @@ const nextConfig = {
   // Enable strict mode
   reactStrictMode: true,
   
-  // Experimental features
-  experimental: {
-    appDir: true
-  }
+  // Experimental features (03.08)
 };
 
 export default nextConfig;
