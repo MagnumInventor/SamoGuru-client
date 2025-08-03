@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Configure for production deployment
-  output: 'standalone',
+  // output; standalone, -> Configure for production deployment (removed 03.08.2025)
   
   // Environment variables
   env: {

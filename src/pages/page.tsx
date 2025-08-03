@@ -1,14 +1,9 @@
-"use client";
-
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter();
+  if (typeof window === "undefined") {
+    redirect("/signup");
+  }
 
-  useEffect(() => {
-    router.replace("/signup");
-  }, [router]);
-
-  return null; // або Loading spinner
+  return null;
 }
