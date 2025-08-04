@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove 'standalone' - it's for Docker deployments
-  // output: 'standalone', // Remove this line
+  // For serving from Express
+  trailingSlash: false,
   
   // Environment variables
   env: {
     NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'production' 
-      ? process.env.NEXT_PUBLIC_API_URL || '' // Use env var or same domain
+      ? process.env.NEXT_PUBLIC_API_URL || ''
       : 'http://localhost:5000'
   },
   
@@ -15,23 +15,30 @@ const nextConfig = {
     unoptimized: true
   },
   
-  // Remove trailing slash for better compatibility
-  // trailingSlash: true, // Remove this
-  
   // Enable strict mode
   reactStrictMode: true,
   
-  // Add memory optimization
+  // Memory optimization for build
   experimental: {
     workerThreads: false,
     cpus: 1
   },
   
-  // Disable source maps in production to save memory
+  // Disable source maps in production
   productionBrowserSourceMaps: false,
   
-  // Optimize for deployment
+  // SWC minification
   swcMinify: true,
+  
+  // Custom rewrites for your routes
+  async rewrites() {
+    return [
+      {
+        source: '/',
+        destination: '/signup', // Redirect root to signup
+      },
+    ];
+  },
 };
 
 export default nextConfig;

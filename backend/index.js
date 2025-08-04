@@ -55,52 +55,70 @@ app.use('/api/*', (req, res) => {
 });
 
 if (process.env.NODE_ENV === 'production') {
-  // Serve Next.js static files
+  // Correct paths for Next.js build
+  const nextBuildPath = path.join(__dirname, '../.next');
   const nextStaticPath = path.join(__dirname, '../.next/static');
   const publicPath = path.join(__dirname, '../public');
   
-  // Serve static files
-  app.use('/_next/static', express.static(nextStaticPath));
-  app.use('/static', express.static(publicPath));
+  console.log('Checking build paths:');
+  console.log('Next build path:', nextBuildPath);
+  console.log('Static path:', nextStaticPath);
   
-  // For all non-API routes, serve the Next.js app
-  app.get('*', async (req, res) => {
-    if (req.path.startsWith('/api/')) {
-      return res.status(404).json({ error: 'API endpoint not found' });
+  try {
+    const fs = await import('fs');
+    
+    // Serve Next.js static assets
+    if (fs.existsSync(nextStaticPath)) {
+      app.use('/_next/static', express.static(nextStaticPath));
+      console.log('✅ Serving Next.js static files');
     }
     
-    try {
-      // Try to serve the Next.js built page
-      const { createServer } = await import('http');
-      const { parse } = await import('url');
-      const next = (await import('next')).default;
-      
-      const nextApp = next({ 
-        dev: false, 
-        dir: path.join(__dirname, '../') 
-      });
-      const handle = nextApp.getRequestHandler();
-      
-      await nextApp.prepare();
-      handle(req, res, parse(req.url, true));
-    } catch (error) {
-      console.error('Next.js serving error:', error);
-      // Fallback to your existing HTML response
-      res.send(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>SamoGuru - Loading...</title>
-          <meta http-equiv="refresh" content="5">
-        </head>
-        <body>
-          <h1>🚀 SamoGuru is starting up...</h1>
-          <p>Please wait while the application loads.</p>
-        </body>
-        </html>
-      `);
+    if (fs.existsSync(publicPath)) {
+      app.use(express.static(publicPath));
+      console.log('✅ Serving public files');
     }
-  });
+    
+    // Check if Next.js server build exists
+    const serverBuildPath = path.join(__dirname, '../.next/server');
+    if (fs.existsSync(serverBuildPath)) {
+      console.log('✅ Next.js server build found');
+      
+      // For all non-API routes, try to serve Next.js pages
+      app.get('*', async (req, res) => {
+        if (req.path.startsWith('/api/')) {
+          return res.status(404).json({ error: 'API endpoint not found' });
+        }
+        
+        try {
+          // Import and start Next.js server
+          const next = (await import('next')).default;
+          const nextApp = next({ 
+            dev: false,
+            dir: path.join(__dirname, '../'),
+            conf: {
+              distDir: '.next'
+            }
+          });
+          
+          const handle = nextApp.getRequestHandler();
+          await nextApp.prepare();
+          
+          console.log(`📄 Serving Next.js page: ${req.path}`);
+          return handle(req, res);
+          
+        } catch (nextError) {
+          console.error('❌ Next.js server error:', nextError);
+          // Fallback - redirect to a specific route
+          return res.redirect('/signup');
+        }
+      });
+    } else {
+      console.log('❌ Next.js server build not found, using fallback');
+    }
+    
+  } catch (error) {
+    console.error('❌ Production setup error:', error);
+  }
 }
 
 app.listen(PORT, '0.0.0.0', () => {
