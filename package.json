@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next build",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "rm -rf .next node_modules package-lock.json",
+    "fresh-install": "npm run clean && npm install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
