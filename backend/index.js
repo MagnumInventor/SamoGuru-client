@@ -55,74 +55,55 @@ app.use('/api/*', (req, res) => {
 });
 
 if (process.env.NODE_ENV === 'production') {
-  // Check if Next.js build exists
-  const nextBuildPath = path.join(__dirname, '../.next/server/app');
+  // Serve Next.js static files
   const nextStaticPath = path.join(__dirname, '../.next/static');
-  const indexPath = path.join(nextBuildPath, 'index.html');
+  const publicPath = path.join(__dirname, '../public');
   
-  // Check if the build files exist
-  try {
-    const fs = await import('fs');
-    if (fs.existsSync(nextBuildPath) && fs.existsSync(indexPath)) {
-      // Serve static files from Next.js build
-      app.use(express.static(nextStaticPath));
-      app.use(express.static(nextBuildPath));
-      
-      // For all other requests, serve the Next.js app
-      app.get('*', (req, res) => {
-        res.sendFile(indexPath);
-      });
-    } else {
-      // Fallback: serve a simple message if Next.js build is not available
-      app.get('*', (req, res) => {
-        if (!req.path.startsWith('/api/')) {
-          res.send(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <title>SamoGuru - API Server</title>
-              <style>
-                body { font-family: Arial, sans-serif; margin: 40px; }
-                .container { max-width: 600px; margin: 0 auto; }
-                .api-info { background: #f5f5f5; padding: 20px; border-radius: 8px; }
-              </style>
-            </head>
-            <body>
-              <div class="container">
-                <h1>🚀 SamoGuru API Server</h1>
-                <p>The API server is running successfully!</p>
-                <div class="api-info">
-                  <h3>Available API Endpoints:</h3>
-                  <ul>
-                    <li><strong>POST</strong> /api/auth/signup - User registration</li>
-                    <li><strong>POST</strong> /api/auth/login - User login</li>
-                    <li><strong>POST</strong> /api/auth/logout - User logout</li>
-                    <li><strong>POST</strong> /api/auth/verify-email - Email verification</li>
-                    <li><strong>POST</strong> /api/auth/forgot-password - Password reset request</li>
-                    <li><strong>POST</strong> /api/auth/reset-password/:token - Password reset</li>
-                    <li><strong>GET</strong> /api/auth/check-auth - Check authentication</li>
-                  </ul>
-                </div>
-                <p><em>Frontend application is being built or is not available.</em></p>
-              </div>
-            </body>
-            </html>
-          `);
-        }
-      });
+  // Serve static files
+  app.use('/_next/static', express.static(nextStaticPath));
+  app.use('/static', express.static(publicPath));
+  
+  // For all non-API routes, serve the Next.js app
+  app.get('*', async (req, res) => {
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({ error: 'API endpoint not found' });
     }
-  } catch (error) {
-    console.error('Error checking Next.js build:', error);
-    // Fallback response
-    app.get('*', (req, res) => {
-      if (!req.path.startsWith('/api/')) {
-        res.send('SamoGuru API Server is running. Frontend is being built.');
-      }
-    });
-  }
+    
+    try {
+      // Try to serve the Next.js built page
+      const { createServer } = await import('http');
+      const { parse } = await import('url');
+      const next = (await import('next')).default;
+      
+      const nextApp = next({ 
+        dev: false, 
+        dir: path.join(__dirname, '../') 
+      });
+      const handle = nextApp.getRequestHandler();
+      
+      await nextApp.prepare();
+      handle(req, res, parse(req.url, true));
+    } catch (error) {
+      console.error('Next.js serving error:', error);
+      // Fallback to your existing HTML response
+      res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>SamoGuru - Loading...</title>
+          <meta http-equiv="refresh" content="5">
+        </head>
+        <body>
+          <h1>🚀 SamoGuru is starting up...</h1>
+          <p>Please wait while the application loads.</p>
+        </body>
+        </html>
+      `);
+    }
+  });
 }
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log("Server starting on port:", PORT);
   connectDB();
   console.log("Server is running on port:", PORT);
