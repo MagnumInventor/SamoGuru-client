@@ -2,6 +2,7 @@
   "name": "frontend",
   "private": true,
   "version": "2.1.0",
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
