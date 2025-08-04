@@ -4,15 +4,11 @@
   "version": "2.1.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev:front\" \"npm run dev:back\"",
-    "dev:front": "next dev",
-    "dev:back": "nodemon backend/index.js",
-    "build": "npm run build:front && npm run build:back",
-    "build:front": "next build",
-    "build:back": "echo 'Backend build completed'",
-    "start": "node backend/index.js",
-    "export": "next build && next export",
-    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
