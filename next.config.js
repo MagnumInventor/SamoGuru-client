@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // For serving from Express
-  trailingSlash: false,
-  
   // Environment variables
   env: {
     NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'production' 
@@ -24,11 +21,10 @@ const nextConfig = {
     cpus: 1
   },
   
-  // Disable source maps in production
+  // Disable source maps in production to save memory
   productionBrowserSourceMaps: false,
   
-  // SWC minification
-  swcMinify: true,
+  // Remove deprecated swcMinify - it's default in Next.js 15
   
   // Custom rewrites for your routes
   async rewrites() {

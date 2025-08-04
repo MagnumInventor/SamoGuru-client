@@ -54,15 +54,45 @@ app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'API endpoint not found' });
 });
 
+
+// Add this before your production check
+app.get('/debug-build', async (req, res) => {
+  const fs = await import('fs');
+  const nextPath = path.join(__dirname, '../.next');
+  
+  function listDir(dirPath) {
+    try {
+      if (!fs.existsSync(dirPath)) return 'Directory does not exist';
+      return fs.readdirSync(dirPath, { withFileTypes: true }).map(dirent => ({
+        name: dirent.name,
+        isDirectory: dirent.isDirectory()
+      }));
+    } catch (error) {
+      return `Error reading directory: ${error.message}`;
+    }
+  }
+  
+  res.json({
+    cwd: process.cwd(),
+    __dirname: __dirname,
+    nextExists: fs.existsSync(nextPath),
+    nextContents: listDir(nextPath),
+    serverContents: listDir(path.join(nextPath, 'server')),
+    pagesContents: listDir(path.join(nextPath, 'server/pages')),
+    staticContents: listDir(path.join(nextPath, 'static'))
+  });
+});
+
+
 if (process.env.NODE_ENV === 'production') {
-  // Correct paths for Next.js build
-  const nextBuildPath = path.join(__dirname, '../.next');
+  // Paths for Next.js static build
   const nextStaticPath = path.join(__dirname, '../.next/static');
+  const nextServerPath = path.join(__dirname, '../.next/server/pages');
   const publicPath = path.join(__dirname, '../public');
   
   console.log('Checking build paths:');
-  console.log('Next build path:', nextBuildPath);
-  console.log('Static path:', nextStaticPath);
+  console.log('Next static path:', nextStaticPath);
+  console.log('Next server path:', nextServerPath);
   
   try {
     const fs = await import('fs');
@@ -78,42 +108,103 @@ if (process.env.NODE_ENV === 'production') {
       console.log('✅ Serving public files');
     }
     
-    // Check if Next.js server build exists
-    const serverBuildPath = path.join(__dirname, '../.next/server');
-    if (fs.existsSync(serverBuildPath)) {
-      console.log('✅ Next.js server build found');
+    // Check if Next.js server pages exist
+    if (fs.existsSync(nextServerPath)) {
+      console.log('✅ Next.js server pages found');
       
-      // For all non-API routes, try to serve Next.js pages
-      app.get('*', async (req, res) => {
+      // Define your route mappings
+      const routeMap = {
+        '/': '/signup/page',
+        '/signup': '/signup/page',
+        '/login': '/login/page',
+        '/forgot-password': '/forgot-password/page',
+        '/reset-password': '/reset-password',
+        '/verify-email': '/verify-email/page',
+        '/menu': '/menu/page',
+        '/dashboard': '/DashboardPage',
+        '/admin': '/admin/page'
+      };
+      
+      // Handle specific routes
+      Object.entries(routeMap).forEach(([route, htmlFile]) => {
+        app.get(route, (req, res) => {
+          const htmlPath = path.join(nextServerPath, `${htmlFile}.html`);
+          if (fs.existsSync(htmlPath)) {
+            console.log(`📄 Serving: ${route} -> ${htmlFile}`);
+            res.sendFile(htmlPath);
+          } else {
+            console.log(`❌ File not found: ${htmlPath}`);
+            res.status(404).send('Page not found');
+          }
+        });
+      });
+      
+      // Catch-all for other routes
+      app.get('*', (req, res) => {
         if (req.path.startsWith('/api/')) {
           return res.status(404).json({ error: 'API endpoint not found' });
         }
         
-        try {
-          // Import and start Next.js server
-          const next = (await import('next')).default;
-          const nextApp = next({ 
-            dev: false,
-            dir: path.join(__dirname, '../'),
-            conf: {
-              distDir: '.next'
-            }
-          });
-          
-          const handle = nextApp.getRequestHandler();
-          await nextApp.prepare();
-          
-          console.log(`📄 Serving Next.js page: ${req.path}`);
-          return handle(req, res);
-          
-        } catch (nextError) {
-          console.error('❌ Next.js server error:', nextError);
-          // Fallback - redirect to a specific route
-          return res.redirect('/signup');
+        // Try to find the corresponding HTML file
+        let htmlPath = path.join(nextServerPath, `${req.path}/page.html`);
+        
+        if (!fs.existsSync(htmlPath)) {
+          // Fallback to signup page
+          htmlPath = path.join(nextServerPath, '/signup/page.html');
+        }
+        
+        if (fs.existsSync(htmlPath)) {
+          console.log(`📄 Serving catch-all: ${req.path} -> ${htmlPath}`);
+          res.sendFile(htmlPath);
+        } else {
+          console.log(`❌ No page found for: ${req.path}`);
+          res.status(404).send('Page not found');
         }
       });
+      
     } else {
-      console.log('❌ Next.js server build not found, using fallback');
+      console.log('❌ Next.js server pages not found');
+      
+      // Fallback routing
+      app.get('*', (req, res) => {
+        if (req.path.startsWith('/api/')) {
+          return res.status(404).json({ error: 'API endpoint not found' });
+        }
+        
+        // Your existing fallback HTML
+        res.send(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>SamoGuru - API Server</title>
+            <style>
+              body { font-family: Arial, sans-serif; margin: 40px; }
+              .container { max-width: 600px; margin: 0 auto; }
+              .api-info { background: #f5f5f5; padding: 20px; border-radius: 8px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1>🚀 SamoGuru API Server</h1>
+              <p>The API server is running successfully!</p>
+              <div class="api-info">
+                <h3>Available API Endpoints:</h3>
+                <ul>
+                  <li><strong>POST</strong> /api/auth/signup - User registration</li>
+                  <li><strong>POST</strong> /api/auth/login - User login</li>
+                  <li><strong>POST</strong> /api/auth/logout - User logout</li>
+                  <li><strong>POST</strong> /api/auth/verify-email - Email verification</li>
+                  <li><strong>POST</strong> /api/auth/forgot-password - Password reset request</li>
+                  <li><strong>POST</strong> /api/auth/reset-password/:token - Password reset</li>
+                  <li><strong>GET</strong> /api/auth/check-auth - Check authentication</li>
+                </ul>
+              </div>
+              <p><em>Frontend application is being built or is not available.</em></p>
+            </div>
+          </body>
+          </html>
+        `);
+      });
     }
     
   } catch (error) {
