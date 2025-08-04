@@ -1,3 +1,4 @@
+//pages/page.tsx
 "use client"
 
 import { Button } from "@/app/components/ui/button"
