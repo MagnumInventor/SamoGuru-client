@@ -67,6 +67,7 @@
     "typescript": "^5.9.2",
     "use-sync-external-store": "latest",
     "vaul": "latest",
+    "xlsx": "^0.18.5",
     "zod": "^3.24.1",
     "zustand": "latest"
   },
