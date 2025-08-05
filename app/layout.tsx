@@ -1,31 +1,33 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-//import "@/globals.css"
-import { ThemeProvider } from "next-themes"
-import { ClientLayout } from "./components/client-layout"
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "../styles/globals.css";
+import { ClientLayout } from "@/app/components/client-layout";
+import { ThemeProvider } from "@/app/components/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] })
-
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "САМоГуру - Платформа для персоналу ресторану Ковчег",
-  description: "Повноцінний путівник для стажерів та помічників, корисні функції для персоналу: інтерактивний розклад роботи, завдання, навчання, тестування, та багато іншого.",
+  title: "СамоГуру - Робоче середовище ресторану",
+  description: "Повноцінне робоче середовище на одному сайті",
 };
-
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="uk" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
           <ClientLayout>{children}</ClientLayout>
         </ThemeProvider>
       </body>
     </html>
-  )
-};
+  );
+}

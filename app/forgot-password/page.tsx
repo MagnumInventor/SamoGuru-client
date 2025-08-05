@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useAuthStore } from "@/app/store/authStore";
-import Input from "@/app/components/Input";
 import { ArrowLeft, Loader, Mail } from "lucide-react";
 import Link from "next/link";
 import FloatingShape from "@/app/components/FloatingShape";
@@ -20,70 +19,97 @@ const ForgotPasswordPage = () => {
 		setIsSubmitted(true);
 	};
 
-	return (
-		<div className='min-h-screen bg-gradient-to-br from-gray-100 via-orange-500 to-red-600 flex items-center justify-center relative overflow-hidden'>
-			<FloatingShape color='bg-gray-100' size='w-64 h-64' top='-5%' left='10%' delay={0} />
-			<FloatingShape color='bg-orange-500' size='w-48 h-48' top='70%' left='80%' delay={5} />
-			<FloatingShape color='bg-red-700' size='w-32 h-32' top='40%' left='-10%' delay={2} />
+return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-purple-700 flex items-center justify-center relative overflow-hidden">
+      <FloatingShape color="bg-purple-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
+      <FloatingShape color="bg-indigo-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
+      <FloatingShape color="bg-purple-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
-			<motion.div
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ duration: 0.5 }}
-				className='max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden'
-			>
-				<div className='p-8'>
-					<h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text'>
-						Forgot Password
-					</h2>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-md w-full bg-white/10 backdrop-filter backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden"
+      >
+        <div className="p-8">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Mail className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-indigo-400 text-transparent bg-clip-text">
+              Забули пароль?
+            </h2>
+          </div>
 
-					{!isSubmitted ? (
-						<form onSubmit={handleSubmit}>
-							<p className='text-gray-300 mb-6 text-center'>
-								Enter your email address and we'll send you a link to reset your password.
-							</p>
-							<Input
-								icon={Mail}
-								type='email'
-								placeholder='Email Address'
-								value={email}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-								required
-							/>
-							<motion.button
-								whileHover={{ scale: 1.02 }}
-								whileTap={{ scale: 0.98 }}
-								className='w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200'
-								type='submit'
-							>
-								{isLoading ? <Loader className='size-6 animate-spin mx-auto' /> : "Send Reset Link"}
-							</motion.button>
-						</form>
-					) : (
-						<div className='text-center'>
-							<motion.div
-								initial={{ scale: 0 }}
-								animate={{ scale: 1 }}
-								transition={{ type: "spring", stiffness: 500, damping: 30 }}
-								className='w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4'
-							>
-								<Mail className='h-8 w-8 text-white' />
-							</motion.div>
-							<p className='text-gray-300 mb-6'>
-								If an account exists for {email}, you will receive a password reset link shortly.
-							</p>
-						</div>
-					)}
-				</div>
+          {!isSubmitted ? (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <p className="text-white/80 text-center text-sm mb-6">
+                Введіть вашу електронну пошту і ми надішлемо посилання для відновлення пароля
+              </p>
 
-				<div className='px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center'>
-					<Link href="/login" className='text-sm text-green-400 hover:underline flex items-center'>
-						<ArrowLeft className='h-4 w-4 mr-2' /> Back to Login
-					</Link>
-				</div>
-			</motion.div>
-		</div>
-	);
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
+                <input
+                  type="email"
+                  placeholder="Електронна пошта"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                />
+              </div>
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <div className="flex items-center justify-center">
+                    <Loader className="w-5 h-5 animate-spin mr-2" />
+                    Надсилання...
+                  </div>
+                ) : (
+                  "Надіслати посилання"
+                )}
+              </motion.button>
+            </form>
+          ) : (
+            <div className="text-center space-y-6">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto"
+              >
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </motion.div>
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-2">Лист надіслано!</h3>
+                <p className="text-white/80 text-sm">
+                  Якщо акаунт з адресою <span className="font-medium text-purple-300">{email}</span> існує, ви незабаром
+                  отримаєте посилання для відновлення пароля.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="px-8 py-4 bg-white/5 border-t border-white/10 flex justify-center">
+          <Link
+            href="/auth/login"
+            className="text-sm text-purple-400 hover:text-purple-300 flex items-center transition-colors duration-200"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" /> Повернутися до входу
+          </Link>
+        </div>
+      </motion.div>
+    </div>
+  )
 };
 
 export default ForgotPasswordPage; 

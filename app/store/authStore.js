@@ -5,8 +5,15 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 axios.defaults.withCredentials = true;
 
+// Define available roles
+export const USER_ROLES = {
+  TRAINEE: 'trainee',
+  HELPER: 'helper', 
+  WAITER: 'waiter',
+  ADMIN: 'admin'
+}
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set, get) => ({
 	user: null,
 	isAuthenticated: false,
 	error: null,
@@ -14,16 +21,23 @@ export const useAuthStore = create((set) => ({
 	isCheckingAuth: true,
 	message: null,
 
-	signup: async (email, password, name) => {
+	// Enhanced signup with role support
+	signup: async (email, password, name, role = USER_ROLES.TRAINEE) => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axios.post(`${API_URL}/signup`, { email, password, name });
+			const response = await axios.post(`${API_URL}/signup`, { 
+				email, 
+				password, 
+				name,
+				role 
+			});
 			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
 		} catch (error) {
 			set({ error: error.response.data.message || "Error signing up", isLoading: false });
 			throw error;
 		}
 	},
+
 	login: async (email, password) => {
 		set({ isLoading: true, error: null });
 		try {
@@ -39,6 +53,7 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
+
 	logout: async () => {
 		set({ isLoading: true, error: null });
 		try {
@@ -61,6 +76,7 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
+
 	checkAuth: async () => {
 		set({ isCheckingAuth: true, error: null });
 		try {
@@ -84,6 +100,7 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
+
 	resetPassword: async (token, password) => {
 		set({ isLoading: true, error: null });
 		try {
@@ -97,4 +114,53 @@ export const useAuthStore = create((set) => ({
 			throw error;
 		}
 	},
+
+	// NEW: Role management functions
+	updateUserRole: async (userId, newRole) => {
+		const { user } = get()
+		
+		if (user?.role !== USER_ROLES.ADMIN) {
+			throw new Error('Only admins can update user roles')
+		}
+
+		try {
+			const response = await axios.put(`${API_URL}/update-role`, {
+				userId,
+				role: newRole
+			})
+			
+			// If updating own role, update local state
+			if (userId === user.id) {
+				set({ 
+					user: { ...user, role: newRole }
+				})
+			}
+			
+			return response.data
+		} catch (error) {
+			throw error
+		}
+	},
+
+	// Role checking helpers
+	hasRole: (requiredRole) => {
+		const { user } = get()
+		return user?.role === requiredRole
+	},
+
+	hasAnyRole: (roles) => {
+		const { user } = get()
+		return roles.includes(user?.role)
+	},
+
+	isAdmin: () => {
+		const { user } = get()
+		return user?.role === USER_ROLES.ADMIN
+	},
+
+	// Clear error
+	clearError: () => set({ error: null }),
+
+	// Clear message
+	clearMessage: () => set({ message: null })
 }));
