@@ -165,7 +165,7 @@ export default function NewsPage() {
             <Card key={article.id} className="hover:shadow-lg transition-shadow border-orange-100">
               <div className="relative">
                 <img
-                  app={article.image || "/placeholder.svg"}
+                  src={article.image || "/placeholder.svg"}
                   alt={article.title}
                   className="w-full h-48 object-cover rounded-t-lg"
                 />

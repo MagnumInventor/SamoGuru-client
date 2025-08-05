@@ -117,7 +117,7 @@ export default function AssistantGuidePage() {
               >
                 <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500 hover:shadow-lg hover:ring-2 hover:ring-orange-400 transition cursor-pointer">
                   <iframe
-                    app="table-plan/map"
+                    src="table-plan/map"
                     title="Інтерактивна карта ресторану"
                     className="w-full h-full rounded-lg border-0"
                   />

@@ -18,7 +18,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/100s.png"
+              src="/images/scheme/100s.png"
               alt="Схема ресторану - 1 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -67,7 +67,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/200s.png"
+              src="/images/scheme/200s.png"
               alt="Схема столиків 200s - 2 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -117,7 +117,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/300sV2.png"
+              src="/images/scheme/300sV2.png"
               alt="Схема столиків 300s - 3 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -164,7 +164,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/400s.png"
+              src="/images/scheme/400s.png"
               alt="Схема столиків 400s - 1 поверх"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -210,7 +210,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/500s.png"
+              src="/images/scheme/500s.png"
               alt="Схема столиків 500s - Яруса"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -260,7 +260,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/600s.png"
+              src="/images/scheme/600s.png"
               alt="Схема столиків 600s - Пивниця"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -306,7 +306,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/700s.png"
+              src="/images/scheme/700s.png"
               alt="Схема столиків - Світлиця"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />
@@ -352,7 +352,7 @@ export default function TablePlanMapPage() {
         <CardContent>
           <div className="bg-gray-50 p-4 rounded-lg">
             <img
-              app="/images/scheme/800s.png"
+              src="/images/scheme/800s.png"
               alt="Схема столиків - Гірниця"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-sm"
             />

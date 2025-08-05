@@ -338,7 +338,7 @@ export default function TutorialsPage() {
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
-                    app={tutorial.thumbnail || "/placeholder.svg"}
+                    src={tutorial.thumbnail || "/placeholder.svg"}
                     alt={tutorial.title}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
@@ -383,7 +383,7 @@ export default function TutorialsPage() {
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
-                    app={tutorial.thumbnail || "/placeholder.svg"}
+                    src={tutorial.thumbnail || "/placeholder.svg"}
                     alt={tutorial.title}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
@@ -428,7 +428,7 @@ export default function TutorialsPage() {
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
-                    app={tutorial.thumbnail || "/placeholder.svg"}
+                    src={tutorial.thumbnail || "/placeholder.svg"}
                     alt={tutorial.title}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
@@ -473,7 +473,7 @@ export default function TutorialsPage() {
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
-                    app={tutorial.thumbnail || "/placeholder.svg"}
+                    src={tutorial.thumbnail || "/placeholder.svg"}
                     alt={tutorial.title}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
@@ -518,7 +518,7 @@ export default function TutorialsPage() {
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
-                    app={tutorial.thumbnail || "/placeholder.svg"}
+                    src={tutorial.thumbnail || "/placeholder.svg"}
                     alt={tutorial.title}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
@@ -563,7 +563,7 @@ export default function TutorialsPage() {
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
-                    app={tutorial.thumbnail || "/placeholder.svg"}
+                    src={tutorial.thumbnail || "/placeholder.svg"}
                     alt={tutorial.title}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />
@@ -608,7 +608,7 @@ export default function TutorialsPage() {
               <Card key={tutorial.id} className="hover:shadow-lg transition-shadow border-orange-100">
                 <div className="relative">
                   <img
-                    app={tutorial.thumbnail || "/placeholder.svg"}
+                    src={tutorial.thumbnail || "/placeholder.svg"}
                     alt={tutorial.title}
                     className="w-full h-48 object-cover rounded-t-lg"
                   />

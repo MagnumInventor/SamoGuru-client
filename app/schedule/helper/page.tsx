@@ -806,7 +806,7 @@ export default function SchedulePage() {
           <CardContent className="flex justify-center">
             <div className="relative w-full max-w-4xl h-[500px]">
               <Image
-                app="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5159-6NPoArol4vMJN7CW78zfAY9TpxMDqG.jpeg"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5159-6NPoArol4vMJN7CW78zfAY9TpxMDqG.jpeg"
                 alt="Оригінальний графік помічників - IMG_5159"
                 fill
                 style={{ objectFit: "contain" }}

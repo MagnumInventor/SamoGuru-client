@@ -486,7 +486,7 @@ export default function ServingPage() {
                       <div className="mb-4 bg-gray-100 rounded-lg h-48 flex items-center justify-center">
                         {item.image ? (
                           <img
-                            app={item.image}
+                            src={item.image}
                             alt={item.name}
                             className="h-full max-h-44 w-auto mx-auto rounded object-contain"
                             style={{ maxWidth: "100%" }}
@@ -590,7 +590,7 @@ export default function ServingPage() {
               <div className="relative h-60 w-full bg-gray-100 rounded-md flex items-center justify-center">
                 {selectedItem.image ? (
                   <img
-                    app={selectedItem.image}
+                    src={selectedItem.image}
                     alt={selectedItem.name}
                     width={400}
                     height={400}

@@ -1100,7 +1100,7 @@ export default function WaiterSchedulePage() {
           <CardContent className="flex justify-center">
             <div className="relative w-full max-w-5xl h-[600px]">
               <Image
-                app="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5233-3zzv4exYpLLH4pBbsD72joSZT8HURI.jpeg"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5233-3zzv4exYpLLH4pBbsD72joSZT8HURI.jpeg"
                 alt="Оригінальний графік офіціантів - IMG_5233"
                 fill
                 style={{ objectFit: "contain" }}
