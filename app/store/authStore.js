@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import API from "../utils/axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -26,7 +27,7 @@ export const useAuthStore = create((set, get) => ({
         set({ isLoading: true, error: null });
         try {
             // Використовуйте повний URL
-            const response = await axios.post(`${API_URL}/signup`, { 
+            const response = await API.post(`${API_URL}/signup`, { 
                 email, 
                 password, 
                 firstName,
@@ -44,7 +45,7 @@ export const useAuthStore = create((set, get) => ({
 	verifyEmail: async (code) => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axios.post(`${API_URL}/verify-email`, { code });
+			const response = await API.post(`${API_URL}/verify-email`, { code });
 			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
 			return response.data;
 		} catch (error) {
@@ -56,7 +57,7 @@ export const useAuthStore = create((set, get) => ({
 	checkAuth: async () => {
 		set({ isCheckingAuth: true, error: null });
 		try {
-			const response = await axios.get(`${API_URL}/check-auth`);
+			const response = await API.get(`${API_URL}/check-auth`);
 			set({ user: response.data.user, isAuthenticated: true, isCheckingAuth: false });
 		} catch (error) {
 			set({ error: null, isCheckingAuth: false, isAuthenticated: false });
@@ -66,7 +67,7 @@ export const useAuthStore = create((set, get) => ({
 	forgotPassword: async (email) => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axios.post(`${API_URL}/forgot-password`, { email });
+			const response = await API.post(`${API_URL}/forgot-password`, { email });
 			set({ message: response.data.message, isLoading: false });
 		} catch (error) {
 			set({
@@ -80,7 +81,7 @@ export const useAuthStore = create((set, get) => ({
 	resetPassword: async (token, password) => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axios.post(`${API_URL}/reset-password/${token}`, { password });
+			const response = await API.post(`${API_URL}/reset-password/${token}`, { password });
 			set({ message: response.data.message, isLoading: false });
 		} catch (error) {
 			set({
@@ -100,7 +101,7 @@ export const useAuthStore = create((set, get) => ({
 		}
 
 		try {
-			const response = await axios.put(`${API_URL}/update-role`, {
+			const response = await API.put(`${API_URL}/update-role`, {
 				userId,
 				role: newRole
 			})
