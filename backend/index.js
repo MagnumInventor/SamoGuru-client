@@ -35,7 +35,9 @@ app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://www.samoguru.run.place', 'https://samoguru.run.place']
     : 'http://localhost:3000',
-  credentials: true
+  credentials: true, // для cookies
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
