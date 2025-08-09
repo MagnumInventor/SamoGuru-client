@@ -66,10 +66,10 @@ const EmailVerificationPage = () => {
 	}, [code]);
 
 	return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-purple-700 flex items-center justify-center relative overflow-hidden">
-      <FloatingShape color="bg-purple-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
+    <div className="min-h-screen bg-gradient-to-br from-orange-900 via-indigo-800 to-orange-700 flex items-center justify-center relative overflow-hidden">
+      <FloatingShape color="bg-orange-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
       <FloatingShape color="bg-indigo-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
-      <FloatingShape color="bg-purple-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
+      <FloatingShape color="bg-orange-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
       <div className="max-w-md w-full bg-white/10 backdrop-filter backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
         <motion.div
@@ -79,7 +79,7 @@ const EmailVerificationPage = () => {
           className="p-8 w-full"
         >
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -89,7 +89,7 @@ const EmailVerificationPage = () => {
                 />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-indigo-400 text-transparent bg-clip-text">
+            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-indigo-400 text-transparent bg-clip-text">
               Підтвердження Email
             </h2>
             <p className="text-white/80 text-sm">Введіть 6-значний код, надісланий на вашу електронну пошту</p>
@@ -108,7 +108,7 @@ const EmailVerificationPage = () => {
                   value={digit}
                   onChange={(e) => handleChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
-                  className="w-12 h-12 text-center text-xl font-bold bg-white/10 text-white border-2 border-white/20 rounded-lg focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/50 transition-all duration-200"
+                  className="w-12 h-12 text-center text-xl font-bold bg-white/10 text-white border-2 border-white/20 rounded-lg focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400/50 transition-all duration-200"
                 />
               ))}
             </div>
@@ -124,7 +124,7 @@ const EmailVerificationPage = () => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isLoading || code.some((digit) => !digit)}
-              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full bg-gradient-to-r from-orange-600 to-indigo-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg hover:from-orange-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
@@ -159,7 +159,7 @@ const EmailVerificationPage = () => {
           <div className="mt-6 text-center">
             <p className="text-white/60 text-sm">
               Не отримали код?{" "}
-              <button className="text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200">
+              <button className="text-orange-400 hover:text-orange-300 font-medium transition-colors duration-200">
                 Надіслати знову
               </button>
             </p>

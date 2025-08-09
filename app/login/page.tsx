@@ -20,10 +20,10 @@ const LoginPage = () => {
 	};
 
 return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-purple-700 flex items-center justify-center relative overflow-hidden">
-      <FloatingShape color="bg-purple-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
+    <div className="min-h-screen bg-gradient-to-br from-orange-900 via-indigo-800 to-orange-700 flex items-center justify-center relative overflow-hidden">
+      <FloatingShape color="bg-orange-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
       <FloatingShape color="bg-indigo-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
-      <FloatingShape color="bg-purple-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
+      <FloatingShape color="bg-orange-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -33,7 +33,7 @@ return (
       >
         <div className="p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -43,7 +43,7 @@ return (
                 />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-indigo-400 text-transparent bg-clip-text">
+            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-indigo-400 text-transparent bg-clip-text">
               Ласкаво просимо
             </h2>
             <p className="text-white/80 text-sm">Увійдіть до вашого акаунту СамоГуру</p>
@@ -57,7 +57,7 @@ return (
                 placeholder="Електронна пошта"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -68,7 +68,7 @@ return (
                 placeholder="Пароль"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />
               <button
                 type="button"
@@ -85,13 +85,13 @@ return (
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 text-purple-600 bg-white/10 border-white/20 rounded focus:ring-purple-500 focus:ring-2"
+                  className="w-4 h-4 text-orange-600 bg-white/10 border-white/20 rounded focus:ring-orange-500 focus:ring-2"
                 />
                 <span className="ml-2 text-sm text-white/80">Запам'ятати мене</span>
               </label>
               <Link
                 href="/auth/forgot-password"
-                className="text-sm text-purple-400 hover:text-purple-300 transition-colors duration-200"
+                className="text-sm text-orange-400 hover:text-orange-300 transition-colors duration-200"
               >
                 Забули пароль?
               </Link>
@@ -106,7 +106,7 @@ return (
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-orange-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-orange-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               type="submit"
               disabled={isLoading}
             >
@@ -127,7 +127,7 @@ return (
             Немає акаунту?{" "}
             <Link
               href="/signup"
-              className="text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200">
+              className="text-orange-400 hover:text-orange-300 font-medium transition-colors duration-200">
               Зареєструватися
             </Link>
           </p>

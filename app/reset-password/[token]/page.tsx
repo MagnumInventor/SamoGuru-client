@@ -51,10 +51,10 @@ const ResetPasswordPage = () => {
 	};
 
 return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-purple-700 flex items-center justify-center relative overflow-hidden">
-      <FloatingShape color="bg-purple-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
+    <div className="min-h-screen bg-gradient-to-br from-orange-900 via-indigo-800 to-orange-700 flex items-center justify-center relative overflow-hidden">
+      <FloatingShape color="bg-orange-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
       <FloatingShape color="bg-indigo-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
-      <FloatingShape color="bg-purple-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
+      <FloatingShape color="bg-orange-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -64,10 +64,10 @@ return (
       >
         <div className="p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <Lock className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-indigo-400 text-transparent bg-clip-text">
+            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-indigo-400 text-transparent bg-clip-text">
               Новий пароль
             </h2>
             <p className="text-white/80 text-sm">Створіть новий надійний пароль для вашого акаунту</p>
@@ -94,7 +94,7 @@ return (
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />
               <button
                 type="button"
@@ -113,7 +113,7 @@ return (
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />
               <button
                 type="button"
@@ -127,7 +127,7 @@ return (
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-orange-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-orange-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               type="submit"
               disabled={isLoading}
             >

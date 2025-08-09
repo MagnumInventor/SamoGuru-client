@@ -41,10 +41,10 @@ const roleOptions = [
 	const selectedRole = roleOptions.find(option => option.value === role);
 
 return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-purple-700 flex items-center justify-center relative overflow-hidden py-8">
-      <FloatingShape color="bg-purple-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
+    <div className="min-h-screen bg-gradient-to-br from-orange-900 via-indigo-800 to-orange-700 flex items-center justify-center relative overflow-hidden py-8">
+      <FloatingShape color="bg-orange-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
       <FloatingShape color="bg-indigo-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
-      <FloatingShape color="bg-purple-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
+      <FloatingShape color="bg-orange-600" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -54,10 +54,10 @@ return (
       >
         <div className="p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <User className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-indigo-400 text-transparent bg-clip-text">
+            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-indigo-400 text-transparent bg-clip-text">
               Створити акаунт
             </h2>
             <p className="text-white/80 text-sm">Приєднуйтесь до команди СамоГуру</p>
@@ -71,7 +71,7 @@ return (
                 placeholder="Повне ім'я"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -82,7 +82,7 @@ return (
                 placeholder="Електронна пошта"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -93,7 +93,7 @@ return (
                 placeholder="Пароль"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200"
+                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />
               <button
                 type="button"
@@ -110,7 +110,7 @@ return (
 							<button
 								type="button"
 								onClick={() => setShowRoleDropdown(!showRoleDropdown)}
-								className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 text-left"
+								className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200 text-left"
 							>
 								{selectedRole ? selectedRole.label : "Оберіть роль"}
 							</button>
@@ -148,7 +148,7 @@ return (
             )}
 
             <motion.button
-              className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 bg-gradient-to-r from-orange-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:from-orange-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
@@ -171,7 +171,7 @@ return (
             Вже маєте акаунт?{" "}
             <Link
               href="/auth/login"
-              className="text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200"
+              className="text-orange-400 hover:text-orange-300 font-medium transition-colors duration-200"
             >
               Увійти
             </Link>
