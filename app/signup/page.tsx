@@ -10,13 +10,13 @@ import FloatingShape from "@/app/components/FloatingShape";
 import { useAuthStore, USER_ROLES } from "@/app/store/authStore"
 
 const SignUpPage = () => {
-	const [name, setName] = useState("");
+	const [firstName, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showRoleDropdown, setShowRoleDropdown] = useState(false);
 	const router = useRouter();
 
-	const { signup, error, isLoading } = useAuthStore();
+	  const { signup, error, isLoading } = useAuthStore();
   	const [showPassword, setShowPassword] = useState(false)
   	const [role, setRole] = useState("trainee")
 
@@ -31,7 +31,7 @@ const roleOptions = [
 		e.preventDefault();
 
 		try {
-			await signup(email, password, name, role);
+			await signup(email, password, firstName, role);
 			router.push("/verify-email");
 		} catch (error) {
 			console.log(error);
@@ -69,7 +69,7 @@ return (
               <input
                 type="text"
                 placeholder="Повне ім'я"
-                value={name}
+                value={firstName}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
               />

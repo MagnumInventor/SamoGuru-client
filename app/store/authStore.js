@@ -23,7 +23,7 @@ export const useAuthStore = create((set, get) => ({
 	message: null,
 
 	// Enhanced signup with role support
-	signup: async (email, password, name, role = USER_ROLES.TRAINEE) => {
+	signup: async (email, password, firstName, role = USER_ROLES.TRAINEE) => {
         set({ isLoading: true, error: null });
         try {
             // Використовуйте повний URL
