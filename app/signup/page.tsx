@@ -170,7 +170,7 @@ return (
           <p className="text-sm text-white/60">
             Вже маєте акаунт?{" "}
             <Link
-              href="/auth/login"
+              href="/login"
               className="text-orange-400 hover:text-orange-300 font-medium transition-colors duration-200"
             >
               Увійти

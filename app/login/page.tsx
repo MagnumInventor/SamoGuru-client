@@ -90,7 +90,7 @@ return (
                 <span className="ml-2 text-sm text-white/80">Запам'ятати мене</span>
               </label>
               <Link
-                href="/auth/forgot-password"
+                href="/forgot-password"
                 className="text-sm text-orange-400 hover:text-orange-300 transition-colors duration-200"
               >
                 Забули пароль?

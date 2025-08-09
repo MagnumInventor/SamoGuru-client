@@ -101,7 +101,7 @@ return (
 
         <div className="px-8 py-4 bg-white/5 border-t border-white/10 flex justify-center">
           <Link
-            href="/auth/login"
+            href="/login"
             className="text-sm text-orange-400 hover:text-orange-300 flex items-center transition-colors duration-200"
           >
             <ArrowLeft className="h-4 w-4 mr-2" /> Повернутися до входу
