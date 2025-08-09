@@ -7,7 +7,7 @@ export interface User {
   id: string
   firstName: string
   lastName: string
-  phone: string
+  email: string
   role: "waiter" | "helper" | "admin" | "trainee"
   isAuthenticated: boolean
 }
@@ -40,7 +40,7 @@ export const useAuth = create<AuthStore>()(
             id: Math.random().toString(36).substr(2, 9),
             firstName: userInfo.name,
             lastName: userInfo.surname,
-            phone: "+380 XX XXX XX XX",
+            email: "+380 XX XXX XX XX",
             role: userInfo.role as any,
             isAuthenticated: true,
           }
