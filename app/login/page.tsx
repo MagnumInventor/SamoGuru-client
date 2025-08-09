@@ -126,9 +126,8 @@ return (
           <p className="text-sm text-white/60">
             Немає акаунту?{" "}
             <Link
-              href="/auth/sign-up"
-              className="text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200"
-            >
+              href="/signup"
+              className="text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200">
               Зареєструватися
             </Link>
           </p>
