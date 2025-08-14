@@ -13,7 +13,7 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
-      - key: RESEND_API_KEY
+      - key: BREVO_API_KEY
         value: re_aVdAmnoE_Lv8t7VgdewpYsonrCQKxZxdo
       - key: CLIENT_URL
         value: https://www.samoguru.run.place

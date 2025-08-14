@@ -3,12 +3,12 @@
   "private": true,
   "version": "2.1.0",
   "type": "module",
-"scripts": {
-  "build": "npm install && next build",
-  "start": "next start",
-  "dev": "next dev",
-  "lint": "eslint . --ext js,jsx,ts,tsx --max-warnings 0"
-},
+  "scripts": {
+    "build": "npm install && next build",
+    "start": "next start",
+    "dev": "next dev",
+    "lint": "eslint . --ext js,jsx,ts,tsx --max-warnings 0"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "latest",
@@ -71,7 +71,6 @@
     "react-hot-toast": "^2.5.2",
     "react-resizable-panels": "latest",
     "recharts": "latest",
-    "resend": "^4.7.0",
     "sonner": "latest",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
