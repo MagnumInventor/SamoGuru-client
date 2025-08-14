@@ -1,25 +1,22 @@
+// emailService.js - оновлена версія з Brevo
 import {
 	PASSWORD_RESET_REQUEST_TEMPLATE,
 	PASSWORD_RESET_SUCCESS_TEMPLATE,
 	VERIFICATION_EMAIL_TEMPLATE,
 } from "./emailTemplates.js";
-import { resendClient, sender } from "./resend.config.js";
+import { brevoClient, sender } from "./brevo.config.js";
 
 export const sendVerificationEmail = async (email, verificationToken) => {
 	try {
-		const response = await resendClient.emails.send({
-			from: `${sender.name} <${sender.email}>`,
-			to: [email],
+		const sendSmtpEmail = {
+			to: [{ email: email }],
+			sender: { name: sender.name, email: sender.email },
 			subject: "Підтвердіть вашу пошту - SamoGuru",
-			html: VERIFICATION_EMAIL_TEMPLATE.replace("{verificationCode}", verificationToken),
-			tags: [
-				{
-					name: "category",
-					value: "email_verification"
-				}
-			]
-		});
+			htmlContent: VERIFICATION_EMAIL_TEMPLATE.replace("{verificationCode}", verificationToken),
+			tags: ["email_verification"]
+		};
 
+		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
 		console.log("Email sent successfully", response);
 		return response;
 	} catch (error) {
@@ -65,19 +62,15 @@ export const sendWelcomeEmail = async (email, name) => {
 			</html>
 		`;
 
-		const response = await resendClient.emails.send({
-			from: `${sender.name} <${sender.email}>`,
-			to: [email],
+		const sendSmtpEmail = {
+			to: [{ email: email, name: name }],
+			sender: { name: sender.name, email: sender.email },
 			subject: "Ласкаво просимо до SamoGuru! 🎉",
-			html: welcomeTemplate,
-			tags: [
-				{
-					name: "category",
-					value: "welcome_email"
-				}
-			]
-		});
+			htmlContent: welcomeTemplate,
+			tags: ["welcome_email"]
+		};
 
+		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
 		console.log("Welcome email sent successfully", response);
 		return response;
 	} catch (error) {
@@ -88,19 +81,15 @@ export const sendWelcomeEmail = async (email, name) => {
 
 export const sendPasswordResetEmail = async (email, resetURL) => {
 	try {
-		const response = await resendClient.emails.send({
-			from: `${sender.name} <${sender.email}>`,
-			to: [email],
+		const sendSmtpEmail = {
+			to: [{ email: email }],
+			sender: { name: sender.name, email: sender.email },
 			subject: "Скидання пароля - SamoGuru",
-			html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
-			tags: [
-				{
-					name: "category",
-					value: "password_reset"
-				}
-			]
-		});
+			htmlContent: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
+			tags: ["password_reset"]
+		};
 
+		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
 		console.log("Лист про скидання паролю успішно надісланий", response);
 		return response;
 
@@ -112,19 +101,15 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
 
 export const sendResetSuccessEmail = async (email) => {
 	try {
-		const response = await resendClient.emails.send({
-			from: `${sender.name} <${sender.email}>`,
-			to: [email],
+		const sendSmtpEmail = {
+			to: [{ email: email }],
+			sender: { name: sender.name, email: sender.email },
 			subject: "Пароль успішно скинуто - SamoGuru",
-			html: PASSWORD_RESET_SUCCESS_TEMPLATE,
-			tags: [
-				{
-					name: "category",
-					value: "password_reset_success"
-				}
-			]
-		});
+			htmlContent: PASSWORD_RESET_SUCCESS_TEMPLATE,
+			tags: ["password_reset_success"]
+		};
 
+		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
 		console.log("Password reset success email sent successfully", response);
 		return response;
 	} catch (error) {
