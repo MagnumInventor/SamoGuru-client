@@ -7,8 +7,8 @@ export const generateTokenAndSetCookie = (res, userId) => {
 
     res.cookie("token", token, {
         httpOnly: true, // забороняє доступ з JS (тільки з https)
-        secure: process.env.NODE_ENV === "production", // захист від XSS атак
-        sameSite: "strict", // захист від CSRF атак
+        secure: true, // захист від XSS атак REMOVED RULE -> (process.env.NODE_ENV === "production")
+        sameSite: "none", // захист від CSRF атак REMOVED RULE -> "strict"
         maxAge: 12 * 24 * 60 * 60 * 1000, // Тривалість життя токену (12 днів)
     });
 
