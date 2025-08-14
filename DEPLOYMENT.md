@@ -19,7 +19,7 @@ NODE_ENV=production
 PORT=10000
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/samoguru?retryWrites=true&w=majority
 JWT_SECRET=your-super-secret-jwt-key-here
-BREVO_API_KEY=your-resend-api-key
+BREVO_API_KEY=your-brevo-api-key
 MAILTRAP_TOKEN=your-mailtrap-token
 ```
 
