@@ -1,14 +1,14 @@
-// emailService.js - оновлена версія з Brevo
+// emailService.js - Версія з fetch
+import { sendBrevoEmail, sender } from "./brevo.config.js";
 import {
 	PASSWORD_RESET_REQUEST_TEMPLATE,
 	PASSWORD_RESET_SUCCESS_TEMPLATE,
 	VERIFICATION_EMAIL_TEMPLATE,
 } from "./emailTemplates.js";
-import { brevoClient, sender } from "./brevo.config.js";
 
 export const sendVerificationEmail = async (email, verificationToken) => {
 	try {
-		const sendSmtpEmail = {
+		const emailData = {
 			to: [{ email: email }],
 			sender: { name: sender.name, email: sender.email },
 			subject: "Підтвердіть вашу пошту - SamoGuru",
@@ -16,7 +16,7 @@ export const sendVerificationEmail = async (email, verificationToken) => {
 			tags: ["email_verification"]
 		};
 
-		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
+		const response = await sendBrevoEmail(emailData);
 		console.log("Email sent successfully", response);
 		return response;
 	} catch (error) {
@@ -62,7 +62,7 @@ export const sendWelcomeEmail = async (email, name) => {
 			</html>
 		`;
 
-		const sendSmtpEmail = {
+		const emailData = {
 			to: [{ email: email, name: name }],
 			sender: { name: sender.name, email: sender.email },
 			subject: "Ласкаво просимо до SamoGuru! 🎉",
@@ -70,7 +70,7 @@ export const sendWelcomeEmail = async (email, name) => {
 			tags: ["welcome_email"]
 		};
 
-		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
+		const response = await sendBrevoEmail(emailData);
 		console.log("Welcome email sent successfully", response);
 		return response;
 	} catch (error) {
@@ -81,7 +81,7 @@ export const sendWelcomeEmail = async (email, name) => {
 
 export const sendPasswordResetEmail = async (email, resetURL) => {
 	try {
-		const sendSmtpEmail = {
+		const emailData = {
 			to: [{ email: email }],
 			sender: { name: sender.name, email: sender.email },
 			subject: "Скидання пароля - SamoGuru",
@@ -89,10 +89,9 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
 			tags: ["password_reset"]
 		};
 
-		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
+		const response = await sendBrevoEmail(emailData);
 		console.log("Лист про скидання паролю успішно надісланий", response);
 		return response;
-
 	} catch (error) {
 		console.error(`Помилка під час надсилання листу про скидування паролю`, error);
 		throw new Error(`Помилка під час надсилання листу про скидування паролю: ${error}`);
@@ -101,7 +100,7 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
 
 export const sendResetSuccessEmail = async (email) => {
 	try {
-		const sendSmtpEmail = {
+		const emailData = {
 			to: [{ email: email }],
 			sender: { name: sender.name, email: sender.email },
 			subject: "Пароль успішно скинуто - SamoGuru",
@@ -109,11 +108,38 @@ export const sendResetSuccessEmail = async (email) => {
 			tags: ["password_reset_success"]
 		};
 
-		const response = await brevoClient.sendTransacEmail(sendSmtpEmail);
+		const response = await sendBrevoEmail(emailData);
 		console.log("Password reset success email sent successfully", response);
 		return response;
 	} catch (error) {
 		console.error(`Error sending password reset success email`, error);
 		throw new Error(`Error sending password reset success email: ${error}`);
+	}
+};
+
+// Тестова функція
+export const testBrevoConnection = async () => {
+	try {
+		const emailData = {
+			to: [{ email: "samoguru.main@gmail.com" }],
+			sender: { name: sender.name, email: sender.email },
+			subject: "🧪 Brevo Connection Test - SamoGuru",
+			htmlContent: `
+				<div style="padding: 20px; font-family: Arial, sans-serif;">
+					<h2>✅ Brevo успішно підключено!</h2>
+					<p>Відправник: ${sender.email}</p>
+					<p>Час: ${new Date().toLocaleString('uk-UA')}</p>
+					<p>API: REST (без SDK)</p>
+				</div>
+			`,
+			tags: ["connection_test"]
+		};
+
+		const response = await sendBrevoEmail(emailData);
+		console.log("✅ Brevo connection test successful:", response);
+		return response;
+	} catch (error) {
+		console.error("❌ Brevo connection test failed:", error);
+		throw error;
 	}
 };
