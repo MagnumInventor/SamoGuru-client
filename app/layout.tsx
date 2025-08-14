@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "СамоГуру - Робоче середовище ресторану",
   description: "Повноцінне робоче середовище на одному сайті",
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({
