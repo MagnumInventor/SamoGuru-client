@@ -71,6 +71,7 @@
     "react-hot-toast": "^2.5.2",
     "react-resizable-panels": "latest",
     "recharts": "latest",
+    "sib-api-v3-sdk": "^8.5.0",
     "sonner": "latest",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
