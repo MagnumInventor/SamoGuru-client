@@ -2,10 +2,9 @@ import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
 
 import { User } from '../models/user.module.js';
-import { testBrevoConnection } from './emailService.js';
 import { generateVerificationToken } from '../utils/generateVerificationToken.js';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
-import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
+import { testBrevoConnection, sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
 
 
 // Реєстрація
