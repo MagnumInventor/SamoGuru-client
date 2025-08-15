@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
-import { useAuth } from "@/lib/auth"
+import { useAuthStore} from "@/app/store/authStore"
 import { redirectToFF } from "@/lib/ff-redirect"
 import Image from "next/image"
 
@@ -593,7 +593,7 @@ const getDayOfWeek = (day: number) => {
 
 export default function SchedulePage() {
   const [selectedCell, setSelectedCell] = useState<{ employee: string; day: number } | null>(null)
-  const { user } = useAuth()
+  const { user } = useAuthStore()
   const employees = Object.keys(helperScheduleData)
 
   const getShiftColor = (shift: string | null) => {

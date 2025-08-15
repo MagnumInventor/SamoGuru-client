@@ -17,7 +17,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react"
-import { useAuth } from "@/lib/auth"
+import { useAuthStore} from "@/app/store/authStore"
 
 interface WaiterTask {
   id: string
@@ -709,7 +709,7 @@ const allTasks = [...allWaiterTasks, ...allHelperTasks]
 type Task = WaiterTask | HelperTask
 
 export default function TasksPage() {
-  const { user } = useAuth()
+  const { user } = useAuthStore()
   const [tasks, setTasks] = useState<Task[]>(allTasks)
   const [sellDishes, setSellDishes] = useState<SellDish[]>(allSellDishes)
   const [selectedDay, setSelectedDay] = useState<string>("ЗАВЖДИ")
