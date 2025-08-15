@@ -1,7 +1,8 @@
+//backend/controllers/auth.controller.js
 import bcryptjs from 'bcryptjs';
 import crypto from 'crypto';
 
-import { User } from '../models/user.module.js';
+import { User, USER_ROLES } from '../models/user.module.js';
 import { generateVerificationToken } from '../utils/generateVerificationToken.js';
 import { generateTokenAndSetCookie } from '../utils/generateTokenAndSetCookie.js';
 import { testBrevoConnection, sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from '../mailing/emails.js';
@@ -9,49 +10,62 @@ import { testBrevoConnection, sendPasswordResetEmail, sendResetSuccessEmail, sen
 
 // Реєстрація
 export const signup = async (req, res) => {
-    const {email, firstName, password} = req.body;
+    const { email, firstName, password, role = USER_ROLES.TRAINEE } = req.body; // Додаємо role з дефолтним значенням
+    
     try {
+        // Валідація обов'язкових полів
         if(!email || !firstName || !password) {
-            throw new Error("Введіть дані в усі поля!");
+            throw new Error("Введіть дані в усі обов'язкові поля!");
         }
-
-
-
+        // Перевірка на існуючого користувача
         const userAlreadyExists = await User.findOne({ email });
-        console.log("userAlreadyExists", userAlreadyExists);
-
         if(userAlreadyExists) {
-            return res.status(400).json({success:false, message: "Користувач вже існує!"});
+            return res.status(400).json({success: false, message: "Користувач вже існує!"});
         }
 
+        // Хешування пароля
         const hashedPassword = await bcryptjs.hash(password, 10);
+        // Генерація токену верифікації
         const verificationToken = generateVerificationToken();
+        
+        // Створення нового користувача
         const user = new User({
             email,
             password: hashedPassword,
             firstName,
+            role, 
             verificationToken,
             verificationTokenExpiresAt: Date.now() + 1000 * 60 * 60 * 1 // 1 година
         });
 
         await user.save();
 
-        // JWT & Cookies
+        // Генерація JWT та кукі
         generateTokenAndSetCookie(res, user._id);
 
-        await sendVerificationEmail(user.email,verificationToken);
+        // Відправка email для верифікації
+        await sendVerificationEmail(user.email, verificationToken);
 
+        // Успішна відповідь
         res.status(201).json({
             success: true,
             message: "Користувач успішно створений",
             user: {
-                ...user._doc,
-                password: undefined
+                _id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                role: user.role,
+                isVerified: user.isVerified,
+                createdAt: user.createdAt
             },
         });
 
     } catch (error) {
-        return res.status(400).json({success:false, message: error.message});
+        console.error("Помилка при реєстрації:", error);
+        return res.status(400).json({
+            success: false, 
+            message: error.message || "Сталася помилка при реєстрації"
+        });
     }
 };
 
