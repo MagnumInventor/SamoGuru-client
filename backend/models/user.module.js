@@ -1,6 +1,12 @@
-//backend/controllers/auth.controller.js
+//backend/models/auth.model.js
 import mongoose from "mongoose";
 
+export const USER_ROLES = {
+  TRAINEE: 'trainee',
+  HELPER: 'helper',
+  WAITER: 'waiter',
+  ADMIN: 'admin'
+};
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -19,6 +25,12 @@ const userSchema = new mongoose.Schema({
   lastName: {
     type: String,
     required: false
+  },
+    role: {
+    type: String,
+    enum: Object.values(USER_ROLES), // Обмежуємо можливі значення
+    default: USER_ROLES.TRAINEE,     // Стажер за замовчуванням
+    required: true
   },
   entryDate: {
     type: Date,
