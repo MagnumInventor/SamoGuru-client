@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/app/components/ui/card"
+import { Button } from "@/app/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
+import { Input } from "@/app/components/ui/input"
 import { Search, Utensils, GlassWater, Coffee, UtensilsCrossed, Beef} from "lucide-react"
 //, Grill, Kitchen }
 import {
@@ -14,8 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import Image from "next/image"
+} from "@/app/components/ui/dialog"
 
 
 

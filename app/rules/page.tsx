@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Badge } from "@/app/components/ui/badge"
 import { FileText, Clock, AlertTriangle, CheckCircle, Users, Utensils } from "lucide-react"
 
 const rules = [
@@ -45,15 +45,7 @@ const newOrders = [
     title: "Вилучення десерту",
     description: "В меню більше немає <strong>еклерів</strong>",
     priority: "high",
-    deadline: "25.01.2024",
-    status: "active",
-  },
-  {
-    id: 2,
-    title: "Оновлені процедури оплати",
-    description: "Нові способи оплати та процедури повернення",
-    priority: "medium",
-    deadline: "30.01.2024",
+    deadline: "25.01.2025",
     status: "active",
   }
 ]

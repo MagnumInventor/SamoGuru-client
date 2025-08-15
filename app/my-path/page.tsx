@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Badge } from "@/app/components/ui/badge"
+import { Button } from "@/app/components/ui/button"
+import { Progress } from "@/app/components/ui/progress"
 import { CheckCircle, Clock, Star, Trophy, BookOpen, Users, Target } from "lucide-react"
 
 const pathStages = [
@@ -73,7 +73,7 @@ const achievements = [
     description: "Успішно завершили перший робочий день",
     icon: Star,
     earned: true,
-    date: "15.01.2024",
+    date: "15.06.2025",
   },
 ]
 

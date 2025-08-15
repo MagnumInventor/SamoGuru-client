@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
-import { Button } from "@/components/ui/button" 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Badge } from "@/app/components/ui/badge"
+import { Checkbox } from "@/app/components/ui/checkbox"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
+import { Progress } from "@/app/components/ui/progress"
+import { Button } from "@/app/components/ui/button" 
 import {
   CheckCircle2,
   Clock,
@@ -17,7 +17,7 @@ import {
   Plus,
   Minus,
 } from "lucide-react"
-import { useAuth } from "@/lib/auth"
+import { useAuthStore} from "@/app/store/authStore"
 
 interface WaiterTask {
   id: string
@@ -409,7 +409,7 @@ const allWaiterTasks: WaiterTask[] = [
     difficulty: "easy",
     day: "ЗАВЖДИ",
     station: "1 поверх",
-    forRoles: ["waiter", "helper"],
+    forRoles: ["waiter"],
     completed: false
   },
   {
@@ -431,7 +431,7 @@ const allWaiterTasks: WaiterTask[] = [
     difficulty: "easy",
     day: "ЗАВЖДИ",
     station: "1 поверх",
-    forRoles: ["waiter", "helper"],
+    forRoles: ["waiter"],
     completed: false
   },
   {
@@ -709,7 +709,7 @@ const allTasks = [...allWaiterTasks, ...allHelperTasks]
 type Task = WaiterTask | HelperTask
 
 export default function TasksPage() {
-  const { user } = useAuth()
+  const { user } = useAuthStore()
   const [tasks, setTasks] = useState<Task[]>(allTasks)
   const [sellDishes, setSellDishes] = useState<SellDish[]>(allSellDishes)
   const [selectedDay, setSelectedDay] = useState<string>("ЗАВЖДИ")
@@ -734,7 +734,7 @@ export default function TasksPage() {
   const userTasks = tasks.filter((task) => {
     const roleMatch = !isAdmin
       ? (userRole === "waiter" || userRole === "helper")
-        ? task.forRoles.includes(userRole as any)
+        ? (task.forRoles as string[]).includes(userRole)
         : false
       : true
     const stationMatch = selectedStation ? task.station === selectedStation : true

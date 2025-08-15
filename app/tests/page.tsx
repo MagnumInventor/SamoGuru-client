@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/app/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Badge } from "@/app/components/ui/badge"
+import { Progress } from "@/app/components/ui/progress"
+import { RadioGroup, RadioGroupItem } from "@/app/components/ui/radio-group"
+import { Label } from "@/app/components/ui/label"
 import { Brain, Trophy, Clock, CheckCircle, XCircle, BarChart3, Link } from "lucide-react"
 
 // ПИТАННЯ З ФАЙЛУ

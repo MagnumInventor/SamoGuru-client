@@ -1,13 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Badge } from "@/app/components/ui/badge"
+import { Checkbox } from "@/app/components/ui/checkbox"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
+import { Progress } from "@/app/components/ui/progress"
 import { CheckCircle2, Clock, AlertTriangle, Coffee, UtensilsCrossed, WashingMachine as CleaningServices } from "lucide-react"
-import { useAuth } from "@/lib/auth"
+import { useAuthStore} from "@/app/store/authStore"
 
 interface HelperTask {
   id: string
@@ -182,7 +182,7 @@ const allHelperTasks: HelperTask[] = [
 
 
 export default function TasksPage() {
-  const { user } = useAuth()
+  const { user } = useAuthStore()
   const [tasks, setTasks] = useState<HelperTask[]>(allHelperTasks)
   const [selectedStation, setSelectedStation] = useState<string>(helperStations[0])
 

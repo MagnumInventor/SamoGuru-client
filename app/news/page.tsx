@@ -1,6 +1,6 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import { Badge } from "@/app/components/ui/badge"
+import { Button } from "@/app/components/ui/button"
 import { Newspaper, Users, Calendar, TrendingUp, Award, Coffee } from "lucide-react"
 import { demoNewsData } from "@/lib/demo-data"
 
@@ -22,7 +22,7 @@ const announcements = [
     id: 2,
     title: "Зміна графіку роботи",
     description: "Пів зміни помічника з 16:00-23:00 (замість 16:00-22:00)",
-    date: "28.01.2024",
+    date: "28.01.2025",
     type: "schedule",
   }
 ]
