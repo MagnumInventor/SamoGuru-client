@@ -10,15 +10,16 @@ import FloatingShape from "@/app/components/FloatingShape";
 import { useAuthStore, USER_ROLES } from "@/app/store/authStore"
 
 const SignUpPage = () => {
+  const router = useRouter();
+
 	const [firstName, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [showRoleDropdown, setShowRoleDropdown] = useState(false);
-	const router = useRouter();
+  const [role, setRole] = useState("trainee")
 
+	  const [showRoleDropdown, setShowRoleDropdown] = useState(false);
 	  const { signup, error, isLoading } = useAuthStore();
   	const [showPassword, setShowPassword] = useState(false)
-  	const [role, setRole] = useState("trainee")
 
 const roleOptions = [
   { value: USER_ROLES.TRAINEE, label: "Стажер", description: "Новий працівник на навчанні" },
