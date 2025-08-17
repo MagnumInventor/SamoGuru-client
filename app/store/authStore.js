@@ -148,5 +148,12 @@ export const useAuthStore = create((set, get) => ({
 	clearError: () => set({ error: null }),
 
 	// Clear message
-	clearMessage: () => set({ message: null })
+	clearMessage: () => set({ message: null }),
+
+// Вихід з акаунта
+	logout: async (req, res) => {
+    	res.clearCookie("token");
+    	res.status(200).json({ success: true, message: "Ви успшіно вийшли з свого акаунта"});
+}
+
 }));
