@@ -18,7 +18,7 @@ const rules = [
   {
     category: "Обслуговування столів",
     icon: Utensils,
-    color: "bg-green-100 text-green-800",
+    color: "bg-orange-100 text-orange-800",
     rules: [
       "Підходьте до столу протягом 3-5 хвилин після принесеного основного блюда",
       "Завжди телефон під рукою",
@@ -82,7 +82,7 @@ export default function RulesPage() {
       case "medium":
         return "bg-yellow-100 text-yellow-800"
       case "low":
-        return "bg-green-100 text-green-800"
+        return "bg-orange-100 text-orange-800"
       default:
         return "bg-gray-100 text-gray-800"
     }
@@ -127,7 +127,7 @@ export default function RulesPage() {
                   <ul className="space-y-3">
                     {category.rules.map((rule, ruleIndex) => (
                       <li key={ruleIndex} className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-orange-500 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-gray-700">{rule}</span>
                       </li>
                     ))}
@@ -155,7 +155,7 @@ export default function RulesPage() {
                   <div className="flex flex-col items-end space-y-2">
                     <Badge className={getPriorityColor(order.priority)}>{getPriorityText(order.priority)}</Badge>
                     {order.status === "completed" ? (
-                      <Badge className="bg-green-100 text-green-800">Виконано</Badge>
+                      <Badge className="bg-orange-100 text-orange-800">Виконано</Badge>
                     ) : (
                       <Badge className="bg-blue-100 text-blue-800">Активний</Badge>
                     )}
@@ -170,7 +170,7 @@ export default function RulesPage() {
                     Термін: {order.deadline}
                   </div>
                   {order.status === "completed" ? (
-                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <CheckCircle className="h-5 w-5 text-orange-500" />
                   ) : (
                     <AlertTriangle className="h-5 w-5 text-orange-500" />
                   )}

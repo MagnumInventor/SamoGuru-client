@@ -80,8 +80,8 @@ return (
           )}
 
           {message && (
-            <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-3 mb-4">
-              <p className="text-green-300 text-sm text-center">{message}</p>
+            <div className="bg-green-500/20 border border-orange-500/50 rounded-lg p-3 mb-4">
+              <p className="text-orange-300 text-sm text-center">{message}</p>
             </div>
           )}
 
