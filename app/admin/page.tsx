@@ -1,107 +1,281 @@
-//app/admin/page
-"use client"
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
+import { Badge } from "@/app/components/ui/badge";
+import { Alert, AlertDescription } from "@/app/components/ui/alert";
+import { ProtectedRoute } from "@/app/components/auth/protected-route";
+import { useAuthStore } from "@/app/store/authStore";
+import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle } from "lucide-react";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
-import { Button } from "@/app/components/ui/button"
-import { ProtectedRoute } from "@/app/components/auth/protected-route"
-import { Users, Calendar, FileText, BarChart3, Settings, Plus, Edit } from "lucide-react"
+export default function AdminPage() {
+    const {
+        employeeCodes,
+        fetchEmployeeCodes,
+        addEmployeeCode,
+        deleteEmployeeCode,
+        isLoading,
+        error,
+        message,
+        clearMessages
+    } = useAuthStore();
 
+    const [newCode, setNewCode] = useState('');
+    const [newDescription, setNewDescription] = useState('');
+    const [showAddForm, setShowAddForm] = useState(false);
 
-// ПОТРІБНО зробити звязок з БД 
-const adminStats = [
-  {
-    title: "Всього офіціантів/помічників станом на {currentdate}",
-    value: "52",
-    change: "+2",
-    icon: Users,
-    color: "text-blue-600",
-  },
-  {
-    title: "Активних змін",
-    value: "32",
-    change: "0",
-    icon: Calendar,
-    color: "text-green-600",
-  }
-]
+    // Завантажуємо коди при завантаженні компонента
+    useEffect(() => {
+        fetchEmployeeCodes();
+    }, [fetchEmployeeCodes]);
 
-// ПОТРІБНО зробити звязок з БД 
-const recentEmployees = [
-  { name: "Захар", role: "helper", joinDate: "11.05.2025", status: "active" },
-  { name: "Олександр Маркович", role: "helper", joinDate: "6.05.2025", status: "training" },
-  { name: "Ярослав", role: "waiter", joinDate: "2.05.2025", status: "active" },
-]
+    // Очищуємо повідомлення через 3 секунди
+    useEffect(() => {
+        if (message || error) {
+            const timer = setTimeout(() => {
+                clearMessages();
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message, error, clearMessages]);
 
-export default function AdminPage() { // НАПИСАТИ метод управління (додавання/видалення) кодами працівників
-  return (
-    <ProtectedRoute requiredRole="admin">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Панель адміністратора</h1>
-          <p className="text-gray-600">Управління співробітниками, розкладом та контентом</p>
-        </div>
+    const handleAddCode = async (e) => {
+        e.preventDefault();
+        if (!newCode.trim()) return;
 
-        {/* Add this after the header section: */}
-        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
-          <div className="text-sm text-yellow-800">
-            <strong>FF (For Future):</strong> Адміністративні функції (додавання співробітників, редагування розкладу,
-            управління контентом) будуть реалізовані після впровадження backend API
-          </div>
-        </div>
+        try {
+            await addEmployeeCode(newCode.trim(), newDescription.trim());
+            setNewCode('');
+            setNewDescription('');
+            setShowAddForm(false);
+        } catch (error) {
+            console.error('Error adding code:', error);
+        }
+    };
 
-        {/* Stats Overview */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {adminStats.map((stat, index) => {
-            const Icon = stat.icon
-            return (
-              <Card key={index} className="border-orange-200">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
-                      <div className="text-sm text-gray-600">{stat.title}</div>
-                      {stat.change !== "0" && <div className="text-xs text-green-600">{stat.change} цього тижня</div>}
+    const handleDeleteCode = async (codeId) => {
+        if (!confirm('Ви впевнені, що хочете видалити цей код?')) return;
+
+        try {
+            await deleteEmployeeCode(codeId);
+        } catch (error) {
+            console.error('Error deleting code:', error);
+        }
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toLocaleDateString('uk-UA', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    };
+
+    // Статистика
+    const totalCodes = employeeCodes.length;
+    const usedCodes = employeeCodes.filter(code => code.isUsed).length;
+    const availableCodes = totalCodes - usedCodes;
+
+    const adminStats = [
+        {
+            title: "Всього кодів",
+            value: totalCodes.toString(),
+            change: `+${availableCodes} доступних`,
+            icon: Users,
+            color: "text-blue-600",
+        },
+        {
+            title: "Використані коди",
+            value: usedCodes.toString(),
+            change: `${availableCodes} вільних`,
+            icon: CheckCircle,
+            color: "text-green-600",
+        }
+    ];
+
+    return (
+        <ProtectedRoute allowedRoles={['admin']}>
+            <div className="min-h-screen bg-gray-50 p-6">
+                <div className="max-w-7xl mx-auto space-y-6">
+                    {/* Заголовок */}
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-3xl font-bold text-gray-900">Панель адміністратора</h1>
+                            <p className="text-gray-600 mt-1">Управління кодами працівників</p>
+                        </div>
+                        <Button 
+                            onClick={() => setShowAddForm(!showAddForm)}
+                            className="flex items-center gap-2"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Додати код
+                        </Button>
                     </div>
-                    <Icon className={`h-8 w-8 ${stat.color}`} />
-                  </div>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
 
-        {/* Quick Actions */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Швидкі дії</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Button className="h-20 bg-orange-500 hover:bg-orange-600 flex flex-col items-center justify-center">
-              <Plus className="h-6 w-6 mb-2" />
-              Додати страву/напій
-            </Button>
-            <Button
-              variant="outline"
-              className="h-20 border-orange-200 text-orange-600 hover:bg-orange-50 flex flex-col items-center justify-center"
-            >
-              <Edit className="h-6 w-6 mb-2" />
-              Редагувати розклад
-            </Button>
-            <Button
-              variant="outline"
-              className="h-20 border-orange-200 text-orange-600 hover:bg-orange-50 flex flex-col items-center justify-center"
-            >
-              <FileText className="h-6 w-6 mb-2" />
-              Додати правило
-            </Button>
-            <Button
-              variant="outline"
-              className="h-20 border-orange-200 text-orange-600 hover:bg-orange-50 flex flex-col items-center justify-center"
-            >
-              <Settings className="h-6 w-6 mb-2" />
-              Налаштування
-            </Button>
-          </div>
-        </section>
-      </div>
-    </ProtectedRoute>
-  )
+                    {/* Повідомлення */}
+                    {message && (
+                        <Alert className="border-green-200 bg-green-50">
+                            <CheckCircle className="h-4 w-4 text-green-600" />
+                            <AlertDescription className="text-green-700">
+                                {message}
+                            </AlertDescription>
+                        </Alert>
+                    )}
+
+                    {error && (
+                        <Alert className="border-red-200 bg-red-50">
+                            <AlertCircle className="h-4 w-4 text-red-600" />
+                            <AlertDescription className="text-red-700">
+                                {error}
+                            </AlertDescription>
+                        </Alert>
+                    )}
+
+                    {/* Статистика */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {adminStats.map((stat, index) => {
+                            const Icon = stat.icon;
+                            return (
+                                <Card key={index}>
+                                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                        <CardTitle className="text-sm font-medium text-gray-600">
+                                            {stat.title}
+                                        </CardTitle>
+                                        <Icon className={`h-4 w-4 ${stat.color}`} />
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="text-2xl font-bold">{stat.value}</div>
+                                        <p className="text-xs text-gray-600 mt-1">{stat.change}</p>
+                                    </CardContent>
+                                </Card>
+                            );
+                        })}
+                    </div>
+
+                    {/* Форма додавання коду */}
+                    {showAddForm && (
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Додати новий код працівника</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <form onSubmit={handleAddCode} className="space-y-4">
+                                    <div>
+                                        <Label htmlFor="code">Код працівника *</Label>
+                                        <Input
+                                            id="code"
+                                            value={newCode}
+                                            onChange={(e) => setNewCode(e.target.value)}
+                                            placeholder="Введіть унікальний код"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label htmlFor="description">Опис (необов'язково)</Label>
+                                        <Input
+                                            id="description"
+                                            value={newDescription}
+                                            onChange={(e) => setNewDescription(e.target.value)}
+                                            placeholder="Опис або коментар"
+                                        />
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Button 
+                                            type="submit" 
+                                            disabled={isLoading || !newCode.trim()}
+                                        >
+                                            {isLoading ? 'Додавання...' : 'Додати код'}
+                                        </Button>
+                                        <Button 
+                                            type="button" 
+                                            variant="outline" 
+                                            onClick={() => setShowAddForm(false)}
+                                        >
+                                            Скасувати
+                                        </Button>
+                                    </div>
+                                </form>
+                            </CardContent>
+                        </Card>
+                    )}
+                    
+                  
+
+                                        {/* Список кодів */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Коди працівників</CardTitle>
+                            <CardDescription>
+                                Управління кодами для реєстрації нових працівників
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {isLoading && !employeeCodes.length ? (
+                                <div className="text-center py-4">Завантаження...</div>
+                            ) : employeeCodes.length === 0 ? (
+                                <div className="text-center py-8 text-gray-500">
+                                    <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                                    <p>Коди працівників ще не додані</p>
+                                </div>
+                            ) : (
+                                <div className="space-y-3">
+                                    {employeeCodes.map((code) => (
+                                        <div 
+                                            key={code._id} 
+                                            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
+                                        >
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <span className="font-mono font-medium">
+                                                        {code.code}
+                                                    </span>
+                                                    <Badge variant={code.isUsed ? "secondary" : "default"}>
+                                                        {code.isUsed ? "Використаний" : "Доступний"}
+                                                    </Badge>
+                                                </div>
+                                                {code.description && (
+                                                    <p className="text-sm text-gray-600 mb-2">
+                                                        {code.description}
+                                                    </p>
+                                                )}
+                                                <div className="text-xs text-gray-500 flex flex-wrap gap-4">
+                                                    <span className="flex items-center gap-1">
+                                                        <Calendar className="h-3 w-3" />
+                                                        Створено: {formatDate(code.createdAt)}
+                                                    </span>
+                                                    {code.isUsed && code.usedBy && (
+                                                        <span>
+                                                            Використав: {code.usedBy.firstName} {code.usedBy.lastName}
+                                                        </span>
+                                                    )}
+                                                    {code.isUsed && code.usedAt && (
+                                                        <span className="flex items-center gap-1">
+                                                            <CheckCircle className="h-3 w-3" />
+                                                            Використано: {formatDate(code.usedAt)}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            {!code.isUsed && (
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    onClick={() => handleDeleteCode(code._id)}
+                                                    className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                                                    title="Видалити код"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        </ProtectedRoute>
+    );
 }
