@@ -1,4 +1,4 @@
-//app/store/authStore.js
+// app/store/authStore.js (ОНОВЛЕНИЙ)
 import { create } from "zustand";
 import axios from "axios";
 import API from "../utils/axios";
@@ -22,17 +22,19 @@ export const useAuthStore = create((set, get) => ({
 	isLoading: false,
 	isCheckingAuth: true,
 	message: null,
+	employeeCodes: [], // Для зберігання кодів працівників
 
-	// Enhanced signup with role support
-	signup: async (email, password, firstName, role = USER_ROLES.TRAINEE) => {
+	// Enhanced signup with employee code validation
+	signup: async (email, password, firstName, role = USER_ROLES.TRAINEE, employeeCode = null, adminCode = null) => {
         set({ isLoading: true, error: null });
         try {
-            // Використовуйте повний URL
             const response = await API.post(`${API_URL}/signup`, { 
                 email, 
                 password, 
                 firstName,
-                role 
+                role,
+                employeeCode,
+                adminCode
             });
             set({ user: response.data.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
@@ -42,6 +44,102 @@ export const useAuthStore = create((set, get) => ({
             throw error;
         }
 	},
+
+	// Перевірка адміністраторського коду
+	verifyAdminCode: async (adminCode) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await API.post(`${API_URL}/employee-codes/verify-admin-code`, { 
+                adminCode 
+            });
+            set({ isLoading: false });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Помилка перевірки коду";
+            set({ error: errorMessage, isLoading: false });
+            throw error;
+        }
+    },
+
+	// Перевірка коду працівника
+	verifyEmployeeCode: async (employeeCode) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await API.post(`${API_URL}/employee-codes/verify-employee-code`, { 
+                employeeCode 
+            });
+            set({ isLoading: false });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Помилка перевірки коду";
+            set({ error: errorMessage, isLoading: false });
+            throw error;
+        }
+    },
+
+	// Додавання коду працівника (тільки адміни)
+	addEmployeeCode: async (code, description = '') => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await API.post(`${API_URL}/employee-codes/add`, { 
+                code, 
+                description 
+            });
+            
+            // Оновлюємо список кодів
+            const currentCodes = get().employeeCodes;
+            set({ 
+                employeeCodes: [response.data.code, ...currentCodes],
+                isLoading: false,
+                message: response.data.message
+            });
+            
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Помилка додавання коду";
+            set({ error: errorMessage, isLoading: false });
+            throw error;
+        }
+    },
+
+	// Видалення коду працівника (тільки адміни)
+	deleteEmployeeCode: async (codeId) => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await API.delete(`${API_URL}/employee-codes/${codeId}`);
+            
+            // Видаляємо код зі списку
+            const currentCodes = get().employeeCodes;
+            set({ 
+                employeeCodes: currentCodes.filter(code => code._id !== codeId),
+                isLoading: false,
+                message: response.data.message
+            });
+            
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Помилка видалення коду";
+            set({ error: errorMessage, isLoading: false });
+            throw error;
+        }
+    },
+
+	// Отримання всіх кодів (тільки адміни)
+	fetchEmployeeCodes: async () => {
+        set({ isLoading: true, error: null });
+        try {
+            const response = await API.get(`${API_URL}/employee-codes/all`);
+            set({ 
+                employeeCodes: response.data.codes,
+                isLoading: false 
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Помилка завантаження кодів";
+            set({ error: errorMessage, isLoading: false });
+            throw error;
+        }
+    },
 
 	verifyEmail: async (code) => {
   set({ isLoading: true, error: null });
