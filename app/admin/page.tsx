@@ -18,7 +18,8 @@ export default function AdminPage() {
         isLoading,
         error,
         message,
-        clearMessages
+        clearError,
+        clearMessage
     } = useAuthStore();
 
     const [newCode, setNewCode] = useState('');
@@ -28,22 +29,27 @@ export default function AdminPage() {
     // Завантажуємо коди при завантаженні компонента
     useEffect(() => {
         fetchEmployeeCodes();
-    }, [fetchEmployeeCodes]);
+    }, []);
 
     // Очищуємо повідомлення через 3 секунди
     useEffect(() => {
-        if (message || error) {
+        if (message) {
             const timer = setTimeout(() => {
-                clearMessages();
+                clearMessage();
             }, 3000);
             return () => clearTimeout(timer);
         }
-    }, [message, error, clearMessages]);
+        if (error) {
+            const timer = setTimeout(() => {
+                clearError();
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message, error]);
 
-    const handleAddCode = async (e) => {
+    const handleAddCode = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!newCode.trim()) return;
-
         try {
             await addEmployeeCode(newCode.trim(), newDescription.trim());
             setNewCode('');
@@ -54,9 +60,8 @@ export default function AdminPage() {
         }
     };
 
-    const handleDeleteCode = async (codeId) => {
-        if (!confirm('Ви впевнені, що хочете видалити цей код?')) return;
-
+    const handleDeleteCode = async (codeId: string) => {
+        if (!window.confirm('Ви впевнені, що хочете видалити цей код?')) return;
         try {
             await deleteEmployeeCode(codeId);
         } catch (error) {
@@ -64,7 +69,7 @@ export default function AdminPage() {
         }
     };
 
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('uk-UA', {
             day: '2-digit',
             month: '2-digit',
@@ -73,8 +78,8 @@ export default function AdminPage() {
     };
 
     // Статистика
-    const totalCodes = employeeCodes.length;
-    const usedCodes = employeeCodes.filter(code => code.isUsed).length;
+    const totalCodes = Array.isArray(employeeCodes) ? employeeCodes.length : 0;
+    const usedCodes = Array.isArray(employeeCodes) ? employeeCodes.filter((code: any) => code.isUsed).length : 0;
     const availableCodes = totalCodes - usedCodes;
 
     const adminStats = [
@@ -220,7 +225,7 @@ export default function AdminPage() {
                                 </div>
                             ) : (
                                 <div className="space-y-3">
-                                    {employeeCodes.map((code) => (
+                                    {Array.isArray(employeeCodes) && employeeCodes.map((code: any) => (
                                         <div 
                                             key={code._id} 
                                             className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
@@ -246,7 +251,7 @@ export default function AdminPage() {
                                                     </span>
                                                     {code.isUsed && code.usedBy && (
                                                         <span>
-                                                            Використав: {code.usedBy.firstName} {code.usedBy.lastName}
+                                                            {code.usedBy.firstName ? `Використав: ${code.usedBy.firstName} ${code.usedBy.lastName}` : `Використав: ${code.usedBy}`}
                                                         </span>
                                                     )}
                                                     {code.isUsed && code.usedAt && (
