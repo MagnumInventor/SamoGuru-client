@@ -1,3 +1,4 @@
+//app/admin/page
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
@@ -5,6 +6,8 @@ import { Button } from "@/app/components/ui/button"
 import { ProtectedRoute } from "@/app/components/auth/protected-route"
 import { Users, Calendar, FileText, BarChart3, Settings, Plus, Edit } from "lucide-react"
 
+
+// ПОТРІБНО зробити звязок з БД 
 const adminStats = [
   {
     title: "Всього офіціантів/помічників станом на {currentdate}",
@@ -22,13 +25,14 @@ const adminStats = [
   }
 ]
 
+// ПОТРІБНО зробити звязок з БД 
 const recentEmployees = [
   { name: "Захар", role: "helper", joinDate: "11.05.2025", status: "active" },
   { name: "Олександр Маркович", role: "helper", joinDate: "6.05.2025", status: "training" },
   { name: "Ярослав", role: "waiter", joinDate: "2.05.2025", status: "active" },
 ]
 
-export default function AdminPage() {
+export default function AdminPage() { // НАПИСАТИ метод управління (додавання/видалення) кодами працівників
   return (
     <ProtectedRoute requiredRole="admin">
       <div className="container mx-auto px-4 py-8">
