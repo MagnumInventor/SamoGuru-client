@@ -118,9 +118,11 @@ return (
 							
 							{showRoleDropdown && (
 								<motion.div
-									initial={{ opacity: 0, y: -10 }}
+									initial={{ opacity: 0, y: -20 }}
 									animate={{ opacity: 1, y: 0 }}
-									className="absolute top-full left-0 right-0 mt-1 bg-white/15 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-10"
+									exit={{ opacity: 0, y: -20 }}
+									transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.3 }}
+									className="absolute top-full left-0 right-0 mt-1 bg-white/15 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-10 overflow-hidden"
 								>
 									{roleOptions.map((option) => (
 										<button
@@ -183,4 +185,4 @@ return (
   );
 };
 
-export default SignUpPage; 
+export default SignUpPage;
