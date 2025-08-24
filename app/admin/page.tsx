@@ -100,7 +100,7 @@ export default function AdminPage() {
     ];
 
     return (
-        <ProtectedRoute allowedRoles={['admin']}>
+        <ProtectedRoute>
             <div className="min-h-screen bg-gray-50 p-6">
                 <div className="max-w-7xl mx-auto space-y-6">
                     {/* Заголовок */}
@@ -216,67 +216,75 @@ export default function AdminPage() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {isLoading && !employeeCodes.length ? (
-                                <div className="text-center py-4">Завантаження...</div>
-                            ) : employeeCodes.length === 0 ? (
-                                <div className="text-center py-8 text-gray-500">
-                                    <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                                    <p>Коди працівників ще не додані</p>
-                                </div>
-                            ) : (
-                                <div className="space-y-3">
-                                    {Array.isArray(employeeCodes) && employeeCodes.map((code: any) => (
-                                        <div 
-                                            key={code._id} 
-                                            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
-                                        >
-                                            <div className="flex-1">
-                                                <div className="flex items-center gap-3 mb-2">
-                                                    <span className="font-mono font-medium">
-                                                        {code.code}
-                                                    </span>
-                                                    <Badge variant={code.isUsed ? "secondary" : "default"}>
-                                                        {code.isUsed ? "Використаний" : "Доступний"}
-                                                    </Badge>
-                                                </div>
-                                                {code.description && (
-                                                    <p className="text-sm text-gray-600 mb-2">
-                                                        {code.description}
-                                                    </p>
-                                                )}
-                                                <div className="text-xs text-gray-500 flex flex-wrap gap-4">
-                                                    <span className="flex items-center gap-1">
-                                                        <Calendar className="h-3 w-3" />
-                                                        Створено: {formatDate(code.createdAt)}
-                                                    </span>
-                                                    {code.isUsed && code.usedBy && (
-                                                        <span>
-                                                            {code.usedBy.firstName ? `Використав: ${code.usedBy.firstName} ${code.usedBy.lastName}` : `Використав: ${code.usedBy}`}
-                                                        </span>
-                                                    )}
-                                                    {code.isUsed && code.usedAt && (
-                                                        <span className="flex items-center gap-1">
-                                                            <CheckCircle className="h-3 w-3" />
-                                                            Використано: {formatDate(code.usedAt)}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            {!code.isUsed && (
-                                                <Button
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    onClick={() => handleDeleteCode(code._id)}
-                                                    className="text-red-600 hover:text-red-800 hover:bg-red-50"
-                                                    title="Видалити код"
-                                                >
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            )}
+                            {(() => {
+                                if (isLoading && !employeeCodes.length) {
+                                    return (
+                                        <div className="text-center py-4">Завантаження...</div>
+                                    );
+                                }
+                                if (employeeCodes.length === 0) {
+                                    return (
+                                        <div className="text-center py-8 text-gray-500">
+                                            <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                                            <p>Коди працівників ще не додані</p>
                                         </div>
-                                    ))}
-                                </div>
-                            )}
+                                    );
+                                }
+                                return (
+                                    <div className="space-y-3">
+                                        {Array.isArray(employeeCodes) && employeeCodes.map((code: any) => (
+                                            <div 
+                                                key={code._id} 
+                                                className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
+                                            >
+                                                <div className="flex-1">
+                                                    <div className="flex items-center gap-3 mb-2">
+                                                        <span className="font-mono font-medium">
+                                                            {code.code}
+                                                        </span>
+                                                        <Badge variant={code.isUsed ? "secondary" : "default"}>
+                                                            {code.isUsed ? "Використаний" : "Доступний"}
+                                                        </Badge>
+                                                    </div>
+                                                    {code.description && (
+                                                        <p className="text-sm text-gray-600 mb-2">
+                                                            {code.description}
+                                                        </p>
+                                                    )}
+                                                    <div className="text-xs text-gray-500 flex flex-wrap gap-4">
+                                                        <span className="flex items-center gap-1">
+                                                            <Calendar className="h-3 w-3" />
+                                                            Створено: {formatDate(code.createdAt)}
+                                                        </span>
+                                                        {code.isUsed && code.usedBy && (
+                                                            <span>
+                                                                {code.usedBy.firstName ? `Використав: ${code.usedBy.firstName} ${code.usedBy.lastName}` : `Використав: ${code.usedBy}`}
+                                                            </span>
+                                                        )}
+                                                        {code.isUsed && code.usedAt && (
+                                                            <span className="flex items-center gap-1">
+                                                                <CheckCircle className="h-3 w-3" />
+                                                                Використано: {formatDate(code.usedAt)}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                {!code.isUsed && (
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        onClick={() => handleDeleteCode(code._id)}
+                                                        className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                                                        title="Видалити код"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                );
+                            })()}
                         </CardContent>
                     </Card>
                 </div>
