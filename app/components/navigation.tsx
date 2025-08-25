@@ -50,10 +50,10 @@ const allNavItems = [
   { href: "/admin", label: "Меню", icon: User, roles: ["admin"] },
   { href: "/p&p", label: "Правила платформи", icon: Newspaper, roles: ["admin"] },
   { href: "/schedule", label: "Графік", icon: Calendar, roles: ["admin"] },
+  { href: "/tasks", label: "Виконання плану", icon: CheckSquare, roles: ["admin"] },
 
 
   { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
-  { href: "/tasks", label: "Виконання плану", icon: CheckSquare, roles: ["admin"] },
   { href: "/tasks", label: "Робота", icon: CheckSquare, roles: ["helper"] },
 
   { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
@@ -67,11 +67,11 @@ const allNavItems = [
     { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter", "helper"] },
   
     { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
-  { href: "/rules", label: "Правила", icon: FileText, roles: ["admin", "waiter"] }, 
+  { href: "/rules", label: "Правила", icon: FileText, roles: ["waiter"] }, 
   //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
   
-  { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter", "admin"] },
+  { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter"] },
 
 
   // МЕНЮ ДЛЯ СТАЖЕРІВ
