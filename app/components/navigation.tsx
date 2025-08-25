@@ -48,7 +48,7 @@ const allNavItems = [
 
   // ПАНЕЛЬ АДМІНІСТРАТОРА
   { href: "/admin", label: "Меню", icon: User, roles: ["admin"] },
-  { href: "/p&p", label: "Правила платформи", icon: Newspaper, roles: ["admin"] },
+  { href: "/pnp", label: "Правила платформи", icon: Newspaper, roles: ["admin"] },
   { href: "/schedule", label: "Графік", icon: Calendar, roles: ["admin"] },
   { href: "/tasks", label: "Виконання плану", icon: CheckSquare, roles: ["admin"] },
 
@@ -71,7 +71,7 @@ const allNavItems = [
   //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
   
-  { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter"] },
+  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter"] },
 
 
   // МЕНЮ ДЛЯ СТАЖЕРІВ
@@ -85,7 +85,7 @@ const allNavItems = [
 
     { href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
 
-  { href: "/p&p", label: "Формальності", icon: Newspaper, roles: ["trainee"] }, 
+  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["trainee"] }, 
 ]
 
 export function Navigation() {
