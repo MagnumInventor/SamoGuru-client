@@ -7,10 +7,10 @@ import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
-import { Separator } from "../components/ui/separator"
+import { Separator } from "../components/separator"
 import { Alert, AlertDescription } from "../components/ui/alert"
 import { User, Briefcase, Edit, Save, X, Mail, Calendar, CheckCircle, XCircle, Shield } from "lucide-react"
-import { RoleBadge } from "../components/role-badge"
+import { RoleBadge } from "../components/ui/role-badge"
 
 function formatDate(dateString?: string | Date) {
   if (!dateString) return "-"
@@ -279,56 +279,4 @@ export default function UserProfilePage() {
     </div>
   )
 }
-                    {saving ? "Збереження..." : "Зберегти"}
-                  </Button>
-                </>
-              ) : (
-                <Button variant="outline" size="sm" onClick={() => setEditing(true)}>
-                  <Edit className="h-4 w-4 mr-2" />
-                  Редагувати
-                </Button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Role Information Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Інформація про роль
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label>Поточна роль</Label>
-              <RoleBadge role={user.role} size="lg" />
-            </div>
-
-            <div className="text-sm text-muted-foreground">
-              {user.role === "trainee" &&
-                "Стажер має базовий доступ до системи та може переглядати навчальні матеріали."}
-              {user.role === "helper" && "Хелпер має розширений доступ та може допомагати в обслуговуванні."}
-              {user.role === "waiter" &&
-                "Офіціант має повний доступ до системи обслуговування та може керувати замовленнями."}
-              {user.role === "admin" &&
-                "Адміністратор має повний доступ до всіх функцій системи, включаючи управління користувачами."}
-            </div>
-
-            {user.role === "admin" && (
-              <Alert>
-                <Shield className="h-4 w-4" />
-                <AlertDescription>
-                  Ви маєте права адміністратора. Будьте обережні при внесенні змін до системи.
-                </AlertDescription>
-              </Alert>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
+           
