@@ -69,6 +69,26 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
+login: async (email, password) => {
+  set({ isLoading: true, error: null });
+  try {
+    const response = await API.post(`${API_URL}/auth/login`, { email, password });
+    set({
+      user: response.data.user,
+      isAuthenticated: true,
+      isLoading: false,
+      message: response.data.message,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Помилка коду:", error);
+    const errorMessage =
+      error.response?.data?.message || "Помилка входу в систему";
+    set({ error: errorMessage, isLoading: false });
+    throw error;
+  }
+},
+
   // Перевірка адміністраторського коду
   verifyAdminCode: async (adminCode) => {
     set({ isLoading: true, error: null });
@@ -236,6 +256,9 @@ export const useAuthStore = create((set, get) => ({
       throw error;
     }
   },
+
+
+
 
   // NEW: Role management functions
   updateUserRole: async (userId, newRole) => {
