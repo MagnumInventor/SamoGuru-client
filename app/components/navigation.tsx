@@ -46,11 +46,16 @@ const allNavItems = [
   
   { href: "/", label: "Головна", icon: User, roles: ["waiter", "helper"] },
 
+  // ПАНЕЛЬ АДМІНІСТРАТОРА
+  { href: "/admin", label: "Меню", icon: User, roles: ["admin"] },
+  { href: "/p&p", label: "Правила платформи", icon: Newspaper, roles: ["admin"] },
+  { href: "/schedule", label: "Графік", icon: Calendar, roles: ["admin"] },
+
+
   { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
   { href: "/tasks", label: "Виконання плану", icon: CheckSquare, roles: ["admin"] },
   { href: "/tasks", label: "Робота", icon: CheckSquare, roles: ["helper"] },
 
-  { href: "/schedule", label: "Повний розклад роботи", icon: Calendar, roles: ["admin"] },
   { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
   { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
 
