@@ -7,6 +7,8 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Badge } from "@/app/components/ui/badge";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
+import LoadingSpinner from "../components/LoadingSpinner";
+
 import { ProtectedRoute } from "@/app/components/auth/protected-route";
 import { useAuthStore } from "@/app/store/authStore";
 import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle } from "lucide-react";
@@ -27,7 +29,19 @@ export default function AdminPage() {
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
+    const { user, isAuthenticated, isCheckingAuth } = useAuthStore();
 
+if (isCheckingAuth) {
+  return <LoadingSpinner />; // or null
+}
+
+if (!isAuthenticated || !user) {
+  // redirect to login or show error
+  return <div>Доступ заборонено</div>;
+}
+    if (user.role !== 'admin') {
+        return <div>Доступ заборонено</div>;
+    }
     // Завантажуємо коди при завантаженні компонента
     useEffect(() => {
         fetchEmployeeCodes();
