@@ -74,7 +74,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await API.post(
-        `${API_URL}/auth/employee-codes/verify-admin-code`,
+        `${API_URL}/employee-codes/verify-admin-code`,
         {
           adminCode,
         }
@@ -179,7 +179,7 @@ export const useAuthStore = create((set, get) => ({
   verifyEmail: async (code) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await API.post(`${API_URL}/verify-email`, { code });
+      const response = await API.post(`${API_URL}/auth/verify-email`, { code });
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -195,7 +195,7 @@ export const useAuthStore = create((set, get) => ({
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
     try {
-      const response = await API.get(`${API_URL}/check-auth`);
+      const response = await API.get(`${API_URL}/auth/check-auth`);
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -209,7 +209,7 @@ export const useAuthStore = create((set, get) => ({
   forgotPassword: async (email) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await API.post(`${API_URL}/forgot-password`, { email });
+      const response = await API.post(`${API_URL}/auth/forgot-password`, { email });
       set({ message: response.data.message, isLoading: false });
     } catch (error) {
       set({
@@ -224,7 +224,7 @@ export const useAuthStore = create((set, get) => ({
   resetPassword: async (token, password) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await API.post(`${API_URL}/reset-password/${token}`, {
+      const response = await API.post(`${API_URL}/auth/reset-password/${token}`, {
         password,
       });
       set({ message: response.data.message, isLoading: false });
@@ -286,11 +286,24 @@ export const useAuthStore = create((set, get) => ({
   // Clear message
   clearMessage: () => set({ message: null }),
 
-  // Вихід з акаунта
-  logout: async (req, res) => {
-    res.clearCookie("token");
-    res
-      .status(200)
-      .json({ success: true, message: "Ви успшіно вийшли з свого акаунта" });
+  // Вихід з акаунта (logout, updated to call backend and clear state)
+  logout: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      await API.post(`${API_URL}/auth/logout`);
+      set({
+        user: null,
+        isAuthenticated: false,
+        isVerified: false,
+        isLoading: false,
+        message: "Ви успішно вийшли з акаунта",
+      });
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error.response?.data?.message || "Error logging out",
+      });
+      throw error;
+    }
   },
 }));
