@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "../components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
 import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
-import { useAuth } from "@/backend/auth"
-import { redirectToFF } from "@/backend/ff-redirect"
+import { useAuthStore } from "../store/authStore"
+import redirectToFF from "../components/ff-status"
 import Image from "next/image"
 
 // Days of the week abbreviations
@@ -587,7 +587,13 @@ const helperScheduleData: HelperSchedule = {
 
 // Add waiter schedule data and helpers from waiter/page.tsx
 const waiterDaysOfWeek = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"];
-const waiterScheduleData = {
+type WaiterSchedule = {
+  [employee: string]: {
+    [day: string]: string
+  }
+};
+
+const waiterScheduleData: WaiterSchedule = {
   "Ігор": {
     "1": "1", "2": "0", "3": "0", "4": "0", "5": "1", "6": "1", "7": "1", "8": "0", "9": "0", "10": "0", "11": "1", "12": "1", "13": "1", "14": "0", "15": "0", "16": "0", "17": "1", "18": "1", "19": "1", "20": "0", "21": "0", "22": "0", "23": "1", "24": "1", "25": "1", "26": "0", "27": "0", "28": "0", "29": "1", "30": "1"
   },
@@ -634,7 +640,7 @@ const getWaiterDayOfWeek = (day: number) => {
 export default function SchedulePage() {
   const [selectedCell, setSelectedCell] = useState<{ employee: string; day: number } | null>(null)
   const [selectedWaiterCell, setSelectedWaiterCell] = useState<{ employee: string; day: number } | null>(null);
-  const { user } = useAuth()
+  const { user } = useAuthStore()
   const employees = Object.keys(helperScheduleData)
 
   const getShiftColor = (shift: string | null) => {
