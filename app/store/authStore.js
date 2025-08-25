@@ -329,4 +329,23 @@ login: async (email, password) => {
       throw error;
     }
   },
+
+  updateUserProfile: async (profileData) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await API.put(`${API_URL}/auth/profile`, profileData);
+      set({
+        user: response.data.user,
+        isLoading: false,
+        message: "Профіль оновлено",
+      });
+      return response.data.user;
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error.response?.data?.message || "Помилка оновлення профілю",
+      });
+      throw error;
+    }
+  },
 }));
