@@ -24,13 +24,23 @@ export const useAuthStore = create((set, get) => ({
 	message: null,
 	employeeCodes: [], // Для зберігання кодів працівників
 
-	// Enhanced signup with employee code validation
-	signup: async (email, password, firstName, role = USER_ROLES.TRAINEE, employeeCode = null, adminCode = null) => {
+    // Enhanced signup with employee code validation
+    signup: async (email, password, firstName, role = USER_ROLES.TRAINEE, employeeCode = null, adminCode = null) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await API.post(`${API_URL}/signup`, { 
-                email, 
-                password, 
+            // Require adminCode for admin role
+            if (role === USER_ROLES.ADMIN && !adminCode) {
+                set({ error: "Потрібен адміністраторський код", isLoading: false });
+                throw new Error("Потрібен адміністраторський код");
+            }
+            // Require employeeCode for waiter role
+            if (role === USER_ROLES.WAITER && !employeeCode) {
+                set({ error: "Потрібен код працівника", isLoading: false });
+                throw new Error("Потрібен код працівника");
+            }
+            const response = await API.post(`${API_URL}/signup`, {
+                email,
+                password,
                 firstName,
                 role,
                 employeeCode,
@@ -39,11 +49,11 @@ export const useAuthStore = create((set, get) => ({
             set({ user: response.data.user, isAuthenticated: true, isLoading: false });
         } catch (error) {
             console.error('Signup error:', error);
-            const errorMessage = error.response?.data?.message || "Error signing up";
+            const errorMessage = error.response && error.response.data && error.response.data.message ? error.response.data.message : "Error signing up";
             set({ error: errorMessage, isLoading: false });
             throw error;
         }
-	},
+    },
 
 	// Перевірка адміністраторського коду
 	verifyAdminCode: async (adminCode) => {
