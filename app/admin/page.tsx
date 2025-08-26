@@ -29,13 +29,13 @@ export default function AdminPage() {
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
-    const { user, isAuthenticated, isCheckingAuth } = useAuthStore();
+    const { user, isAuthenticated, isVerified, isCheckingAuth } = useAuthStore();
 
 if (isCheckingAuth) {
   return <LoadingSpinner />; // or null
 }
 
-if (!isAuthenticated || !user) {
+if (!isVerified || !user) {
   // redirect to login or show error
   return <div>Доступ заборонено</div>;
 }
