@@ -23,31 +23,53 @@ export default function AdminPage() {
         error,
         message,
         clearError,
-        clearMessage
+        clearMessage,
+        user,
+        isVerified,
+        isCheckingAuth,
+        checkAuth
     } = useAuthStore();
 
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
-    const { user, isVerified, isCheckingAuth, checkAuth } = useAuthStore();
 
+    // Always call hooks at the top level
     useEffect(() => {
-        // Ensure auth check runs on mount
         checkAuth();
         fetchEmployeeCodes();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        fetchEmployeeCodes();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                clearMessage();
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+        if (error) {
+            const timer = setTimeout(() => {
+                clearError();
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [message, error, clearMessage, clearError]);
+
+    // Early returns for auth checks
     if (isCheckingAuth) {
         return <LoadingSpinner />;
     }
-
-    if (!user || !isVerified) {
+    if (!user || !isVerified || user.role !== 'admin') {
         return <div>Доступ заборонено</div>;
     }
 
-    if (user.role !== 'admin') {
-        return <div>Доступ заборонено</div>;
-    }
+    // ...rest of your component...
     // Завантажуємо коди при завантаженні компонента
     useEffect(() => {
         fetchEmployeeCodes();
