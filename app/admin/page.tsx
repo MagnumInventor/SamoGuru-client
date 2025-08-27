@@ -29,16 +29,22 @@ export default function AdminPage() {
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
-    const { user, isAuthenticated, isVerified, isCheckingAuth } = useAuthStore();
+    const { user, isVerified, isCheckingAuth, checkAuth } = useAuthStore();
 
-if (isCheckingAuth) {
-  return <LoadingSpinner />; // or null
-}
+    useEffect(() => {
+        // Ensure auth check runs on mount
+        checkAuth();
+        fetchEmployeeCodes();
+    }, []);
 
-if (!isVerified || !user) {
-  // redirect to login or show error
-  return <div>Доступ заборонено</div>;
-}
+    if (isCheckingAuth) {
+        return <LoadingSpinner />;
+    }
+
+    if (!user || !isVerified) {
+        return <div>Доступ заборонено</div>;
+    }
+
     if (user.role !== 'admin') {
         return <div>Доступ заборонено</div>;
     }
