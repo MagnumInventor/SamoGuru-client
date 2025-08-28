@@ -220,9 +220,10 @@ login: async (email, password) => {
         user: response.data.user,
         isAuthenticated: true,
         isVerified: response.data.user?.isVerified || false,
+        isCheckingAuth: false, // <-- ensure this is set!
       });
     } catch (error) {
-      set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+      set({ error: null, isCheckingAuth: false, isAuthenticated: false, user: null, isVerified: false });
     }
   },
 

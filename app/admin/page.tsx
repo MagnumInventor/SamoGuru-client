@@ -42,11 +42,6 @@ export default function AdminPage() {
     }, []);
 
     useEffect(() => {
-        fetchEmployeeCodes();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
         if (message) {
             const timer = setTimeout(() => {
                 clearMessage();
@@ -69,7 +64,6 @@ export default function AdminPage() {
         return <div>Доступ заборонено</div>;
     }
 
-    // ...rest of your component...
     // Завантажуємо коди при завантаженні компонента
     useEffect(() => {
         fetchEmployeeCodes();
