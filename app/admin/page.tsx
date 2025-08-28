@@ -26,7 +26,7 @@ export default function AdminPage() {
         clearError,
         clearMessage,
         user,
-        isVerified,
+        isAuthenticated,
         isCheckingAuth,
         checkAuth
     } = useAuthStore();
@@ -62,7 +62,7 @@ export default function AdminPage() {
     if (isCheckingAuth) {
         return <LoadingSpinner />;
     }
-    if (!user || !isVerified || user.role !== 'admin') {
+    if (!user || !isAuthenticated || user.role !== 'admin') {
         return <div>Доступ заборонено</div>;
     }
 
