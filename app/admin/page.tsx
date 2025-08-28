@@ -43,20 +43,6 @@ export default function AdminPage() {
         }
     ];
 
-export default function AdminPage() {
-    // Only call hooks at the top level!
-    const {
-        employeeCodes,
-        fetchEmployeeCodes,
-        addEmployeeCode,
-        deleteEmployeeCode,
-        isLoading,
-        error,
-        message,
-        clearError,
-        clearMessage,
-    } = useAuthStore();
-
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
