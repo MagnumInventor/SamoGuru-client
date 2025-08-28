@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
@@ -91,10 +91,12 @@ const allNavItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter();
   const { user, logout } = useAuthStore()
 
   const handleLogout = async () => {
     await logout()
+    router.push("/login")
   }
 
   // ФІЛЬТРУВАННЯ НАВІГАЦІЇ ЗАЛЕЖНО ВІД РОЛІ
