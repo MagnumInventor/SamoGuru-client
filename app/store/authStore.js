@@ -331,12 +331,3 @@ login: async (email, password) => {
     }
   },
 }));
-        set({
-          isLoading: false,
-          error: error.response?.data?.message || "Error logging out",
-        });
-        throw error;
-      }
-    },
-  };
-});
