@@ -14,6 +14,7 @@ import { useAuthStore } from "@/app/store/authStore";
 import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function AdminPage() {
+    // Only call hooks at the top level!
     const {
         employeeCodes,
         fetchEmployeeCodes,
@@ -34,13 +35,14 @@ export default function AdminPage() {
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
 
-    // Always call hooks at the top level
+    // Only ONE useEffect for auth and codes
     useEffect(() => {
         checkAuth();
         fetchEmployeeCodes();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Only ONE useEffect for clearing messages/errors
     useEffect(() => {
         if (message) {
             const timer = setTimeout(() => {
@@ -63,27 +65,6 @@ export default function AdminPage() {
     if (!user || !isVerified || user.role !== 'admin') {
         return <div>Доступ заборонено</div>;
     }
-
-    // Завантажуємо коди при завантаженні компонента
-    useEffect(() => {
-        fetchEmployeeCodes();
-    }, []);
-
-    // Очищуємо повідомлення через 3 секунди
-    useEffect(() => {
-        if (message) {
-            const timer = setTimeout(() => {
-                clearMessage();
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-        if (error) {
-            const timer = setTimeout(() => {
-                clearError();
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [message, error]);
 
     const handleAddCode = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
