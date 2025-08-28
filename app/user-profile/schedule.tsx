@@ -121,7 +121,7 @@ export default function UserProfileSchedulePage() {
                 const isSelected = selectedDate?.toDateString() ===
                   date.toDateString();
                 const shifts = personalSchedule.filter(
-                  (shift) => new Date(shift.date).getDate() === day
+                  (shift: { date: string | number | Date; }) => new Date(shift.date).getDate() === day
                 );
 
                 return (
@@ -137,7 +137,7 @@ export default function UserProfileSchedulePage() {
                     <div className="text-xs">{getDayOfWeek(date.getDate())}</div>
                     <div className="text-sm font-medium">
                       {shifts.length > 0
-                        ? shifts.map((shift) =>
+                        ? shifts.map((shift: { type: string; }) =>
                             shift.type === "morning"
                               ? "Робочий ранок"
                               : "Робочий вечір"
