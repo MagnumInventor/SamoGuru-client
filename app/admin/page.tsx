@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
@@ -11,6 +11,37 @@ import LoadingSpinner from "../components/LoadingSpinner";
 
 import { useAuthStore } from "@/app/store/authStore";
 import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle } from "lucide-react";
+
+export default function AdminPage() {
+    // Only call hooks at the top level!
+    const {
+        employeeCodes,
+        fetchEmployeeCodes,
+        addEmployeeCode,
+        deleteEmployeeCode,
+        isLoading,
+        error,
+        message,
+        clearError,
+        clearMessage,
+    } = useAuthStore();
+
+    const adminStats = [
+        {
+            title: "Загальна кількість кодів",
+            value: Array.isArray(employeeCodes) ? employeeCodes.length : 0,
+            change: "",
+            icon: Users,
+            color: "text-blue-600"
+        },
+        {
+            title: "Використані коди",
+            value: Array.isArray(employeeCodes) ? employeeCodes.filter((c: any) => c.isUsed).length : 0,
+            change: "",
+            icon: CheckCircle,
+            color: "text-green-600"
+        }
+    ];
 
 export default function AdminPage() {
     // Only call hooks at the top level!
@@ -53,6 +84,37 @@ export default function AdminPage() {
     }, [message, error, clearMessage, clearError]);
 
 
+
+    function formatDate(dateString: string): string {
+        if (!dateString) return '';
+        return new Date(dateString).toLocaleDateString('uk-UA', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+
+    async function handleAddCode(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        if (!newCode.trim()) return;
+        try {
+            await addEmployeeCode(newCode.trim(), newDescription.trim());
+            setNewCode('');
+            setNewDescription('');
+            setShowAddForm(false);
+        } catch (error) {
+            // error handled by store
+        }
+    }
+
+    async function handleDeleteCode(codeId: string) {
+        if (!window.confirm('Ви впевнені, що хочете видалити цей код?')) return;
+        try {
+            await deleteEmployeeCode(codeId);
+        } catch (error) {
+            // error handled by store
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -108,8 +170,8 @@ export default function AdminPage() {
                                     <p className="text-xs text-gray-600 mt-1">{stat.change}</p>
                                 </CardContent>
                             </Card>
-                        );
-                    })}
+                            );
+                        })}
                 </div>
 
                 {/* Форма додавання коду */}
@@ -177,116 +239,60 @@ export default function AdminPage() {
                             </div>
                         ) : (
                             <div className="space-y-3">
-                                {Array.isArray(employeeCodes) && employeeCodes.map((code: any) => {
-                                    return (
-                                        <div 
-                                            key={code._id} 
-                                            className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
-                                        >
-                                            <div className="flex-1">
-                                                <div className="flex items-center gap-3 mb-2">
-                                                    <span className="font-mono font-medium">
-                                                        {code.code}
-                                                    </span>
-                                                    <Badge variant={code.isUsed ? "secondary" : "default"}>
-                                                        {code.isUsed ? "Використаний" : "Доступний"}
-                                                    </Badge>
-                                                </div>
-                                                {code.description && (
-                                                    <p className="text-sm text-gray-600 mb-2">
-                                                        {code.description}
-                                                    </p>
-                                                )}
-                                                <div className="text-xs text-gray-500 flex flex-wrap gap-4">
-                                                    <span className="flex items-center gap-1">
-                                                        <Calendar className="h-3 w-3" />
-                                                        Створено: {formatDate(code.createdAt)}
-                                                    </span>
-                                                    {code.isUsed && code.usedBy && (
-                                                        <span>
-                                                            {code.usedBy.firstName ? `Використав: ${code.usedBy.firstName} ${code.usedBy.lastName}` : `Використав: ${code.usedBy}`}
-                                                        </span>
-                                                    )}
-                                                    {code.isUsed && code.usedAt && (
-                                                        <span className="flex items-center gap-1">
-                                                            <CheckCircle className="h-3 w-3" />
-                                                            Використано: {formatDate(code.usedAt)}
-                                                        </span>
-                                                    )}
-                                                </div>
+                                {Array.isArray(employeeCodes) && employeeCodes.map((code: any) => (
+                                    <div 
+                                        key={code._id} 
+                                        className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
+                                    >
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <span className="font-mono font-medium">
+                                                    {code.code}
+                                                </span>
+                                                <Badge variant={code.isUsed ? "secondary" : "default"}>
+                                                    {code.isUsed ? "Використаний" : "Доступний"}
+                                                </Badge>
                                             </div>
-                                            {!code.isUsed && (
-                                                <Button
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    onClick={() => handleDeleteCode(code._id)}
-                                                    className="text-red-600 hover:text-red-800 hover:bg-red-50"
-                                                    title="Видалити код"
-                                                >
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
+                                            {code.description && (
+                                                <p className="text-sm text-gray-600 mb-2">
+                                                    {code.description}
+                                                </p>
                                             )}
+                                            <div className="text-xs text-gray-500 flex flex-wrap gap-4">
+                                                <span className="flex items-center gap-1">
+                                                    <Calendar className="h-3 w-3" />
+                                                    Створено: {formatDate(code.createdAt)}
+                                                </span>
+                                                {code.isUsed && code.usedBy && (
+                                                    <span>
+                                                        {code.usedBy.firstName ? `Використав: ${code.usedBy.firstName} ${code.usedBy.lastName}` : `Використав: ${code.usedBy}`}
+                                                    </span>
+                                                )}
+                                                {code.isUsed && code.usedAt && (
+                                                    <span className="flex items-center gap-1">
+                                                        <CheckCircle className="h-3 w-3" />
+                                                        Використано: {formatDate(code.usedAt)}
+                                                    </span>
+                                                )}
+                                            </div>
                                         </div>
-                                    );
-                                })}
+                                        {!code.isUsed && (
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={() => handleDeleteCode(code._id)}
+                                                className="text-red-600 hover:text-red-800 hover:bg-red-50"
+                                                title="Видалити код"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         )}
                     </CardContent>
                 </Card>
             </div>
         </div>
-    );
-                                                    <div className="flex items-center gap-3 mb-2">
-                                                        <span className="font-mono font-medium">
-                                                            {code.code}
-                                                        </span>
-                                                        <Badge variant={code.isUsed ? "secondary" : "default"}>
-                                                            {code.isUsed ? "Використаний" : "Доступний"}
-                                                        </Badge>
-                                                    </div>
-                                                    {code.description && (
-                                                        <p className="text-sm text-gray-600 mb-2">
-                                                            {code.description}
-                                                        </p>
-                                                    )}
-                                                    <div className="text-xs text-gray-500 flex flex-wrap gap-4">
-                                                        <span className="flex items-center gap-1">
-                                                            <Calendar className="h-3 w-3" />
-                                                            Створено: {formatDate(code.createdAt)}
-                                                        </span>
-                                                        {code.isUsed && code.usedBy && (
-                                                            <span>
-                                                                {code.usedBy.firstName ? `Використав: ${code.usedBy.firstName} ${code.usedBy.lastName}` : `Використав: ${code.usedBy}`}
-                                                            </span>
-                                                        )}
-                                                        {code.isUsed && code.usedAt && (
-                                                            <span className="flex items-center gap-1">
-                                                                <CheckCircle className="h-3 w-3" />
-                                                                Використано: {formatDate(code.usedAt)}
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                {!code.isUsed && (
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        onClick={() => handleDeleteCode(code._id)}
-                                                        className="text-red-600 hover:text-red-800 hover:bg-red-50"
-                                                        title="Видалити код"
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                );
-                            })()}
-                        </CardContent>
-                    </Card>
-                </div>
-            </div>
-        </div>
-    );
-}
+    )};
