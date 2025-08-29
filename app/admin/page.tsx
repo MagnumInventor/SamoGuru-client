@@ -1,63 +1,21 @@
 "use client";
 
 import React, { useState, useEffect, FormEvent } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Badge } from "../components/ui/badge";
-import { Alert, AlertDescription } from "../components/ui/alert";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
+import { Badge } from "@/app/components/ui/badge";
+import { Alert, AlertDescription } from "@/app/components/ui/alert";
+import { AdminGuard } from "../components/RoleGuard"; // Імпорт нашого компонента
 
 import { useAuthStore, USER_ROLES } from "../store/authStore";
-import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock } from "lucide-react";
+import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield } from "lucide-react";
 
-// Компонент для блокування доступу
-const AccessDenied = () => (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-        <Card className="max-w-md w-full">
-            <CardHeader className="text-center">
-                <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-                    <Lock className="w-6 h-6 text-red-600" />
-                </div>
-                <CardTitle className="text-red-600">Доступ заборонено</CardTitle>
-                <CardDescription>
-                    У вас немає прав для перегляду цієї сторінки. Тільки адміністратори мають доступ до панелі управління.
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="text-center">
-                <Button 
-                    variant="outline" 
-                    onClick={() => window.history.back()}
-                    className="w-full"
-                >
-                    Повернутися назад
-                </Button>
-            </CardContent>
-        </Card>
-    </div>
-);
-
-// Компонент завантаження під час перевірки ролі
-const RoleCheckLoading = () => (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-        <Card className="max-w-md w-full">
-            <CardHeader className="text-center">
-                <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                    <Shield className="w-6 h-6 text-blue-600 animate-spin" />
-                </div>
-                <CardTitle>Перевірка прав доступу</CardTitle>
-                <CardDescription>
-                    Будь ласка, зачекайте...
-                </CardDescription>
-            </CardHeader>
-        </Card>
-    </div>
-);
-
-export default function AdminPage() {
+// Основний компонент без перевірки ролі (це робить AdminGuard)
+function AdminPageContent() {
     const {
         user,
-        isAuthenticated,
         employeeCodes,
         fetchEmployeeCodes,
         addEmployeeCode,
@@ -67,46 +25,8 @@ export default function AdminPage() {
         message,
         clearError,
         clearMessage,
-        isAdmin, // Використаємо готову функцію з store
     } = useAuthStore();
 
-    const [isCheckingRole, setIsCheckingRole] = useState(true);
-    const [hasAdminAccess, setHasAdminAccess] = useState(false);
-
-    // Перевірка ролі користувача
-    useEffect(() => {
-        const checkAdminRole = () => {
-            // Перевіряємо чи користувач авторизований
-            if (!isAuthenticated) {
-                setHasAdminAccess(false);
-                setIsCheckingRole(false);
-                return;
-            }
-
-            // Використовуємо функцію isAdmin() з store
-            const adminAccess = isAdmin();
-            setHasAdminAccess(adminAccess);
-            setIsCheckingRole(false);
-        };
-
-        // Невелика затримка для кращого UX
-        const timer = setTimeout(checkAdminRole, 300);
-        return () => clearTimeout(timer);
-    }, [isAuthenticated, user, isAdmin]); // Додали isAdmin до залежностей
-
-    // Показуємо завантаження під час перевірки
-    if (isCheckingRole) {
-        return <RoleCheckLoading />;
-    }
-
-    // Блокуємо доступ якщо користувач не адмін
-    if (!hasAdminAccess) {
-        return <AccessDenied />;
-    }
-
-
-
-    // Решта коду админ панелі (тільки якщо користувач - адмін)
     const adminStats = [
         {
             title: "Загальна кількість кодів",
@@ -365,5 +285,14 @@ export default function AdminPage() {
                 </Card>
             </div>
         </div>
+    );
+}
+
+// Основний експортований компонент обгорнутий в AdminGuard
+export default function AdminPage() {
+    return (
+        <AdminGuard>
+            <AdminPageContent />
+        </AdminGuard>
     );
 }
