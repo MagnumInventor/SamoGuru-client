@@ -1,12 +1,6 @@
 // hooks/useRoleProtection.ts
 import { useState, useEffect } from 'react';
-import { useAuthStore } from '@/app/store/authStore';
-
-export const USER_ROLES = {
-    ADMIN: 'admin',
-    WAITER: 'waiter',
-    HELPER: 'helper'
-} as const;
+import { useAuthStore, USER_ROLES } from '@/app/store/authStore';
 
 type UserRole = typeof USER_ROLES[keyof typeof USER_ROLES];
 
@@ -28,7 +22,7 @@ export const useRoleProtection = ({
     redirectOnUnauthorized = false,
     redirectPath = '/dashboard'
 }: UseRoleProtectionOptions): UseRoleProtectionReturn => {
-    const { user, isAuthenticated } = useAuthStore();
+    const { user, isAuthenticated, hasRole } = useAuthStore();
     const [isChecking, setIsChecking] = useState(true);
     const [hasAccess, setHasAccess] = useState(false);
 
@@ -45,9 +39,8 @@ export const useRoleProtection = ({
                 return;
             }
 
-            // Перевіряємо роль
-            const userRole = user.role?.toLowerCase();
-            const hasRequiredRole = userRole === requiredRole.toLowerCase();
+            // Використовуємо функцію hasRole з store
+            const hasRequiredRole = hasRole(requiredRole);
             
             setHasAccess(hasRequiredRole);
             setIsChecking(false);
@@ -61,7 +54,7 @@ export const useRoleProtection = ({
         // Невелика затримка для кращого UX
         const timer = setTimeout(checkRole, 100);
         return () => clearTimeout(timer);
-    }, [isAuthenticated, user, requiredRole, redirectOnUnauthorized, redirectPath]);
+    }, [isAuthenticated, user, requiredRole, redirectOnUnauthorized, redirectPath, hasRole]);
 
     return {
         hasAccess,
@@ -75,7 +68,7 @@ export const useRoleProtection = ({
 export const useMultiRoleProtection = (
     allowedRoles: UserRole[]
 ): UseRoleProtectionReturn => {
-    const { user, isAuthenticated } = useAuthStore();
+    const { user, isAuthenticated, hasAnyRole } = useAuthStore();
     const [isChecking, setIsChecking] = useState(true);
     const [hasAccess, setHasAccess] = useState(false);
 
@@ -87,10 +80,8 @@ export const useMultiRoleProtection = (
                 return;
             }
 
-            const userRole = user.role?.toLowerCase();
-            const hasAllowedRole = allowedRoles.some(
-                role => role.toLowerCase() === userRole
-            );
+            // Використовуємо функцію hasAnyRole з store
+            const hasAllowedRole = hasAnyRole(allowedRoles);
             
             setHasAccess(hasAllowedRole);
             setIsChecking(false);
@@ -98,7 +89,7 @@ export const useMultiRoleProtection = (
 
         const timer = setTimeout(checkRoles, 100);
         return () => clearTimeout(timer);
-    }, [isAuthenticated, user, allowedRoles]);
+    }, [isAuthenticated, user, allowedRoles, hasAnyRole]);
 
     return {
         hasAccess,
@@ -108,6 +99,10 @@ export const useMultiRoleProtection = (
     };
 };
 
+
+
+
+/* 
 // HOC для захисту компонентів
 export const withRoleProtection = <P extends object>(
     WrappedComponent: React.ComponentType<P>,
@@ -159,3 +154,4 @@ export const withRoleProtection = <P extends object>(
         return <WrappedComponent {...props} />;
     };
 };
+*/

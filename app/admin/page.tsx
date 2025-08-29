@@ -7,14 +7,57 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Badge } from "@/app/components/ui/badge";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
-import LoadingSpinner from "../components/LoadingSpinner";
 
-import { useAuthStore } from "@/app/store/authStore";
-import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle } from "lucide-react";
+import { useAuthStore, USER_ROLES } from "@/app/store/authStore";
+import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock } from "lucide-react";
+
+// Компонент для блокування доступу
+const AccessDenied = () => (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <Card className="max-w-md w-full">
+            <CardHeader className="text-center">
+                <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                    <Lock className="w-6 h-6 text-red-600" />
+                </div>
+                <CardTitle className="text-red-600">Доступ заборонено</CardTitle>
+                <CardDescription>
+                    У вас немає прав для перегляду цієї сторінки. Тільки адміністратори мають доступ до панелі управління.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+                <Button 
+                    variant="outline" 
+                    onClick={() => window.history.back()}
+                    className="w-full"
+                >
+                    Повернутися назад
+                </Button>
+            </CardContent>
+        </Card>
+    </div>
+);
+
+// Компонент завантаження під час перевірки ролі
+const RoleCheckLoading = () => (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+        <Card className="max-w-md w-full">
+            <CardHeader className="text-center">
+                <div className="mx-auto mb-4 w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-blue-600 animate-spin" />
+                </div>
+                <CardTitle>Перевірка прав доступу</CardTitle>
+                <CardDescription>
+                    Будь ласка, зачекайте...
+                </CardDescription>
+            </CardHeader>
+        </Card>
+    </div>
+);
 
 export default function AdminPage() {
-    // Only call hooks at the top level!
     const {
+        user,
+        isAuthenticated,
         employeeCodes,
         fetchEmployeeCodes,
         addEmployeeCode,
@@ -24,8 +67,44 @@ export default function AdminPage() {
         message,
         clearError,
         clearMessage,
+        isAdmin, // Використаємо готову функцію з store
     } = useAuthStore();
 
+    const [isCheckingRole, setIsCheckingRole] = useState(true);
+    const [hasAdminAccess, setHasAdminAccess] = useState(false);
+
+    // Перевірка ролі користувача
+    useEffect(() => {
+        const checkAdminRole = () => {
+            // Перевіряємо чи користувач авторизований
+            if (!isAuthenticated) {
+                setHasAdminAccess(false);
+                setIsCheckingRole(false);
+                return;
+            }
+
+            // Використовуємо функцію isAdmin() з store
+            const adminAccess = isAdmin();
+            setHasAdminAccess(adminAccess);
+            setIsCheckingRole(false);
+        };
+
+        // Невелика затримка для кращого UX
+        const timer = setTimeout(checkAdminRole, 100);
+        return () => clearTimeout(timer);
+    }, [isAuthenticated, user, isAdmin]); // Додали isAdmin до залежностей
+
+    // Показуємо завантаження під час перевірки
+    if (isCheckingRole) {
+        return <RoleCheckLoading />;
+    }
+
+    // Блокуємо доступ якщо користувач не адмін
+    if (!hasAdminAccess) {
+        return <AccessDenied />;
+    }
+
+    // Решта коду админ панелі (тільки якщо користувач - адмін)
     const adminStats = [
         {
             title: "Загальна кількість кодів",
@@ -47,13 +126,12 @@ export default function AdminPage() {
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
 
-    // Only ONE useEffect for auth and codes
+    // Завантажуємо коди працівників
     useEffect(() => {
         fetchEmployeeCodes();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [fetchEmployeeCodes]);
 
-    // Only ONE useEffect for clearing messages/errors
+    // Очищення повідомлень
     useEffect(() => {
         if (message) {
             const timer = setTimeout(() => {
@@ -68,8 +146,6 @@ export default function AdminPage() {
             return () => clearTimeout(timer);
         }
     }, [message, error, clearMessage, clearError]);
-
-
 
     function formatDate(dateString: string): string {
         if (!dateString) return '';
@@ -105,11 +181,17 @@ export default function AdminPage() {
     return (
         <div className="min-h-screen bg-gray-50 p-6">
             <div className="max-w-7xl mx-auto space-y-6">
-                {/* Заголовок */}
+                {/* Заголовок з індикатором ролі */}
                 <div className="flex justify-between items-center">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Панель адміністратора</h1>
-                        <p className="text-gray-600 mt-1">Управління кодами працівників</p>
+                        <div className="flex items-center gap-2 mb-2">
+                            <h1 className="text-3xl font-bold text-gray-900">Панель адміністратора</h1>
+                            <Badge variant="default" className="bg-green-100 text-green-800">
+                                <Shield className="w-3 h-3 mr-1" />
+                                {user?.role?.toUpperCase()}
+                            </Badge>
+                        </div>
+                        <p className="text-gray-600">Управління кодами працівників</p>
                     </div>
                     <Button 
                         onClick={() => setShowAddForm(!showAddForm)}
@@ -156,8 +238,8 @@ export default function AdminPage() {
                                     <p className="text-xs text-gray-600 mt-1">{stat.change}</p>
                                 </CardContent>
                             </Card>
-                            );
-                        })}
+                        );
+                    })}
                 </div>
 
                 {/* Форма додавання коду */}
@@ -281,4 +363,5 @@ export default function AdminPage() {
                 </Card>
             </div>
         </div>
-    )};
+    );
+}
