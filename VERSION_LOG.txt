@@ -1,0 +1,24 @@
+VERSION_LOG.txt
+Version meaning
+1. vx.x.xs - Stable version with main function/changes working fully properly
+2. vx.x.xd - Development (test) version with main function/changes working
+===============
+frontend branches:
+- Fetch (mail): Implemented Brevo based mail servise used for authentication (07-08 2025)
+- NOauth-admin: Bypassed few security methods that were used to restrict users (all roles apart from admin) from getting access to admin page (27.08.2025)
+- Main (stuck in 08)
+
+v1.0.0 (2025-08-15)
+
+v1.1.0 (2025-08-15)
+
+v1.2.0 (2025-08-22)
+v1.2.1 (2025-08-22)
+v1.2.2 (2025-08-25)
+v1.3.0 (2025-08-28)
+
+v1.3.1 (2025-08-28-29)
+v1.3.2 (2025-08-29)
+v1.3.3d (2025-08-29)
+v1.3.4s (2025-08-29)
+s
