@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, FormEvent } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
-import { Button } from "@/app/components/ui/button";
-import { Input } from "@/app/components/ui/input";
-import { Label } from "@/app/components/ui/label";
-import { Badge } from "@/app/components/ui/badge";
-import { Alert, AlertDescription } from "@/app/components/ui/alert";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Badge } from "../components/ui/badge";
+import { Alert, AlertDescription } from "../components/ui/alert";
 
-import { useAuthStore, USER_ROLES } from "@/app/store/authStore";
+import { useAuthStore, USER_ROLES } from "../store/authStore";
 import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock } from "lucide-react";
 
 // Компонент для блокування доступу
@@ -90,7 +90,7 @@ export default function AdminPage() {
         };
 
         // Невелика затримка для кращого UX
-        const timer = setTimeout(checkAdminRole, 100);
+        const timer = setTimeout(checkAdminRole, 300);
         return () => clearTimeout(timer);
     }, [isAuthenticated, user, isAdmin]); // Додали isAdmin до залежностей
 
@@ -103,6 +103,8 @@ export default function AdminPage() {
     if (!hasAdminAccess) {
         return <AccessDenied />;
     }
+
+
 
     // Решта коду админ панелі (тільки якщо користувач - адмін)
     const adminStats = [
