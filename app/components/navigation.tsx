@@ -62,11 +62,11 @@ const allNavItems = [
   { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["helper"] }, 
   { href: "/tablewear", label: "Посуд", icon: Utensils, roles: ["helper"] },
 
-  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper"] }, 
-    { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
-    { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter", "helper"] },
+  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper", "waiter"] }, 
+  { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
+  { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter", "helper"] },
   
-    { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
+  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["waiter"] }, 
   //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
