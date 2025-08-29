@@ -58,13 +58,13 @@ export default function AdminPage() {
         if (message) {
             const timer = setTimeout(() => {
                 clearMessage();
-            }, 3000);
+            }, 30000);
             return () => clearTimeout(timer);
         }
         if (error) {
             const timer = setTimeout(() => {
                 clearError();
-            }, 3000);
+            }, 10000);
             return () => clearTimeout(timer);
         }
     }, [message, error, clearMessage, clearError]);

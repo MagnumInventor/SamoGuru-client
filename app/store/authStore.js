@@ -24,6 +24,9 @@ export const useAuthStore = create((set, get) => ({
   message: null,
   employeeCodes: [], 
 
+
+
+
   // Enhanced signup with employee code validation
   signup: async (
     email,
@@ -88,6 +91,12 @@ login: async (email, password) => {
     throw error;
   }
 },
+
+
+
+
+
+
 
   // Перевірка адміністраторського коду
   verifyAdminCode: async (adminCode) => {
@@ -196,6 +205,12 @@ login: async (email, password) => {
     }
   },
 
+
+
+
+
+
+
   verifyEmail: async (code) => {
     set({ isLoading: true, error: null });
     try {
@@ -261,6 +276,7 @@ login: async (email, password) => {
 
 
 
+
   // NEW: Role management functions
   updateUserRole: async (userId, newRole) => {
     const { user } = get();
@@ -309,6 +325,10 @@ login: async (email, password) => {
 
   // Clear message
   clearMessage: () => set({ message: null }),
+
+
+
+
 
   // Вихід з акаунта (logout, updated to call backend and clear state)
   logout: async () => {
