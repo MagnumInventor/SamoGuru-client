@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useAuthStore } from "@/app/store/authStore"
+import { useAuthStore } from "../../store/authStore"
 import LoadingSpinner from "@/app/components/LoadingSpinner"
 
 interface ProtectedRouteProps {
@@ -24,7 +24,7 @@ export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) 
   }
 
   if (!isAuthenticated) {
-    router.push("/login")
+    router.push("/main")
     return <LoadingSpinner />
   }
 

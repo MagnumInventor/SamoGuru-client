@@ -42,50 +42,46 @@ const getRoleDisplayName = (role: string): string => {
 }
 
 const allNavItems = [
-  { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
-  
-  { href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
+  // НЕЗАХИЩЕНІ СТОРІНКИ (без ProtectedRoute, etc.)
+  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter"] },
+  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper", "waiter"] }, 
+  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["trainee"] }, 
 
-  // ПАНЕЛЬ МенеджерА
-  { href: "/admin", label: "Меню", icon: User, roles: ["admin"] },
-  { href: "/pnp", label: "Правила платформи", icon: Newspaper, roles: ["admin"] },
-  { href: "/schedule", label: "Графік", icon: Calendar, roles: ["admin"] },
-  { href: "/tasks", label: "Виконання плану", icon: CheckSquare, roles: ["admin"] },
-
-
-  { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
-  { href: "/tasks", label: "Робота", icon: CheckSquare, roles: ["helper"] },
-
-  { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
-  { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
-
+  // ЗАХИЩЕНІ СТОРІНКИ (через ProtectedRoute)
   { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["helper"] }, 
   { href: "/tablewear", label: "Посуд", icon: Utensils, roles: ["helper"] },
+  { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
+  { href: "/tasks", label: "Робота", icon: CheckSquare, roles: ["helper"] },
+  { href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
 
-  { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper", "waiter"] }, 
+  // ПЕРСОНАЛЬНІ СТОРІНКИ
+  { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
+  { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
+  { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
+  { href: "/my-path/trainee", label: "Стажування", icon: User, roles: ["trainee"] },
+  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
+
+        // HELPER & WAITER
   { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
   { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter", "helper"] },
-  
   { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["waiter"] }, 
   //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
-  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
-  
-  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter"] },
-
-
-  // МЕНЮ ДЛЯ СТАЖЕРІВ
-  { href: "/my-path/trainee", label: "Стажування", icon: User, roles: ["trainee"] },
-
+      // TRAINEE
   { href: "/rules/trainee", label: "Правила", icon: FileText, roles: ["trainee"] },
   { href: "/tasks/trainee", label: "Завдання", icon: CheckSquare, roles: ["trainee"] },
   { href: "/table-plan/map", label: "План закладу", icon:  BookOpen, roles: ["trainee"] },
   { href: "/serving", label: "Сервірування", icon:  Soup, roles: ["trainee"] },
   { href: "/tablewear", label: "Посуд та ліфт", icon:  BookOpen, roles: ["trainee"] },
+  { href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
 
-    { href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
 
-  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["trainee"] }, 
+  // СТОРІНКИ МЕНЕДЖЕРА
+  { href: "/admin", label: "Меню", icon: User, roles: ["admin"] },
+  { href: "/pnp", label: "Правила платформи", icon: Newspaper, roles: ["admin"] },
+  { href: "/schedule", label: "Графік", icon: Calendar, roles: ["admin"] },
+  { href: "/tasks", label: "Виконання плану", icon: CheckSquare, roles: ["admin"] },
+
 ]
 
 export function Navigation() {
