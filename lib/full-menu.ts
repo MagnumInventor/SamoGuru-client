@@ -37,7 +37,14 @@ interface BarItem {
   alcohol: string
   volumes: string[]
   price: string
-  type: "beer" | "tincture" | "brandy" | "vodka" | "rum" | "gin" | "whisky"
+  type: 
+  | "beer" 
+  | "tincture" 
+  | "brandy" 
+  | "vodka" 
+  | "rum" 
+  | "gin" 
+  | "whisky"
   country?: string
   type_detail?: string
   ingredients?: string
@@ -81,52 +88,6 @@ const barTabs = [
   { value: "cocktails", label: "Коктейлі" },
   { value: "alco", label: "Алкогольні напої" },
 ]
-
-// ===== Helpers =====
-const getTypeColor = (type?: string) => {
-  switch (type) {
-    case "beer":
-      return "bg-yellow-100 text-yellow-800"
-    case "tincture":
-      return "bg-purple-100 text-purple-800"
-    case "brandy":
-      return "bg-amber-100 text-amber-800"
-    case "vodka":
-      return "bg-blue-100 text-blue-800"
-    case "rum":
-      return "bg-orange-100 text-orange-800"
-    case "gin":
-      return "bg-green-100 text-green-800"
-    case "whisky":
-      return "bg-red-100 text-red-800"
-    default:
-      return "bg-gray-100 text-gray-800"
-  }
-}
-
-const getTypeText = (type?: string) => {
-  switch (type) {
-    case "beer":
-      return "Пиво"
-    case "tincture":
-      return "Наливка"
-    case "brandy":
-      return "Бренді"
-    case "vodka":
-      return "Горілка"
-    case "rum":
-      return "Ром"
-    case "gin":
-      return "Джин"
-    case "whisky":
-      return "Віскі"
-    default:
-      return "Напій"
-  }
-}
-
-
-
 
 
   // ФІЛЬТРАЦІЯ ПО ІМЕНІ + алерген
