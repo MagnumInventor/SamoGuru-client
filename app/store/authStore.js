@@ -24,6 +24,9 @@ export const useAuthStore = create((set, get) => ({
   message: null,
   employeeCodes: [], 
 
+
+
+
   // Enhanced signup with employee code validation
   signup: async (
     email,
@@ -37,8 +40,8 @@ export const useAuthStore = create((set, get) => ({
     try {
       // Require adminCode for admin role
       if (role === USER_ROLES.ADMIN && !adminCode) {
-        set({ error: "Потрібен адміністраторський код", isLoading: false });
-        throw new Error("Потрібен адміністраторський код");
+        set({ error: "Потрібен Менеджерський код", isLoading: false });
+        throw new Error("Потрібен Менеджерський код");
       }
       // Require employeeCode for waiter role
       if (role === USER_ROLES.WAITER && !employeeCode) {
@@ -89,7 +92,13 @@ login: async (email, password) => {
   }
 },
 
-  // Перевірка адміністраторського коду
+
+
+
+
+
+
+  // Перевірка Менеджерського коду
   verifyAdminCode: async (adminCode) => {
     set({ isLoading: true, error: null });
     try {
@@ -129,7 +138,7 @@ login: async (email, password) => {
     }
   },
 
-  // Додавання коду працівника (тільки адміни)
+  // Додавання коду працівника (тільки Менеджери)
   addEmployeeCode: async (code, description = "") => {
     set({ isLoading: true, error: null });
     try {
@@ -155,7 +164,7 @@ login: async (email, password) => {
     }
   },
 
-  // Видалення коду працівника (тільки адміни)
+  // Видалення коду працівника (тільки Менеджери)
   deleteEmployeeCode: async (codeId) => {
     set({ isLoading: true, error: null });
     try {
@@ -178,7 +187,7 @@ login: async (email, password) => {
     }
   },
 
-  // Отримання всіх кодів (тільки адміни)
+  // Отримання всіх кодів (тільки Менеджери)
   fetchEmployeeCodes: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -195,6 +204,12 @@ login: async (email, password) => {
       throw error;
     }
   },
+
+
+
+
+
+
 
   verifyEmail: async (code) => {
     set({ isLoading: true, error: null });
@@ -261,6 +276,7 @@ login: async (email, password) => {
 
 
 
+
   // NEW: Role management functions
   updateUserRole: async (userId, newRole) => {
     const { user } = get();
@@ -309,6 +325,10 @@ login: async (email, password) => {
 
   // Clear message
   clearMessage: () => set({ message: null }),
+
+
+
+
 
   // Вихід з акаунта (logout, updated to call backend and clear state)
   logout: async () => {

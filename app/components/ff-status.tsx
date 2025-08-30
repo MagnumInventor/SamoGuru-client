@@ -23,7 +23,7 @@ export default function FFStatus() {
     { name: "Завантаження відео", status: "ff", type: "server" },
     { name: "CMS для новин", status: "ff", type: "server" },
     { name: "База даних", status: "ff", type: "server" },
-    { name: "Адмін панель (повна)", status: "ff", type: "server" },
+    { name: "Менеджер панель (повна)", status: "ff", type: "server" },
   ]
 
   return (

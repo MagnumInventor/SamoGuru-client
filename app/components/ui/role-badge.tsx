@@ -32,7 +32,7 @@ export function RoleBadge({ role, size = "md" }: RoleBadgeProps) {
         }
       case "admin":
         return {
-          label: "Адміністратор",
+          label: "Менеджер",
           variant: "destructive" as const,
           icon: Shield,
           color: "text-red-600",

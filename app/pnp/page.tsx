@@ -185,7 +185,7 @@ export default function LegalDocumentsPage() {
                 <div className="mb-4">
                   <p className="text-gray-700 font-medium mb-2">Поточна версія:</p>
                   <ul className="list-disc pl-6 space-y-1 text-gray-700">
-                    <li>Авторизація за ролями (Адміністратор, Офіціант, Помічник)</li>
+                    <li>Авторизація за ролями (Менеджер, Офіціант, Помічник)</li>
                     <li>Базовий інтерфейс управління</li>
                   </ul>
                 </div>

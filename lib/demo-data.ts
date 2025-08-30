@@ -88,7 +88,7 @@ export const demoNewsData = [
     description: "Вітаємо Діму, який приєдналася до нашої команди як помічник офіціантв",
     category: "team",
     date: "12.05.2025",
-    author: "Адміністрація",
+    author: "Менеджерістрація",
   },
   {
     id: 2,
