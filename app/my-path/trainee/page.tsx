@@ -147,7 +147,7 @@ export default function AssistantGuidePage() {
               </div>
               <div className="p-3 bg-blue-50 rounded-lg">
                 <p>"Уважно читайте чек та коментарі до них перед сервіруванням та віднесенням замовлення"</p>
-                <p className="text-sm text-gray-600 mt-1">- Порада від адміністратора</p>
+                <p className="text-sm text-gray-600 mt-1">- Порада від Менеджера</p>
               </div>
               <div className="p-3 bg-blue-50 rounded-lg">
                 <p>"Перш ніж заносити замовлення, уявіть собі весь маршрут - та врахуйте що можна зробити по дорозі"</p>
@@ -207,11 +207,11 @@ export default function AssistantGuidePage() {
                 </div>
                 <div>
                   <h3 className="font-medium mb-2">Тривалість стажування</h3>
-                  <p>Стажування на кожній з 4 станцій по 1 повній зміні, вихід на ставку визначає адміністратор залежно від успішності стажування та результатів</p><Link href="/app/tests/trainee">тестування</Link>
+                  <p>Стажування на кожній з 4 станцій по 1 повній зміні, вихід на ставку визначає Менеджер залежно від успішності стажування та результатів</p><Link href="/app/tests/trainee">тестування</Link>
                 </div>
                 <div>
                   <h3 className="font-medium mb-2">Контактні особи</h3>
-                  <p>Адміністратор: (тел. 067-327-9853)</p>
+                  <p>Менеджер: (тел. 067-327-9853)</p>
                 </div>
                 <div>
                   <h3 className="font-medium mb-2">Важливі процедури</h3>
@@ -230,7 +230,7 @@ export default function AssistantGuidePage() {
             <CardContent className="space-y-4">
               <div>
                 <h3 className="font-medium">Що робити, якщо розбили посуд з напоєм/стравою?</h3>
-                <p className="text-gray-600">Повідомити про інцедент посудомийницям на мийці біля станції Гриль, якщо цього не достатньо повідомити адміністраторам</p>
+                <p className="text-gray-600">Повідомити про інцедент посудомийницям на мийці біля станції Гриль, якщо цього не достатньо повідомити Менеджерам</p>
               </div>
               <div>
                 <h3 className="font-medium">Як поміняти воду у кулері?</h3>
@@ -238,7 +238,7 @@ export default function AssistantGuidePage() {
               </div>
               <div>
                 <h3 className="font-medium">Що робити якщо погане самопочуття?</h3>
-                <p className="text-gray-600">ВАЖЛИВО зразу повідомити про це адміністратору та колегам по станції, аптечка на 3 поверсі в кабінеті</p>
+                <p className="text-gray-600">ВАЖЛИВО зразу повідомити про це Менеджеру та колегам по станції, аптечка на 3 поверсі в кабінеті</p>
               </div>
             </CardContent>
           </Card>

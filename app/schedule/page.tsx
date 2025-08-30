@@ -695,7 +695,7 @@ export default function SchedulePage() {
         </Button>
         {user?.role === "admin" && (
           <Button variant="outline" className="border-purple-200 text-purple-600 hover:bg-purple-50">
-            <a href="/admin">Адмін панель</a>
+            <a href="/admin">Менеджер панель</a>
           </Button>
         )}
       </div>

@@ -193,7 +193,7 @@ const allHelperTasks: HelperTask[] = [
   {
     id: "h21",
     title: "Звіт про стан форми в кінці зміни",
-    description: "Перевірити стан форми, чи все чисте та випрасуване, чи є пошкодження. Якщо є - повідомити адміністратора, якщо все добре - відправити звіт",
+    description: "Перевірити стан форми, чи все чисте та випрасуване, чи є пошкодження. Якщо є - повідомити Менеджера, якщо все добре - відправити звіт",
     category: "before-closing",
     difficulty: "easy",
     station: ["Верхній бар", "Нижній бар", "Гриль", "Кухня"],
@@ -812,7 +812,7 @@ export default function TasksPage() {
   if (isAdmin) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Адмін панель - Прогрес завдань</h1>
+        <h1 className="text-3xl font-bold mb-6">Менеджер панель - Прогрес завдань</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card>

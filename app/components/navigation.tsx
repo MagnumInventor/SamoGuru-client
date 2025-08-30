@@ -33,7 +33,7 @@ const getRoleDisplayName = (role: string): string => {
     case "helper":
       return "Малий/мала"
     case "admin":
-      return "Адмін"
+      return "Менеджер"
     case "trainee":
       return "Стажер"
     default:
@@ -44,9 +44,9 @@ const getRoleDisplayName = (role: string): string => {
 const allNavItems = [
   { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
   
-  { href: "/", label: "Головна", icon: User, roles: ["waiter", "helper"] },
+  { href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
 
-  // ПАНЕЛЬ АДМІНІСТРАТОРА
+  // ПАНЕЛЬ МенеджерА
   { href: "/admin", label: "Меню", icon: User, roles: ["admin"] },
   { href: "/pnp", label: "Правила платформи", icon: Newspaper, roles: ["admin"] },
   { href: "/schedule", label: "Графік", icon: Calendar, roles: ["admin"] },
@@ -155,7 +155,7 @@ export function Navigation() {
                 <DropdownMenuItem asChild>
                   <Link href="/admin" className="flex items-center">
                     <Settings className="mr-2 h-4 w-4" />
-                    Адміністрування
+                    Менеджерістрування
                   </Link>
                 </DropdownMenuItem>
               )}
@@ -212,7 +212,7 @@ export function Navigation() {
                     className="flex items-center space-x-3 px-4 py-3 rounded-md text-sm font-medium text-gray-600 hover:text-orange-600 hover:bg-orange-50"
                   >
                     <Settings className="h-5 w-5" />
-                    <span>Адміністрування</span>
+                    <span>Менеджерістрування</span>
                   </Link>
                 )}
               </div>

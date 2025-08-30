@@ -22,7 +22,7 @@ export default function AdminPage() {
     // Якщо дані ще завантажуються
     if (!isReady) return <div>Завантаження...</div>;
 
-    // Якщо користувач не має прав адміністратора
+    // Якщо користувач не має прав Менеджера
     if (!isAdmin) return <div>Немає доступу</div>;
 
 
@@ -30,7 +30,7 @@ export default function AdminPage() {
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
 
-    // Основний контент для адмінів
+    // Основний контент для Менеджерів
     const adminStats = [
         {
             title: "Загальна кількість кодів",
@@ -86,7 +86,7 @@ export default function AdminPage() {
                 <div className="flex justify-between items-center">
                     <div>
                         <div className="flex items-center gap-2 mb-2">
-                            <h1 className="text-3xl font-bold text-gray-900">Панель адміністратора</h1>
+                            <h1 className="text-3xl font-bold text-gray-900">Панель Менеджера</h1>
                             <Badge variant="default" className="bg-green-100 text-green-800">
                                 <Shield className="w-3 h-3 mr-1" />
                                 {authState.user.role.toUpperCase()}

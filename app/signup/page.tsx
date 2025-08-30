@@ -27,7 +27,7 @@ const roleOptions = [
   { value: USER_ROLES.TRAINEE, label: "Стажер", description: "Новий працівник на навчанні" },
   //{ value: USER_ROLES.HELPER, label: "Помічник", description: "Малий/мала - помічник офіціанта" },
   { value: USER_ROLES.WAITER, label: "Офіціант", description: "Фіц - рядовий офіціант" },
-  { value: USER_ROLES.ADMIN, label: "Адміністратор", description: "Менеджмент та управління" }
+  { value: USER_ROLES.ADMIN, label: "Менеджер", description: "Менеджмент та управління" }
 ]
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -86,7 +86,7 @@ return (
                 <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Код працівника (отримайте у адміністратора)"
+                  placeholder="Код працівника (отримайте у Менеджера)"
                   value={employeeCode}
                   onChange={(e) => setEmployeeCode(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
@@ -101,7 +101,7 @@ return (
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Адміністраторський код (отримайте у власника)"
+                  placeholder="Менеджерський код (отримайте у власника)"
                   value={adminCode}
                   onChange={(e) => setAdminCode(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"

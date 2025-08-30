@@ -59,7 +59,7 @@ export default function HomePage() {
           <Card className="hover:shadow-lg transition-shadow border-orange-100">
             <CardHeader className="text-center">
               <BookOpen className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-              <CardTitle className="text-orange-600">Адміністративна складова</CardTitle>
+              <CardTitle className="text-orange-600">Менеджерістративна складова</CardTitle>
               <CardDescription>Повний список усіх правил, штрафів, оновлень, розпорядження, тощо</CardDescription>
             </CardHeader>
             <CardContent>

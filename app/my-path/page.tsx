@@ -21,7 +21,7 @@ const pathStages = [
       { task: "Перевірка знань", completed: true },
     ],
     duration: "1 день",
-    mentor: "Адміністратор",
+    mentor: "Менеджер",
   },
   {
     id: 2,
