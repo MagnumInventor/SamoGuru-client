@@ -13,117 +13,22 @@ import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock }
 
 export default function AdminPage() {
     // Отримуємо весь стан з authStore
-    const authState = useAuthStore();   
+    const authState = useAuthStore(); 
     
-    // Логування для дебагу
-    useEffect(() => {
-        console.log('🔍 AdminPage - Auth State:', {
-            isAuthenticated: authState.isAuthenticated,
-            isCheckingAuth: authState.isCheckingAuth,
-            user: authState.user,
-            userRole: authState.user?.role
-        });
-    }, [authState.isAuthenticated, authState.isCheckingAuth, authState.user]);
+    // Перевірка на готовність
+    const isReady = !authState.isCheckingAuth;
+    const isAdmin = authState.user?.role === 'admin';
 
-    // Принудово запускаємо checkAuth при завантаженні компонента
-    useEffect(() => {
-        if (!authState.isAuthenticated && !authState.isCheckingAuth) {
-            console.log('🚀 Calling checkAuth...');
-            authState.checkAuth();
-        }
-    }, [authState]);
+    // Якщо дані ще завантажуються
+    if (!isReady) return <div>Завантаження...</div>;
+
+    // Якщо користувач не має прав адміністратора
+    if (!isAdmin) return <div>Немає доступу</div>;
+
 
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
-
-    // Завантажуємо коди працівників тільки для адмінів
-    useEffect(() => {
-        if (authState.isAuthenticated && authState.user?.role === USER_ROLES.ADMIN) {
-            authState.fetchEmployeeCodes();
-        }
-    }, [authState.isAuthenticated, authState.user?.role]);
-
-    // Очищення повідомлень
-    useEffect(() => {
-        if (authState.message) {
-            const timer = setTimeout(() => {
-                authState.clearMessage();
-            }, 30000);
-            return () => clearTimeout(timer);
-        }
-        if (authState.error) {
-            const timer = setTimeout(() => {
-                authState.clearError();
-            }, 10000);
-            return () => clearTimeout(timer);
-        }
-    }, [authState.message, authState.error]);
-
-    // Показуємо завантаження
-    if (authState.isCheckingAuth) {
-        return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Перевірка автентифікації...</p>
-                    <p className="text-xs text-gray-400 mt-2">
-                        Debug: isCheckingAuth = {String(authState.isCheckingAuth)}
-                    </p>
-                </div>
-            </div>
-        );
-    }
-
-    // Перевірка автентифікації
-    if (!authState.isAuthenticated || !authState.user) {
-        return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-                <div className="max-w-md w-full bg-white rounded-lg shadow p-6 text-center">
-                    <Lock className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h2 className="text-xl font-bold mb-2">Потрібна автентифікація</h2>
-                    <p className="text-gray-600 mb-4">
-                        Будь ласка, увійдіть в систему для доступу до адмін-панелі.
-                    </p>
-                    <button 
-                        onClick={() => window.location.href = '/login'}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg"
-                    >
-                        Перейти до входу
-                    </button>
-                    <p className="text-xs text-gray-400 mt-4">
-                        Debug: auth = {String(authState.isAuthenticated)}, user = {authState.user ? 'exists' : 'null'}
-                    </p>
-                </div>
-            </div>
-        );
-    }
-
-    // Перевірка ролі адміністратора
-    if (authState.user.role !== USER_ROLES.ADMIN) {
-        return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-                <div className="max-w-md w-full bg-white rounded-lg shadow p-6 text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-red-100 rounded-full flex items-center justify-center">
-                        <Lock className="w-8 h-8 text-red-600" />
-                    </div>
-                    <h2 className="text-xl font-semibold text-gray-900 mb-2">Доступ заборонено</h2>
-                    <p className="text-gray-600 mb-2">
-                        Тільки адміністратори мають доступ до цієї сторінки.
-                    </p>
-                    <p className="text-sm text-gray-500 mb-4">
-                        Ваша роль: <span className="font-medium">{authState.user.role}</span>
-                    </p>
-                    <button
-                        onClick={() => window.history.back()}
-                        className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                    >
-                        Повернутися назад
-                    </button>
-                </div>
-            </div>
-        );
-    }
 
     // Основний контент для адмінів
     const adminStats = [
