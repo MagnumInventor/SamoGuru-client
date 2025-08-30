@@ -8,17 +8,26 @@ frontend branches:
 - NOauth-admin: Bypassed few security methods that were used to restrict users (all roles apart from admin) from getting access to admin page (27.08.2025)
 - Main (stuck in 08)
 
-v1.0.0 (2025-08-15)
+v1.0.0 (2025-06-12)
+- Builed front-side Next.js app (React (.tsx)) with static pages (rules, tasks, ) & login (joint test passwords)
+v1.1.0 (2025-06-20)
+v1.1.1 (2025-06-25)
+v1.2.0 (2025-06-30)
 
-v1.1.0 (2025-08-15)
+v2.1.0 (2025-07-dd)
+- Creating full-stack infrastcurture for server functions (Using AI systems) - failed
+v2.2.0 (2025-07-20)
+- Implemented MERN stack mono-sudo
+v2.2.0 (2025-07-20)
+- Adding properly secured but simple authentication ("simple-login" branch)
+v2.2.1s (2025-07-20)
+- Formed stable simple auth. system (terporary not suitable for SamoGuru eco-system) including: email verification, reset/forgot password end points, security from varios hacker attacks (SQL ...)
 
-v1.2.0 (2025-08-22)
-v1.2.1 (2025-08-22)
-v1.2.2 (2025-08-25)
-v1.3.0 (2025-08-28)
 
-v1.3.1 (2025-08-28-29)
-v1.3.2 (2025-08-29)
-v1.3.3d (2025-08-29)
-v1.3.4s (2025-08-29)
-s
+v3.4.1 (2025-08-30)
+- Renamed all console posts from "Адмін, адміністрація" to "Менеджер, менеджмент"
+
+v3.4.2 (2025-08-29)
+- Implemented low-security limiting methods to open access to admin page only for admin role
+v3.4.3s (2025-08-30)
+- Merged updates into MAIN after tests
