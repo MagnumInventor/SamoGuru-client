@@ -14,7 +14,6 @@ import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock }
 export default function AdminPage() {
     // Отримуємо весь стан з authStore
     const authState = useAuthStore(); 
-    
     // Перевірка на готовність
     const isReady = !authState.isCheckingAuth;
     const isAdmin = authState.user?.role === 'admin';
