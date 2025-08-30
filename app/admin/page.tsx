@@ -8,18 +8,14 @@ import { Label } from "@/app/components/ui/label";
 import { Badge } from "@/app/components/ui/badge";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
 
-import { useAuthStore, USER_ROLES } from "@/app/store/authStore";
+import { useAuthStore } from "@/app/store/authStore";
 import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock } from "lucide-react";
 
 export default function AdminPage() {
     // Отримуємо весь стан з authStore
     const authState = useAuthStore(); 
-    // Перевірка на готовність
-    const isReady = !authState.isCheckingAuth;
+    // Перевірка на роль Менеджера
     const isAdmin = authState.user?.role === 'admin';
-
-    // Якщо дані ще завантажуються
-    if (!isReady) return <div>Завантаження...</div>;
 
     // Якщо користувач не має прав Менеджера
     if (!isAdmin) return <div>Немає доступу</div>;
