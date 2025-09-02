@@ -1,7 +1,8 @@
 VERSION_LOG.txt
 Version meaning
-1. vx.x.xs - Stable version with main function/changes working fully properly
-2. vx.x.xd - Development (test) version with main function/changes working
+1. vx.x.xs - Stable version with main function/changes working FULLY properly
+1. vx.x.xb - Stable version with main function/changes working with BYPASS/ES
+2. vx.x.xd - Development (test) version with main function/changes WORKING
 ===============
 frontend branches:
 - Fetch (mail): Implemented Brevo based mail servise used for authentication (07-08 2025)
@@ -37,4 +38,4 @@ v3.5.0 (2025-09-02)
 v3.5.1 (2025-09-02)
 - Tested main page.tsx if opening component works fine (then returned ProtectedRoute component)
 v3.6.0 (2025-09-02)
-- Added redirect after login to main page in "handleLogin"
+- Added redirect after login to main page in "handleLogin" 
