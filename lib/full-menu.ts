@@ -66,20 +66,6 @@ export const demoMenuData: { [key in FoodCategory]: (FoodItem | BarItem)[] } = {
   drinks: [],
   bar: [],
 }
-// КАТЕГОРІЇ МЕНЮ
-const categoryTabs: { value: FoodCategory; label: string }[] = [
-  { value: "main", label: "🍖 Основні" },
-  { value: "grill", label: "🔥 Мангал" },
-  { value: "khachapuri", label: "Хачапурі" },
-  { value: "khinkali", label: "🥟 Хінкалі" },
-  { value: "garnish", label: "Гарніри" },
-  { value: "snacks", label: "Закуски" },
-  { value: "soups", label: "Супи" },
-  { value: "childmenu", label: "Дитяче меню" },
-  { value: "friture", label: "Фритюр" },
-  { value: "salads", label: "🥗 Салати" },
-  { value: "desserts", label: "🍰 Десерти" },
-]
 
 // Add bar subcategories (in Ukrainian)
 const barTabs = [
