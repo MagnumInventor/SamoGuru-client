@@ -31,3 +31,6 @@ v3.4.2 (2025-08-29)
 - Implemented low-security limiting methods to open access to admin page only for admin role
 v3.4.3s (2025-08-30)
 - Merged updates into MAIN after tests
+
+v3.5.0 (2025-09-02)
+- Created frontend component that wakes up backend server !(wo checking its status)!
