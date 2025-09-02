@@ -4,21 +4,29 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Loader, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/app/store/authStore";
 import FloatingShape from "@/app/components/FloatingShape";
-// In your main App.js or _app.js
 import BackendLoader from '../components/BackendLoader';
 
 const LoginPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login, isLoading, error } = useAuthStore();
-  	const [showPassword, setShowPassword] = useState(false)
-  	const [rememberMe, setRememberMe] = useState(false)
+  	const [showPassword, setShowPassword] = useState(false);
+  	const [rememberMe, setRememberMe] = useState(false);
+	const router = useRouter(); // Add router hook
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
-		await login(email, password);
+		try {
+			await login(email, password);
+			// Redirect to main page after successful login
+			router.push('/main');
+		} catch (error) {
+			// Error is already handled in the store
+			console.log('Login failed:', error);
+		}
 	};
 
 return (
@@ -141,4 +149,4 @@ return (
   )
 };
 
-export default LoginPage; 
+export default LoginPage;
