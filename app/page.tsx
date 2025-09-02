@@ -7,10 +7,12 @@ import { Calendar, BookOpen, Brain, MapPin } from "lucide-react"
 import Link from "next/link"
 import FFStatus from "@/app/components/ff-status"
 import { ProtectedRoute } from "@/app/components/auth/protected-route"
+// In your main App.js or _app.js
+import BackendLoader from './components/BackendLoader';
 
 export default function HomePage() {
   return (
-    <ProtectedRoute>
+    <BackendLoader>
       <div className="container mx-auto px-4 py-8">
         {/* Hero Section */}
         <section className="text-center py-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl text-white mb-12">
@@ -101,6 +103,6 @@ export default function HomePage() {
           <FFStatus />
         </section>
       </div>
-    </ProtectedRoute>
+    </BackendLoader>
   )
 } 

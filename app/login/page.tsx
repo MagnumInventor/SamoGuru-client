@@ -6,6 +6,8 @@ import { Mail, Lock, Loader, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useAuthStore } from "@/app/store/authStore";
 import FloatingShape from "@/app/components/FloatingShape";
+// In your main App.js or _app.js
+import BackendLoader from '../components/BackendLoader';
 
 const LoginPage = () => {
 	const [email, setEmail] = useState("");
@@ -20,6 +22,7 @@ const LoginPage = () => {
 	};
 
 return (
+ <BackendLoader>
     <div className="min-h-screen bg-gradient-to-br from-orange-900 via-red-800 to-orange-700 flex items-center justify-center relative overflow-hidden">
       <FloatingShape color="bg-orange-400" size="w-64 h-64" top="-5%" left="10%" delay={0} />
       <FloatingShape color="bg-red-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
@@ -134,6 +137,7 @@ return (
         </div>
       </motion.div>
     </div>
+    </BackendLoader>
   )
 };
 
