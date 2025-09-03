@@ -8,17 +8,21 @@ import { useAuthStore } from "@/app/store/authStore";
 import FloatingShape from "@/app/components/FloatingShape";
 // In your main App.js or _app.js
 import BackendLoader from '../components/BackendLoader';
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login, isLoading, error } = useAuthStore();
-  	const [showPassword, setShowPassword] = useState(false)
-  	const [rememberMe, setRememberMe] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+	const router = useRouter();
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
 		await login(email, password);
+    router.push('/user-profile');
 	};
 
 return (
