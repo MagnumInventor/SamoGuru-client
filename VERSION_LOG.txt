@@ -1,8 +1,9 @@
 VERSION_LOG.txt
 Version meaning
-1. vx.x.xs - Stable version with main function/changes working FULLY properly
-1. vx.x.xb - Stable version with main function/changes working with BYPASS/ES
-2. vx.x.xd - Development (test) version with main function/changes WORKING
+1. vx.x.xS - Stable version with main function/changes working FULLY properly
+2. vx.x.xB - Stable version with main function/changes working with BYPASS/ES
+3. vx.x.xD - Development (test) version with main function/changes WORKING
+4. vx.x.xU - Updated p&p.
 ===============
 frontend branches:
 - Fetch (mail): Implemented Brevo based mail servise used for authentication (07-08 2025)
@@ -21,7 +22,7 @@ v2.2.0 (2025-07-20)
 - Implemented MERN stack mono-sudo
 v2.2.0 (2025-07-20)
 - Adding properly secured but simple authentication ("simple-login" branch)
-v2.2.1s (2025-07-20)
+v2.2.1S (2025-07-20)
 - Formed stable simple auth. system (terporary not suitable for SamoGuru eco-system) including: email verification, reset/forgot password end points, security from varios hacker attacks (SQL ...)
 
 
@@ -30,12 +31,12 @@ v3.4.1 (2025-08-30)
 
 v3.4.2 (2025-08-29)
 - Implemented low-security limiting methods to open access to admin page only for admin role
-v3.4.3s (2025-08-30)
+v3.4.3S (2025-08-30)
 - Merged updates into MAIN after tests
 
 v3.5.0 (2025-09-02)
 - Created frontend component that wakes up backend server !(wo checking its status)!
-v3.5.1b (2025-09-02)
+v3.5.1B (2025-09-02)
 - Tested main page.tsx if opening component works fine (then returned ProtectedRoute component)
 v3.6.0 (2025-09-02)
 - Added redirect after login to main page in "handleLogin"
@@ -49,4 +50,6 @@ v3.6.3 (2025-09-03)
 v3.6.4 (2025-09-03)
 - Redirect in ProtectedRoute component to /login instead of /main 
 v3.6.5S (2025-09-03)
+- Updated admin page content ((swip) debug element -> comment how to delete used employeeCodes)
+v3.6.6SU (2025-09-04)
 - Updated admin page content ((swip) debug element -> comment how to delete used employeeCodes)

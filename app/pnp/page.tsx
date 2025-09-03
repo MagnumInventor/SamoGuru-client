@@ -39,7 +39,7 @@ export default function LegalDocumentsPage() {
                 ПОЛІТИКА КОНФІДЕНЦІЙНОСТІ
               </CardTitle>
               <div className="text-sm text-gray-600">
-                <strong>Дата останнього оновлення:</strong> 22 червня 2025 року
+                <strong>Дата останнього оновлення:</strong> 4 вересня 2025 року
               </div>
             </CardHeader>
           </Card>
@@ -50,10 +50,22 @@ export default function LegalDocumentsPage() {
                 <CardTitle className="text-lg">1. ЗАГАЛЬНІ ПОЛОЖЕННЯ</CardTitle>
               </CardHeader>
               <CardContent>
+            <h2>1.1 Використані поняття:</h2>
                 <p className="text-gray-700">
                   Веб-додаток "САМоГуру" (далі - "Платформа", "я - Маркович Олександр Юрійович") зобов'язується захищати конфіденційність персональних даних 
                   користувачів платформи САМоГуру. Наступна інформація описує, 
                   як я збираю, використовую та захищаю вашу інформацію.
+                </p>
+                <p className="text-gray-700">
+                  Персональні дані - дані які користувач надає під час реєстрації та використання платформи, які НЕ передаються третій особам, окрім імʼя та персонального коду працівника якими керують менеджери.
+                </p>
+                <p className="text-gray-700">
+                  Конфіденційні дані - індивідуальні дані користувача (пароль до акаунта), що захищаються (серверними методами захисту та кодування), які НЕ розголошуються третім особам та залишаються закодованими на базі даних.
+                </p>
+            <h2>1.2 Передача даних користувачів</h2>
+                <p className="text-gray-700">
+                  Я не продаю, не передаю та не розголошую персональні дані третім особам, 
+                  окрім випадків, передбачених законодавством України та функціоналом менеджерів платформи.
                 </p>
               </CardContent>
             </Card>
@@ -64,11 +76,23 @@ export default function LegalDocumentsPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 mb-4">
+                  <strong>Поточна версія 3.6.6S:</strong>
+                </p>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                  <li>Персональна сторінка працівника (Імʼя, електронна пошта, закодований пароль)</li>
+                  <li>Управління кодами працівників</li>
+                  <li>Тестування та правила<strong>роботи</strong></li>
+                  <li>Інформаційна складова робочого процесу</li>
+                  <li>Сторінки для стажування помічників та офіціантів</li>
+                </ul>
+                <p className="text-gray-700 mb-4">
                   <strong>Майбутні версії:</strong>
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-gray-700">
                   <li>Персональна сторінка працівника (ПІБ, номер телефону, персональне фото, решта інформації)</li>
                   <li>Управління змінами робочого розкладу</li>
+                  <li>Заповнення та розрахунок складеної зарплати працівника на основі відпрацьованих змін, виковання плану, (чайових і процента від каси для офіціантів)</li>
+                  <li>Інтеграція з системами ресторанних процесів Syrve, Expriensa</li>
                   <li>Статистика навчання, тестування та <strong>роботи</strong></li>
                   <li>Інтерактивна панель користувача</li>
                 </ul>
@@ -81,12 +105,17 @@ export default function LegalDocumentsPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">
-                  Станом на 22.06 платформа <strong>НЕ використовує дані користувача</strong>, 
-                  через відсутність серверної частини Платформи.
-                </p>
-                <p className="text-gray-700">
                   Від 23.06 платформа <strong>використовує фотографії з сайту меню</strong>, з сайту Самогонної ресторації у розділі Ковчег, без прав власнотсі над медіа матеріалами (використання фото у форматі URL).
                 </p>
+                    <p className="text-gray-700">
+                      Станом на 03.09 платформа <strong>використовує дані користувача</strong>, 
+                      виключно для авторизації та інтерфейсу менеджерів платформи.
+                    </p>
+                    <ul>
+                      <li>- Дані використовуються для авторизації, управління ролями, персоналізації інтерфейсу менеджерів.</li>
+                      <li>- Фотографії з сайту меню використовуються лише у форматі URL, без передачі прав власності.</li>
+                      <li>- Email використовується для надсилання службових повідомлень (верифікація, скидання пароля, зміна ролі).</li>
+                    </ul>
               </CardContent>
             </Card>
 
@@ -96,21 +125,26 @@ export default function LegalDocumentsPage() {
               </CardHeader>
               <CardContent>
                 <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                  <li>*Обмежені дані з пристроїв користувачів зберігаються на серверах Vercel (що відповідають GDPR)</li>
-                  <li>Дані шифруються під час передачі (передачі 3-тім особам не піддаються) та зберігання</li>
+                  <li>- Дані з пристроїв користувачів (Cookie) зберігаються на у тимчасовому сховищі вашого браузера що дозволяє уникати повторної авторизації при закінченні сесії користування (до перезавантаження браузера)</li>
+                  <li>- Конфіденційні дані шифруються під час передачі на базу даних Mongo DB (передачі 3-тім особам не піддаються) та зберігання</li>
+                  <li>- Зберігаються: імʼя, електронна пошта, хешований пароль, роль, дата реєстрації, статус верифікації, токени для підтвердження/скидання пароля.</li>
+                  <li>- Дані для розкладу роботи, статистики навчання/тестування, інтерактивна панель користувача.</li>
+                  <li>- Персональні паролі працівників (код співробітника).</li>
+                  <li>- Дані не використовуються для маркетингових цілей.</li>
                 </ul>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-lg">5. ПЕРЕДАЧА ДАНИХ ТРЕТІМ ОСОБАМ</CardTitle>
+                <CardTitle className="text-lg">5. ЗАХИСТ ДАНИХ</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-700">
-                  Я не продаю, не передаю та не розголошую персональні дані третім особам, 
-                  окрім випадків, передбачених законодавством України.
-                </p>
+                <ul className="list-disc pl-6 space-y-2">
+                  <li className="text-gray-700">- Використовується шифрування паролів (bcrypt), токенізація (JWT).</li>
+                  <li className="text-gray-700">- Доступ до даних обмежено ролями (STAЖЕР, HELPER, WAITER, ADMIN).</li>
+                  <li className="text-gray-700">- Всі запити до захищених маршрутів перевіряються через middleware (JWT, cookie).</li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -123,10 +157,10 @@ export default function LegalDocumentsPage() {
                   Відповідно до Закону України "Про захист персональних даних", ви маєте право:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                  <li>Отримувати інформацію про обробку ваших даних</li>
-                  <li>Вимагати виправлення неточних даних</li>
-                  <li>Вимагати видалення ваших даних</li>
-                  <li>Обмежувати обробку даних</li>
+                  <li>- Отримувати інформацію про обробку ваших даних</li>
+                  <li>- Вимагати виправлення неточних даних</li>
+                  <li>- Вимагати видалення ваших даних</li>
+                  <li>- Обмежувати обробку даних</li>
                 </ul>
               </CardContent>
             </Card>
@@ -159,7 +193,7 @@ export default function LegalDocumentsPage() {
                 УМОВИ ВИКОРИСТАННЯ
               </CardTitle>
               <div className="text-sm text-gray-600">
-                <strong>Дата останнього оновлення:</strong> 22 червня 2025 року
+                <strong>Дата останнього оновлення:</strong> 4 вересня 2025 року
               </div>
             </CardHeader>
           </Card>
@@ -281,7 +315,7 @@ export default function LegalDocumentsPage() {
               <CardContent>
                 <p className="text-gray-700">
                   Платформа залишає за собою право змінювати ці умови з повідомленням користувачів 
-                  за 14 днів до набрання чинності змін.
+                  за 14 днів після набрання чинності змін.
                 </p>
               </CardContent>
             </Card>
@@ -295,18 +329,18 @@ export default function LegalDocumentsPage() {
               </CardHeader>
               <CardContent>
                 <div className="mb-3">
-                  <p className="text-gray-700 font-medium">Сайт "САМоГУРу"</p>
+                  <p className="text-gray-700 font-medium">Сайт "СамоГуру"</p>
                 </div>
                 <div className="flex items-center mb-2">
                   <Mail className="h-4 w-4 text-gray-600 mr-2" />
-                  <a href="mailto:markoleks08@gmail.com" className="text-green-600 hover:underline">
-                    markoleks08@gmail.com
+                  <a href="mailto:samoguru.main@gmail.com" className="text-green-600 hover:underline">
+                    samoguru.main@gmail.com
                   </a>
                 </div>
                 <div className="flex items-center">
                   <Phone className="h-4 w-4 text-gray-600 mr-2" />
-                  <a href="tel:+380960427745" className="text-green-600 hover:underline">
-                    +380 96 042 7745
+                  <a href="tel:0960427745" className="text-green-600 hover:underline">
+                    +380-96-042-7745
                   </a>
                 </div>
               </CardContent>
