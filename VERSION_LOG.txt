@@ -43,3 +43,6 @@ v3.6.1 (2025-09-03)
 - Added redirect after login to personal profile page in "handleLogin" 
 v3.6.2 (2025-09-03)
 - Less waiting time in BackendLoader (15sec -> 7.5sec)
+
+v3.6.3 (2025-09-03)
+- Fixing employeeCodes call from admin page

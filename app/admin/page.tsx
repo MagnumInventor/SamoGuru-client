@@ -14,12 +14,17 @@ import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock }
 export default function AdminPage() {
     // Отримуємо весь стан з authStore
     const authState = useAuthStore(); 
-    // Перевірка на роль Менеджера
     const isAdmin = authState.user?.role === 'admin';
 
-    // Якщо користувач не має прав Менеджера
-    if (!isAdmin) return <div>Немає доступу</div>;
+    // Fetch all codes on mount
+    useEffect(() => {
+        if (isAdmin) {
+            authState.fetchEmployeeCodes();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdmin]);
 
+    if (!isAdmin) return <div>Немає доступу</div>;
 
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
