@@ -12,7 +12,6 @@ export default function HomePage() {
   return (
     <ProtectedRoute>
       <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
         <section className="text-center py-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl text-white mb-12">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Ласкаво просимо до <span className="text-orange-100">СамоГуру</span>

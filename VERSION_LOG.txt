@@ -48,3 +48,5 @@ v3.6.3 (2025-09-03)
 - Fixing employeeCodes call from admin page
 v3.6.4 (2025-09-03)
 - Redirect in ProtectedRoute component to /login instead of /main 
+v3.6.5S (2025-09-03)
+- Updated admin page content ((swip) debug element -> comment how to delete used employeeCodes)

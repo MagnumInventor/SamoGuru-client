@@ -122,11 +122,6 @@ export default function AdminPage() {
                     </Alert>
                 )}
 
-                {/* Debug info (можна прибрати після тестування) */}
-                <div className="bg-gray-100 p-2 rounded text-xs">
-                    Debug: User = {authState.user.email}, Role = {authState.user.role}, Codes = {authState.employeeCodes?.length || 0}
-                </div>
-
                 {/* Статистика */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {adminStats.map((stat, index) => {
@@ -265,6 +260,9 @@ export default function AdminPage() {
                                 ))}
                             </div>
                         )}
+                            <div className="bg-gray-100 p-2 rounded text-xs">
+                                Для видалення використаного коду працівника зверніться до розробника <strong>096-042-7745</strong>:  Кодів = {authState.employeeCodes?.length || 0}
+                            </div>
                     </CardContent>
                 </Card>
             </div>
