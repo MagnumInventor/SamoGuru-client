@@ -41,3 +41,5 @@ v3.6.0 (2025-09-02)
 - Added redirect after login to main page in "handleLogin"
 v3.6.1 (2025-09-03)
 - Added redirect after login to personal profile page in "handleLogin" 
+v3.6.2 (2025-09-03)
+- Less waiting time in BackendLoader (15sec -> 7.5sec)

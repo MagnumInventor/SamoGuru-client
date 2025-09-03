@@ -9,7 +9,7 @@ const BackendLoader: React.FC<BackendLoaderProps> = ({ children }) => {
   const [progress, setProgress] = useState(0);
 
   const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'https://samoguru-back.onrender.com';
-  const WAIT_TIME = 15000; 
+  const WAIT_TIME = 7500; 
 
   const wakeupBackend = async () => {
     try {
@@ -79,7 +79,7 @@ const BackendLoader: React.FC<BackendLoaderProps> = ({ children }) => {
           </div>
           
           <div className="mt-4 text-xs text-gray-500">
-            Це може зайняти до 10 секунд
+            Це може зайняти до 5 секунд
           </div>
         </div>
       </div>
