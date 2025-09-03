@@ -24,7 +24,7 @@ export function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) 
   }
 
   if (!isAuthenticated) {
-    router.push("/main")
+    router.push("/login")
     return <LoadingSpinner />
   }
 
