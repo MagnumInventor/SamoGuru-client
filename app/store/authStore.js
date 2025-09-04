@@ -44,7 +44,7 @@ export const useAuthStore = create((set, get) => ({
         throw new Error("Потрібен Менеджерський код");
       }
       // Require employeeCode for waiter role
-      if (role === USER_ROLES.WAITER && !employeeCode) {
+      if (role === USER_ROLES.WAITER || USER_ROLES.HELPER && !employeeCode) {
         set({ error: "Потрібен код працівника", isLoading: false });
         throw new Error("Потрібен код працівника");
       }
