@@ -34,6 +34,7 @@ const roleOptions = [
     e.preventDefault();
     try {
       await signup(email, password, firstName, role,
+        role === USER_ROLES.HELPER ? employeeCode : null,
         role === USER_ROLES.WAITER ? employeeCode : null,
         role === USER_ROLES.ADMIN ? adminCode : null
       );
