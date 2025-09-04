@@ -7,11 +7,11 @@ import { Calendar, BookOpen, Brain, MapPin } from "lucide-react"
 import Link from "next/link"
 import FFStatus from "@/app/components/ff-status"
 import { ProtectedRoute } from "@/app/components/auth/protected-route"
-import { useAuth } from "@/app/store/authStore"
+import { useAuthStore } from "@/app/store/authStore"
 
 export default function HomePage() {
   const router = useRouter()
-  const { isAuthenticated } = useAuth() // Assuming `useAuth` provides authentication status.
+  const { isAuthenticated } = useAuthStore() 
 
   useEffect(() => {
     if (!isAuthenticated) {
