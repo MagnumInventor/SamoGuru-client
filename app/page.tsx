@@ -1,7 +1,7 @@
 //pages/page.tsx
 "use client";
 
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useEffect, FormEvent } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Calendar, BookOpen, Brain, MapPin } from "lucide-react"
 import { Button } from "@/app/components/ui/button";
@@ -19,6 +19,9 @@ export default function HomePage() {
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/login")
+    }
+    else {
+      router.push("/user-profile")
     }
   }, [isAuthenticated, router])
 
