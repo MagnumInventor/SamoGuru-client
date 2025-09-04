@@ -25,7 +25,7 @@ const SignUpPage = () => {
 
 const roleOptions = [
   { value: USER_ROLES.TRAINEE, label: "Стажер", description: "Новий працівник на навчанні" },
-  //{ value: USER_ROLES.HELPER, label: "Помічник", description: "Малий/мала - помічник офіціанта" },
+  { value: USER_ROLES.HELPER, label: "Помічник", description: "Малий/мала - помічник офіціанта" },
   { value: USER_ROLES.WAITER, label: "Офіціант", description: "Фіц - рядовий офіціант" },
   { value: USER_ROLES.ADMIN, label: "Менеджер", description: "Менеджмент та управління" }
 ]

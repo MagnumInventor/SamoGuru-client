@@ -58,3 +58,6 @@ v3.6.6SU (2025-09-04)
 - Updated admin page content ((swip) debug element -> comment how to delete used employeeCodes)
 v3.6.7U (2025-09-04)
 - Main page fixes (unAuthenticated user redirecting to login page)
+
+v3.6.8 (2025-09-04)
+- Returned HELPER option in signup form
