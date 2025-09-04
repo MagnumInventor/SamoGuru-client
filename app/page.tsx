@@ -4,10 +4,13 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Calendar, BookOpen, Brain, MapPin } from "lucide-react"
+import { Button } from "@/app/components/ui/button";
 import Link from "next/link"
 import FFStatus from "@/app/components/ff-status"
+
 import { ProtectedRoute } from "@/app/components/auth/protected-route"
 import { useAuthStore } from "@/app/store/authStore"
+import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
   const router = useRouter()
