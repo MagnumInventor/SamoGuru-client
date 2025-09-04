@@ -1,8 +1,8 @@
 //pages/page.tsx
-"use client"
+"use client";
 
-import { Button } from "@/app/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
+import React, { useState, useEffect, FormEvent } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Calendar, BookOpen, Brain, MapPin } from "lucide-react"
 import Link from "next/link"
 import FFStatus from "@/app/components/ff-status"
