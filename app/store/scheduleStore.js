@@ -3,9 +3,9 @@ import API from "../utils/axios";
 
 export const useScheduleStore = create((set, get) => ({
   schedules: [],
-  personalSchedule: null,
   isLoading: false,
   error: null,
+  message: null,
 
   // Fetch all schedules (admin)
   fetchSchedules: async () => {
@@ -19,49 +19,68 @@ export const useScheduleStore = create((set, get) => ({
   },
 
   // Create or update a schedule (admin)
-  saveSchedule: async (month, year, scheduleData, templateType) => {
+  createOrUpdateSchedule: async (scheduleData) => {
+    const { month, year, data, userIds, templateType = "default", type = "manual" } = scheduleData;
     set({ isLoading: true, error: null });
     try {
-      await API.post("/schedule", { month, year, scheduleData, templateType });
+      const res = await API.post("/schedule", { 
+        month, year, data, userIds, templateType, type 
+      });
+      set({ 
+        message: "Графік успішно збережено",
+        isLoading: false 
+      });
       await get().fetchSchedules();
+      return res.data.schedule;
     } catch (error) {
-      set({ error: "Помилка збереження графіка", isLoading: false });
+      set({ 
+        error: "Помилка збереження графіка", 
+        isLoading: false 
+      });
+      throw error;
     }
   },
 
   // Import schedule from Excel (admin)
-  importSchedule: async (parsedExcelData) => {
+  importSchedule: async (formData) => {
     set({ isLoading: true, error: null });
     try {
-      await API.post("/schedule/import", { data: parsedExcelData });
+      const res = await API.post("/schedule/import", formData);
+      set({ 
+        message: "Графік успішно імпортовано",
+        isLoading: false 
+      });
+      await get().fetchSchedules();
+      return res.data.schedule;
+    } catch (error) {
+      set({ 
+        error: "Помилка імпорту графіка", 
+        isLoading: false 
+      });
+      throw error;
+    }
+  },
+
+  // Delete schedule (admin)
+  deleteSchedule: async (scheduleId) => {
+    set({ isLoading: true, error: null });
+    try {
+      await API.delete(`/schedule/${scheduleId}`);
+      set({ 
+        message: "Графік успішно видалено",
+        isLoading: false 
+      });
       await get().fetchSchedules();
     } catch (error) {
-      set({ error: "Помилка імпорту графіка", isLoading: false });
+      set({ 
+        error: "Помилка видалення графіка", 
+        isLoading: false 
+      });
+      throw error;
     }
   },
 
-  // Get personal schedule for employee
-  fetchPersonalSchedule: async (userId) => {
-    set({ isLoading: true, error: null });
-    try {
-      const res = await API.get(`/schedule/personal/${userId}`);
-      set({ personalSchedule: res.data.schedule, isLoading: false });
-    } catch (error) {
-      set({ error: "Помилка завантаження особистого графіка", isLoading: false });
-    }
-  },
-
-  // Save personal schedule (employee)
-  savePersonalSchedule: async (userId, scheduleData) => {
-    set({ isLoading: true, error: null });
-    try {
-      await API.post(`/schedule/personal/${userId}`, { scheduleData });
-      await get().fetchPersonalSchedule(userId);
-    } catch (error) {
-      set({ error: "Помилка збереження особистого графіка", isLoading: false });
-    }
-  },
-
-  // Clear error
+  // Clear messages
+  clearMessage: () => set({ message: null }),
   clearError: () => set({ error: null }),
 }));

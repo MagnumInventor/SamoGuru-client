@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "../components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
 import { Calendar, Users, RefreshCw, CalendarIcon } from "lucide-react"
@@ -637,7 +637,23 @@ const getWaiterDayOfWeek = (day: number) => {
   return waiterDaysOfWeek[(startDay + day - 1) % 7];
 };
 
-export default function SchedulePage() {
+export default function AdminPage() {
+
+      // Отримуємо весь стан з authStore
+    const authState = useAuthStore(); 
+    const isAdmin = authState.user?.role === 'admin';
+
+    // Fetch all codes on mount
+    useEffect(() => {
+        if (isAdmin) {
+            authState.fetchEmployeeCodes();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdmin]);
+
+    if (!isAdmin) return <div>Немає доступу</div>;
+
+
   const [selectedCell, setSelectedCell] = useState<{ employee: string; day: number } | null>(null)
   const [selectedWaiterCell, setSelectedWaiterCell] = useState<{ employee: string; day: number } | null>(null);
   const { user } = useAuthStore()

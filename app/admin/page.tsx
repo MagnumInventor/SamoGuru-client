@@ -9,6 +9,7 @@ import { Badge } from "@/app/components/ui/badge";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
 
 import { useAuthStore } from "@/app/store/authStore";
+import { useScheduleStore } from "@/app/store/scheduleStore";
 import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock } from "lucide-react";
 
 export default function AdminPage() {
@@ -16,10 +17,15 @@ export default function AdminPage() {
     const authState = useAuthStore(); 
     const isAdmin = authState.user?.role === 'admin';
 
+    // Add schedule store
+    const scheduleStore = useScheduleStore();
+    const [importFile, setImportFile] = useState<File | null>(null);
+
     // Fetch all codes on mount
     useEffect(() => {
         if (isAdmin) {
             authState.fetchEmployeeCodes();
+            scheduleStore.fetchSchedules(); // Add this line
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdmin]);
@@ -78,6 +84,21 @@ export default function AdminPage() {
             console.error('Error deleting code:', error);
         }
     }
+
+    // Add handler for schedule import
+    const handleImportSchedule = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (!importFile) return;
+
+        const formData = new FormData();
+        formData.append('file', importFile);
+        try {
+            await scheduleStore.importSchedule(formData);
+            setImportFile(null);
+        } catch (error) {
+            console.error('Error importing schedule:', error);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -263,6 +284,67 @@ export default function AdminPage() {
                             <div className="bg-gray-100 p-2 rounded text-xs">
                                 Для видалення використаного коду працівника зверніться до розробника <strong>096-042-7745</strong>:  Кодів = {authState.employeeCodes?.length || 0}
                             </div>
+                    </CardContent>
+                </Card>
+
+                {/* Add Schedule Management Section */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Управління розкладом</CardTitle>
+                        <CardDescription>Імпорт та редагування розкладу працівників</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        {/* Import Form */}
+                        <form onSubmit={handleImportSchedule} className="space-y-4">
+                            <div>
+                                <Label htmlFor="schedule-file">Імпорт розкладу</Label>
+                                <Input
+                                    id="schedule-file"
+                                    type="file"
+                                    accept=".xlsx,.xls"
+                                    onChange={(e) => setImportFile(e.target.files?.[0] || null)}
+                                />
+                            </div>
+                            <Button 
+                                type="submit"
+                                disabled={!importFile || scheduleStore.isLoading}
+                            >
+                                {scheduleStore.isLoading ? 'Імпортування...' : 'Імпортувати'}
+                            </Button>
+                        </form>
+
+                        {/* Schedules List */}
+                        <div className="space-y-4 mt-6">
+                            <h3 className="font-medium">Наявні розклади</h3>
+                            {scheduleStore.schedules.length === 0 ? (
+                                <p className="text-gray-500 text-center py-4">Немає доступних розкладів</p>
+                            ) : (
+                                scheduleStore.schedules.map((schedule: any) => (
+                                    <div 
+                                        key={schedule._id}
+                                        className="border rounded-lg p-4 space-y-2"
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <div>
+                                                <h4 className="font-medium">
+                                                    {schedule.month}/{schedule.year}
+                                                </h4>
+                                                <p className="text-sm text-gray-500">
+                                                    Тип: {schedule.templateType}
+                                                </p>
+                                            </div>
+                                            <Button
+                                                variant="destructive"
+                                                size="sm"
+                                                onClick={() => scheduleStore.deleteSchedule(schedule._id)}
+                                            >
+                                                Видалити
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </CardContent>
                 </Card>
             </div>
