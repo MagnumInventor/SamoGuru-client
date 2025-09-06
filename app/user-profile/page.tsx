@@ -76,7 +76,12 @@ export default function UserProfilePage() {
     return (
       <div className="container mx-auto p-6">
         <div className="text-center py-12">
-          <p className="text-muted-foreground">Користувача не знайдено</p>
+            <p className="text-muted-foreground">
+              Користувача не знайдено, якщо ви нещодавно зареєстрували перегляньте скриньку ел.пошти, або увійдіть через посилання{' '}
+              <a href="https://www.samoguru.run.place" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                www.samoguru.run.place
+              </a>
+            </p>
         </div>
       </div>
     )
