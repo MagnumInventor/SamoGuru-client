@@ -68,7 +68,7 @@ export const useAuthStore = create((set, get) => ({
       const errorMessage =
         error.response && error.response.data && error.response.data.message
           ? error.response.data.message
-          : "Error signing up";
+          : "Помилка реєстрації";
       set({ error: errorMessage, isLoading: false });
       throw error;
     }
@@ -254,7 +254,7 @@ login: async (email, password) => {
       set({
         isLoading: false,
         error:
-          error.response.data.message || "Error sending reset password email",
+          error.response.data.message || "Помилки надсилання коду для відновлення паролю",
       });
       throw error;
     }
@@ -270,7 +270,7 @@ login: async (email, password) => {
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response.data.message || "Error resetting password",
+        error: error.response.data.message || "Помилка відновлення паролю",
       });
       throw error;
     }
@@ -285,7 +285,7 @@ login: async (email, password) => {
     const { user } = get();
 
     if (user?.role !== USER_ROLES.ADMIN) {
-      throw new Error("Only admins can update user roles");
+      throw new Error("Тільки менеджери можуть оновлювати ролі користувачів");
     }
 
     try {
@@ -349,7 +349,7 @@ login: async (email, password) => {
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response?.data?.message || "Error logging out",
+        error: error.response?.data?.message || "Помилка виходу з акаунта",
       });
       throw error;
     }
