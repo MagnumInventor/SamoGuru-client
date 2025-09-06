@@ -74,3 +74,5 @@ v3.6.11S (2025-09-07)
 
 v3.7.0D (2025-09-07)
 - Implemented Admin part of Schedule functionality
+v3.7.1 (2025-09-07)
+- Redirect on refresh fun.

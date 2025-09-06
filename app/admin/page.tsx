@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
@@ -13,11 +14,47 @@ import { useScheduleStore } from "@/app/store/scheduleStore";
 import { Users, Calendar, Plus, Trash2, CheckCircle, AlertCircle, Shield, Lock } from "lucide-react";
 
 export default function AdminPage() {
-    // Отримуємо весь стан з authStore
-    const authState = useAuthStore(); 
+    const router = useRouter();
+    const authState = useAuthStore();
     const isAdmin = authState.user?.role === 'admin';
 
-    // Add schedule store
+    // Add browser refresh detection
+    useEffect(() => {
+        // Check if this is a browser refresh
+        const isRefresh = performance.navigation.type === 1;
+        
+        if (isRefresh && !authState.user) {
+            router.push('/login');
+            return;
+        }
+        
+        if (isAdmin) {
+            authState.fetchEmployeeCodes();
+            scheduleStore.fetchSchedules();
+        }
+    }, [isAdmin, authState.user, router]);
+
+    if (!isAdmin) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+                <div className="text-center p-8 rounded-lg">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                        Доступ обмежено
+                    </h2>
+                    <p className="text-gray-600 mb-4">
+                        Будь ласка, увійдіть як менеджер для доступу до цієї сторінки
+                    </p>
+                    <Button
+                        onClick={() => router.push('/login')}
+                        className="bg-orange-500 hover:bg-orange-600"
+                    >
+                        Перейти до входу
+                    </Button>
+                </div>
+            </div>
+        );
+    }
+
     const scheduleStore = useScheduleStore();
     const [importFile, setImportFile] = useState<File | null>(null);
 
@@ -29,8 +66,6 @@ export default function AdminPage() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdmin]);
-
-    if (!isAdmin) return <div>Немає доступу, якщо ви зареєстровані як менеджер, будь-ласка перезавантажте сторінку</div>;
 
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
