@@ -18,6 +18,7 @@ export const USER_ROLES = {
 export const useAuthStore = create((set, get) => ({
   user: null,
   isAuthenticated: false,
+  isVerified: false,  // Add this explicitly
   error: null,
   isLoading: false,
   isCheckingAuth: true,
@@ -59,6 +60,7 @@ export const useAuthStore = create((set, get) => ({
       set({
         user: response.data.user,
         isAuthenticated: true,
+        isVerified: false, // Explicitly set to false on signup
         isLoading: false,
       });
     } catch (error) {
@@ -79,6 +81,7 @@ login: async (email, password) => {
     set({
       user: response.data.user,
       isAuthenticated: true,
+      isVerified: response.data.user.isVerified || false, // Ensure isVerified is set from response
       isLoading: false,
       message: response.data.message,
     });

@@ -61,3 +61,5 @@ v3.6.7U (2025-09-04)
 
 v3.6.8 (2025-09-04)
 - Returned HELPER option in signup form
+v3.6.9 (2025-09-06)
+- isVerified check on Navigation menu (client-layout)
