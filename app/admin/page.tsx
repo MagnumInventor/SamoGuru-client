@@ -30,7 +30,7 @@ export default function AdminPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdmin]);
 
-    if (!isAdmin) return <div>Немає доступу</div>;
+    if (!isAdmin) return <div>Немає доступу, якщо ви зареєстровані як менеджер, будь-ласка перезавантажте сторінку</div>;
 
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
@@ -72,7 +72,7 @@ export default function AdminPage() {
             setNewDescription('');
             setShowAddForm(false);
         } catch (error) {
-            console.error('Error adding code:', error);
+            console.error('Помилка додавання коду:', error);
         }
     }
 
@@ -81,7 +81,7 @@ export default function AdminPage() {
         try {
             await authState.deleteEmployeeCode(codeId);
         } catch (error) {
-            console.error('Error deleting code:', error);
+            console.error('Помилка видалення коду:', error);
         }
     }
 
@@ -96,14 +96,18 @@ export default function AdminPage() {
             await scheduleStore.importSchedule(formData);
             setImportFile(null);
         } catch (error) {
-            console.error('Error importing schedule:', error);
+            console.error('Помилка імпортування графіку:', error);
         }
     };
+
+
+
+
+
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
             <div className="max-w-7xl mx-auto space-y-6">
-                {/* Заголовок з індикатором ролі */}
                 <div className="flex justify-between items-center">
                     <div>
                         <div className="flex items-center gap-2 mb-2">
@@ -143,7 +147,8 @@ export default function AdminPage() {
                     </Alert>
                 )}
 
-                {/* Статистика */}
+  
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {adminStats.map((stat, index) => {
                         const Icon = stat.icon;
@@ -164,7 +169,7 @@ export default function AdminPage() {
                     })}
                 </div>
 
-                {/* Форма додавання коду */}
+
                 {showAddForm && (
                     <Card>
                         <CardHeader>
@@ -211,7 +216,9 @@ export default function AdminPage() {
                     </Card>
                 )}
 
-                {/* Список кодів */}
+
+
+
                 <Card>
                     <CardHeader>
                         <CardTitle>Коди працівників</CardTitle>
@@ -287,7 +294,15 @@ export default function AdminPage() {
                     </CardContent>
                 </Card>
 
-                {/* Add Schedule Management Section */}
+
+
+
+
+
+
+
+
+
                 <Card>
                     <CardHeader>
                         <CardTitle>Управління розкладом</CardTitle>

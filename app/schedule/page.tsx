@@ -651,7 +651,7 @@ export default function AdminPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdmin]);
 
-    if (!isAdmin) return <div>Немає доступу</div>;
+    if (!isAdmin) return <div>Немає доступу, якщо ви зареєстровані як менеджер, будь-ласка перезавантажте сторінку</div>;
 
 
   const [selectedCell, setSelectedCell] = useState<{ employee: string; day: number } | null>(null)
