@@ -81,7 +81,7 @@ return (
               />
             </div>
 
-            {(role === USER_ROLES.WAITER || USER_ROLES.HELPER) && (
+            {(role === USER_ROLES.WAITER || role === USER_ROLES.HELPER) && (
               <div className="relative">
                 <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
                 <input
