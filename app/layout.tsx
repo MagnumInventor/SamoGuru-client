@@ -21,15 +21,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="uk" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang="uk" suppressHydrationWarning className="h-full">
+      <body className={`${inter.className} h-full m-0 p-0 overflow-x-hidden`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          <ClientLayout>{children}</ClientLayout>
+          <div className="min-h-screen w-full overflow-x-hidden">
+            <ClientLayout>{children}</ClientLayout>
+          </div>
         </ThemeProvider>
       </body>
     </html>
