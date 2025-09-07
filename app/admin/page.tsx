@@ -430,6 +430,7 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                 ))
+                                )
                             }
                         </div>
                     </CardContent>
@@ -506,7 +507,7 @@ export default function AdminPage() {
                                   {scheduleStore.employees.map((employee: any) => (
                                     <div key={employee._id} className="flex items-center space-x-2">
                                       <Checkbox
-                                        checked={scheduleStore.selectedEmployees.some(emp => emp._id === employee._id)}
+                                        checked={scheduleStore.selectedEmployees.some((emp: { _id: any; }) => emp._id === employee._id)}
                                         onCheckedChange={() => scheduleStore.toggleEmployee(employee)}
                                       />
                                       <Label>{employee.firstName} {employee.lastName}</Label>
