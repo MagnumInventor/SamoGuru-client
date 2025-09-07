@@ -8,6 +8,8 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import { Badge } from "@/app/components/ui/badge";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
+import { Checkbox } from "@/app/components/ui/checkbox";
 
 import { useAuthStore } from "@/app/store/authStore";
 import { useScheduleStore } from "@/app/store/scheduleStore";
@@ -70,6 +72,21 @@ export default function AdminPage() {
     const [newCode, setNewCode] = useState('');
     const [newDescription, setNewDescription] = useState('');
     const [showAddForm, setShowAddForm] = useState(false);
+
+    // Add these states
+    const [scheduleType, setScheduleType] = useState<'helpers' | 'waiters' | 'admin'>('helpers');
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [shifts, setShifts] = useState<{[key: string]: string[]}>({});
+    const [showScheduleCreator, setShowScheduleCreator] = useState(false);
+
+    // Load employees when schedule type changes
+    useEffect(() => {
+        if (showScheduleCreator) {
+            scheduleStore.fetchEmployeesByRole(scheduleType);
+            scheduleStore.clearSelections();
+        }
+    }, [scheduleType, showScheduleCreator]);
 
     // Основний контент для Менеджерів
     const adminStats = [
@@ -135,8 +152,28 @@ export default function AdminPage() {
         }
     };
 
+    // Handle shift change
+    const handleShiftChange = (employeeId: string, day: number, shift: string) => {
+        setShifts(prev => ({
+            ...prev,
+            [employeeId]: {
+                ...prev[employeeId],
+                [day]: shift
+            }
+        }));
+    };
 
-
+    // Handle schedule creation
+    const handleCreateSchedule = async () => {
+        await scheduleStore.createSchedule({
+            month: selectedMonth,
+            year: selectedYear,
+            employees: scheduleStore.selectedEmployees,
+            shifts,
+            type: scheduleType
+        });
+        setShowScheduleCreator(false);
+    };
 
 
 
@@ -393,10 +430,150 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                 ))
-                            )}
+                            }
                         </div>
                     </CardContent>
                 </Card>
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Створення нового розкладу</CardTitle>
+                        <CardDescription>Створіть розклад для конкретної групи працівників</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                          <Button 
+                            onClick={() => setShowScheduleCreator(true)}
+                            className="w-full"
+                          >
+                            Створити новий розклад
+                          </Button>
+
+                          {showScheduleCreator && (
+                            <div className="space-y-4">
+                              <div className="grid grid-cols-3 gap-4">
+                                <div>
+                                  <Label>Тип розкладу</Label>
+                                  <Select value={scheduleType} onValueChange={(val: any) => setScheduleType(val)}>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Виберіть тип" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="helpers">Помічники</SelectItem>
+                                      <SelectItem value="waiters">Офіціанти</SelectItem>
+                                      <SelectItem value="admin">Адміністратори</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                                
+                                <div>
+                                  <Label>Місяць</Label>
+                                  <Select value={selectedMonth.toString()} onValueChange={(val) => setSelectedMonth(parseInt(val))}>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Виберіть місяць" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {Array.from({length: 12}, (_, i) => (
+                                        <SelectItem key={i + 1} value={(i + 1).toString()}>
+                                          {new Date(2000, i).toLocaleString('uk-UA', { month: 'long' })}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                <div>
+                                  <Label>Рік</Label>
+                                  <Select value={selectedYear.toString()} onValueChange={(val) => setSelectedYear(parseInt(val))}>
+                                    <SelectTrigger>
+                                      <SelectValue placeholder="Виберіть рік" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {Array.from({length: 3}, (_, i) => (
+                                        <SelectItem key={i} value={(new Date().getFullYear() + i).toString()}>
+                                          {new Date().getFullYear() + i}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+
+                              {/* Employee Selection */}
+                              <div className="border rounded-lg p-4">
+                                <h3 className="font-medium mb-4">Виберіть працівників</h3>
+                                <div className="grid grid-cols-3 gap-4">
+                                  {scheduleStore.employees.map((employee: any) => (
+                                    <div key={employee._id} className="flex items-center space-x-2">
+                                      <Checkbox
+                                        checked={scheduleStore.selectedEmployees.some(emp => emp._id === employee._id)}
+                                        onCheckedChange={() => scheduleStore.toggleEmployee(employee)}
+                                      />
+                                      <Label>{employee.firstName} {employee.lastName}</Label>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Shift Assignment */}
+                              {scheduleStore.selectedEmployees.length > 0 && (
+                                <div className="border rounded-lg p-4">
+                                  <h3 className="font-medium mb-4">Призначення змін</h3>
+                                  <div className="overflow-x-auto">
+                                    <table className="min-w-full">
+                                      <thead>
+                                        <tr>
+                                          <th className="px-4 py-2">Працівник</th>
+                                          {Array.from({length: 31}, (_, i) => (
+                                            <th key={i} className="px-2 py-2">{i + 1}</th>
+                                          ))}
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {scheduleStore.selectedEmployees.map((employee: any) => (
+                                          <tr key={employee._id}>
+                                            <td className="px-4 py-2">{employee.firstName}</td>
+                                            {Array.from({length: 31}, (_, day) => (
+                                              <td key={day} className="px-2 py-2">
+                                                <Select
+                                                  value={shifts[employee._id]?.[day] || "0"}
+                                                  onValueChange={(val) => handleShiftChange(employee._id, day, val)}
+                                                >
+                                                  <SelectTrigger className="w-[60px]">
+                                                    <SelectValue />
+                                                  </SelectTrigger>
+                                                  <SelectContent>
+                                                    <SelectItem value="0">-</SelectItem>
+                                                    <SelectItem value="1">1</SelectItem>
+                                                    <SelectItem value="16">16</SelectItem>
+                                                  </SelectContent>
+                                                </Select>
+                                              </td>
+                                            ))}
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              )}
+
+                              <div className="flex justify-end space-x-4">
+                                <Button variant="outline" onClick={() => setShowScheduleCreator(false)}>
+                                  Скасувати
+                                </Button>
+                                <Button 
+                                  onClick={handleCreateSchedule}
+                                  disabled={scheduleStore.selectedEmployees.length === 0}
+                                >
+                                  Створити розклад
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
             </div>
         </div>
     );
