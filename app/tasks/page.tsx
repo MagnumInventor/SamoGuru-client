@@ -1028,7 +1028,7 @@ export default function TasksPage() {
         ))}
       </Tabs>
 
-      {/* Sell Dishes Section - Only for waiters */}
+
       {userRole === "waiter" && (
         <Card className="mt-8">
           <CardHeader>

@@ -874,7 +874,7 @@ export default function AdminPage() {
         </Card>
       )}
 
-      {/* Add a button to scroll to waiters' schedule */}
+
       <div className="mb-6">
         <Button variant="outline" className="border-orange-200 text-orange-600 hover:bg-orange-50" onClick={() => {
           const el = document.getElementById("waiter-schedule-section");
@@ -891,7 +891,6 @@ export default function AdminPage() {
           <p className="text-gray-600">Червень 2025 - Графік роботи офіціантів ({Object.keys(waiterScheduleData).length} співробітників)</p>
         </div>
 
-        {/* Legend for waiters */}
         <div className="mb-6 flex flex-wrap gap-4">
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 bg-blue-100 border border-blue-200 rounded flex items-center justify-center text-xs font-medium text-blue-800">
