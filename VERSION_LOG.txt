@@ -76,3 +76,6 @@ v3.7.0D (2025-09-07)
 - Implemented Admin part of Schedule functionality
 v3.7.1 (2025-09-07)
 - Redirect on refresh fun.
+
+v3.8.1 (2025-09-10)
+- Cleaned work tree (new fork: Schedule-management) for Schedule management implementation & Import "scheduleStore" from external device
