@@ -79,3 +79,5 @@ v3.7.1 (2025-09-07)
 
 v3.8.1 (2025-09-10)
 - Cleaned work tree (new fork: Schedule-management) for Schedule management implementation & Import "scheduleStore" from external device
+v3.8.2 (2025-09-10)
+- Import frontend components & schedule page from external DEV. device
