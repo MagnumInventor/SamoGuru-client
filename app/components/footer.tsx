@@ -17,8 +17,8 @@ export function Footer() {
             <Link href="/ff" className="hover:text-orange-600 transition-colors">
               Підтримка
             </Link>
-            <Link href="/rules" className="hover:text-orange-600 transition-colors">
-              Правила
+            <Link href="/pnp" className="hover:text-orange-600 transition-colors">
+              Правила та політика
             </Link>
             <span className="text-xs text-gray-400">розробив <strong>Маркович Олександр</strong></span>
             <span className="text-xs text-gray-600">By registering you agree to receive occasional updates by email.</span>
