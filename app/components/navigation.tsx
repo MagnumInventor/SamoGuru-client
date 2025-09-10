@@ -56,8 +56,9 @@ const allNavItems = [
 
   // ПЕРСОНАЛЬНІ СТОРІНКИ
   { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
-  { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
-  { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
+  { href: "/schedule", label: "Графік", icon: Calendar, roles: ["helper, waiter"] },
+  //{ href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
+  //{ href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
   { href: "/my-path/trainee", label: "Стажування", icon: User, roles: ["trainee"] },
   { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
 
