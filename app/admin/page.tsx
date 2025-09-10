@@ -110,7 +110,7 @@ export default function AdminPage() {
       
       setScheduleForm(prev => ({
         ...prev,
-        title: `Розклад ${roleNames[scheduleForm.role]} - ${monthNames[scheduleForm.month - 1]} ${scheduleForm.year}`
+        title: `Розклад ${roleNames[scheduleForm.role as keyof typeof roleNames]} - ${monthNames[scheduleForm.month - 1]} ${scheduleForm.year}`
       }));
     }
   }, [scheduleForm.month, scheduleForm.year, scheduleForm.role]);
