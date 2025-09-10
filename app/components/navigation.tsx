@@ -51,11 +51,11 @@ const allNavItems = [
   { href: "/tablewear", label: "Посуд", icon: Utensils, roles: ["helper"] },
   { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
   { href: "/tasks", label: "Робота", icon: CheckSquare, roles: ["helper"] },
-  { href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
+  //{ href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
 
   // ПЕРСОНАЛЬНІ СТОРІНКИ
   { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
-  { href: "/schedule/employee", label: "Графік", icon: Calendar, roles: ["helper, waiter"] },
+  { href: "/schedule/employee", label: "Графік", icon: Calendar, roles: ["helper", "waiter"] },
   //{ href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
   //{ href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
   { href: "/my-path/trainee", label: "Стажування", icon: User, roles: ["trainee"] },
@@ -63,7 +63,7 @@ const allNavItems = [
 
         // HELPER & WAITER
   { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
-  { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter", "helper"] },
+  { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter"] },
   { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["waiter"] }, 
   //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
