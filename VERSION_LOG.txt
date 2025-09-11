@@ -85,3 +85,5 @@ v3.8.3 (2025-09-10)
 - Added main schedule page to joint nav. menu
 v3.8.4d (2025-09-11)
 - Created schedule/employee/page.tsx based on schedule/page.tsx excluding admin functionality, navigation & footer link to /pnp instead of /rules
+v3.8.5 (2025-09-11)
+-  Placed /user-profile into side dropdown menu instead of main menu bar 

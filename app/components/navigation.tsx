@@ -54,7 +54,7 @@ const allNavItems = [
   //{ href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
 
   // ПЕРСОНАЛЬНІ СТОРІНКИ
-  { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
+    //{ href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
   { href: "/schedule/employee", label: "Графік", icon: Calendar, roles: ["helper", "waiter"] },
   //{ href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
   //{ href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
@@ -147,6 +147,12 @@ export function Navigation() {
                 </div>
                 <div className="text-xs">{getRoleDisplayName(user?.role || "")}</div>
               </div>
+                    <DropdownMenuItem asChild>
+                      <Link href="/user-profile" className="flex items-center">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Профіль
+                      </Link>
+                    </DropdownMenuItem>
               {user?.role === "admin" && (
                 <DropdownMenuItem asChild>
                   <Link href="/admin" className="flex items-center">
@@ -208,7 +214,7 @@ export function Navigation() {
                     className="flex items-center space-x-3 px-4 py-3 rounded-md text-sm font-medium text-gray-600 hover:text-orange-600 hover:bg-orange-50"
                   >
                     <Settings className="h-5 w-5" />
-                    <span>Менеджерістрування</span>
+                    <span>Менеджмент</span>
                   </Link>
                 )}
               </div>
