@@ -22,10 +22,11 @@ export function Footer() {
             </Link>
             <span className="text-xs text-gray-400">розробив <strong>Маркович Олександр</strong></span>
             <span className="text-xs text-gray-600">By registering you agree to receive occasional updates by email.</span>
-            <span className="text-xs text-gray-600">Реєструючись ви автоматично погоджуєтеся на отримання повідомленнь про новини та нові функції платформи на вказану вами ел.пошту</span>
           </div>
         </div>
       </div>
     </footer>
   )
 }
+
+         //   <span className="text-xs text-gray-600">Реєструючись ви автоматично погоджуєтеся на отримання повідомленнь про новини та нові функції платформи на вказану вами ел.пошту</span>
