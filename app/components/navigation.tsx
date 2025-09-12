@@ -149,7 +149,7 @@ export function Navigation() {
               </div>
                     <DropdownMenuItem asChild>
                       <Link href="/user-profile" className="flex items-center">
-                        <Settings className="mr-2 h-4 w-4" />
+                        <Smile className="mr-2 h-4 w-4" />
                         Профіль
                       </Link>
                     </DropdownMenuItem>
