@@ -47,7 +47,7 @@ export default function HomePage() {
             <CardHeader className="text-center">
               <BookOpen className="h-12 w-12 text-orange-500 mx-auto mb-4" />
               <CardTitle className="text-orange-600">Навчальні матеріали</CardTitle>
-              <CardDescription>Відео/текстові інструкції для вивчення необхідної теоретичної бази для роботи помічником, офіціантом, кухарем*</CardDescription>
+              <CardDescription>Відео/текстові інструкції для вивчення необхідної теоретичної бази для роботи ранером, офіціантом, кухарем*</CardDescription>
             </CardHeader>
             <CardContent>
               <Link href="/menu">

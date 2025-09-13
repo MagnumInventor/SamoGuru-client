@@ -842,7 +842,7 @@ export default function TasksPage() {
               </div>
               <div>
                 <div className="flex justify-between mb-1">
-                  <span>Помічники</span>
+                  <span>ранери</span>
                   <span>35%</span>
                 </div>
                 <Progress value={35} className="h-2" />
@@ -925,7 +925,7 @@ export default function TasksPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          {userRole === "waiter" ? "Завдання офіціанта" : "Завдання помічника"}
+          {userRole === "waiter" ? "Завдання офіціанта" : "Завдання ранера"}
         </h1>
         <p className="text-gray-600">
           {selectedStation} • {selectedDay}

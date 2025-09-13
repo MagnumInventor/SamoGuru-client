@@ -49,7 +49,7 @@ export default function TablePlanMapPage() {
               </div>
               <div className="flex items-center gap-1">
                 <Users className="h-3 w-3 text-orange-600" />
-                <span><strong>Помічники:</strong> Барна стійка</span>
+                <span><strong>ранери:</strong> Барна стійка</span>
               </div>
             </div>
           </div>
@@ -98,7 +98,7 @@ export default function TablePlanMapPage() {
               </div>
               <div className="flex items-center gap-1">
                 <Users className="h-3 w-3 text-orange-600" />
-                <span><strong>Помічники:</strong> Верхній бар</span>
+                <span><strong>ранери:</strong> Верхній бар</span>
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@ export default function TablePlanMapPage() {
               </div>
               <div className="flex items-center gap-1">
                 <Users className="h-3 w-3 text-orange-600" />
-                <span><strong>Помічники:</strong> Гриль</span>
+                <span><strong>ранери:</strong> Гриль</span>
               </div>
             </div>
           </div>
@@ -241,7 +241,7 @@ export default function TablePlanMapPage() {
               </div>
               <div className="flex items-center gap-1">
                 <Users className="h-3 w-3 text-orange-600" />
-                <span><strong>Помічники:</strong> Нижній бар</span>
+                <span><strong>ранери:</strong> Нижній бар</span>
               </div>
             </div>
           </div>
@@ -414,7 +414,7 @@ export default function TablePlanMapPage() {
             <div className="p-4 bg-orange-50 rounded-lg">
               <h3 className="font-semibold text-orange-800 mb-2 flex items-center gap-1">
                 <UserCheck className="h-4 w-4" />
-                Станції помічників
+                Станції ранерів
               </h3>
               <ul className="text-sm space-y-1 text-orange-700">
                 <li>• Барна стійка (1 поверх)</li>

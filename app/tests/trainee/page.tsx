@@ -98,7 +98,7 @@ const layoutQuestions: Question[] = [
   },
   {
     id: 3,
-    question: "На які столи замовлення помічники відносять напряму з кухні/нижнього бару (окрім гарячих напоїв)?",
+    question: "На які столи замовлення ранери відносять напряму з кухні/нижнього бару (окрім гарячих напоїв)?",
     type: "single",
     options: [
       "100-ті, 400-ті, 500-ті",
@@ -191,7 +191,7 @@ const rulesQuestions: Question[] = [
     type: "multiple",
     options: [
       "Очікувати на сервірування замовленнь",
-      "За можливості надавати допомогу кухарям/офіціантам/помічникам",
+      "За можливості надавати допомогу кухарям/офіціантам/ранерам",
       "Поновити запаси приборів",
       "Прибирати кімнату персоналу"
     ],
@@ -224,7 +224,7 @@ const rulesQuestions: Question[] = [
   },
   {
     id: 5,
-    question: "Що входить в обов'язки помічника?",
+    question: "Що входить в обов'язки ранера?",
     type: "multiple",
     options: [
       "Подача страв/напоїв гостям",
@@ -244,7 +244,7 @@ const rulesQuestions: Question[] = [
       "Смачного!",
       "Ваша (назва страви), нехай смакує!",
       "Утриматись від коментарів",
-      "Помічник не може подавати страву гостю",
+      "ранер не може подавати страву гостю",
       "Приємного апетиту!"
     ],
     correct: 3
@@ -349,7 +349,7 @@ const testCategories: TestCategory[] = [
   {
     id: 5,
     title: "Правила та обов'язки",
-    description: "Основні правила роботи та обов'язки помічників",
+    description: "Основні правила роботи та обов'язки ранерів",
     questions: rulesQuestions.length,
     duration: "2.5 хв",
     difficulty: "Легкий",
@@ -599,7 +599,7 @@ export default function TestsPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center">
               <Trophy className="h-5 w-5 text-orange-500 mr-2" />
-              Розроблено тестів для помічників
+              Розроблено тестів для ранерів
             </CardTitle>
           </CardHeader>
           <CardContent>

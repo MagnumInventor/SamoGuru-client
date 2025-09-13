@@ -25,7 +25,7 @@ const pathStages = [
   },
   {
     id: 2,
-    title: "Стажист (помічник)",
+    title: "Стажист (ранер)",
     description: "Практична робота під наглядом",
     status: "in-progress",
     progress: 65,
@@ -35,7 +35,7 @@ const pathStages = [
       { task: "Знання номерації столів", completed: false },
     ],
     duration: "3-5 днів",
-    mentor: "Помічник",
+    mentor: "ранер",
   },
   {
     id: 3,

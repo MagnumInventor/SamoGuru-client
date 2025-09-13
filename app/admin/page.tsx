@@ -100,7 +100,7 @@ export default function AdminPage() {
   useEffect(() => {
     if (scheduleForm.month && scheduleForm.year && scheduleForm.role) {
       const roleNames = {
-        'helper': 'Помічники',
+        'helper': 'ранери',
         'waiter': 'Офіціанти', 
         'admin': 'Менеджери'
       };
@@ -606,7 +606,7 @@ export default function AdminPage() {
                             <SelectValue placeholder="Виберіть тип" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="helper">Помічники</SelectItem>
+                            <SelectItem value="helper">ранери</SelectItem>
                             <SelectItem value="waiter">Офіціанти</SelectItem>
                             <SelectItem value="admin">Менеджери</SelectItem>
                           </SelectContent>

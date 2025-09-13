@@ -95,3 +95,6 @@ v3.8.7d (2025-09-13)
 v3.8.7S (2025-09-13)
 - Update Privacy & Policy content to suit for dev. changes (Політика конфіденційності)
 - Write  new Terms of Use (Умови використання)
+
+v3.8.8 (2025-09-13)
+- Replaced role "помічник" -> "ранер" WAITING TO BACKEND UPDATE
