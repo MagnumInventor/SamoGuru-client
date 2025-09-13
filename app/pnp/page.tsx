@@ -189,8 +189,8 @@ export default function LegalDocumentsPage() {
               <CardContent>
                 <p className="text-gray-700">
                   З питань конфіденційності звертайтесь: 
-                  <a href="mailto:markoleks08@gmail.com" className="text-blue-600 ml-2 hover:underline">
-                    markoleks08@gmail.com
+                  <a href="mailto:samoguru.main@gmail.com" className="text-blue-600 ml-2 hover:underline">
+                    samoguru.main@gmail.com
                   </a>
                 </p>
               </CardContent>

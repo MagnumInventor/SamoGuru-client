@@ -182,7 +182,7 @@ export default function AssistantGuidePage() {
                   const textarea = document.getElementById("dev-message") as HTMLTextAreaElement | null
                   const text = textarea?.value || ""
                   window.localStorage.setItem("devMessageDraft", text)
-                  const mailto = `mailto:markoleks08@gmail.com?subject=Порада/помилка%20від%20стажера&body=${encodeURIComponent(text)}`
+                  const mailto = `mailto:samoguru.main@gmail.com?subject=Порада/помилка%20від%20стажера&body=${encodeURIComponent(text)}`
                   window.location.href = mailto
                 }}
               >
