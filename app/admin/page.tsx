@@ -835,39 +835,39 @@ export default function AdminPage() {
                 )}
                 
                 <div className="overflow-x-auto mt-8">
-                  <table className="w-full border-collapse border border-gray-200">
+                  <table className="w-full border-collapse border border-gray-200 text-sm">
                     <thead>
                       <tr>
-                        <th className="border border-gray-200 bg-gray-50 p-2 sticky left-0 z-10">Працівник</th>
+                        <th className="border border-gray-200 bg-gray-50 p-1 sticky left-0 z-10 w-8">#</th>
+                        <th className="border border-gray-200 bg-gray-50 p-1 sticky left-8 z-10 w-32 text-left">Працівник</th>
                         {Array.from({ length: new Date((selectedSchedule as any).year, (selectedSchedule as any).month, 0).getDate() }, (_, i) => (
-                          <th key={i + 1} className="border border-gray-200 bg-gray-50 p-2 min-w-[40px] text-center">
-                            {i + 1}
+                          <th key={i + 1} className="border border-gray-200 bg-gray-50 p-1 w-8">
+                            <div>{i + 1}</div>
+                            <div className="text-xs text-gray-500">
+                              {new Date((selectedSchedule as any).year, (selectedSchedule as any).month - 1, i + 1)
+                                .toLocaleDateString('uk-UA', { weekday: 'short' })
+                                .slice(0, 2)}
+                            </div>
                           </th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
-                      {(selectedSchedule as any).employees?.map((employee: { employee: string; employeeName: string; days: Array<{ shift: string; isAdditional: boolean; comment?: string }> }) => (
+                      {(selectedSchedule as any).employees?.map((employee: { employee: string; employeeName: string; days: Array<{ shift: string; isAdditional: boolean; comment?: string }> }, index: number) => (
                         <tr key={employee.employee}>
-                          <td className="border border-gray-200 p-2 whitespace-nowrap bg-white sticky left-0">
+                          <td className="border border-gray-200 p-1 text-center bg-white sticky left-0 z-10">
+                            {index + 1}
+                          </td>
+                          <td className="border border-gray-200 p-1 whitespace-nowrap bg-white sticky left-8 z-10 text-left">
                             {employee.employeeName}
                           </td>
-                          {employee.days.map((day, index) => (
+                          {employee.days.map((day, dayIndex) => (
                             <td 
-                              key={index}
-                              className={`border border-gray-200 p-2 text-center ${
-                                day.shift === '1'
-                                  ? 'bg-blue-100 text-blue-800' 
-                                  : day.shift === '16'
-                                  ? 'bg-green-100 text-green-800'
-                                  : day.shift === 'ADD'
-                                  ? 'bg-orange-100 text-orange-800'
-                                  : 'bg-gray-50'
-                              } ${day.isAdditional ? 'font-bold' : ''}`}
+                              key={dayIndex}
+                              className="border border-gray-200 p-1 text-center"
                               title={day.comment || undefined}
                             >
-                              {day.shift === '0' ? '-' : day.shift}
-                              {day.isAdditional && '*'}
+                              {day.shift === '0' ? '' : day.shift}
                             </td>
                           ))}
                         </tr>
@@ -876,22 +876,11 @@ export default function AdminPage() {
                   </table>
                 </div>
                 {/* Legend */}
-                <div className="mt-4 flex flex-wrap gap-4 justify-center text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-blue-100 border border-blue-200"></div>
-                    <span>Денна зміна (1) - 9:00-22:15</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-100 border border-green-200"></div>
-                    <span>Вечірня зміна (16) - 16:00-23:00</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-orange-100 border border-orange-200"></div>
-                    <span>Додаткова зміна (ADD)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-gray-50 border border-gray-200"></div>
-                    <span>Вихідний (-)</span>
+                <div className="mt-4 text-sm text-gray-600">
+                  <div className="flex gap-8 justify-center">
+                    <div>1 = Денна зміна (9:00-22:15)</div>
+                    <div>16 = Вечірня зміна (16:00-23:00)</div>
+                    <div>Пусте поле = Вихідний</div>
                   </div>
                 </div>
                 {/* Schedule Statistics */}
