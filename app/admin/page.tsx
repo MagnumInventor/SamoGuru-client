@@ -838,7 +838,7 @@ export default function AdminPage() {
                   <table className="w-full border-collapse border border-gray-200">
                     <thead>
                       <tr>
-                        <th className="border border-gray-200 bg-gray-50 p-2">Працівник</th>
+                        <th className="border border-gray-200 bg-gray-50 p-2 sticky left-0 z-10">Працівник</th>
                         {Array.from({ length: new Date((selectedSchedule as any).year, (selectedSchedule as any).month, 0).getDate() }, (_, i) => (
                           <th key={i + 1} className="border border-gray-200 bg-gray-50 p-2 min-w-[40px] text-center">
                             {i + 1}
@@ -847,32 +847,73 @@ export default function AdminPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(selectedSchedule as any).employees?.map((employee: { _id: string; name: string; shifts?: { [key: number]: string } }) => (
-                        <tr key={employee._id}>
-                          <td className="border border-gray-200 p-2 whitespace-nowrap">
-                            {employee.name}
+                      {(selectedSchedule as any).employees?.map((employee: { employee: string; employeeName: string; days: Array<{ shift: string; isAdditional: boolean; comment?: string }> }) => (
+                        <tr key={employee.employee}>
+                          <td className="border border-gray-200 p-2 whitespace-nowrap bg-white sticky left-0">
+                            {employee.employeeName}
                           </td>
-                          {Array.from(
-                            { length: new Date((selectedSchedule as any).year, (selectedSchedule as any).month, 0).getDate() },
-                            (_, day) => (
-                              <td 
-                                key={day + 1} 
-                                className={`border border-gray-200 p-2 text-center ${
-                                  employee.shifts?.[day + 1] === '1' 
-                                    ? 'bg-blue-100 text-blue-800' 
-                                    : employee.shifts?.[day + 1] === '16'
-                                    ? 'bg-green-100 text-green-800'
-                                    : 'bg-gray-50'
-                                }`}
-                              >
-                                {employee.shifts?.[day + 1] || '-'}
-                              </td>
-                            )
-                          )}
+                          {employee.days.map((day, index) => (
+                            <td 
+                              key={index}
+                              className={`border border-gray-200 p-2 text-center ${
+                                day.shift === '1'
+                                  ? 'bg-blue-100 text-blue-800' 
+                                  : day.shift === '16'
+                                  ? 'bg-green-100 text-green-800'
+                                  : day.shift === 'ADD'
+                                  ? 'bg-orange-100 text-orange-800'
+                                  : 'bg-gray-50'
+                              } ${day.isAdditional ? 'font-bold' : ''}`}
+                              title={day.comment || undefined}
+                            >
+                              {day.shift === '0' ? '-' : day.shift}
+                              {day.isAdditional && '*'}
+                            </td>
+                          ))}
                         </tr>
                       ))}
                     </tbody>
                   </table>
+                </div>
+                {/* Legend */}
+                <div className="mt-4 flex flex-wrap gap-4 justify-center text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-blue-100 border border-blue-200"></div>
+                    <span>Денна зміна (1) - 9:00-22:15</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-100 border border-green-200"></div>
+                    <span>Вечірня зміна (16) - 16:00-23:00</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-orange-100 border border-orange-200"></div>
+                    <span>Додаткова зміна (ADD)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-gray-50 border border-gray-200"></div>
+                    <span>Вихідний (-)</span>
+                  </div>
+                </div>
+                {/* Schedule Statistics */}
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                  <div className="p-4 bg-white rounded-lg border">
+                    <div className="font-medium text-gray-500">Всього працівників</div>
+                    <div className="text-2xl font-bold mt-1">{(selectedSchedule as any).totalEmployees}</div>
+                  </div>
+                  <div className="p-4 bg-white rounded-lg border">
+                    <div className="font-medium text-gray-500">Робочих днів</div>
+                    <div className="text-2xl font-bold mt-1">{(selectedSchedule as any).totalWorkingDays}</div>
+                  </div>
+                  <div className="p-4 bg-white rounded-lg border">
+                    <div className="font-medium text-gray-500">Статус</div>
+                    <div className="text-2xl font-bold mt-1">{(selectedSchedule as any).status}</div>
+                  </div>
+                  <div className="p-4 bg-white rounded-lg border">
+                    <div className="font-medium text-gray-500">Останнє оновлення</div>
+                    <div className="text-2xl font-bold mt-1">
+                      {new Date((selectedSchedule as any).lastModifiedAt).toLocaleDateString('uk-UA')}
+                    </div>
+                  </div>
                 </div>
                 {/* Legend */}
                 <div className="mt-4 flex gap-4 justify-center text-sm">
