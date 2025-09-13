@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
@@ -28,7 +29,7 @@ import {
   Send,
   Edit,
   Archive,
-  Download
+  Download,
 } from "lucide-react";
 
 interface ScheduleFormData {
@@ -125,12 +126,9 @@ export default function AdminPage() {
           <p className="text-gray-600 mb-4">
             Будь ласка, увійдіть як менеджер для доступу до цієї сторінки
           </p>
-          <Button
-            onClick={() => router.push('/login')}
-            className="bg-orange-500 hover:bg-orange-600"
-          >
-            Перейти до входу
-          </Button>
+            <Link href="/ff" className="hover:text-orange-600 transition-colors">
+              Перейти до входу
+            </Link>
         </div>
       </div>
     );
