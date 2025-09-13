@@ -89,3 +89,5 @@ v3.8.5 (2025-09-11)
 -  Placed /user-profile into side dropdown menu instead of main menu bar 
 v3.8.6 (2025-09-13)
 -  Removed SChedule import simulation and fake methods
+v3.8.7d (2025-09-13)
+-  Test overview schedule on test admin page

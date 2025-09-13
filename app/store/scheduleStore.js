@@ -258,7 +258,6 @@ export const useScheduleStore = create((set, get) => ({
     }
   },
  
-
   
   // Format shift display
   formatShift: (shift) => {

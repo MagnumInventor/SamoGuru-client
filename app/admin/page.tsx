@@ -834,9 +834,61 @@ export default function AdminPage() {
                   </div>
                 )}
                 
-                <p className="text-center text-gray-500 mt-8">
-                  Детальний перегляд розкладу буде доступний після повного завантаження даних
-                </p>
+                <div className="overflow-x-auto mt-8">
+                  <table className="w-full border-collapse border border-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="border border-gray-200 bg-gray-50 p-2">Працівник</th>
+                        {Array.from({ length: new Date((selectedSchedule as any).year, (selectedSchedule as any).month, 0).getDate() }, (_, i) => (
+                          <th key={i + 1} className="border border-gray-200 bg-gray-50 p-2 min-w-[40px] text-center">
+                            {i + 1}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(selectedSchedule as any).employees?.map((employee: { _id: string; name: string; shifts?: { [key: number]: string } }) => (
+                        <tr key={employee._id}>
+                          <td className="border border-gray-200 p-2 whitespace-nowrap">
+                            {employee.name}
+                          </td>
+                          {Array.from(
+                            { length: new Date((selectedSchedule as any).year, (selectedSchedule as any).month, 0).getDate() },
+                            (_, day) => (
+                              <td 
+                                key={day + 1} 
+                                className={`border border-gray-200 p-2 text-center ${
+                                  employee.shifts?.[day + 1] === '1' 
+                                    ? 'bg-blue-100 text-blue-800' 
+                                    : employee.shifts?.[day + 1] === '16'
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-gray-50'
+                                }`}
+                              >
+                                {employee.shifts?.[day + 1] || '-'}
+                              </td>
+                            )
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {/* Legend */}
+                <div className="mt-4 flex gap-4 justify-center text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-blue-100 border border-blue-200"></div>
+                    <span>Денна зміна (1)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-green-100 border border-green-200"></div>
+                    <span>Вечірня зміна (16)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-gray-50 border border-gray-200"></div>
+                    <span>Вихідний (-)</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
