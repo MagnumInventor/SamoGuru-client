@@ -34,14 +34,9 @@ export default function AdminPage() {
     const {
         schedules,
         fetchSchedules,
-        importSchedule,
-        saveSchedule,
-        isSaving,
         isImporting,
         error: importError,
         message: importMessage,
-        clearImportError,
-        clearImportMessage,
     } = useScheduleStore();
 
     const [newCode, setNewCode] = useState('');
@@ -104,18 +99,6 @@ export default function AdminPage() {
             await deleteEmployeeCode(codeId);
         } catch (error) {
             console.error('Error deleting code:', error);
-        }
-    };
-
-    const handleImportSchedule = async () => {
-        if (!importFile) return;
-        try {
-            const formData = new FormData();
-            formData.append('file', importFile);
-            await importSchedule(formData);
-            setImportFile(null);
-        } catch (error) {
-            console.error('Error importing schedule:', error);
         }
     };
 

@@ -257,33 +257,8 @@ export const useScheduleStore = create((set, get) => ({
       throw error;
     }
   },
+ 
 
-  // Import schedule from Excel (placeholder - to be implemented with actual Excel parsing)
-  importSchedule: async (formData) => {
-    set({ isLoading: true, error: null });
-    try {
-      // This would be implemented with actual Excel parsing logic
-      // For now, it's a placeholder that simulates the process
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      set({ 
-        message: "Імпорт розкладу поки що в розробці", 
-        isLoading: false 
-      });
-      
-    } catch (error) {
-      console.error("Помилка імпорту розкладу:", error);
-      set({ 
-        error: "Помилка імпорту розкладу", 
-        isLoading: false 
-      });
-      throw error;
-    }
-  },
-
-  // Helper functions for working with schedule data
   
   // Format shift display
   formatShift: (shift) => {
