@@ -91,3 +91,7 @@ v3.8.6 (2025-09-13)
 -  Removed SChedule import simulation and fake methods
 v3.8.7d (2025-09-13)
 -  Test overview schedule on test admin page
+
+v3.8.7S (2025-09-13)
+- Update Privacy & Policy content to suit for dev. changes (Політика конфіденційності)
+- Write  new Terms of Use (Умови використання)
