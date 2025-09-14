@@ -6,10 +6,12 @@ export function Footer() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex items-center space-x-2">
+            <Link href="/login">
             <div className="text-lg font-bold">
-              <span className="text-gray-900">САМо</span>
-              <span className="text-orange-500">ГУРу</span>
+              <span className="text-gray-900">Само</span>
+              <span className="text-orange-500">Гуру</span>
             </div>
+            </Link>
             <span className="text-gray-500 text-sm">© 2025</span>
           </div>
 
