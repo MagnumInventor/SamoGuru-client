@@ -6,7 +6,6 @@ import { Mail, Lock, Loader, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useAuthStore } from "@/app/store/authStore";
 import FloatingShape from "@/app/components/FloatingShape";
-// In your main App.js or _app.js
 import BackendLoader from '../components/BackendLoader';
 import { useRouter } from "next/navigation";
 

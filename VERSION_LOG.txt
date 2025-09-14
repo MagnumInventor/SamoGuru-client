@@ -98,3 +98,5 @@ v3.8.7S (2025-09-13)
 
 v3.8.8 (2025-09-13)
 - Replaced role "помічник" -> "ранер" WAITING TO BACKEND UPDATE
+v3.8.9 (2025-09-14)
+- Created ReadRules component, placed in signup page

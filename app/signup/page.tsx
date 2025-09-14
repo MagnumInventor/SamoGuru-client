@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PasswordStrengthMeter from "@/app/components/PasswordStrengthMeter";
 import FloatingShape from "@/app/components/FloatingShape";
+import { ReadRules } from "@/app/components/ReadRules";
 import { useAuthStore, USER_ROLES } from "@/app/store/authStore"
 
 const SignUpPage = () => {
@@ -202,6 +203,8 @@ return (
             </motion.button>
           </form>
         </div>
+
+        <ReadRules />
 
         <div className="px-8 py-4 bg-white/5 border-t border-white/10 flex justify-center">
           <p className="text-sm text-white/60">
