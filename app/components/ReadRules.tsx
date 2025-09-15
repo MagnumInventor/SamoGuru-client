@@ -7,7 +7,7 @@ export function ReadRules() {
   const [UserAgreedToRules, setUserAgreedToRules] = useState(false);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between px-4 pb-2">
       <label className="flex items-center">
         <input
           type="checkbox"
