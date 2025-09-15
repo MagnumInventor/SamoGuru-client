@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useAuthStore } from "../store/authStore";
 
 export function ReadRules() {
   const [UserAgreedToRules, setUserAgreedToRules] = useState(false);

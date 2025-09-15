@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Shield, Cookie, X } from 'lucide-react';
+import { hasCookieConsent, setCookie, setSecurityCookie } from '../utils/cookies';
 
 export function CookieConsent() {
   const [showConsent, setShowConsent] = useState(false);
@@ -16,18 +17,21 @@ export function CookieConsent() {
   }, []);
 
   const handleAccept = () => {
-    // Set cookie consent in localStorage
     localStorage.setItem('cookieConsent', 'true');
-    // Set the necessary cookies
-    document.cookie = "cookieConsent=true; path=/; max-age=31536000"; // 1 year
+    setSecurityCookie();
+    setCookie('cookieConsent', 'true');
+    setCookie('acceptedAt', new Date().toISOString());
     setShowConsent(false);
-    // Reload the page to apply cookie settings
+    // Reload to apply cookie settings and refresh authentication
     window.location.reload();
   };
 
   const handleDecline = () => {
     localStorage.setItem('cookieConsent', 'false');
+    setCookie('cookieConsent', 'false');
     setShowConsent(false);
+    // Redirect to a page explaining limited functionality
+    window.location.href = '/cookie-policy';
   };
 
   if (!showConsent) return null;
