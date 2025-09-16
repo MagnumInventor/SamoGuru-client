@@ -26,9 +26,9 @@ const SignUpPage = () => {
 
 const roleOptions = [
   { value: USER_ROLES.TRAINEE, label: "Стажер", description: "Новий працівник на навчанні" },
-  { value: USER_ROLES.HELPER, label: "ранер", description: "Малий/мала - ранер офіціанта" },
-  { value: USER_ROLES.WAITER, label: "Офіціант", description: "Фіц - рядовий офіціант" },
-  { value: USER_ROLES.ADMIN, label: "Менеджер", description: "Менеджмент та управління" }
+  { value: USER_ROLES.HELPER, label: "Ранер", description: "Помічник офіціанта" },
+  { value: USER_ROLES.WAITER, label: "Офіціант", description: "Рядовий офіціант" },
+  { value: USER_ROLES.ADMIN, label: "Менеджер", description: "Адміністрація та управління" }
 ]
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -67,7 +67,7 @@ return (
             <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-red-400 text-transparent bg-clip-text">
               Створити акаунт
             </h2>
-            <p className="text-white/80 text-sm">Приєднуйтесь до команди СамоГуру</p>
+            <p className="text-white/80 text-sm">Приєднуйтесь до команди *Самогонної ресторації</p>
           </div>
 
           <form onSubmit={handleSignUp} className="space-y-6">
@@ -102,7 +102,7 @@ return (
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Менеджерський код (отримайте у власника)"
+                  placeholder="Код менеджера (отримайте у власника)"
                   value={adminCode}
                   onChange={(e) => setAdminCode(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200"
@@ -140,7 +140,6 @@ return (
               </button>
             </div>
 
-{/* Role Selection Dropdown */}
 						<div className="relative">
 							<Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
 							<button
