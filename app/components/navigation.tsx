@@ -64,7 +64,7 @@ const allNavItems = [
         // HELPER & WAITER
   { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
   { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter"] },
-  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
+  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["waiter"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["waiter"] }, 
   //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
       // TRAINEE
@@ -73,7 +73,7 @@ const allNavItems = [
   { href: "/table-plan/map", label: "План закладу", icon:  BookOpen, roles: ["trainee"] },
   { href: "/serving", label: "Сервірування", icon:  Soup, roles: ["trainee"] },
   { href: "/tablewear", label: "Посуд та ліфт", icon:  BookOpen, roles: ["trainee"] },
-  { href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
+  //{ href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
 
 
   // СТОРІНКИ МЕНЕДЖЕРА
