@@ -23,10 +23,11 @@ export function Footer() {
               Правила та політика
             </Link>
             <span className="text-xs text-gray-400">розробив <strong>Маркович Олександр</strong></span>
-            <span className="text-xs text-gray-600">By registering you agree to receive occasional updates by email.</span>
+            <span className="text-xs text-gray-600">By registering you agree to receive email authentication updates by email.</span>
           </div>
         </div>
       </div>
+       <span className="text-gray-500 text-sm">v3.8.9S</span>
     </footer>
   )
 }
