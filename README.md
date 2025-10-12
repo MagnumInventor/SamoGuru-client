@@ -3,4 +3,6 @@
 Deployed on Render
 
 (https://www.samoguru.run.place)
-(https://samoguru-back.onrender.com)
+(https://samoguru-front.onrender.com)
+
+getting ready for upscaling to restoraunt level!
