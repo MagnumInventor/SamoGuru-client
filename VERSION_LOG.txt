@@ -76,3 +76,29 @@ v3.7.0D (2025-09-07)
 - Implemented Admin part of Schedule functionality
 v3.7.1 (2025-09-07)
 - Redirect on refresh fun.
+
+v3.8.1 (2025-09-10)
+- Cleaned work tree (new fork: Schedule-management) for Schedule management implementation & Import "scheduleStore" from external device
+v3.8.2 (2025-09-10)
+- Import frontend components & schedule page from external DEV. device
+v3.8.3 (2025-09-10)
+- Added main schedule page to joint nav. menu
+v3.8.4d (2025-09-11)
+- Created schedule/employee/page.tsx based on schedule/page.tsx excluding admin functionality, navigation & footer link to /pnp instead of /rules
+v3.8.5 (2025-09-11)
+-  Placed /user-profile into side dropdown menu instead of main menu bar 
+v3.8.6 (2025-09-13)
+-  Removed SChedule import simulation and fake methods
+v3.8.7d (2025-09-13)
+-  Test overview schedule on test admin page
+
+v3.8.7S (2025-09-13)
+- Update Privacy & Policy content to suit for dev. changes (Політика конфіденційності)
+- Write  new Terms of Use (Умови використання)
+
+v3.8.8 (2025-09-13)
+- Replaced role "помічник" -> "ранер" WAITING TO BACKEND UPDATE
+v3.8.9 (2025-09-14)
+- Created ReadRules component, placed in signup page
+v3.8.9 (2025-09-15)
+ - Create component of checking user agreement to Cookie & following toggle button

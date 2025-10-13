@@ -84,8 +84,8 @@ export const demoTestQuestions = [
 export const demoNewsData = [
   {
     id: 1,
-    title: "Новий помічник у команді",
-    description: "Вітаємо Діму, який приєдналася до нашої команди як помічник офіціантв",
+    title: "Новий ранер у команді",
+    description: "Вітаємо Діму, який приєдналася до нашої команди як ранер офіціантв",
     category: "team",
     date: "12.05.2025",
     author: "Менеджерістрація",

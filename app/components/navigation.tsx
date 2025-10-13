@@ -43,28 +43,28 @@ const getRoleDisplayName = (role: string): string => {
 
 const allNavItems = [
   // НЕЗАХИЩЕНІ СТОРІНКИ (без ProtectedRoute, etc.)
-  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter"] },
+  //{ href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["helper", "waiter", "trainee"] },
   { href: "/table-plan", label: "План столиків", icon: MapPin, roles: ["helper", "waiter"] }, 
-  { href: "/pnp", label: "Формальності", icon: Newspaper, roles: ["trainee"] }, 
 
   // ЗАХИЩЕНІ СТОРІНКИ (через ProtectedRoute)
   { href: "/serving", label: "Сервірування", icon: Coffee, roles: ["helper"] }, 
   { href: "/tablewear", label: "Посуд", icon: Utensils, roles: ["helper"] },
   { href: "/tasks", label: "Чек-лист", icon: CheckSquare, roles: ["waiter"] },
   { href: "/tasks", label: "Робота", icon: CheckSquare, roles: ["helper"] },
-  { href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
+  //{ href: "/main", label: "Головна", icon: User, roles: ["waiter", "helper"] },
 
   // ПЕРСОНАЛЬНІ СТОРІНКИ
-  { href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
-  { href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
-  { href: "/schedule/helper", label: "Розклад роботи помічників", icon: Calendar, roles: ["helper"] },
+    //{ href: "/user-profile", label: "Профіль", icon: Smile, roles: ["waiter", "helper", "admin", "trainee"] },
+  { href: "/schedule/employee", label: "Графік", icon: Calendar, roles: ["helper", "waiter"] },
+  //{ href: "/schedule/waiter", label: "Розклад роботи офіціантів", icon: Calendar, roles: ["waiter"] },
+  //{ href: "/schedule/helper", label: "Розклад роботи ранерів", icon: Calendar, roles: ["helper"] },
   { href: "/my-path/trainee", label: "Стажування", icon: User, roles: ["trainee"] },
-  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
+  //  { href: "/my-path", label: "Мій шлях", icon: TrendingUp, roles: ["helper"] },
 
         // HELPER & WAITER
   { href: "/tests", label: "Тестування", icon: Brain, roles: ["waiter", "helper"] },
-  { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter", "helper"] },
-  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["helper"] },
+  { href: "/menu", label: "Меню", icon: Soup, roles: ["waiter"] },
+  { href: "/tutorials", label: "Навчання", icon: BookOpen, roles: ["waiter"] },
   { href: "/rules", label: "Правила", icon: FileText, roles: ["waiter"] }, 
   //{ href: "/news", label: "Актуальне", icon: Newspaper, roles: ["admin", "waiter", "helper"] },
       // TRAINEE
@@ -73,7 +73,7 @@ const allNavItems = [
   { href: "/table-plan/map", label: "План закладу", icon:  BookOpen, roles: ["trainee"] },
   { href: "/serving", label: "Сервірування", icon:  Soup, roles: ["trainee"] },
   { href: "/tablewear", label: "Посуд та ліфт", icon:  BookOpen, roles: ["trainee"] },
-  { href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
+  //{ href: "/tests/trainee", label: "Тестування", icon: Brain, roles: ["trainee"] },
 
 
   // СТОРІНКИ МЕНЕДЖЕРА
@@ -147,6 +147,12 @@ export function Navigation() {
                 </div>
                 <div className="text-xs">{getRoleDisplayName(user?.role || "")}</div>
               </div>
+                    <DropdownMenuItem asChild>
+                      <Link href="/user-profile" className="flex items-center">
+                        <Smile className="mr-2 h-4 w-4" />
+                        Профіль
+                      </Link>
+                    </DropdownMenuItem>
               {user?.role === "admin" && (
                 <DropdownMenuItem asChild>
                   <Link href="/admin" className="flex items-center">
@@ -208,7 +214,7 @@ export function Navigation() {
                     className="flex items-center space-x-3 px-4 py-3 rounded-md text-sm font-medium text-gray-600 hover:text-orange-600 hover:bg-orange-50"
                   >
                     <Settings className="h-5 w-5" />
-                    <span>Менеджерістрування</span>
+                    <span>Менеджмент</span>
                   </Link>
                 )}
               </div>

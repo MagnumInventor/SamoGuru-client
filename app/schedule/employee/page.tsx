@@ -7,8 +7,8 @@ import { Button } from "@/app/components/ui/button";
 import { Badge } from "@/app/components/ui/badge";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
 
-import { useAuthStore } from "@/app/store/authStore";
-import { useScheduleStore } from "@/app/store/scheduleStore";
+import { useAuthStore } from "../../store/authStore";
+import { useScheduleStore } from "../../store/scheduleStore";
 import { 
   Calendar, 
   Clock, 
@@ -17,30 +17,53 @@ import {
   CheckCircle,
   Coffee,
   Moon,
-  Home
+  Home,
+  RefreshCw
 } from "lucide-react";
 
-export default function EmployeeSchedulePage() {
+export default function StaffSchedulePage() {
   const router = useRouter();
   const authState = useAuthStore();
   const scheduleStore = useScheduleStore();
   
-  const [calendarView, setCalendarView] = useState<any>(null);
+  type CalendarStats = {
+    totalWorkingDays: number;
+    totalDayShifts: number;
+    totalEveningShifts: number;
+  };
+
+  type CalendarViewType = {
+    calendar: any[][];
+    month: number;
+    year: number;
+    employeeName: string;
+    stats: CalendarStats;
+  };
+
+  const [calendarView, setCalendarView] = useState<CalendarViewType | null>(null);
 
   useEffect(() => {
-    // Check authentication
+    // Check authentication and role
     if (!authState.user) {
       router.push('/login');
       return;
     }
 
-    // Fetch current schedule
-    scheduleStore.fetchMyCurrentSchedule();
+    // Redirect admin users to admin page
+    if (authState.user.role === 'admin') {
+      router.push('/admin');
+      return;
+    }
+
+    // Fetch current schedule for staff
+    if (scheduleStore.fetchMyCurrentSchedule) {
+      scheduleStore.fetchMyCurrentSchedule();
+    }
   }, [authState.user, router]);
 
   // Generate calendar view when schedule loads
   useEffect(() => {
-    if (scheduleStore.myCurrentSchedule) {
+    if (scheduleStore.myCurrentSchedule && scheduleStore.generateCalendarView) {
       const calendar = scheduleStore.generateCalendarView(scheduleStore.myCurrentSchedule);
       setCalendarView(calendar);
     }
@@ -50,13 +73,19 @@ export default function EmployeeSchedulePage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
+          <Clock className="h-8 w-8 mx-auto mb-2 text-gray-400 animate-spin" />
           <p className="text-gray-600">Завантаження...</p>
         </div>
       </div>
     );
   }
 
-  const getShiftIcon = (shift: string) => {
+  // Redirect admin users
+  if (authState.user.role === 'admin') {
+    return null;
+  }
+
+  const getShiftIcon = (shift: any) => {
     switch (shift) {
       case '1':
         return <Coffee className="h-4 w-4" />;
@@ -67,7 +96,7 @@ export default function EmployeeSchedulePage() {
     }
   };
 
-  const getShiftLabel = (shift: string) => {
+  const getShiftLabel = (shift: any) => {
     switch (shift) {
       case '1':
         return '9:00-22:15';
@@ -105,7 +134,7 @@ export default function EmployeeSchedulePage() {
           <h2 className="text-2xl font-bold text-gray-900">
             {monthNames[month - 1]} {year}
           </h2>
-          <p className="text-gray-600 mt-1">Особистий розклад для {employeeName}</p>
+          <p className="text-gray-600 mt-1">Ваш особистий розклад</p>
         </div>
 
         {/* Statistics */}
@@ -158,18 +187,18 @@ export default function EmployeeSchedulePage() {
           <CardContent className="p-6">
             <div className="grid grid-cols-7 gap-2">
               {/* Week day headers */}
-              {calendar[0].map((day: string, index: number) => (
+              {calendar[0].map((day: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined, index: React.Key | null | undefined) => (
                 <div key={index} className="p-2 text-center font-medium text-gray-700 bg-gray-50 rounded">
                   {day}
                 </div>
               ))}
               
               {/* Calendar days */}
-              {calendar.slice(1).map((week: any[], weekIndex: number) => (
-                week.map((day: any, dayIndex: number) => (
+              {calendar.slice(1).map((week: any[], weekIndex: any) => (
+                week.map((day: { shift: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; date: string | number | bigint | boolean | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined> | null | undefined; isAdditional: any; }, dayIndex: any) => (
                   <div key={`${weekIndex}-${dayIndex}`} className="aspect-square">
                     {day ? (
-                      <div className={`h-full border-2 rounded-lg p-1 flex flex-col items-center justify-center ${getShiftColor(day.shift)} hover:shadow-md transition-shadow`}>
+                      <div className={`h-full border-2 rounded-lg p-1 flex flex-col items-center justify-center ${getShiftColor(String(day.shift))} hover:shadow-md transition-shadow`}>
                         <div className="font-bold text-lg mb-1">{day.date}</div>
                         <div className="flex items-center gap-1 text-xs">
                           {getShiftIcon(day.shift)}
@@ -196,7 +225,7 @@ export default function EmployeeSchedulePage() {
         {/* Legend */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Легенда</CardTitle>
+            <CardTitle className="text-lg">Позначення змін</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -237,21 +266,25 @@ export default function EmployeeSchedulePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
+      <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Мій розклад</h1>
-            <p className="text-gray-600">
-              Особистий графік роботи для {authState.user.firstName}
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="flex items-center gap-1">
-              <User className="w-3 h-3" />
-              {authState.user.role.toUpperCase()}
-            </Badge>
+        <div className="text-center md:text-left">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                Мій розклад
+              </h1>
+              <p className="text-gray-600">
+                {authState.user.firstName} {authState.user.lastName}
+              </p>
+            </div>
+            <div className="flex items-center justify-center md:justify-end gap-2">
+              <Badge variant="secondary" className="flex items-center gap-1">
+                <User className="w-3 h-3" />
+                {authState.user.role.toUpperCase()}
+              </Badge>
+            </div>
           </div>
         </div>
 
@@ -298,8 +331,10 @@ export default function EmployeeSchedulePage() {
               </p>
               <Button
                 variant="outline"
-                onClick={() => scheduleStore.fetchMyCurrentSchedule()}
+                onClick={() => scheduleStore.fetchMyCurrentSchedule && scheduleStore.fetchMyCurrentSchedule()}
+                className="flex items-center gap-2"
               >
+                <RefreshCw className="h-4 w-4" />
                 Перевірити знову
               </Button>
             </CardContent>
@@ -309,7 +344,7 @@ export default function EmployeeSchedulePage() {
         {/* Schedule Display */}
         {!scheduleStore.isLoading && scheduleStore.myCurrentSchedule && renderCalendar()}
 
-        {/* General Comments */}
+        {/* Important Information */}
         {scheduleStore.myCurrentSchedule?.generalComment && (
           <Card>
             <CardHeader>
@@ -326,37 +361,28 @@ export default function EmployeeSchedulePage() {
           </Card>
         )}
 
-        {/* Quick Actions */}
+        {/* Simple Actions */}
         <Card>
-          <CardHeader>
-            <CardTitle>Швидкі дії</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-3">
+          <CardContent className="p-4">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 variant="outline"
-                onClick={() => scheduleStore.fetchMyCurrentSchedule()}
+                onClick={() => scheduleStore.fetchMyCurrentSchedule && scheduleStore.fetchMyCurrentSchedule()}
                 disabled={scheduleStore.isLoading}
+                className="flex items-center gap-2"
               >
-                <Clock className="h-4 w-4 mr-2" />
+                <RefreshCw className="h-4 w-4" />
                 Оновити розклад
               </Button>
               
               <Button
                 variant="outline"
                 onClick={() => window.print()}
+                className="flex items-center gap-2"
               >
-                Друкувати розклад
+                <Calendar className="h-4 w-4" />
+                Друкувати
               </Button>
-              
-              {authState.user.role === 'admin' && (
-                <Button
-                  variant="outline"
-                  onClick={() => router.push('/admin')}
-                >
-                  Панель менеджера
-                </Button>
-              )}
             </div>
           </CardContent>
         </Card>

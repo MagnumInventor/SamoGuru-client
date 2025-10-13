@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import { ClientLayout } from "./components/client-layout";
 import { ThemeProvider } from "./components/theme-provider";
+import { CookieConsent } from "./components/CookieConsent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         >
           <div className="min-h-screen w-full overflow-x-hidden">
             <ClientLayout>{children}</ClientLayout>
+            <CookieConsent />
           </div>
         </ThemeProvider>
       </body>

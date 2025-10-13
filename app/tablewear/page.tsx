@@ -202,7 +202,7 @@ export default function DishwarePage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Організація посуду</h1>
-        <p className="text-gray-600">Правила розподілу посуду для помічників офіціантів</p>
+        <p className="text-gray-600">Правила розподілу посуду для ранерів офіціантів</p>
       </div>
 
       {/* Search Bar */}
@@ -466,7 +466,7 @@ export default function DishwarePage() {
           <CardHeader>
             <CardTitle className="flex items-center text-green-800">
               <span className="mr-2">✅</span>
-              Поради для помічників
+              Поради для ранерів
             </CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-green-700 space-y-3">

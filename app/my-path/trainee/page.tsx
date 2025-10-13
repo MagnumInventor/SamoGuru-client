@@ -43,7 +43,7 @@ export default function AssistantGuidePage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Путівник стажера-помічника</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Путівник стажера-ранера</h1>
         <p className="text-gray-600">Основні навички та алгоритми дій для успішного початку роботи</p>
       </div>
 
@@ -79,7 +79,7 @@ export default function AssistantGuidePage() {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Utensils className="h-5 w-5 mr-2" />
-                Основні навички помічника
+                Основні навички ранера
               </CardTitle>
               <CardDescription>Критично важливі дії, які необхідно освоїти в першу чергу</CardDescription>
             </CardHeader>
@@ -182,7 +182,7 @@ export default function AssistantGuidePage() {
                   const textarea = document.getElementById("dev-message") as HTMLTextAreaElement | null
                   const text = textarea?.value || ""
                   window.localStorage.setItem("devMessageDraft", text)
-                  const mailto = `mailto:markoleks08@gmail.com?subject=Порада/помилка%20від%20стажера&body=${encodeURIComponent(text)}`
+                  const mailto = `mailto:samoguru.main@gmail.com?subject=Порада/помилка%20від%20стажера&body=${encodeURIComponent(text)}`
                   window.location.href = mailto
                 }}
               >

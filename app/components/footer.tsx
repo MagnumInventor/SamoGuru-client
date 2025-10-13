@@ -6,10 +6,12 @@ export function Footer() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex items-center space-x-2">
+            <Link href="/login">
             <div className="text-lg font-bold">
-              <span className="text-gray-900">САМо</span>
-              <span className="text-orange-500">ГУРу</span>
+              <span className="text-gray-900">Само</span>
+              <span className="text-orange-500">Гуру</span>
             </div>
+            </Link>
             <span className="text-gray-500 text-sm">© 2025</span>
           </div>
 
@@ -17,15 +19,17 @@ export function Footer() {
             <Link href="/ff" className="hover:text-orange-600 transition-colors">
               Підтримка
             </Link>
-            <Link href="/rules" className="hover:text-orange-600 transition-colors">
-              Правила
+            <Link href="/pnp" className="hover:text-orange-600 transition-colors">
+              Правила та політика
             </Link>
             <span className="text-xs text-gray-400">розробив <strong>Маркович Олександр</strong></span>
-            <span className="text-xs text-gray-600">By registering you agree to receive occasional updates by email.</span>
-            <span className="text-xs text-gray-600">Реєструючись ви автоматично погоджуєтеся на отримання повідомленнь про новини та нові функції платформи на вказану вами ел.пошту</span>
+            <span className="text-xs text-gray-600">By registering you agree to receive email authentication updates by email.</span>
           </div>
         </div>
       </div>
+       <span className="text-gray-500 text-sm">v3.8.9S</span>
     </footer>
   )
 }
+
+         //   <span className="text-xs text-gray-600">Реєструючись ви автоматично погоджуєтеся на отримання повідомленнь про новини та нові функції платформи на вказану вами ел.пошту</span>
