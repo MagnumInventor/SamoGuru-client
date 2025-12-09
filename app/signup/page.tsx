@@ -9,7 +9,7 @@ import PasswordStrengthMeter from "@/app/components/PasswordStrengthMeter";
 import FloatingShape from "@/app/components/FloatingShape";
 import AutoRefresh from "@/app/utils/AutoRefresh";
 import { ReadRules } from "@/app/components/ReadRules";
-import { useAuthStore, USER_ROLES } from "@/app/store/authStore"
+import { useAuthStore, USER_ROLES, USER_RESTARAUNTS } from "@/app/store/authStore"
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -18,21 +18,24 @@ const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("trainee");
+  const [restaraunt, setRestaraunt] = useState("Kovcheg");
   const [employeeCode, setEmployeeCode] = useState("");
   const [adminCode, setAdminCode] = useState("");
 
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
+  const [showRestarauntDropdown, setShowRestarauntDropdown] = useState(false);
   const { signup, error, isLoading } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
 
 
 const restarauntOptions = [
-  { value: RESTARAUNT.KOVCHEG, label: "Ковчег", description: "Ресторан-пивоварня" },
-  { value: RESTARAUNT.MLYN, label: "Старий Млин", description: "Українська автентика" },
-  { value: RESTARAUNT.FLAMINGO, label: "Фламінго", description: "Унікальна пастерія" },
-  { value: RESTARAUNT.HATA, label: "Грибна Хата", description: "Перлина Буковелю" },
-  { value: RESTARAUNT.SUSHI, label: "Суші", description: "" }
+  { value: USER_RESTARAUNTS.KOVCHEG, label: "Ковчег", description: "Пивна ресторація" },
+  { value: USER_RESTARAUNTS.MLYN, label: "Старий Млин", description: "Ресторан-музей" },
+  { value: USER_RESTARAUNTS.FLAMINGO, label: "Фламінго", description: "Піцерія та пастерія" },
+  { value: USER_RESTARAUNTS.HATA, label: "Грибна Хата", description: "Готель-садива" },
+  { value: USER_RESTARAUNTS.SUSHI, label: "Каламбур", description: "Паназія" },
+  { value: USER_RESTARAUNTS.FARM, label: "Фермерська крамниця", description: "Наймолодша філія" }
 ]
 
 
@@ -195,13 +198,13 @@ return (
             <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
             <button
               type="button"
-              onClick={() => setShowRoleDropdown(!showRoleDropdown)}
+              onClick={() => setShowRestarauntDropdown(!showRoleDropdown)}
               className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200 text-left"
             >
-              {selectedRole ? selectedRole.label : "Оберіть ресторан"}
+              {selectedRestaraunt ? selectedRestaraunt.label : "Оберіть ресторан"}
             </button>
 
-          {showRoleDropdown && (
+          {showRestarauntDropdown && (
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -209,12 +212,12 @@ return (
                 transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.3 }}
                 className="absolute top-full left-0 right-0 mt-1 bg-white/15 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-10 overflow-hidden"
               >
-                {roleOptions.map((option) => (
+                {restarauntOptions.map((option) => (
                   <button
                     key={option.value}
                     type="button"
                     onClick={() => {
-                      setRole(option.value);
+                      setRestaraunt(option.value);
                       setShowRoleDropdown(false);
                     } }
                     className="w-full px-4 py-3 text-left hover:bg-white/10 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
