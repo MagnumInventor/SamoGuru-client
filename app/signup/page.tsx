@@ -177,7 +177,7 @@ const SignUpPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowRoleDropdown(!showRoleDropdown)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200 text-left hover:bg-white/15"
+                  className="w-full pl-10 pr-4 py-3 bg-grey/20 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200 text-left hover:bg-grey/30 backdrop-blur-md"
                 >
                   {selectedRole ? selectedRole.label : "Оберіть роль"}
                 </button>
@@ -188,7 +188,7 @@ const SignUpPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 right-0 mt-2 bg-white/15 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-50 overflow-hidden"
+                    className="absolute top-full left-0 right-0 mt-2 bg-grey/40 backdrop-blur-md backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-50 overflow-hidden"
                   >
                     <div className="max-h-56 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                       {roleOptions.map((option) => (
@@ -216,7 +216,7 @@ const SignUpPage = () => {
                 <button
                   type="button"
                   onClick={() => setShowRestarauntDropdown(!showRestarauntDropdown)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200 text-left hover:bg-white/15"
+                  className="w-full pl-10 pr-4 py-3 bg-grey/25 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200 text-left hover:bg-grey/30 backdrop-blur-md"
                 >
                   {selectedRestaraunt ? selectedRestaraunt.label : "Оберіть ресторан"}
                 </button>
@@ -227,7 +227,7 @@ const SignUpPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 right-0 mt-2 bg-white/15 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-50 overflow-hidden"
+                    className="absolute top-full left-0 right-0 mt-2 bg-grey/15 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-50 overflow-hidden"
                   >
                     <div className="max-h-56 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                       {restarauntOptions.map((option) => (
@@ -238,7 +238,7 @@ const SignUpPage = () => {
                             setRestaraunt(option.value);
                             setShowRestarauntDropdown(false);
                           }}
-                          className="w-full px-4 py-3 text-left hover:bg-white/20 transition-colors duration-150 border-b border-white/5 last:border-b-0"
+                          className="w-full px-4 py-3 text-left hover:bg-grey/20 backdrop-blur-md transition-colors duration-150 border-b border-white/5 last:border-b-0"
                         >
                           <div className="text-white font-medium">{option.label}</div>
                           <div className="text-white/60 text-xs">{option.description}</div>
@@ -278,7 +278,7 @@ const SignUpPage = () => {
 
           <ReadRules />
 
-          <div className="px-8 py-4 bg-white/5 border-t border-white/10 flex justify-center">
+          <div className="px-8 py-4 bg-white/10 border-t border-white/10 flex justify-center">
             <p className="text-sm text-white/60">
               Вже маєте акаунт?{" "}
               <Link
