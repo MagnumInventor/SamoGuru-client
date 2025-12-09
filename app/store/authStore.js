@@ -7,12 +7,20 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 axios.defaults.withCredentials = true;
 
-// Define available roles
 export const USER_ROLES = {
   TRAINEE: "trainee",
   HELPER: "helper",
   WAITER: "waiter",
   ADMIN: "admin",
+};
+
+export const USER_RESTARAUNT = {
+  KOVCHEG: "Kovcheg",
+  MLYN: "Staryi Mlyn",
+  FLAMINGO: "Flamingo",
+  HATA: "Grybna Hata",
+  SUSHI: "Sushi Kalambur",
+  FARM: "Fermerska Kramnytsia",
 };
 
 export const useAuthStore = create((set, get) => ({

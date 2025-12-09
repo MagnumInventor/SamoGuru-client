@@ -25,6 +25,18 @@ const SignUpPage = () => {
   const { signup, error, isLoading } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
+
+
+const restarauntOptions = [
+  { value: RESTARAUNT.KOVCHEG, label: "Ковчег", description: "Ресторан-пивоварня" },
+  { value: RESTARAUNT.MLYN, label: "Старий Млин", description: "Українська автентика" },
+  { value: RESTARAUNT.FLAMINGO, label: "Фламінго", description: "Унікальна пастерія" },
+  { value: RESTARAUNT.HATA, label: "Грибна Хата", description: "Перлина Буковелю" },
+  { value: RESTARAUNT.SUSHI, label: "Суші", description: "" }
+]
+
+
+
 const roleOptions = [
   { value: USER_ROLES.TRAINEE, label: "Стажер", description: "Новий працівник на навчанні" },
   { value: USER_ROLES.HELPER, label: "Ранер", description: "Помічник офіціанта" },
@@ -35,7 +47,7 @@ const roleOptions = [
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signup(email, password, firstName, role,
+      await signup(email, password, firstName, restaraunt, role,
         role === USER_ROLES.HELPER ? employeeCode : null,
         role === USER_ROLES.WAITER ? employeeCode : null,
         role === USER_ROLES.ADMIN ? adminCode : null
@@ -47,6 +59,8 @@ const roleOptions = [
   };
 
 	const selectedRole = roleOptions.find(option => option.value === role);
+  const selectedRestaraunt = restarauntOptions.find(option => option.value === restaraunt);
+
 
 return (
 
@@ -171,6 +185,51 @@ return (
               </motion.div>
             )}
           </div>
+
+
+
+
+    // RESTARANT CHOISE MENU
+
+  <div className="relative">
+            <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5" />
+            <button
+              type="button"
+              onClick={() => setShowRoleDropdown(!showRoleDropdown)}
+              className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-200 text-left"
+            >
+              {selectedRole ? selectedRole.label : "Оберіть ресторан"}
+            </button>
+
+          {showRoleDropdown && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.3 }}
+                className="absolute top-full left-0 right-0 mt-1 bg-white/15 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl z-10 overflow-hidden"
+              >
+                {roleOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => {
+                      setRole(option.value);
+                      setShowRoleDropdown(false);
+                    } }
+                    className="w-full px-4 py-3 text-left hover:bg-white/10 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                  >
+                    <div className="text-white font-medium">{option.label}</div>
+                    <div className="text-white/70 text-xs">{option.description}</div>
+                  </button>
+                ))}
+              </motion.div>
+            )}
+    </div>
+
+    // RESTARANT CHOISE MENU 
+
+
 
           {password && <PasswordStrengthMeter password={password} />}
 
