@@ -106,3 +106,5 @@ v3.8.9 (2025-09-15)
 
  v4.0.1a (2025-12-09)
  - Added restaraunt choice dropdown in signup page
+  v4.0.2 (2025-12-09)
+ - UI & dropdown scroll fixes
