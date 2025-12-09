@@ -14,7 +14,7 @@ export const USER_ROLES = {
   ADMIN: "admin",
 };
 
-export const USER_RESTARAUNT = {
+export const USER_RESTARAUNTS = {
   KOVCHEG: "Kovcheg",
   MLYN: "Staryi Mlyn",
   FLAMINGO: "Flamingo",
