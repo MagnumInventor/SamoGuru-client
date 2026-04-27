@@ -29,7 +29,8 @@ const SignUpPage = () => {
   const { signup, error, isLoading } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
-  // Close dropdowns when clicking outside
+
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (roleDropdownRef.current && !roleDropdownRef.current.contains(event.target as Node)) {
@@ -171,7 +172,7 @@ const SignUpPage = () => {
                 </button>
               </div>
 
-              {/* Role Dropdown */}
+
               <div className="relative" ref={roleDropdownRef}>
                 <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5 pointer-events-none z-20" />
                 <button
@@ -210,7 +211,7 @@ const SignUpPage = () => {
                 )}
               </div>
 
-              {/* Restaurant Dropdown */}
+  
               <div className="relative" ref={restaurantDropdownRef}>
                 <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-5 h-5 pointer-events-none z-20" />
                 <button
